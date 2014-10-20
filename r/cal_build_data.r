@@ -4,8 +4,7 @@ library(fields)
 library(maptools)
 gpclibPermit()
 
-# source('calibration/r/cal_build_config.r')
-source('calibration/r/utils/build_data_funs.r')
+source('r/utils/build_data_funs.r')
 
 #####################################################################################
 # read in data
@@ -19,12 +18,12 @@ depth_type = 'lower'
 data_date = '2014-10-20'
 
 ## relative to working directory!
-path_pollen  = paste0('sh_analysis/data/cal_data_', depth_type, '_depth_', data_date, '.csv')    # sh elicitation results
-path_veg     = 'data/pls/composition_v0.2.csv'              # composition model results
-path_map     = 'data/map_data/us_alb.shp'                   # albers projected state map!
-path_convert = 'calibration/r/meta/dict-comp2stepps.csv'    # conversion table
+path_pollen  = paste0('data/cal_data_', depth_type, '_depth_', data_date, '.csv') # sh elicitation results
+path_veg     = 'data/composition_v0.2.csv'                                        # composition model results
+path_map     = 'data/map_data/us_alb.shp'                                         # albers projected state map!
+path_convert = 'data/dict-comp2stepps.csv'                                        # conversion table
 
-path_out = 'calibration/r/dump'                             # dump data file stored here
+path_out = 'r/dump'                                                               # dump data file stored here
 
 # append to output filenames
 suff       = paste0(depth_type, '_comp_v0.1')                                
@@ -33,7 +32,7 @@ states = c('michigan:north', 'minnesota', 'wisconsin')
 
 wd = getwd() 
 
-us.shp     = readShapeLines(path_map, proj4string=CRS('+init=epsg:3175'))
+us.shp  = readShapeLines(path_map, proj4string=CRS('+init=epsg:3175'))
 # us.shp = readOGR('data/map_data/us_alb.shp', 'us_alb')
 
 dist.scale = 1000000 # megamaters
