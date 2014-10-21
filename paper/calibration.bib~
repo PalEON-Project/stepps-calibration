@@ -1,0 +1,698 @@
+@article{peters1981principal,
+  title={Principal components analysis of tree-ring sites},
+  author={Peters, K. and Jacoby, GC and Cook, E.R.},
+  journal={Tree-Ring Bulletin},
+  volume={41},
+  pages={1--19},
+  year={1981}
+}
+
+@article{cook1994spatial,
+  title={Spatial regression methods in dendroclimatology: a review and comparison of two techniques},
+  author={Cook, Edward R and Briffa, Keith R and Jones, Philip D},
+  journal={International Journal of Climatology},
+  volume={14},
+  number={4},
+  pages={379--402},
+  year={1994},
+  publisher={Wiley Online Library}
+}
+
+@book{schweingruber1988tree,
+  title={Tree rings-basics and applications of dendrochronology.},
+  author={Schweingruber, Fritz Hans and others},
+  year={1988},
+  publisher={D. Reidel Publishing Company}
+}
+
+@article{yamaguchi1991simple,
+  title={A simple method for {cross-dating} increment cores from living trees},
+  author={Yamaguchi, David K},
+  journal={Canadian Journal of Forest Research},
+  volume={21},
+  number={3},
+  pages={414--416},
+  year={1991},
+  publisher={NRC Research Press}
+}
+
+@book{national2006Surface,
+  title={Surface Temperature Reconstructions for the Last 2,000 Years},
+  author={Committee on Surface Temperature Reconstructions for the Last 2,000 Years, National Research Council},
+  year={2006},
+  publisher={The National Academies Press}
+}
+
+@book{fritts1976tree,
+  title={Tree rings and climate},
+  author={Fritts, H.C.},
+  year={1976},
+  publisher={London, New York, San Francisco.: Academic Press}
+}
+
+@article{wigley1984average,
+  title={On the average value of correlated time series, with applications in dendroclimatology and hydrometeorology},
+  author={Wigley, TML and Briffa, KR and Jones, PD},
+  journal={Journal of Climate and Applied Meteorology},
+  volume={23},
+  number={2},
+  pages={201--213},
+  year={1984}
+}
+
+@article{cook2007north,
+  title={North American drought: reconstructions, causes, and consequences},
+  author={Cook, Edward R and Seager, Richard and Cane, Mark A and Stahle, David W},
+  journal={Earth-Science Reviews},
+  volume={81},
+  number={1},
+  pages={93--134},
+  year={2007},
+  publisher={Elsevier}
+}
+
+@book{palmer1965meteorological,
+  title={Meteorological drought},
+  author={Palmer, Wayne C},
+  year={1965},
+  publisher={US Department of Commerce, Weather Bureau Washington, DC, USA}
+}
+
+@article{cook1999drought,
+  title={Drought reconstructions for the continental {United States}},
+  author={Cook, E.R. and Meko, D.M. and Stahle, D.W. and Cleaveland, M.K.},
+  journal={Journal of Climate},
+  volume={12},
+  number={4},
+  pages={1145--1162},
+  year={1999}
+}
+
+@article{warrick1980drought,
+  title={Drought in the Great Plains{: A} case Study of Research on Climate and Society in the {USA}},
+  author={Warrick, R.A. and others},
+  journal={Climatic constraints and human activities},
+  volume={10},
+  pages={93--123},
+  year={1980},
+  publisher={Pergamon Press Oxford, England}
+}
+
+@article{ruffner1998relating,
+  title={{Relating land-use history and climate to the dendroecology of a 326-year-old \textit{Quercus prinus} talus slope forest}},
+  author={Ruffner, C.M. and Abrams, M.D.},
+  journal={Canadian Journal of Forest Research},
+  volume={28},
+  number={3},
+  pages={347--358},
+  year={1998},
+  publisher={NRC Research Press}
+}
+
+@article{lawson2005desert,
+  title={DESERT MYTH AND CLIMATIC REALITY},
+  author={Lawson, M.P. and Stockton, C.W.},
+  journal={Annals of the Association of American Geographers},
+  volume={71},
+  number={4},
+  pages={527--535},
+  year={2005},
+  publisher={Wiley Online Library}
+}
+
+@techreport{droughtCali,
+  title={Drought conditions in {California}},
+  author={State of California},
+  institution={Department of Water Resources},
+  year={1990}
+}
+
+
+@techreport{edwards1997characteristics,
+  title={Characteristics of 20th Century drought in the {United States} at multiple time scales.},
+  author={Edwards, D.C.},
+  year={1997},
+  institution={DTIC Document}
+}
+
+@article{beniston1997climatic,
+  title={Climatic change at high elevation sites: an overview},
+  author={Beniston, M. and Diaz, HF and Bradley, RS},
+  journal={Climatic Change},
+  volume={36},
+  number={3},
+  pages={233--251},
+  year={1997},
+  publisher={Springer}
+}
+
+@article{druckenbrod2003late,
+  title={Late-eighteenth-century precipitation reconstructions from {James Madison's Montpelier} plantation},
+  author={Druckenbrod, D.L. and Mann, M.E. and Stahle, D.W. and Cleaveland, M.K. and Therrell, M.D. and Shugart, H.H.},
+  journal={Bulletin of the American Meteorological Society},
+  volume={84},
+  number={1},
+  pages={57--72},
+  year={2003},
+  publisher={[Lancaster, Pa., etc., American Meteorological Society]}
+}
+
+@article{hancock1979cross,
+  title={Cross-Spectral Analysis of Sunspots and Monthly Mean Temperature and Precipitation for the Contiguous {United States}},
+  author={Hancock, D.J. and Yarger, D.N.},
+  journal={Journal of Atmospheric Sciences},
+  volume={36},
+  pages={746--746},
+  year={1979}
+}
+
+@article{cook1997new,
+  title={A new assessment of possible solar and lunar forcing of the bidecadal drought rhythm in the western {United States}},
+  author={Cook, E.R. and Meko, D.M. and Stockton, C.W.},
+  journal={Journal of Climate},
+  volume={10},
+  number={6},
+  pages={1343--1356},
+  year={1997}
+}
+
+@article{franks2002assessing,
+  title={Assessing hydrological change: deterministic general circulation models or spurious solar correlation?},
+  author={Franks, S.W.},
+  journal={Hydrological Processes},
+  volume={16},
+  number={2},
+  pages={559--564},
+  year={2002},
+  publisher={Wiley Online Library}
+}
+
+@book{national1994Solar,
+  title={Solar Influences on Global Change},
+  author={Board on Global Change, National Research Council},
+  isbn={9780309051484},
+  url={http://www.nap.edu/openbook.php?record_id=4778},
+  year={1994},
+  publisher={The National Academies Press}
+}
+
+@article{lassen1995variability,
+  title={Variability of the solar cycle length during the past five centuries and the apparent association with terrestrial climate},
+  author={Lassen, K. and Friis-Christensen, E.},
+  journal={Journal of Atmospheric and Terrestrial Physics},
+  volume={57},
+  number={8},
+  pages={835--845},
+  year={1995},
+  publisher={Elsevier}
+}
+
+@article{nichols2012hydroclimate,
+  title={Hydroclimate of the northeastern {United States} is highly sensitive to solar forcing},
+  author={Nichols, J.E. and Huang, Y.},
+  journal={Geophysical Research Letters},
+  volume={39},
+  number={4},
+  pages={L04707},
+  year={2012},
+  publisher={American Geophysical Union}
+}
+
+@article{stahle1998lost,
+  title={The lost colony and {Jamestown} droughts},
+  author={Stahle, D.W. and Cleaveland, M.K. and Blanton, D.B. and Therrell, M.D. and Gay, D.A.},
+  journal={Science},
+  volume={280},
+  number={5363},
+  pages={564--567},
+  year={1998},
+  publisher={American Association for the Advancement of Science}
+}
+
+@article{stahle1992reconstruction,
+  title={Reconstruction and analysis of spring rainfall over the southeastern {US} for the past 1000 years},
+  author={Stahle, D.W. and Cleaveland, M.K.},
+  journal={Bulletin of the American Meteorological Society;(United States)},
+  volume={73},
+  number={12},
+  year={1992}
+}
+
+@article{speer2009climate,
+  title={Climate response of five oak species in the eastern deciduous forest of the southern {Appalachian Mountains, USA}},
+  author={Speer, J.H. and Grissino-Mayer, H.D. and Orvis, K.H. and Greenberg, C.H.},
+  journal={Canadian Journal of Forest Research},
+  volume={39},
+  number={3},
+  pages={507--518},
+  year={2009},
+  publisher={NRC Research Press}
+}
+
+@article{holmes1983computer,
+  title={Computer-assisted quality control in tree-ring dating and measurement},
+  author={Holmes, R.L.},
+  journal={Tree-ring bulletin},
+  volume={43},
+  number={1},
+  pages={69--78},
+  year={1983}
+}
+
+@book{stokes1996introduction,
+  title={An introduction to tree-ring dating},
+  author={Stokes, M.A. and Smiley, T.L.},
+  year={1996},
+  publisher={University of Arizona Press}
+}
+
+@book{speer2010fundamentals,
+  title={Fundamentals of tree-ring research},
+  author={Speer, J.H.},
+  year={2010},
+  publisher={University of Arizona Press}
+}
+
+@article{robertson1992factors,
+  title={Factors affecting tree growth on three lowland sites in southern {Illinois}},
+  author={Robertson, P.A.},
+  journal={American Midland Naturalist},
+  pages={218--236},
+  year={1992},
+  publisher={JSTOR}
+}
+
+@phdthesis{li2011dendroclimatic,
+  title={Dendroclimatic Analysis of Climate Oscillations for the Southeastern {United States} from Tree-ring Network Data},
+  author={Li, Y.},
+  school={University of Tennessee},
+  year={2011}
+}
+
+@article{zweifel2006intra,
+  title={Intra-annual radial growth and water relations of trees: implications towards a growth mechanism},
+  author={Zweifel, R. and Zimmermann, L. and Zeugin, F. and Newbery, D.M.},
+  journal={Journal of Experimental Botany},
+  volume={57},
+  number={6},
+  pages={1445--1459},
+  year={2006},
+  publisher={Soc Experiment Biol}
+}
+
+@inproceedings{dickson1996oak,
+  title={Oak growth, development and carbon metabolism in response to water stress},
+  author={Dickson, RE and Tomlinson, PT},
+  booktitle={Annales des Sciences Foresti{\`e}res},
+  volume={53},
+  pages={181--196},
+  year={1996}
+}
+
+@article{leblanc1993temporal,
+  title={Temporal and spatial variation of oak growth-climate relationships along a pollution gradient in the midwestern {United States}},
+  author={LeBlanc, D.C.},
+  journal={Canadian Journal of Forest Research},
+  volume={23},
+  number={5},
+  pages={772--782},
+  year={1993},
+  publisher={NRC Research Press}
+}
+
+@incollection{stahle1993,
+	booktitle = {{Climatic variations and forcing mechanisms of the last 2000 years}},
+	publisher = {NATO ASI},
+	series = {I41},
+	author = {Stahle, D.W.  and Cleveland, M.K. },
+	pages = {125 - 140},
+	year = {1993},
+	editor = {Jones, P.D.  and Bradley, R.S.  and Jouzel, J.},
+	title = {Large-scale climatic influences on baldcypress tree growth across the southeastern United States}
+}
+
+@article{seager2009drought,
+  title={Drought in the Southeastern {United States}: Causes, Variability over the Last Millennium, and the Potential for Future Hydroclimate Change},
+  author={Seager, R. and Tzanova, A. and Nakamura, J.},
+  journal={Journal of Climate},
+  volume={22},
+  number={19},
+  pages={5021--5045},
+  year={2009}
+}
+
+@article{anchukaitis2006forward,
+  title={Forward modeling of regional scale tree-ring patterns in the southeastern {United States} and the recent influence of summer drought},
+  author={Anchukaitis, KJ and Evans, MN and Kaplan, A. and Vaganov, EA and Hughes, MK and Grissino-Mayer, HD and Cane, MA},
+  journal={Geophysical Research Letters},
+  volume={33},
+  number={4},
+  pages={L04705},
+  year={2006},
+  publisher={American Geophysical Union}
+}
+
+@article{jacoby1989reconstructed,
+  title={Reconstructed Northern Hemisphere annual temperature since 1671 based on high-latitude tree-ring data from {North America}},
+  author={Jacoby, G.C. and D'Arrigo, R.},
+  journal={Climatic Change},
+  volume={14},
+  number={1},
+  pages={39--59},
+  year={1989},
+  publisher={Springer}
+}
+
+@article{sobolowski2012evaluation,
+  title={Evaluation of present and future {North American Regional Climate Change Assessment Program (NARCCAP)} regional climate simulations over the southeast {United States}},
+  author={Sobolowski, S. and Pavelsky, T.},
+  journal={Journal of Geophysical Research},
+  volume={117},
+  pages={D01101},
+  year={2012},
+  publisher={American Geophysical Union}
+}
+
+@article{wells2004self,
+  title={A self-calibrating Palmer drought severity index},
+  author={Wells, Nathan and Goddard, Steve and Hayes, Michael J},
+  journal={Journal of Climate},
+  volume={17},
+  number={12},
+  pages={2335--2351},
+  year={2004}
+}
+
+@article{zipper2011restoring,
+  title={Restoring forests and associated ecosystem services on Appalachian coal surface mines},
+  author={Zipper, C.E. and Burger, J.A. and Skousen, J.G. and Angel, P.N. and Barton, C.D. and Davis, V. and Franklin, J.A.},
+  journal={Environmental management},
+  volume={47},
+  number={5},
+  pages={751--765},
+  year={2011},
+  publisher={Springer}
+}
+
+@article{phipps1982comments,
+  title={Comments on interpretation of climatic information from tree rings, eastern {North America}},
+  author={Phipps, R.L.},
+  journal={Tree-ring bulletin},
+  volume={42},
+  pages={11--22},
+  year={1982}
+}
+
+@article{pan1997dendroclimatological,
+  title={Dendroclimatological analysis of major forest species of the central {Appalachians}},
+  author={Pan, C. and Tajchman, SJ and Kochenderfer, JN},
+  journal={Forest Ecology and Management},
+  volume={98},
+  number={1},
+  pages={77--87},
+  year={1997},
+  publisher={Elsevier}
+}
+
+@article{rubino2000dendroclimatological,
+  title={{Dendroclimatological analysis of white oak (\textit{Quercus alba} L., Fagaceae) from an old-growth forest of southeastern Ohio, USA}},
+  author={Rubino, D.L. and McCarthy, B.C.},
+  journal={Journal of the Torrey Botanical Society},
+  pages={240--250},
+  year={2000},
+  publisher={JSTOR}
+}
+
+@article{mitchell2005improved,
+  title={An improved method of constructing a database of monthly climate observations and associated high-resolution grids},
+  author={Mitchell, Timothy D and Jones, Philip D},
+  journal={International journal of climatology},
+  volume={25},
+  number={6},
+  pages={693--712},
+  year={2005},
+  publisher={Wiley Online Library}
+}
+
+@article{trouet2013knmi,
+  title={{KNMI Climate Explorer:} a web-based research tool for high-resolution paleoclimatology},
+  author={Trouet, V. and Van Oldenborgh, G.J.},
+  journal={Tree-Ring Research},
+  volume={69},
+  number={1},
+  pages={3--13},
+  year={2013},
+  publisher={BioOne}
+}
+
+@article{torrence1998practical,
+  title={A practical guide to wavelet analysis},
+  author={Torrence, C. and Compo, G.P.},
+  journal={Bulletin of the American Meteorological society},
+  volume={79},
+  number={1},
+  pages={61--78},
+  year={1998}
+}
+
+@article{harris2014updated,
+  title={Updated high-resolution grids of monthly climatic observations{--}the {CRU TS3. 10} Dataset},
+  author={Harris, I. and Jones, P.D. and Osborn, T.J. and Lister, D.H.},
+  journal={International Journal of Climatology},
+  volume={34},
+  number={3},
+  pages={623--642},
+  year={2014},
+  publisher={Wiley Online Library}
+}
+
+@incollection{kattenberg1996climate,
+  booktitle={{Climate change 1995: The science of climate change: contribution of working group I to the second assessment report of the Intergovernmental Panel on Climate Change}},
+  title={Climate models--Projections of future climate},
+  author={Kattenberg, K. and Giorgi, F. and Grassl, H. and Meehl, G.A. and Mitchell, J.F.B. and Stouffer, R.J. and Tokioka, T. and Weaver, A.J. and Wigley, T.M.L},
+  editor={Houghton, J.T. and Meiro Filho, LG and Callander, B.A. and Harris, N. and Kattenburg, A. and Maskell, K.},
+  pages={285--357},
+  year={1996},
+  publisher={Cambridge University Press}
+}
+
+@article{cook1997calculating,
+  title={Calculating unbiased tree-ring indices for the study of climatic and environmental change},
+  author={Cook, E.R. and Peters, K.},
+  journal={The Holocene},
+  volume={7},
+  number={3},
+  pages={361--370},
+  year={1997},
+  publisher={Sage Publications}
+}
+
+@article{buntgen2007growth,
+  title={{Growth responses to climate in a multi-species tree-ring network in the Western Carpathian Tatra Mountains, Poland and Slovakia}},
+  author={B{\"u}ntgen, U. and Frank, D.C. and Kaczka, R.J. and Verstege, A. and Zwijacz-Kozica, T. and Esper, J.},
+  journal={Tree Physiology},
+  volume={27},
+  number={5},
+  pages={689--702},
+  year={2007},
+  publisher={Oxford University Press}
+}
+
+@article{wold1987principal,
+  title={Principal component analysis},
+  author={Wold, S. and Esbensen, K. and Geladi, P.},
+  journal={Chemometrics and intelligent laboratory systems},
+  volume={2},
+  number={1},
+  pages={37--52},
+  year={1987},
+  publisher={Elsevier}
+}
+
+@article{grissino2001research,
+  title={Research report evaluating crossdating accuracy: a manual and tutorial for the computer program {COFECHA}},
+  author={Grissino-Mayer, H.D.},
+  journal={Tree-ring research},
+  volume={57},
+  number={2},
+  pages={205--221},
+  year={2001}
+}
+
+@article{cook2004long,
+  title={Long-term aridity changes in the western {United States}},
+  author={Cook, E.R. and Woodhouse, C.A. and Eakin, C.M. and Meko, D.M. and Stahle, D.W.},
+  journal={Science},
+  volume={306},
+  number={5698},
+  pages={1015--1018},
+  year={2004},
+  publisher={American Association for the Advancement of Science}
+}
+
+@article{cook1987decomposition,
+  title={The decomposition of tree-ring series for environmental studies},
+  author={Cook, E.R.},
+  journal={Tree-Ring Bulletin},
+  volume={47},
+  pages={37--59},
+  year={1987}
+}
+
+@article{monserud1986time,
+  title={Time-series analyses of tree-ring chronologies},
+  author={Monserud, R.A.},
+  journal={Forest Science},
+  volume={32},
+  number={2},
+  pages={349--372},
+  year={1986},
+  publisher={Society of American Foresters}
+}
+
+@article{cook1981smoothing,
+  title={The smoothing spline: a new approach to standardizing forest interior tree-ring width series for dendroclimatic studies},
+  author={Cook, E.R. and Peters, K.},
+  journal={Tree-ring bulletin},
+  volume={41},
+  pages={45--53},
+  year={1981}
+}
+
+@article{pachauri2007climate,
+  title={{Climate Change 2007: Synthesis Report. Contribution of Working Groups I, II and III to the Fourth Assessment Report of the Intergovernmental Panel on Climate Change}},
+  author={Pachauri, RK and Reisinger, A.},
+  journal={Intergovernmental Panel on Climate Change},
+  year={2007}
+}
+
+@article{IPCC2013,
+  title={{Climate Change 2013: The Physical Science Basis. Contribution of Working Group I to the Fifth Assessment Report of the Intergovernmental Panel on Climate Change}},
+  author={Stocker, T.F. and Qin, D. and Plattner, G.{-K.} and Tignor, M. and Allen, S.K. and Boschung, J. and Nauels, A. and Xia, Y. and Bex, V. and Modgley, P.M.},
+  journal={Intergovernmental Panel on Climate Change},
+  year={2013}
+}
+
+@misc{NCNHP2012,
+author = {{North Carolina Natural Heritage Program (NCNHP)}},
+title = {{An Inventory of the Significant Natural Areas of Ashe County, North Carolina}},
+year = {1999},
+url = {http://www.ncnhp.org/Images/Ashe10-10-2005.pdf},
+note={Accessed September 2012}
+}
+
+@misc{ENSOclimate,
+author = {{National Oceanic and Atmosheric Administration (NOAA)}},
+title = {{El Ni\~{n}o Southern Oscillation (ENSO)}},
+year = {2005},
+url = {{http://www.cpc.ncep.noaa.gov/products/precip/CWlink/ENSO/composites/EC_LNT_index.shtml}},
+note={Accessed September 2014}
+}
+
+@article{fritts1990methods,
+  title={Methods of calibration, verification, and reconstruction},
+  author={Fritts, HC and Guiot, J. and Gordon, GA and Schweingruber, F.},
+  journal={Methods of Dendrochronology},
+  pages={163--217},
+  year={1990},
+  publisher={Kluwer}
+}
+
+@article{oliver1980forest,
+  title={Forest development in {North America} following major disturbances},
+  author={Oliver, C.D.},
+  journal={Forest ecology and management},
+  volume={3},
+  pages={153--168},
+  year={1980},
+  publisher={Elsevier}
+}
+
+@article{pielke1999nina,
+  title={La Ni{\~n}a, El Ni{\~n}o and Atlantic Hurricane Damages in the {United States}},
+  author={Pielke Jr, R.A. and Landsea, C.N.},
+  journal={Bulletin of the American Meteorological Society},
+  volume={80},
+  number={10},
+  pages={2027--2033},
+  year={1999}
+}
+
+@article{reid2002solar,
+  title={Solar irradiance variations and the global sea surface temperature record},
+  author={Reid, G.C.},
+  journal={Climate Change: Natural forcing factors for climate change timescales 10-1 to 10-5 years},
+  volume={2},
+  pages={7},
+  year={2002},
+  publisher={Taylor \& Francis US}
+}
+
+@PhDThesis{cook1985time,
+	author = {Cook, Edward Roger},
+	school = {The University of Arizona},
+	title = {A TIME SERIES ANALYSIS APPROACH TO TREE RING STANDARDIZATION},
+	year  = {1985}
+}
+
+@InCollection{cook1990tree,
+	title = {Tree-ring standardization and growth-trend estimation},
+	author = {Cook, E R and Briffa, K and Shiyatov, S and Mazepa, V},
+	year = {1990},
+	booktitle = {Methods of dendrochronology: applications in the environmental sciences},
+	editor = {Cook, Edward R and Kairiukstis, Leonardas A},
+	publisher = {Kluwer}
+}
+
+@article{melvin2008signal,
+  title={A {``signal-free''} approach to dendroclimatic standardisation},
+  author={Melvin, Thomas M and Briffa, Keith R},
+  journal={Dendrochronologia},
+  volume={26},
+  number={2},
+  pages={71--86},
+  year={2008},
+  publisher={Elsevier}
+}
+
+@article{fye2003paleoclimatic,
+  title={Paleoclimatic analogs to twentieth-century moisture regimes across the United States},
+  author={Fye, Falko K and Stahle, David W and Cook, Edward R},
+  journal={Bulletin of the American Meteorological Society},
+  volume={84},
+  number={7},
+  pages={901--909},
+  year={2003}
+}
+
+@article{usoskin2003millennium,
+  title={Millennium-scale sunspot number reconstruction: Evidence for an unusually active Sun since the 1940s},
+  author={Usoskin, Ilya G and Solanki, Sami K and Sch{\"u}ssler, Manfred and Mursula, Kalevi and Alanko, Katja},
+  journal={Physical Review Letters},
+  volume={91},
+  number={21},
+  pages={211101},
+  year={2003},
+  publisher={APS}
+}
+
+@article{friis1991length,
+  title={Length of the solar cycle- An indicator of solar activity closely associated with climate},
+  author={Friis-Christensen, Eigil and Lassen, Knud},
+  journal={Science},
+  volume={254},
+  number={5032},
+  pages={698--700},
+  year={1991}
+}
+
+@article{cole2002multiyear,
+  title={Multiyear La Ni{\~n}a events and persistent drought in the contiguous United States},
+  author={Cole, Julia E and Overpeck, Jonathan T and Cook, Edward R},
+  journal={Geophysical Research Letters},
+  volume={29},
+  number={13},
+  pages={25--1},
+  year={2002},
+  publisher={Wiley Online Library}
+}
