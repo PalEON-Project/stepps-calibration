@@ -89,24 +89,24 @@ available is incomplete.
 
 \subsection{Tree taxa}
 We focus on a subset of taxa that are of particular interest,
-inlcuding the most abundant taxa and any taxa that are of ecological
-importance. Our modelled taxa includes: Ash, Beech, Birch, Elm,
-Hemlock, Maple, Oak, Pine, Spruce, Larch, as well as both Other
-Conifer and Other Hardwood which include those respective tree types
-not explicitly included elsewhere. Separating other hardwood and
-conifers as opposed to having a single other group was motivated by
-ecological modellers who are often interested in grouping taxa as
-deciduous, conifer, and deciduous conifers. Additionally, separating
-these groups allows the model to treat each group seperately, which
-may be benificial because of the inherent differences between conifer
-and deciduous seed production, although we recognize that the
-variability in production and dispersal within each of these groups is
-still large.
+inlcuding the most abundant taxa and any taxa that are of specific
+ecological importance. Our modelled taxa includes: Ash, Beech, Birch,
+Elm, Hemlock, Maple, Oak, Pine, Spruce, Larch, as well as Other
+Conifer and Other Hardwood groups which include those respective tree
+types not explicitly included in the aforementioned list of taxa. This
+separation of other hardwood and conifers as opposed to having a
+single other group was motivated by ecological modellers who are often
+interested in grouping taxa as deciduous, conifer, and deciduous
+conifers. Additionally, the separation of other hardwood and conifers
+allows the model to treat each group seperately and tease out inherent
+differences between conifer and deciduous seed production, although we
+recognize that the variability in production and dispersal within each
+of these groups is still large.
 
 \subsection{Public Land Survey (PLS) data}
 
 %XXX Jack and Simon 
-Prior to majoy European settlement, the US General
+Prior to major European settlement, the US General
 Land Office conducted a Public Land Survey (PLS) throughout much of
 the United States in order to simplify the sale of federal
 lands. Surveyors documented section location using trees as landmarks,
@@ -115,8 +115,8 @@ distance from corner). This data set provides a systematic survey of
 the forest before settlement, and has been used by foresters,
 ecologists, and historians to understand ecosystem and land-use change
 through time. In the Upper Midwest, the survey was conducted during
-XXXX-XXXX. Forest growth is relatively slow, especially in the Upper
-Midwest, which allows us to think of the PLS data as a snapshot of
+XXXX-XXXX. Due to the slow-growing nature of temperate forests, including those in the Upper
+Midwest, we can think of the PLS data as a snapshot of
 forest composition in time.
 
 %XXX Chris...  
@@ -124,7 +124,7 @@ Survey data for the Upper Midwest has been recently
 digitized, and aggregated to an 8km square grid \cite{XXX}. However,
 due to its sparse nature, sampling methodology, and surveyor bias the
 PLS data set contains inherent variability. Here we work with a
-smoothed version of the PLS data, based on a hierarchical Bayesian
+smoothed version of the PLS data, based on a Bayesian spatial multinomial 
 model \cite{XXX}.
 
 \subsection{Pollen data}

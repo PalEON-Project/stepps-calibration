@@ -258,7 +258,125 @@ plot_data_maps_binned <- function(y, centers, taxa, K, breaks, limits, suff, sav
   return(p)
 }
 
+plot_pollen_maps_binned <- function(y, centers, taxa, K, breaks, limits, suff, save_plots, fpath){
+  
+  N = nrow(centers)
+  
+  if (is.null(taxa)){taxa=seq(1,K)}
+  
+  props_data = t(apply(y, 1, function(x) if (sum(x) > 0) {x/sum(x)} else {x}))
+  #colnames(props_data) = taxa
+  
+  props_data_binned = matrix(0, nrow=nrow(props_data), ncol=ncol(props_data))
+  colnames(props_data_binned) <- colnames(props_data)
+  
+  for (i in 1:ncol(props_data)){
+    props_data_binned[,i] = cut(props_data[,i], breaks, include.lowest=TRUE, labels=FALSE)
+  }
+  
+  breaklabels = apply(cbind(breaks[1:(length(breaks)-1)], breaks[2:length(breaks)]), 1, 
+                      function(r) { sprintf("%0.2f - %0.2f", r[1], r[2]) })
+  
+  prop_dat = data.frame(props=numeric(0), x=integer(0), y=integer(0), taxon=character())
+  for (k in 1:K){
+    prop_dat = rbind(prop_dat, data.frame(props = props_data_binned[,k], 
+                                          x     = centers[,1],#*rescale, 
+                                          y     = centers[,2],#*rescale, 
+                                          taxon = rep(taxa[k], N)))
+  }
+  
+  p <- ggplot() + geom_point(data=prop_dat, aes(x=x, y=y, colour=factor(props)), shape=19) + 
+    scale_colour_manual(values = tim.colors(length(breaks)), labels=breaklabels, name='Proportions') + 
+    coord_fixed() #+ scale_x_continuous(limits$xlims) + scale_y_continuous(limits$ylims)
+  p <- add_map_albers(p, us.shp, limits, rescale)
+  p <- p + facet_wrap(~taxon, ncol=6)
+  p <- theme_clean(p) #+ theme(strip.text.y = element_text(size = rel(1.5)), strip.text.x = element_text(size = rel(1.5)))
+  
+  #   p <- p + theme(strip.text.x = element_blank(),
+  #                  strip.text.y = element_blank())
+  p <- p + theme(strip.background = element_blank())
+  
+  print(p)
+  Sys.sleep(2)
+  if (save_plots){
+    ggsave(file=paste(fpath, '/maps_pollen.pdf', sep=''), scale=1)
+    ggsave(file=paste(fpath, '/maps_pollen.eps', sep=''), scale=1)
+    #     dev.off()
+  }
+  return(p)
+}
 
+
+melt_dat <- function(y, centers, breaks, taxa){
+  N=nrow(centers)
+  props_data = t(apply(y, 1, function(x) if (sum(x) > 0) {x/sum(x)} else {x}))
+  colnames(props_data) = taxa
+  
+  props_data_binned = matrix(0, nrow=nrow(y), ncol=ncol(y))
+  colnames(props_data_binned) <- taxa
+  
+  for (i in 1:ncol(props_data)){
+    props_data_binned[,i] = cut(props_data[,i], breaks, include.lowest=TRUE, labels=FALSE)
+  }
+  
+  prop_dat = data.frame(props=numeric(0), x=integer(0), y=integer(0), taxon=character())
+  for (k in 1:K){
+    prop_dat = rbind(prop_dat, data.frame(props = props_data_binned[,k], 
+                                          x     = centers[,1],#*rescale, 
+                                          y     = centers[,2],#*rescale, 
+                                          taxon = rep(taxa[k], N)))
+  }
+  
+  return(prop_dat)
+  
+}
+
+plot_both_maps_binned <- function(y_pol,  y_veg, centers_pol, centers_veg, taxa, taxa_list, K, breaks, limits, suff, save_plots, fpath){
+  
+  N_pol = nrow(centers_pol)
+  
+  if (is.null(taxa)){taxa=seq(1,K)}
+  
+  breaklabels = apply(cbind(breaks[1:(length(breaks)-1)], breaks[2:length(breaks)]), 1, 
+                      function(r) { sprintf("%0.2f - %0.2f", r[1], r[2]) })
+  
+  prop_dat_veg = melt_dat(y_veg, centers_veg, breaks, taxa)
+  prop_dat_pol = melt_dat(y_pol, centers_pol, breaks, taxa)
+  
+  for (k in taxa_list){#1:length(taxa)){
+    
+    veg = prop_dat_veg[prop_dat_veg$taxon == taxa[k], ]
+    pol = prop_dat_pol[prop_dat_pol$taxon == taxa[k], ]
+    
+    p <- ggplot() + geom_tile(data=veg, aes(x=x, y=y, fill=factor(props)), alpha=1) + 
+      scale_fill_manual(values = tim.colors(length(breaks)), labels=breaklabels, name='Proportions') + 
+      coord_fixed() 
+    p <- add_map_albers(p, us.shp, limits, rescale)
+    p <- theme_clean(p) 
+    p <- p + theme(strip.background = element_blank())
+    print(p) 
+    
+    q <- ggplot() + geom_point(data=pol, aes(x=x, y=y, colour=factor(props)), shape=19, size=3) + 
+      scale_colour_manual(values = tim.colors(length(breaks)), labels=breaklabels, name='Proportions') + 
+      coord_fixed() #+ scale_x_continuous(limits$xlims) + scale_y_continuous(limits$ylims)
+    q <- add_map_albers(q, us.shp, limits, rescale)
+    q <- theme_clean(q) 
+    q <- q + theme(strip.background = element_blank())
+    print(q)
+    
+    g <- arrangeGrob(p, q, nrow=2)
+    print(g)
+    
+    Sys.sleep(2)
+    if (save_plots){
+      ggsave(file=paste(fpath, '/maps_compare_', taxa[k], '.pdf', sep=''), scale=1, plot=g)
+      ggsave(file=paste(fpath, '/maps_compare_', taxa[k], '.eps', sep=''), scale=1, plot=g)
+      #     dev.off()
+    }
+    
+  }
+  
+}
 
 theme_clean <- function(plot_obj){
   plot_obj <- plot_obj + theme(axis.ticks = element_blank(), 
