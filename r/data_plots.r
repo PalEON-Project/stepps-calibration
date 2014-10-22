@@ -1,6 +1,7 @@
 library(rstan)
 library(ggplot2)
 library(fields, quietly=TRUE)
+library(RColorBrewer)
 
 wd = getwd()
 
@@ -44,11 +45,14 @@ breaks = c(0, 0.01, 0.05, 0.10, 0.15, 0.2, 0.3, 0.4, 0.5, 0.6, 1)
 plot_data_maps_binned(r, centers_veg, taxa, K, breaks, limits, suff='veg', save_plots, fpath=path_figs)
 plot_pollen_maps_binned(y, centers_polA, taxa, K, breaks, limits, suff='', save_plots, fpath=path_figs)
 
+# pine
 breaks = c(0, 0.01, 0.05, 0.10, 0.15, 0.2, 0.3, 0.4, 0.5, 0.6, 1)
-breaks = c(0, 0.01, 0.05, 0.10, 0.15, 0.2, 0.3, 1)
 # breaks = c(0, 0.1, 0.3, 0.4, 1)
 plot_both_maps_binned(y,  r, centers_polA, centers_veg, taxa, taxa_list=3, K, breaks, limits, suff, save_plots, fpath=path_figs)
   
+# birch
+breaks = c(0, 0.01, 0.05, 0.10, 0.15, 0.2, 1)
+plot_both_maps_binned(y,  r, centers_polA, centers_veg, taxa, taxa_list=3, K, breaks, limits, suff, save_plots, fpath=path_figs)
 # y_veg = compute_props(r[idx_cores,], taxa)
 # y_pol = compute_props(y, taxa)
 # 

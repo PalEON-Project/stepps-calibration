@@ -355,7 +355,7 @@ confidence in the data set/analyst and the recognition that including
 these sites would result in a substantive increase to our sample size.
 
 After suitability screening, we were left with 165 long cores plus 48
-additional short cores, for a total of 213 calibration.
+additional short cores, for a total of 213 cores in the calibration data set.
 
 \subsection{Exploratory data analysis}
 
@@ -366,7 +366,8 @@ identical, then knowing the proportions of vegetation and sediment
 pollen would be identical (i.e. a 1:1 relationship). Although the
 patterns we do see are consistent, there are some striking
 differences. First, we see that pine dominates the pollen records for
-most of the northern half of the domain. Second, we see areas that
+much of the northern half of the domain, while it is present but
+relatively less abundant in the PLS data. Second, we see areas that
 have higher relative abundances of Hemlock, Tamarack, and Maple. There
 are more subtle differences in the less abundant taxa. These
 differences indicate that as expected, the relationship between
@@ -375,7 +376,16 @@ represents an aggregated version of the 8km gridded dataset, and that
 this coarsened data set is used for exploratory purposes only (pies
 would not be visible if the original scale were used).
 
+To better assess spatial distributions of pollen versus PLS data, we plot the data as heat maps by taxon. Differences in these extent of these distributions are indicative of successful pollen dispersal. For example, for both Birch and Pine, we see that the distributions of sediment pollen extend beyond the boundaries of those shown in the PLS data \ref{XXX}.
+
 \subsection{Modelling results}
+
+Three chains were run for with a warmp-up of 250 iterations, followed
+by a sampling period of 10,000 iterations. Warm-up iterations were not
+used in further analysis. For a total of 30,000 iterations, the
+effective sample size of the joint log posterior was XXX. Trace plots
+for the joint log posterior show the efficient mixing achieved by the
+sampler \ref{XXX}.
 
 Parameter estimates from the calibration model run allow us to
 quantify the relationship between the sediment pollen and the
@@ -467,8 +477,19 @@ some issues with parameter identifiability inherent in the model when
 we allow $\psi$ to vary by taxon, and as such results from this run
 should be interepreted with caution.
 
+To visualize the dispersal patterns predicted by our model, we can estimate deposited pollen for each grid cell in the domain (previously we were estimating deposited pollen only at lakes for which we had pollen data). When we compare these maps of relative pollen abundance with those depicting the relative tree abundance, we see that the model predicts 
 
+\section{Discussion}
+
+XXX
+
+%% \section{Acknowledgements}
+
+%% XXX
 
 \include{figures}
+
+\bibliographystyle{plain}
+\bibliography{calibration}
 
 \end{document}

@@ -11,7 +11,7 @@ source('r/utils/build_data_funs.r')
 #####################################################################################
 
 # set your working directory!
-# AD: wd = '~/Documents/paleon/stepps2'
+# AD: wd = '~/Documents/projects/stepps-calibration'
 
 depth_type = 'lower'
 

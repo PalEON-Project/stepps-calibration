@@ -15,13 +15,13 @@ path_figs  = 'figures'
 
 suff=''
 
-suff_dat = '12taxa_lower_comp_v0.1'
+suff_dat = '12taxa_mid_comp_v0.1'
 # suff_fit = '12taxa_mid_comp_v0.1_chain2'
 # suff_fit = '12taxa_mid_comp_v0.1_bigC_c3'
-suff_fit = '12taxa_lower_comp_v0.1_bigC_c1'
-# suff_fit = '12taxa_mid_comp_vary_psi_v0.1_chain1'
+# suff_fit = '12taxa_mid_comp_v0.1_bigC_c1'
+suff_fit = '12taxa_mid_comp_v0.1_vary_psi_bigC_c1'
 
-one_psi    = TRUE
+one_psi    = FALSE
 save_plots = TRUE
 rescale    = 1e6
 
@@ -38,7 +38,10 @@ if (!file.exists(path_figs1)){
 }
 
 load(sprintf('%s/cal_data_%s.rdata', path_data, suff_dat))
-fit <- read_stan_csv(sprintf('%s/%s.csv', path_out, suff_fit))
+
+fname = sprintf('%s/%s.csv', path_out, suff_fit)
+system(sprintf('r/fixup.pl %s', fname))
+fit <- read_stan_csv(fname)
 post = rstan::extract(fit, permuted=FALSE, inc_warmup=FALSE)
 
 #####################################################################################
@@ -62,7 +65,7 @@ print('The taxa modelled are:')
 taxa
 cat('\n')
 print('Summary of posterior parameter vals:')
-get_quants(fit)
+get_quants(fit, npars)
 # unlink(sprintf('%s/%s/summary.txt', wd, path_figs1))
 # unlink(sprintf('%s/summary.txt', path_figs1))
 sink()
@@ -147,7 +150,8 @@ idx_locs = seq(1, N_locs)
 
 preds_out = pollen_preds(post, N_locs, d_all, idx_locs, r, C, one_psi)
 preds = preds_out$preds
-
+sum_w = preds_out$sum_w
+alpha = preds_out$alpha
 
 limits <- get_limits(centers_veg)
 
