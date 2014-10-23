@@ -17,7 +17,6 @@ if ($needs_timing) {
     print STAN "#  Elapsed Time: 666 seconds (Warm-up)\n";
     print STAN "#                666 seconds (Sampling)\n";
     print STAN "#                666 seconds (Total)\n";
-}
 
 # rewind and replace "num_samples"
 seek(STAN, 0, SEEK_SET);
@@ -31,5 +30,5 @@ while (<STAN>) {
         last;
     }
 }
-
+}
 close(STAN);

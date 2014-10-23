@@ -13,9 +13,9 @@ source('r/utils/build_data_funs.r')
 # set your working directory!
 # AD: wd = '~/Documents/projects/stepps-calibration'
 
-depth_type = 'lower'
+depth_type = 'upper'
 
-data_date = '2014-10-20'
+data_date = '2014-10-23'
 
 ## relative to working directory!
 path_pollen  = paste0('data/cal_data_', depth_type, '_depth_', data_date, '.csv') # sh elicitation results
