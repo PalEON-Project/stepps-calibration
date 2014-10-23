@@ -406,7 +406,16 @@ pie map represents an aggregated version of the 8km gridded dataset,
 and that this coarsened data set is used for exploratory purposes only
 (pies would not be visible if the original scale were used).
 
+To better assess spatial distributions of pollen versus PLS data, we plot the data as heat maps by taxon. Differences in these extent of these distributions are indicative of successful pollen dispersal. For example, for both Birch and Pine, we see that the distributions of sediment pollen extend beyond the boundaries of those shown in the PLS data \ref{XXX}.
+
 \subsection{Modelling results}
+
+Three chains were run for with a warmp-up of 250 iterations, followed
+by a sampling period of 10,000 iterations. Warm-up iterations were not
+used in further analysis. For a total of 30,000 iterations, the
+effective sample size of the joint log posterior was XXX. Trace plots
+for the joint log posterior show the efficient mixing achieved by the
+sampler \ref{XXX}.
 
 Parameter estimates from the calibration model run allow us to
 quantify the relationship between the sediment pollen and the
@@ -482,9 +491,18 @@ focal cell, and 90\% is deposited within 296 km of the focal cell \ref{fig:dvd}.
 
 To assess the assumption that all taxa share a dispersal kernel with
 spread controlled by the scalar $\psi$, we re-ran the model letting
-$\psi$ vary by taxon. Five of the taxon-specific 95\% credible intervals had
-some overlap with the credible intervals for the single-$\psi$ case,
-while the remaining taxa had estimated $\psi$ value that were larger (Figure~\ref{fig:psi_vary_psi}). Elm, Tamarack, Maple, and Ash had the largest mean value of $\psi$, although the uncertainty of these estimates was large - for example, for Tamarack the mean value and credible interval of $\psi$ was $0.73 (0.10, 1.9)$. When we let $\psi$ vary by taxon, there was little effect on the values of $\phi$. The ordering of the taxa remained identical, except for a minor switch in position of Oak with Elm (Figure~\ref{fig:phi_vary_psi}). XXX: I don't get the dispersal pars for elm, tam, maple, ash - why are these so big?
+$\psi$ vary by taxon. Five of the taxon-specific 95\% credible
+intervals had some overlap with the credible intervals for the
+single-$\psi$ case, while the remaining taxa had estimated $\psi$
+value that were larger (Figure~\ref{fig:psi_vary_psi}). Elm, Tamarack,
+Maple, and Ash had the largest mean value of $\psi$, although the
+uncertainty of these estimates was large - for example, for Tamarack
+the mean value and credible interval of $\psi$ was $0.73 (0.10,
+1.9)$. When we let $\psi$ vary by taxon, there was little effect on
+the values of $\phi$. The ordering of the taxa remained identical,
+except for a minor switch in position of Oak with Elm
+(Figure~\ref{fig:phi_vary_psi}). XXX: I don't get the dispersal pars
+for elm, tam, maple, ash - why are these so big?
 
 % On average, Maple had by far the
 % largest value of $\psi$, followed by Other hardwood, which implies
@@ -497,6 +515,24 @@ while the remaining taxa had estimated $\psi$ value that were larger (Figure~\re
 % we allow $\psi$ to vary by taxon, and as such results from this run
 % should be interepreted with caution.
 
+
+To visualize the dispersal patterns predicted by our model, we can
+estimate deposited pollen for each grid cell in the domain (previously
+we were estimating deposited pollen only at lakes for which we had
+pollen data) (Figure~\ref{fig:maps_pollen}). These spatial maps help
+us understand how the model treats dispersal. We can compare the maps
+of predicted relative pollen abundance with those depicting the
+relative tree abundance (Figure~\ref{fig:maps_veg}), remembering that the pollen predictions have
+been scaled for differential production. This scaling for differential
+production is particularly apparent for Tamarack. We know from the
+data that Tamarack pollen proportions are always lower than the
+vegetation proportions, and as a result, we expect that the model will
+predict low amounts of Tamarack pollen, which it does. To see how the
+model predicts dispersal by taxon, based on parameters estimated from
+that data, we can compare the vegetation and pollen ranges. The
+effects of dispersal are especially clear in the Pine and Oak cases,
+where we see pollen dispersing well beyond the range limits of the
+vegetation range boundaries.
 
 \include{figures}
 

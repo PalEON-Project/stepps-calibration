@@ -135,10 +135,7 @@ alpha = preds_out$alpha # DM precision pars
 preds = preds_out$preds
 sum_w = preds_out$sum_w
 
-#postscript(paste('calibration/figures/pollen_fit_plot_', suff_fit, '.eps', sep=''), width=10, height=10)
-# pdf(paste('r/pollen/figures/pollen_fit_plot_', suff_fit, '.pdf', sep=''), width=10, height=10)
 pollen_preds_plot(preds, pollen_props, N_cores, r, idx_cores, taxa, suff=suff, save_plots=save_plots, fpath=path_figs1)
-# dev.off()
 
 #####################################################################################
 # potential pollen maps
@@ -161,51 +158,25 @@ breaks = c(0, 0.01, 0.05, 0.10, 0.15, 0.2, 0.3, 0.4, 0.5, 0.6, 1)
 
 plot_data_maps_binned(preds, centers_veg, taxa, K, breaks, limits, suff='pollen', save_plots, fpath=path_figs1)
 
-plot_data_maps_binned(r, centers_veg, taxa, K, breaks, limits, suff='veg', save_plots, fpath=path_figs1)
-
 #####################################################################################
 # sum_w map
 #####################################################################################
 
-foo = data.frame(centers_polA, sum_w=sum_w)
-p <- ggplot() + geom_point(data=foo, aes(x=x, y=y, size=sum_w), shape=21, colour="black", fill="chartreuse4")
-p <- add_map_albers(p, us.shp, limits, rescale) + theme(panel.grid.major = element_blank(), 
-                                                        panel.grid.minor = element_blank())
-p <- p + theme(axis.ticks = element_blank(), axis.text = element_blank(), axis.title = element_blank())
-p 
-
-fpath=path_figs1
-ggsave(file=paste(fpath, '/sum_w_maps.pdf', sep=''), scale=1)
-ggsave(file=paste(fpath, '/sum_w_maps.eps', sep=''), scale=1)
+dat = data.frame(centers_polA, sum_w=sum_w)
+plot_sumw(dat, fpath=path_figs1)
 
 #####################################################################################
 # alpha map
 #####################################################################################
 
-foo = data.frame(centers_polA, alpha=alpha)
-p <- ggplot() + geom_point(data=foo, aes(x=x, y=y, size=alpha), shape=21, colour="black", fill="chartreuse4")
-p <- add_map_albers(p, us.shp, limits, rescale) + theme(panel.grid.major = element_blank(), 
-                                                        panel.grid.minor = element_blank())
-p <- p + theme(axis.ticks = element_blank(), axis.text = element_blank(), axis.title = element_blank())
-p 
-
-fpath=path_figs1
-ggsave(file=paste(fpath, '/alpha_maps.pdf', sep=''), scale=1)
-ggsave(file=paste(fpath, '/alpha_maps.eps', sep=''), scale=1)
+dat = data.frame(centers_polA, alpha=alpha)
+plot_alpha(dat, fpath=path_figs1)
 
 #####################################################################################
-# core locations
+# proportion of pollen falling within a boundary versus radius
 #####################################################################################
 
 radius = seq(8000,1000000, by=4000)
-# radius = radius/1e6
-
-# preds_out = pollen_preds_distance(post, N_cores, d, idx_cores, r, C, radius)
-# 
-# preds_tot  = preds_out$preds_tot
-# preds_int  = preds_out$preds_int
-# preds_dist = preds_out$preds_dist
-
 
 x_pot = seq(-528000, 528000, by=8000)
 y_pot = seq(-416000, 416000, by=8000)
@@ -223,9 +194,9 @@ segments = data.frame(x=c(0, 0, radius[fifty]/1e3, radius[ninety]/1e3),
                       y=c(r_int[fifty], r_int[ninety], 0.2, 0.2),
                       yend=c(r_int[fifty], r_int[ninety], r_int[fifty], r_int[ninety]))
 
-foo = data.frame(radius=radius/1e3, pollen=r_int)
+dat = data.frame(radius=radius/1e3, pollen=r_int)
 
-p <- ggplot(foo) + geom_line(aes(x=radius, y=pollen))
+p <- ggplot(dat) + geom_line(aes(x=radius, y=pollen))
 p <- p + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
         xlab('Radius') + ylab('Proportion of pollen')
 p <- p + theme(axis.text= element_text(size=rel(1)), axis.title=element_text(size=14))
