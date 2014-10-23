@@ -369,6 +369,7 @@ plot_both_maps_binned <- function(y_pol,  y_veg, centers_pol, centers_veg, taxa,
     q <- q + theme(strip.background = element_blank(), 
                    panel.grid.major = element_blank(), 
                    panel.grid.minor = element_blank())
+    #q <- q + theme(legend.position="none")
     
     g <- arrangeGrob(p, q, nrow=2)
     print(g)

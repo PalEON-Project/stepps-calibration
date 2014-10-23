@@ -51,3 +51,6 @@ plot_both_maps_binned(y,  r, centers_polA, centers_veg, taxa, taxa_list=10, K, b
 breaks = c(0, 0.01, 0.05, 0.10, 0.15, 0.2, 1)
 plot_both_maps_binned(y,  r, centers_polA, centers_veg, taxa, taxa_list=3, K, breaks, limits, suff, save_plots, fpath=path_figs)
 
+# birch
+breaks = c(0, 0.01, 0.05, 0.10, 0.15, 0.2, 1)
+plot_both_maps_binned(y,  r, centers_polA, centers_veg, taxa, taxa_list=4, K, breaks, limits, suff, save_plots, fpath=path_figs)

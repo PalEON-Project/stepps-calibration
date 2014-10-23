@@ -6,6 +6,7 @@
 \usepackage{amsfonts}              % for blackboard bold, etc
 \usepackage{amsthm}                % better theorem environments
 \usepackage{hyperref}
+\usepackage{natbib}
 
 \newcommand{\kron}{\raisebox{1pt}{\ensuremath{\:\otimes\:}}} 
 \newcommand{\lgamma}{\text{lgamma}} 
@@ -406,7 +407,12 @@ pie map represents an aggregated version of the 8km gridded dataset,
 and that this coarsened data set is used for exploratory purposes only
 (pies would not be visible if the original scale were used).
 
-To better assess spatial distributions of pollen versus PLS data, we plot the data as heat maps by taxon. Differences in these extent of these distributions are indicative of successful pollen dispersal. For example, for both Birch and Pine, we see that the distributions of sediment pollen extend beyond the boundaries of those shown in the PLS data \ref{XXX}.
+To better assess spatial distributions of pollen versus PLS data, we
+can plot the data as heat maps by taxon. Differences in extent of these
+distributions are indicative of successful pollen dispersal. For
+example, for both Birch and Pine, we see that the distributions of
+sediment pollen extend well beyond the boundaries of those shown in the PLS
+data (Figures~\ref{fig:maps_compare_pine} \& \ref{fig:maps_compare_birch}). 
 
 \subsection{Modelling results}
 
@@ -445,16 +451,24 @@ Differential pollen production is one of the reasons these
 relationships are complicated - in the model, this is accounted for by
 the scaling parameter $\phi$. After scaling the vegetation in the pond
 cell by $\phi$, we can compare the raw pollen proportions with these
-pollen predictions (\ref{fig:focal_scaled}). Scaling by $\phi$ does little towards bringing us closer to the 1:1 line, indicating that something is still missing.
+pollen predictions (\ref{fig:focal_scaled}). Scaling by $\phi$ does seem to improve our pollen estimates; for many taxa, the black points have shifted towards the 1:1 line. However, the improvement is minimal, indicatins that something is still missing.
 
-In Figure~\ref{fig:preds}, we again plot raw pollen against the vegetation
-or predicted pollen by taxon, but here the predicted pollen is based
-on the local plus non-local predictions obtained from the full
-calibration model. Now that dispersal has been accounted for, we see
-that the raw versus predicted pollen points fall more closely along
-the 1:1 line. This indicates that in this region, dispersal processes account for much of the pollen that we see - scaling the local vegetation to account for differential production was not sufficient to predict deposited pollen. When both differential production and dispersal are included, 
+In Figure~\ref{fig:preds}, we again plot raw pollen against the
+vegetation or predicted pollen by taxon, but here the predicted pollen
+is based on the local plus non-local predictions obtained from the
+full calibration model. Now that dispersal has been accounted for, we
+see that the raw versus predicted pollen points fall more closely
+along the 1:1 line. This indicates that in this region, dispersal
+processes account for much of the pollen that we see - scaling the
+local vegetation to account for differential production was not
+sufficient to predict deposited pollen. The model is less succesful at
+predicting Hemlock pollen. In Figure~\ref{fig:preds}. we see that the
+model underpredicts the pollen at sites where there is a high
+proportion of Hemlock. This suggests that pollen dispersing to these
+sites is estimated to make a larger contribution to the sediment
+pollen than it should for this taxon.
 
-XXX There are several cases where the model does not do a good job accounting for the model   
+XXX There are several cases where the model does not do a good job   
 
 Taxon-specific estimates for the production/dispersal parameter $\phi$
 form two distinct groups in $\phi$ parameter space: low to
@@ -535,5 +549,9 @@ where we see pollen dispersing well beyond the range limits of the
 vegetation range boundaries.
 
 \include{figures}
+
+
+\bibliographystyle{plainnat}
+\bibliography{calibration}
 
 \end{document}

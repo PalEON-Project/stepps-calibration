@@ -17,9 +17,6 @@ suff=''
 
 suff_dat = '12taxa_lower_comp_v0.1'
 suff_dat = '12taxa_mid_comp_v0.1'
-# suff_fit = '12taxa_mid_comp_v0.1_chain2'
-# suff_fit = '12taxa_mid_comp_v0.1_bigC_c3'
-#suff_fit = '12taxa_lower_comp_v0.1_bigC_c1'
 suff_fit = '12taxa_mid_comp_v0.1_vary_psi_bigC_c1'
 
 one_psi    = FALSE
