@@ -266,7 +266,11 @@ phi_scale_veg <- function(post, N_cores, r, idx_cores){
 }
 
 get_quants <- function(fit, npars){
+<<<<<<< HEAD
+  quants <- cbind(summary(fit)$summary[,'mean'][1:(npars)],
+=======
   quants <- cbind(summary(fit)$summary[,'mean'][1:npars],
+>>>>>>> aa5d5ffa0f6872cd07a84afde5e0603c05ebbb46
                   summary(fit)$summary[,'2.5%'][1:(npars)],
                   summary(fit)$summary[,'50%'][1:(npars)],
                   summary(fit)$summary[,'97.5%'][1:(npars)],
