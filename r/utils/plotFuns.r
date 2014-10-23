@@ -354,15 +354,14 @@ plot_both_maps_binned <- function(y_pol,  y_veg, centers_pol, centers_veg, taxa,
     p <- add_map_albers(p, us.shp, limits, rescale)
     p <- theme_clean(p) 
     p <- p + theme(strip.background = element_blank())
-    print(p) 
     
     q <- ggplot() + geom_point(data=pol, aes(x=x, y=y, colour=factor(props)), shape=19, size=3) + 
+#       scale_colour_manual(values = brewer.pal(length(breaks),"Spectral")) + 
       scale_colour_manual(values = tim.colors(length(breaks)), labels=breaklabels, name='Proportions') + 
       coord_fixed() #+ scale_x_continuous(limits$xlims) + scale_y_continuous(limits$ylims)
     q <- add_map_albers(q, us.shp, limits, rescale)
     q <- theme_clean(q) 
     q <- q + theme(strip.background = element_blank())
-    print(q)
     
     g <- arrangeGrob(p, q, nrow=2)
     print(g)
