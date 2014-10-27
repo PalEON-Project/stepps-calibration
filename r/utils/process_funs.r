@@ -22,23 +22,30 @@ get_phi_stats <- function(phi, taxa){
 }
 
 
-compute_C <- function(post, N_pot, d_pot){
+compute_C <- function(post, N_pot, d_pot, kernel){
   
   col_substr = substr(colnames(post[,1,]), 1, 3)
-  if (one_psi){
-    psi   = mean(post[,1,which(col_substr == 'psi')])
-  } else {
-    psi   = colMeans(post[,1,which(col_substr == 'psi')])
+  if (kernel=='gaussian'){
+    if (one_psi){
+      psi   = mean(post[,1,which(col_substr == 'psi')])
+    } else {
+      psi   = colMeans(post[,1,which(col_substr == 'psi')])
+    }
+    
+    C = sum( d_pot[,2] * exp(-d_pot[,1]^2/psi^2) )
+  } else if (kernel=='pl'){
+    a   = mean(post[,1,which(col_substr == 'a')])
+    b   = mean(post[,1,which(col_substr == 'b')])
+    C = sum( d_pot[,2] * (b-1) * (b-2) / (2 * pi * a  * a) * (1 + d_pot[,1] / a) )
   }
   
-  C = sum( d_pot[,2] * exp(-d_pot[,1]^2/psi^2) )
   
   return(C)
   
 }
 
 #predicted pollen based on weighted neighborhoods using estimated pars
-pollen_preds <- function(post, N_cores, d, idx_cores, r, C, one_psi){
+pollen_preds <- function(post, N_cores, d, idx_cores, r, C, one_psi, kernel){
   
   iters   = dim(post)[1]
   K       = ncol(r)
@@ -63,6 +70,7 @@ pollen_preds <- function(post, N_cores, d, idx_cores, r, C, one_psi){
   r_new = matrix(NA, nrow=N_cores, ncol=K)
   preds = matrix(NA, nrow=N_cores, ncol=K)
   
+  if (kernel=='gaussian'){
   if (one_psi){
     w = exp(-(d*d)/(psi*psi))
   } else{
@@ -70,6 +78,9 @@ pollen_preds <- function(post, N_cores, d, idx_cores, r, C, one_psi){
     for (k in 1:K){ 
       w[k,,] = exp(-(d*d)/(psi[k]*psi[k]))
     }
+  }
+  } else if (kernel=='pl'){
+    w = (b-1) * (b-2) / (2 * pi * a  * a) * (1 + d / a) 
   }
   
   for (i in 1:N_cores){

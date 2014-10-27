@@ -15,11 +15,11 @@ path_figs  = 'figures'
 
 suff=''
 
-suff_dat = '12taxa_lower_comp_v0.1'
-suff_dat = '12taxa_upper_comp_v0.1'
-# suff_dat = '12taxa_mid_comp_v0.1'
+# suff_dat = '12taxa_upper_comp_v0.1'
+# suff_dat = '12taxa_upper_comp_v0.1'
+suff_dat = '12taxa_mid_comp_v0.1'
 # suff_fit = '12taxa_mid_comp_v0.1_vary_psi_bigC_c1'
-suff_fit = '12taxa_upper_comp_v0.1_bigC_c1'
+suff_fit = '12taxa_mid_comp_v0.1_pl_bigC'
 
 one_psi    = TRUE
 save_plots = TRUE
@@ -41,7 +41,7 @@ load(sprintf('%s/cal_data_%s.rdata', path_data, suff_dat))
 
 fname = sprintf('%s/%s.csv', path_out, suff_fit)
 
-system(sprintf('r/fixup2.pl %s', fname))
+system(sprintf('r/fixup.pl %s', fname))
 fit <- read_stan_csv(fname)
 post = rstan::extract(fit, permuted=FALSE, inc_warmup=FALSE)
 
@@ -126,9 +126,9 @@ local_preds  = phi_scale_veg(fit, N_cores, r, idx_cores)
 
 local_pollen_veg_plot2(r, idx_cores, pollen_props, local_preds, taxa, suff, save_plots, fpath=path_figs1)
 
-C <- compute_C(post, N_pot, d_pot)
+C <- compute_C(post, N_pot, d_pot, kernel='pl')
 
-preds_out = pollen_preds(post, N_cores, d, idx_cores, r, C, one_psi)
+preds_out = pollen_preds(post, N_cores, d, idx_cores, r, C, one_psi, kernel='pl')
 
 alpha = preds_out$alpha # DM precision pars
 preds = preds_out$preds
@@ -146,7 +146,7 @@ N_locs = nrow(d_all)
 
 idx_locs = seq(1, N_locs)
 
-preds_out = pollen_preds(post, N_locs, d_all, idx_locs, r, C, one_psi)
+preds_out = pollen_preds(post, N_locs, d_all, idx_locs, r, C, one_psi, kernel='pl')
 preds = preds_out$preds
 
 
