@@ -20,8 +20,10 @@ suff=''
 suff_dat = '12taxa_mid_comp_v0.1'
 # suff_fit = '12taxa_mid_comp_v0.1_vary_psi_bigC_c1'
 suff_fit = '12taxa_mid_comp_v0.1_pl_bigC'
+suff_fit = '12taxa_mid_comp_v0.1_bigC_c1'
 
 one_psi    = TRUE
+kernel     =  'gaussian' #pl'
 save_plots = TRUE
 rescale    = 1e6
 
@@ -129,9 +131,9 @@ local_preds  = phi_scale_veg(fit, N_cores, r, idx_cores)
 
 local_pollen_veg_plot2(r, idx_cores, pollen_props, local_preds, taxa, suff, save_plots, fpath=path_figs1)
 
-C <- compute_C(post, N_pot, d_pot, kernel='pl')
+C <- compute_C(post, N_pot, d_pot, kernel=kernel)
 
-preds_out = pollen_preds(post, N_cores, d, idx_cores, r, C, one_psi, kernel='pl')
+preds_out = pollen_preds(post, N_cores, d, idx_cores, r, C, one_psi, kernel=kernel)
 
 alpha = preds_out$alpha # DM precision pars
 preds = preds_out$preds
@@ -149,7 +151,7 @@ N_locs = nrow(d_all)
 
 idx_locs = seq(1, N_locs)
 
-preds_out = pollen_preds(post, N_locs, d_all, idx_locs, r, C, one_psi, kernel='pl')
+preds_out = pollen_preds(post, N_locs, d_all, idx_locs, r, C, one_psi, kernel=kernel)
 preds = preds_out$preds
 
 
@@ -186,7 +188,7 @@ coord_pot = expand.grid(x_pot, y_pot)
 
 d_pot = t(rdist(matrix(c(0,0), ncol=2), as.matrix(coord_pot, ncol=2))/rescale)
 
-r_int = dispersal_decay(post, d_pot, C, radius, kernel='pl')
+r_int = dispersal_decay(post, d_pot, C, radius, kernel=kernel)
 
 fifty  = which.min(abs(r_int - 0.5))
 ninety = which.min(abs(r_int - 0.9))
@@ -209,7 +211,23 @@ p
 ggsave(file=paste(path_figs1, '/dispersal_vs_distance.pdf', sep=''), scale=1)
 ggsave(file=paste(path_figs1, '/dispersal_vs_distance.eps', sep=''), scale=1)
 
-# plot(radius/1e3, r_int, type='l')
+
+dvec = seq(0, 1, by=0.0001)
+
+if (kernel=='gaussian'){
+  colsubstr = substr(colnames(post[,1,]),1,3)
+  psi = mean(post[,1,which(colsubstr == 'psi')])
+  px = gaussian(dvec, psi)
+  plot(dvec*1e3, px, type='l', ylab='Density', xlab='Distance')
+} else if (kernel=='pl'){
+  colsubstr = substr(colnames(post[,1,]),1,3)
+  a = mean(post[,1,which(colsubstr == 'a')])
+  b = mean(post[,1,which(colsubstr == 'b')])
+  px=power_law(dvec, a, b)
+  plot(dvec*1e3, px, type='l', ylab='Density', xlab='Distance')
+}
+
+
 #####################################################################################
 # core locations
 #####################################################################################

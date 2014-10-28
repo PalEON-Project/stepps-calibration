@@ -36,7 +36,7 @@ compute_C <- function(post, N_pot, d_pot, kernel){
   } else if (kernel=='pl'){
     a   = mean(post[,1,which(col_substr == 'a')])
     b   = mean(post[,1,which(col_substr == 'b')])
-    C = sum( d_pot[,2] * (b-1) * (b-2) / (2 * pi * a  * a) * (1 + d_pot[,1] / a) )
+    C = sum( d_pot[,2] * (b-1) * (b-2) / (2 * pi * a  * a) * (1 + d_pot[,1] / a)^(-b) )
   }
   
   
@@ -83,7 +83,7 @@ pollen_preds <- function(post, N_cores, d, idx_cores, r, C, one_psi, kernel){
     print("Kernel type : (inverse) power law")
     a = mean(post[,1,which(col_substr == 'a')])
     b = mean(post[,1,which(col_substr == 'b')])
-    w = (b-1) * (b-2) / (2 * pi * a  * a) * (1 + d / a) 
+    w = (b-1) * (b-2) / (2 * pi * a  * a) * (1 + d / a) ^ (-b)
   }
   
   for (i in 1:N_cores){
@@ -245,7 +245,7 @@ dispersal_decay <- function(post, d_pot, C, radius, kernel){
   } else if (kernel=='pl'){
     a = mean(post[,1,which(col_substr == 'a')])
     b = mean(post[,1,which(col_substr == 'b')])
-    w = (b-1) * (b-2) / (2 * pi * a  * a) * (1 + d_pot / a) 
+    w = (b-1) * (b-2) / (2 * pi * a  * a) * (1 + d_pot / a) ^ (-b)
   }
   
   r_int  = vector(length=length(radius), mode='numeric')
@@ -306,6 +306,11 @@ compute_props <- function(y, taxa){
 }
 
 power_law <- function(d, a, b) {
-  x = (b-1) * (b-2) / (2 * pi * a  * a) * (1 + d / a)
+  x = (b-1) * (b-2) / (2 * pi * a  * a) * (1 + d / a) ^ (-b)
  return(x)
+} 
+
+gaussian <- function(d, psi) {
+  x = exp( -( d / psi ) ^ 2 )
+  return(x)
 } 
