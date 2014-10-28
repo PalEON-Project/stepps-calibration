@@ -58,11 +58,6 @@ pollen_preds <- function(post, N_cores, d, idx_cores, r, C, one_psi, kernel){
   #   gamma = summary(fit)$summary[,'mean'][K+2]
   
   phi   = colMeans(post[,1,which(col_substr == 'phi')])
-  if (one_psi){
-    psi   = mean(post[,1,which(col_substr == 'psi')])
-  } else {
-    psi   = colMeans(post[,1,which(col_substr == 'psi')])
-  }
   gamma = mean(post[,1,which(col_substr == 'gam')])
   
   #   
@@ -71,15 +66,23 @@ pollen_preds <- function(post, N_cores, d, idx_cores, r, C, one_psi, kernel){
   preds = matrix(NA, nrow=N_cores, ncol=K)
   
   if (kernel=='gaussian'){
-  if (one_psi){
-    w = exp(-(d*d)/(psi*psi))
-  } else{
-    w = array(NA, c(K, N_cells, N_cores))
-    for (k in 1:K){ 
-      w[k,,] = exp(-(d*d)/(psi[k]*psi[k]))
+    if (one_psi){
+      psi   = mean(post[,1,which(col_substr == 'psi')])
+    } else {
+      psi   = colMeans(post[,1,which(col_substr == 'psi')])
     }
-  }
+    if (one_psi){
+      w = exp(-(d*d)/(psi*psi))
+    } else{
+      w = array(NA, c(K, N_cells, N_cores))
+      for (k in 1:K){ 
+        w[k,,] = exp(-(d*d)/(psi[k]*psi[k]))
+      }
+    }
   } else if (kernel=='pl'){
+    print("Kernel type : (inverse) power law")
+    a = mean(post[,1,which(col_substr == 'a')])
+    b = mean(post[,1,which(col_substr == 'b')])
     w = (b-1) * (b-2) / (2 * pi * a  * a) * (1 + d / a) 
   }
   
@@ -93,7 +96,7 @@ pollen_preds <- function(post, N_cores, d, idx_cores, r, C, one_psi, kernel){
     #       }
     
     out_sum = rep(0, K)
-#     sum_w <- 0
+    #     sum_w <- 0
     
     if (one_psi){
       for (j in 1:N_cells){ # changed N_hood to N_locs
@@ -116,18 +119,18 @@ pollen_preds <- function(post, N_cores, d, idx_cores, r, C, one_psi, kernel){
       }
       
     }
-#     sum_w   <- sum(out_sum)
-#     print(sum_w)
+    #     sum_w   <- sum(out_sum)
+    #     print(sum_w)
     
     sum_w[i] = sum(out_sum)
-#     r_new[i,]  = gamma*r[idx_cores[i],] + (1-gamma)*out_sum/sum_w
+    #     r_new[i,]  = gamma*r[idx_cores[i],] + (1-gamma)*out_sum/sum_w
     r_new[i,]  = gamma*r[idx_cores[i],] + (1-gamma)*out_sum/C
     preds[i,] = phi*r_new[i,]    
     
   }
   
   alpha = rowSums(preds)   
-
+  
   #convert to proportions
   preds = t(apply(preds, 1, function(x) x/sum(x)))
   
@@ -151,7 +154,7 @@ pollen_preds_distance <- function(post, N_cores, d, idx_cores, r, C, radius){
   } else {
     psi   = colMeans(post[,1,which(col_substr == 'psi')])
   }
-
+  
   r_local = matrix(NA, nrow=N_cores, ncol=K)
   r_nl = matrix(NA, nrow=N_cores, ncol=K)
   r_int = matrix(NA, nrow=N_cores, ncol=K)
@@ -214,13 +217,13 @@ pollen_preds_distance <- function(post, N_cores, d, idx_cores, r, C, radius){
   }
   
   #   convert to proportions
-#   preds = t(apply(preds, 1, function(x) x/sum(x)))
+  #   preds = t(apply(preds, 1, function(x) x/sum(x)))
   
   return(list(preds_tot=preds_tot, preds_int=preds_int, preds_dist=preds_dist))
 }
 
 #predicted pollen based on weighted neighborhoods using estimated pars
-dispersal_decay <- function(post, d_pot, C, radius){
+dispersal_decay <- function(post, d_pot, C, radius, kernel){
   
   rescale = 1e6
   iters   = dim(post)[1]
@@ -231,14 +234,21 @@ dispersal_decay <- function(post, d_pot, C, radius){
   
   phi   = colMeans(post[,1,which(col_substr == 'phi')])
   gamma = mean(post[,1,which(col_substr == 'gam')])
-  if (one_psi){
-    psi   = mean(post[,1,which(col_substr == 'psi')])
-  } else {
-    psi   = colMeans(post[,1,which(col_substr == 'psi')])
+  
+  if (kernel=='gaussian'){
+    if (one_psi){
+      psi   = mean(post[,1,which(col_substr == 'psi')])
+    } else {
+      psi   = colMeans(post[,1,which(col_substr == 'psi')])
+    }
+    w      = exp(-(d_pot*d_pot)/(psi*psi))
+  } else if (kernel=='pl'){
+    a = mean(post[,1,which(col_substr == 'a')])
+    b = mean(post[,1,which(col_substr == 'b')])
+    w = (b-1) * (b-2) / (2 * pi * a  * a) * (1 + d_pot / a) 
   }
   
   r_int  = vector(length=length(radius), mode='numeric')
-  w      = exp(-(d_pot*d_pot)/(psi*psi))
   C_test = sum(w)
   
   for (rad in 1:length(radius)){
@@ -294,3 +304,8 @@ compute_props <- function(y, taxa){
   
   return(pollen_props)
 }
+
+power_law <- function(d, a, b) {
+  x = (b-1) * (b-2) / (2 * pi * a  * a) * (1 + d / a)
+ return(x)
+} 

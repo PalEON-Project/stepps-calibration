@@ -48,11 +48,14 @@ post = rstan::extract(fit, permuted=FALSE, inc_warmup=FALSE)
 #####################################################################################
 # read in data and source utils
 #####################################################################################
-
+if (kernel=='gaussian'){
 if (one_psi){
   npars = K+2
 } else {
   npars = 2*K+2
+}
+} else if (kernel=='pl'){
+  npars=K+3
 }
 
 print(fit)
@@ -183,7 +186,7 @@ coord_pot = expand.grid(x_pot, y_pot)
 
 d_pot = t(rdist(matrix(c(0,0), ncol=2), as.matrix(coord_pot, ncol=2))/rescale)
 
-r_int = dispersal_decay(post, d_pot, C, radius)
+r_int = dispersal_decay(post, d_pot, C, radius, kernel='pl')
 
 fifty  = which.min(abs(r_int - 0.5))
 ninety = which.min(abs(r_int - 0.9))
@@ -200,11 +203,11 @@ p <- p + theme(panel.grid.major = element_blank(), panel.grid.minor = element_bl
         xlab('Radius') + ylab('Proportion of pollen')
 p <- p + theme(axis.text= element_text(size=rel(1)), axis.title=element_text(size=14))
 p <- p + geom_segment(data=segments, aes(x=x, y=y, xend=xend, yend=yend), linetype=2, colour='royalblue4')
-p <- p + xlim(0, 500) + ylim(0.2,1.0)
+p <- p + xlim(0, segments$xend[4] + segments$xend[4]/16) + ylim(0.2,1.0)
 p
 
-ggsave(file=paste(fpath, '/dispersal_vs_distance.pdf', sep=''), scale=1)
-ggsave(file=paste(fpath, '/dispersal_vs_distance.eps', sep=''), scale=1)
+ggsave(file=paste(path_figs1, '/dispersal_vs_distance.pdf', sep=''), scale=1)
+ggsave(file=paste(path_figs1, '/dispersal_vs_distance.eps', sep=''), scale=1)
 
 # plot(radius/1e3, r_int, type='l')
 #####################################################################################

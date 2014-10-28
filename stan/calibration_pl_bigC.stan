@@ -60,11 +60,13 @@ model {
 
   C <- 0;
   for (v in 1:N_pot)
-    C <- C + d_pot[v,2] * (b-2) * (b-1) / ( 2 * pi() * a * a ) * ( 1 + d_pot[v,1] / a) ;//exp(-square(d_pot[v,1])/square(psi));
+    C <- C + d_pot[v,2] * (b-2) * (b-1) / ( 2 * pi() * a * a ) * pow( 1 + d_pot[v,1] / a, -b) ;//exp(-square(d_pot[v,1])/square(psi));
   //print("C = ", C);  
   
   //  w <- exp(-(d2)/square(psi));
-  w <- (b-2) * (b-1) / ( 2 * pi() * a * a ) * ( 1 + d / a) ;
+  for (i in 1:N_cells)
+    for (j in 1:N_cores)
+      w[i,j] <- (b-2) * (b-1) / ( 2 * pi() * a * a ) * pow( 1 + d[i,j] / a, -b) ;
       
   for (i in 1:N_cores){   
    /*
