@@ -301,6 +301,54 @@ plot_pollen_maps_binned <- function(y, centers, taxa, K, breaks, limits, suff, s
   return(p)
 }
 
+plot_smoothed_pollen_maps_binned <- function(y, centers_pol, centers_veg, taxa, K, breaks, limits, suff, save_plots, fpath){
+  
+  N = nrow(centers_veg)
+  
+  if (is.null(taxa)){taxa=seq(1,K)}
+  
+  colnames(y) = taxa
+  colnames(centers_veg) = c('x', 'y')
+  
+  pred_dat = data.frame(pred=numeric(0), x=integer(0), y=integer(0), taxon=character())
+  for (k in 1:K){
+    
+    dat   = data.frame(s=y[,k], f=500-y[,k], centers_pol)
+    model = gam(cbind(s,f)~s(x,y), data=dat, family=binomial)
+    out   = predict(model, newdata=data.frame(centers_veg), type='response')
+    
+    pred_dat = rbind(pred_dat, data.frame(pred = out, 
+                                          x     = centers_veg[,1],#*rescale, 
+                                          y     = centers_veg[,2],#*rescale, 
+                                          taxon = rep(taxa[k], N)))
+  }
+  
+  pred_dat$pred_bin = cut(pred_dat$pred, breaks, include.lowest=TRUE, labels=FALSE)
+  
+  breaklabels = apply(cbind(breaks[1:(length(breaks)-1)], breaks[2:length(breaks)]), 1, 
+                      function(r) { sprintf("%0.2f - %0.2f", r[1], r[2]) })
+  
+  p <- ggplot() + geom_point(data=pred_dat, aes(x=x, y=y, colour=factor(pred_bin)), shape=19) + 
+    scale_colour_manual(values = tim.colors(length(breaks)), labels=breaklabels, name='Proportions') + 
+    coord_fixed() #+ scale_x_continuous(limits$xlims) + scale_y_continuous(limits$ylims)
+  p <- add_map_albers(p, us.shp, limits, rescale)
+  p <- p + facet_wrap(~taxon, ncol=6)
+  p <- theme_clean(p) #+ theme(strip.text.y = element_text(size = rel(1.5)), strip.text.x = element_text(size = rel(1.5)))
+  
+  #   p <- p + theme(strip.text.x = element_blank(),
+  #                  strip.text.y = element_blank())
+  p <- p + theme(strip.background = element_blank())
+  
+  print(p)
+  Sys.sleep(2)
+  if (save_plots){
+    ggsave(file=paste(fpath, '/maps_smoothed_pollen.pdf', sep=''), scale=1)
+    ggsave(file=paste(fpath, '/maps_smoothed_pollen.eps', sep=''), scale=1)
+    #     dev.off()
+  }
+  return(p)
+}
+
 
 melt_dat <- function(y, centers, breaks, taxa){
   N=nrow(centers)

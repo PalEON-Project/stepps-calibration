@@ -23,8 +23,8 @@ rescale    = 1e6
 # read in data and source utils
 #####################################################################################
 
-source(file.path(path_utils, 'processFuns.r'))
-source(file.path(path_utils, 'plotFuns.r'))
+source(file.path(path_utils, 'process_funs.r'))
+source(file.path(path_utils, 'plot_funs.r'))
 # 
 # path_figs1 = sprintf('%s/%s', path_figs, suff_fit)
 # if (!file.exists(path_figs1)){
@@ -42,6 +42,12 @@ breaks = c(0, 0.01, 0.05, 0.10, 0.15, 0.2, 0.3, 0.4, 0.5, 0.6, 1)
 plot_data_maps_binned(r, centers_veg, taxa, K, breaks, limits, suff='veg', save_plots, fpath=path_figs)
 plot_pollen_maps_binned(y, centers_polA, taxa, K, breaks, limits, suff='', save_plots, fpath=path_figs)
 
+counts = t(apply(y, 1, function(x) if(sum(x)==0){ rep(0, length(x)) } else { round(x / sum(x) * 500)} ))
+colnames(counts) = taxa
+plot_smoothed_pollen_maps_binned(counts, centers_polA, centers_veg, taxa, K, breaks, limits, suff='', 
+                                 save_plots, fpath=path_figs)
+  
+
 # pine
 breaks = c(0, 0.01, 0.05, 0.10, 0.15, 0.2, 0.3, 0.4, 0.5, 0.6, 1)
 # breaks = c(0, 0.1, 0.3, 0.4, 1)
@@ -54,6 +60,7 @@ plot_both_maps_binned(y,  r, centers_polA, centers_veg, taxa, taxa_list=3, K, br
 # birch
 breaks = c(0, 0.01, 0.05, 0.10, 0.15, 0.2, 1)
 plot_both_maps_binned(y,  r, centers_polA, centers_veg, taxa, taxa_list=4, K, breaks, limits, suff, save_plots, fpath=path_figs)
+
 
 
 # plot gaussian and power law distributions
