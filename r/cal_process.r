@@ -20,10 +20,10 @@ suff=''
 suff_dat = '12taxa_mid_comp_v0.1'
 # suff_fit = '12taxa_mid_comp_v0.1_vary_psi_bigC_c1'
 suff_fit = '12taxa_mid_comp_v0.1_pl_bigC'
-suff_fit = '12taxa_mid_comp_v0.1_bigC_c1'
+# suff_fit = '12taxa_mid_comp_v0.1_bigC_c1'
 
 one_psi    = TRUE
-kernel     =  'gaussian' #pl'
+kernel     =  'pl'
 save_plots = TRUE
 rescale    = 1e6
 
@@ -141,6 +141,10 @@ sum_w = preds_out$sum_w
 
 pollen_preds_plot(preds, pollen_props, N_cores, r, idx_cores, taxa, suff=suff, save_plots=save_plots, fpath=path_figs1)
 
+# THIS IS WRONG!
+vn_hood_props = sum_hood_props(post, C, N_pot, d_pot, kernel=kernel)
+vn_hood_props
+
 #####################################################################################
 # potential pollen maps
 #####################################################################################
@@ -186,9 +190,9 @@ x_pot = seq(-528000, 528000, by=8000)
 y_pot = seq(-416000, 416000, by=8000)
 coord_pot = expand.grid(x_pot, y_pot)
 
-d_pot = t(rdist(matrix(c(0,0), ncol=2), as.matrix(coord_pot, ncol=2))/rescale)
+dmat = t(rdist(matrix(c(0,0), ncol=2), as.matrix(coord_pot, ncol=2))/rescale)
 
-r_int = dispersal_decay(post, d_pot, C, radius, kernel=kernel)
+r_int = dispersal_decay(post, dmat, C, radius, kernel=kernel)
 
 fifty  = which.min(abs(r_int - 0.5))
 ninety = which.min(abs(r_int - 0.9))
@@ -205,7 +209,7 @@ p <- p + theme(panel.grid.major = element_blank(), panel.grid.minor = element_bl
         xlab('Radius') + ylab('Proportion of pollen')
 p <- p + theme(axis.text= element_text(size=rel(1)), axis.title=element_text(size=14))
 p <- p + geom_segment(data=segments, aes(x=x, y=y, xend=xend, yend=yend), linetype=2, colour='royalblue4')
-p <- p + xlim(0, segments$xend[4] + segments$xend[4]/16) + ylim(0.2,1.0)
+p <- p + xlim(0, segments$xend[4] + segments$xend[4]/16) + ylim(0,1.0)
 p
 
 ggsave(file=paste(path_figs1, '/dispersal_vs_distance.pdf', sep=''), scale=1)

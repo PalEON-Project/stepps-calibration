@@ -44,6 +44,39 @@ compute_C <- function(post, N_pot, d_pot, kernel){
   
 }
 
+sum_hood_props <- function(post, C, N_pot, d_pot, kernel){
+  
+  d_hood = d_pot[which((d_pot[,1]*1e6 <= 8000) & (d_pot[,1]*1e6 > 1e-10)),]
+  
+  col_substr = substr(colnames(post[,1,]), 1, 3)
+  gamma   = mean(post[,1,which(col_substr == 'gam')])
+  
+  if (kernel=='gaussian'){
+    if (one_psi){
+      psi   = mean(post[,1,which(col_substr == 'psi')])
+    } else {
+      psi   = colMeans(post[,1,which(col_substr == 'psi')])
+    }
+    
+    w_hood = d_hood[2] * exp(-d_hood[1]^2/psi^2) 
+  } else if (kernel=='pl'){
+    a   = mean(post[,1,which(col_substr == 'a')])
+    b   = mean(post[,1,which(col_substr == 'b')])
+    w_hood = d_hood[2] * (b-1) * (b-2) / (2 * pi * a  * a) * (1 + d_hood[1] / a)^(-b)
+  }
+  
+  prop_hood = (1 - gamma) * w_hood / C
+  
+  return(prop_hood)
+  
+}
+
+
+power_law <- function(d, a, b) {
+  x = (b-1) * (b-2) / (2 * pi * a  * a) * (1 + d / a) ^ (-b)
+  return(x)
+} 
+
 #predicted pollen based on weighted neighborhoods using estimated pars
 pollen_preds <- function(post, N_cores, d, idx_cores, r, C, one_psi, kernel){
   
@@ -305,10 +338,6 @@ compute_props <- function(y, taxa){
   return(pollen_props)
 }
 
-power_law <- function(d, a, b) {
-  x = (b-1) * (b-2) / (2 * pi * a  * a) * (1 + d / a) ^ (-b)
- return(x)
-} 
 
 gaussian <- function(d, psi) {
   x = exp( -( d / psi ) ^ 2 )
