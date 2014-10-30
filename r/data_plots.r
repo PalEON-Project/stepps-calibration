@@ -64,14 +64,14 @@ plot_both_maps_binned(y,  r, centers_polA, centers_veg, taxa, taxa_list=4, K, br
 
 
 # plot gaussian and power law distributions
-dvec = seq(0, 1, by=0.0001)
+dvec = seq(0, 1, by=0.0000001)
 
 pdf('figures/compare_kernels.pdf')
 psi = 0.207299
 a   = 0.01446661
 b   = 2.020447
-px = gaussian(dvec, psi)
-plot(dvec*1e3, px, type='l', ylim=c(0, 4), ylab='Density', xlab='Distance')
+px = gaussian(dvec, psi)/(pi*psi*psi)
+plot(dvec*1e3, px, type='l', ylim=c(0, 20), ylab='Density', xlab='Distance')
 px=power_law(dvec, a, b)
 lines(dvec*1e3, px, col='blue', ylab='Density', xlab='Distance')
 dev.off()

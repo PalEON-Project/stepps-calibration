@@ -107,26 +107,27 @@ of these groups is still large.
 \subsection{Public Land Survey (PLS) data}
 
 %XXX Jack and Simon 
-Prior to major European settlement, the US General
-Land Office conducted a Public Land Survey (PLS) throughout much of
-the United States in order to simplify the sale of federal
-lands. Surveyors documented section location using trees as landmarks,
-and recorded genus or species, diameter, and location (azimuth and
-distance from corner). This data set provides a systematic survey of
-the forest before settlement, and has been used by foresters,
-ecologists, and historians to understand ecosystem and land-use change
-through time. In the Upper Midwest, the survey was conducted during
-XXXX-XXXX. Due to the slow-growing nature of temperate forests, including those in the Upper
-Midwest, we can think of the PLS data as a snapshot of
-forest composition in time.
+Prior to major European settlement, the US General Land Office
+conducted a Public Land Survey (PLS) throughout much of the United
+States in order to simplify the sale of federal lands. Surveyors
+documented section location using trees as landmarks, and recorded
+genus or species, diameter, and location (azimuth and distance from
+corner). This data set provides a systematic survey of the forest
+before settlement, and has been used by foresters, ecologists, and
+historians to understand ecosystem and land-use change through
+time. In the Upper Midwest, the survey was conducted during
+XXXX-XXXX. Due to the slow-growing nature of temperate forests,
+including those in the Upper Midwest, we can think of the PLS data as
+a snapshot of forest composition in time. 
+%This is a unique data set that allows us better understand forest ecosystems
 
 %XXX Chris...  
-Survey data for the Upper Midwest has been recently
-digitized, and aggregated to an 8km square grid \cite{XXX}. However,
-due to its sparse nature, sampling methodology, and surveyor bias the
-PLS data set contains inherent variability. Here we work with a
-smoothed version of the PLS data, based on a Bayesian spatial multinomial 
-model \cite{XXX}.
+Survey data for the Upper Midwest has been recently digitized, and
+aggregated to an 8km square grid \cite{XXX}. As a result of the
+sampling methodology, this aggregation results in small numbers of
+tree counts per grid cell. To overcome the variability arising from
+this we work with a smoothed version of the PLS data, based on a
+Bayesian spatial multinomial model \cite{XXX}. 
 
 \subsection{Pollen data}
 With the push for robust and reproducible research from the scientific
@@ -147,14 +148,33 @@ those from neotoma), while the remaining 48 had only core top and
 pre-settlement samples (at least in the data file we had access to).
 
 Associated with each of the cores is a table containing counts by
-taxon for a series of depths. For each pollen core we are interested
-in the pre-settlement sample that is closest in time to the PLS
-data. Typically, age-depth models are used to assign ages to sample
-depths. However, there are many different types of age-depth models,
-each with its own set of benefits and shortcomings. Instead, we rely
-on a panel of experts to interpret patterns in the pollen count data
-to identify pre-settlement sample estimates. All long cores were
-suitable for this exercise.
+taxon for a series of depths. These counts are not certain -
+classifying pollen grains based on morphological features and relating
+them to plant taxa is often challenging as a result of (differential)
+preservation. Counts between palynologists for a single sample will
+also differ, but for experts this difference should be negligible
+\cite{XXX}.
+
+One of the challenges that arises when working with pollen data
+collected by several (or more) individuals is dealing with naming
+inconsistencies in the pollen taxonomies between sites. Both differing
+nomenclature and identified taxonomic resolution require that care be
+taken when standardizing pollen taxonomies. There arise cases where it
+may not be possible to associate certain pollen grains with plant
+taxa, and in these cases grains may be identified to type
+(e.g. Alnus-type), or placed into a group whose name is defined by
+their morphology (e.g. tricolporate). In this study, decisions
+regarding these poorly identified pollen grains were made on a
+case-by-case basis, although the total number of grains that fell into
+these ambiguous classes were few.
+
+For each pollen core we are interested in the pre-settlement sample
+that is closest in time to the PLS data. Typically, age-depth models
+are used to assign ages to sample depths. However, there are many
+different types of age-depth models, each with its own set of benefits
+and shortcomings. Instead, we rely on a panel of experts to interpret
+patterns in the pollen count data to identify pre-settlement sample
+estimates. All long cores were suitable for this exercise.
 
 \subsection{Expert elicitation of pre-settlement depth}
 Widespread land clearance that occurred during European settlement
@@ -227,14 +247,29 @@ The remaining proportion ($1-\gamma$) of pollen produced in $s_i$ is
 dispersed to other grid cells according to an isotropic dispersal
 kernel centered at $s_i$. The dispersal kernel weights all pollen
 dispersing away from the focal cell as a function of the distance from
-$s_i$ to any neighboring cell $s_k$ by $w(s_i, s_k)$. Here $w(s_i,
-s_k)$, is defined to be an unnormalized gaussian dispersal kernel written as
+$s_i$ to any neighboring cell $s_k$ by $w(s_i, s_k)$. 
+
+ Here we test two
+dispersal kernels: (i) gaussian and (ii) inverse power-law. The
+gaussian kernel is often used as a reference against more leptokurtic
+kernels such as the inverse power law kernel, and can represent
+dispersal through diffusion. Both kernels have been successfully
+applied to pollen data \ref{XXX}.
+
+The gaussian kernel, denoted $w_g(s_i,s_k)$, is written as
 \begin{align}
-w(s_i, s_k) = \exp\left( - \frac{d(s_i, s_k)^2}{\psi^2} \right),
+w_g(s_i, s_k) = \exp\left( - \frac{d(s_i, s_k)^2}{\psi^2} \right),
 \end{align}
 where $d(s_i,s_k)$ defines the distance between cells $s_i$ and $s_k$
-and $\psi$ is a parameter that describes the spread of the kernel. As
-expected, the weight assigned by this kernel is a decreasing function
+and $\psi>0$ is a parameter that describes the spread of the kernel. 
+
+The inverse power-law kernel, denoted by $w_{pl}(s_i,s_k)$, is given by
+\begin{align}
+w_{pl}(s_i, s_k) = \frac{(b-2)(b-1)}{2 \pi a^2} \left( 1 + \frac{d(s_i, s_k)}{a} \right)^{-b},
+\end{align}
+where $a>0$ and $b>2$ are parameters that determine the shape of the kernel. 
+
+As expected, the weight assigned by both kernels is a decreasing function
 of distance - less pollen is distributed farther away.
 
 %Previous work has shown that pollen dispersal distances can reach up to XXXX, and that long-distance dispersal events may be rare, but have the ability to drive range expansion XXX.
@@ -263,20 +298,17 @@ cells in the domain. Therefore the pollen from taxon $p$ arriving at $s(i)$ is g
 by
 
 \begin{align}
-\gamma \phi_p r(s(i)) + \frac{1}{C} (1-\gamma) \phi \sum_{s_k \neq s(i) } r(s_k) w(s(i), s_k).
+\gamma \phi_p r(s(i)) + \frac{1}{C} (1-\gamma) \phi_p \sum_{s_k \neq s(i) } r(s_k) w(s(i), s_k).
 \label{eq:arriving}
 \end{align}
 
-Finally, pollen counts at pond $i$, denoted by $\bm{y}_i$, are
-modelled using the dirichlet-multinomial to account overdispersion
-resulting from the placement of lakes within grid cells. The pollen
-counts observed at a lake are not equivalent to the averaged counts
-that we predict for a grid cell.  We have
+Finally, we need to relate the \ref{eq:arriving} to the pollen count data. To do this, we must consider that the pollen data are overdisperse - the counts are more variable than we might expect if we assumed they followed a  multinomial distribution. This overdispersion is the result of differential production and dispersal, but is also an artifact of comparing counts at a point location falling somewhere within any focal grid cell with grid-based average vegetation. To account for this, we model the pollen counts at pond $i$, denoted by $\bm{y}_i$, as
+dirichlet-multinomial where 
 \begin{align}
-\bm{y}_i \sim DM (n_i, \alpha_i)
+\bm{y}_i \sim DM (n_i, \bm{\alpha}_i).
 \label{eq:DM}
 \end{align}
-where the precision parameter $\alpha_i$ is equal to the sum of \ref{eq:arriving} over all taxa
+The precision $\alpha_i$ is equal to the sum of \ref{eq:arriving} over all taxa
 \begin{align}
 \alpha_i = \sum_{p=1}^K \gamma \phi_p r(s(i)) + \frac{1}{C} (1-\gamma) \phi \sum_{s_k \neq s(i) } r(s_k) w(s(i), s_k).
 \label{eq:alpha}
@@ -285,15 +317,14 @@ This precision parameter $\alpha$ is also affected by how close a lake is to the
 
 \subsection{Numerical implementation}
 
-Due to the non-conjugate nature of the multivariate likelihood terms,
-we are relegated to using MCMC methods. With the goal of achieving
-more efficient sampling with respect to the effective sample size per
-unit time, we used the Stan statistical modeling software to estimate
-parameters. Stan implements a variant of the Hamiltonian Monte Carlo
-method called the No-U-Turn Sampler, which is a gradient based sampling
-method that uses these directional derivatives to make informed
-decisions about how to move along (and sample from) the joint
-posterior surface. 
+We cannot directly sample from the joint posterior, so we rely on MCMC
+methods. With the goal of achieving more efficient sampling with
+respect to the effective sample size per unit time, we used the Stan
+statistical modeling software to estimate parameters. Stan implements
+a variant of the Hamiltonian Monte Carlo method called the No-U-Turn
+Sampler, which is a gradient based sampling method that uses these
+directional derivatives to make informed decisions about how to move
+along (and sample from) the joint posterior surface.
 
 % Our model was coded in the Stan bugs-like language, then converted
 % to C++ code using the Stan translator, compiled using GCC, and run
@@ -333,12 +364,17 @@ Based on these results, we were subsequently faced with the challenge
 of establishing site suitability criteria to determine which sites to
 include in the calibration data set. Ideally, the now quantified
 pre-settlement sample uncertainty would be included into the modelling
-framework. However, this elicitation exercise varies from those that
-are typically conducted to construct priors; here we are uncertain
-about our data, not our parameters. Instead of increasing the
-complexity of the statistical model, we filter suitable sites and
-assign pre-settlement depths in a systematic way based on the expert
-determinations.
+framework. Although this likely possible, it would increase the
+complexity of the statistical model. For the sake of simplicity, we
+filter suitable sites and assign pre-settlement depths in a systematic
+way based on the expert determinations.
+
+% However, this elicitation exercise varies from those that
+% are typically conducted to construct priors; here we are uncertain
+% about our data, not our parameters. Instead of increasing the
+% complexity of the statistical model, we filter suitable sites and
+% assign pre-settlement depths in a systematic way based on the expert
+% determinations.
 
 Sites were considered unsuitable if: 1) the majority chose not to
 assign a pre-settlement sample, or 2) if half of the experts chose not
@@ -398,21 +434,17 @@ to each other at each location. We know this is not the case, but we
 need to assess how they are different from this 1:1 ideal. In the pie
 maps the patterns are consistent with each other, although there are
 some striking differences. First, we see that pine dominates the
-pollen records for most of the northern half of the domain. Second, we
-see areas that have higher relative abundances of Hemlock, Tamarack,
-and Maple. There are more subtle differences in the less abundant
-taxa. As expected, these pictures confirm that the relationship
-between sediment pollen and vegetation is complex. Note that the PLS
-pie map represents an aggregated version of the 8km gridded dataset,
-and that this coarsened data set is used for exploratory purposes only
-(pies would not be visible if the original scale were used).
-
-To better assess spatial distributions of pollen versus PLS data, we
-can plot the data as heat maps by taxon. Differences in extent of these
-distributions are indicative of successful pollen dispersal. For
-example, for both Birch and Pine, we see that the distributions of
-sediment pollen extend well beyond the boundaries of those shown in the PLS
-data (Figures~\ref{fig:maps_compare_pine} \& \ref{fig:maps_compare_birch}). 
+pollen records for most of the northern half of the domain. Second, in
+the vegetation composition data, we see regions that have higher
+relative abundances of Hemlock, Tamarack, and Maple that are not
+apparent or much less pronounced in the pollen data. There are more
+subtle differences between the pollen and vegetation maps in the less
+abundant taxa. As expected, these pictures confirm that the
+relationship between sediment pollen and vegetation is complex. Note
+that the PLS pie map represents an aggregated version of the 8km
+gridded dataset, and that this coarsened data set is used for
+exploratory purposes only (pies would not be visible if the original
+scale were used).
 
 \subsection{Modelling results}
 
@@ -502,6 +534,14 @@ pollen goes, and depends on the spread parameter $\psi$ which was
 estimated to be $210\,(200, 220)$ km. This implies that 50\% of the
 pollen produced in a focal cell is deposited within 140 km of the
 focal cell, and 90\% is deposited within 296 km of the focal cell \ref{fig:dvd}.
+
+XXX: Move me somewhere else!
+To better assess spatial distributions of pollen versus PLS data, we
+can plot the data as heat maps by taxon. Differences in extent of these
+distributions are indicative of successful pollen dispersal. For
+example, for both Birch and Pine, we see that the distributions of
+sediment pollen extend well beyond the boundaries of those shown in the PLS
+data (Figures~\ref{fig:maps_compare_pine} \& \ref{fig:maps_compare_birch}). 
 
 To assess the assumption that all taxa share a dispersal kernel with
 spread controlled by the scalar $\psi$, we re-ran the model letting
