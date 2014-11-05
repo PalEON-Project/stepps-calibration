@@ -256,7 +256,7 @@ pollen_preds_distance <- function(post, N_cores, d, idx_cores, r, C, radius){
 }
 
 #predicted pollen based on weighted neighborhoods using estimated pars
-dispersal_decay <- function(post, d_pot, C, radius, kernel){
+dispersal_decay <- function(post, dmat, C, radius, kernel){
   
   rescale = 1e6
   iters   = dim(post)[1]
@@ -274,18 +274,18 @@ dispersal_decay <- function(post, d_pot, C, radius, kernel){
     } else {
       psi   = colMeans(post[,1,which(col_substr == 'psi')])
     }
-    w      = exp(-(d_pot*d_pot)/(psi*psi))
+    w      = exp(-(dmat*dmat)/(psi*psi))
   } else if (kernel=='pl'){
     a = mean(post[,1,which(col_substr == 'a')])
     b = mean(post[,1,which(col_substr == 'b')])
-    w = (b-1) * (b-2) / (2 * pi * a  * a) * (1 + d_pot / a) ^ (-b)
+    w = (b-1) * (b-2) / (2 * pi * a  * a) * (1 + dmat / a) ^ (-b)
   }
   
   r_int  = vector(length=length(radius), mode='numeric')
   C_test = sum(w)
   
   for (rad in 1:length(radius)){
-    idx_int    = which(d_pot[,1]<radius[rad]/rescale)
+    idx_int    = which(dmat[,1]<radius[rad])#/rescale)
     sum_w_int  = sum(w[idx_int,1])
     r_int[rad] = gamma + (1-gamma) / C * sum_w_int     
   }

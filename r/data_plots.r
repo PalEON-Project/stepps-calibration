@@ -53,25 +53,10 @@ breaks = c(0, 0.01, 0.05, 0.10, 0.15, 0.2, 0.3, 0.4, 0.5, 0.6, 1)
 # breaks = c(0, 0.1, 0.3, 0.4, 1)
 plot_both_maps_binned(y,  r, centers_polA, centers_veg, taxa, taxa_list=10, K, breaks, limits, suff, save_plots, fpath=path_figs)
   
-# birch
+# birch 1
 breaks = c(0, 0.01, 0.05, 0.10, 0.15, 0.2, 1)
 plot_both_maps_binned(y,  r, centers_polA, centers_veg, taxa, taxa_list=3, K, breaks, limits, suff, save_plots, fpath=path_figs)
 
-# birch
+# birch 2
 breaks = c(0, 0.01, 0.05, 0.10, 0.15, 0.2, 1)
 plot_both_maps_binned(y,  r, centers_polA, centers_veg, taxa, taxa_list=4, K, breaks, limits, suff, save_plots, fpath=path_figs)
-
-
-
-# plot gaussian and power law distributions
-dvec = seq(0, 1, by=0.0000001)
-
-pdf('figures/compare_kernels.pdf')
-psi = 0.207299
-a   = 0.01446661
-b   = 2.020447
-px = gaussian(dvec, psi)/(pi*psi*psi)
-plot(dvec*1e3, px, type='l', ylim=c(0, 20), ylab='Density', xlab='Distance')
-px=power_law(dvec, a, b)
-lines(dvec*1e3, px, col='blue', ylab='Density', xlab='Distance')
-dev.off()
