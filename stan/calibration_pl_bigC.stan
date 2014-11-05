@@ -94,7 +94,7 @@ model {
   
     //local vs. non-local
     //r_new[i] <- r_new[i] + out_sum*(1-gamma)/sum_w;
-    r_new[i] <- r_new[i] + out_sum*(1-gamma)/C;
+    r_new[i] <- r_new[i] + out_sum * (1-gamma) / C;
     
     //print(r_new[i]);
     //print(sum(r_new[i]));
