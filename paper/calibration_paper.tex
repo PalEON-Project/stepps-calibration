@@ -7,6 +7,7 @@
 \usepackage{amsthm}                % better theorem environments
 \usepackage{hyperref}
 \usepackage{natbib}
+\usepackage{pdfpages}
 
 \newcommand{\kron}{\raisebox{1pt}{\ensuremath{\:\otimes\:}}} 
 \newcommand{\lgamma}{\text{lgamma}} 
@@ -18,7 +19,7 @@
 
 \title{Calibrating the pollen-vegetation relationship}
 
-\author{Andria Dawson}
+\author{Andria Dawson, Christopher Paciorek, Jason McLachlan,\\ Simon Goring, John Williams, Stephen Jackson}
 
 \maketitle
 
@@ -83,14 +84,12 @@ developed by \cite{XXX}.
 \subsection{Spatial domain}
 Our study area is the upper Midwestern US, and includes Minnesota,
 Wisconsin, and the upper peninsula of Michigan. The lower peninsula of
-Michigan was not included because: 1) it is spatially disjoint from
-the rest of the domain; and 2) the public land survey forest data is
-still in the process of being digitized, so the composition data
-available is incomplete.
+Michigan was omitted from this analysis for two reasons: 1) it is spatially disjoint from
+the remainder of the domain; and 2) the public land survey forest data for the lower peninsula is
+still in the process of being digitized, and therefore the available forest composition data for this region is incomplete.
 
 \subsection{Tree taxa}
-We focus on a subset of taxa that are of particular interest,
-inlcuding the most abundant taxa and any taxa that are of specific
+We focus on a subset of tree taxa which includes the most abundant taxa as well as less-abundant taxa of 
 ecological importance. Our modelled taxa includes: Ash, Beech, Birch,
 Elm, Hemlock, Maple, Oak, Pine, Spruce, Larch, as well as Other
 Conifer and Other Hardwood groups which include those respective tree
@@ -109,8 +108,8 @@ of these groups is still large.
 %XXX Jack and Simon 
 Prior to major European settlement, the US General Land Office
 conducted a Public Land Survey (PLS) throughout much of the United
-States in order to simplify the sale of federal lands. Surveyors
-documented section location using trees as landmarks, and recorded
+States to simplify the sale of federal lands. Surveyors
+documented section locations using trees as landmarks, and recorded
 genus or species, diameter, and location (azimuth and distance from
 corner). This data set provides a systematic survey of the forest
 before settlement, and has been used by foresters, ecologists, and
@@ -132,7 +131,7 @@ Bayesian spatial multinomial model \cite{XXX}.
 \subsection{Pollen data}
 With the push for robust and reproducible research from the scientific
 community, paleoecoinformatics has responded with the development of
-tools that make accessing and using large datasets possible. One such
+tools that make it possible to access and query large datasets. One such
 tool that has made this work possible is the Neotoma database
 (\url{neotomadb.org}; \cite{XXX}), which stores a variety of types of
 paleoecological data, including pollen data. Accessing this data can
@@ -176,7 +175,7 @@ and shortcomings. Instead, we rely on a panel of experts to interpret
 patterns in the pollen count data to identify pre-settlement sample
 estimates. All long cores were suitable for this exercise.
 
-\subsection{Expert elicitation of pre-settlement depth}
+\subsection{Expert elicitation of biostratigraphic evidence for European settlement}
 Widespread land clearance that occurred during European settlement
 provided habitat for certain non-arboreal colonizers, resulting in
 increases in non-arboreal pollen in the sediment. In the Upper
@@ -250,7 +249,7 @@ dispersing away from the focal cell as a function of the distance from
 $s_i$ to any neighboring cell $s_k$ by $w(s_i, s_k)$. 
 
  Here we test two
-dispersal kernels: (i) gaussian and (ii) inverse power-law. The
+dispersal kernels: (i) the gaussian kernel and (ii) the inverse power-law kernel. The
 gaussian kernel is often used as a reference against more leptokurtic
 kernels such as the inverse power law kernel, and can represent
 dispersal through diffusion. Both kernels have been successfully
@@ -267,7 +266,7 @@ The inverse power-law kernel, denoted by $w_{pl}(s_i,s_k)$, is given by
 \begin{align}
 w_{pl}(s_i, s_k) = \frac{(b-2)(b-1)}{2 \pi a^2} \left( 1 + \frac{d(s_i, s_k)}{a} \right)^{-b},
 \end{align}
-where $a>0$ and $b>2$ are parameters that determine the shape of the kernel. 
+where $a>0$ and $b>2$ are parameters that determine the kernel shape. 
 
 As expected, the weight assigned by both kernels is a decreasing function
 of distance - less pollen is distributed farther away.
@@ -287,33 +286,32 @@ rectangular region that covers and extends beyond the limits of the domain.
 
 %and therefore including this non-constant asymmetry in the modeling framework is not straightforward. 
 
-So far we have described the model from a source-based perspective,
-describing how pollen produced in grid cells is dispersed. What we
-really want is to model the pollen arriving at the grid cell in which
-a pond lies $s(i)$ - we have counts of pollen that arrived at
-lakes. To do this, we simply sum all the contributions that have been
-dispersed to $s(i)$, which includes both the locally deposited pollen
-plus the pollen dispersed to $s(i)$ from all other grid
-cells in the domain. Therefore the pollen from taxon $p$ arriving at $s(i)$ is given
-by
-
+So far we have characterized the model from a source-based
+perspective, describing how pollen produced in grid cells is
+dispersed. We would like to quantify the pollen arriving at the grid
+cell in which a pond lies $s(i)$ - we have counts of pollen grains
+deposited in ponds. To do this, we sum the contributions from all
+cells in the domain to the pollen pool in $s(i)$, which includes
+both the locally deposited pollen plus the pollen dispersed to $s(i)$
+from all other grid cells in the domain. Therefore the pollen from
+taxon $p$ arriving at pond $i$, referred to as $r_{i,p}^{\text{pol}}$, is given by
 \begin{align}
-\gamma \phi_p r(s(i)) + \frac{1}{C} (1-\gamma) \phi_p \sum_{s_k \neq s(i) } r(s_k) w(s(i), s_k).
+r_{i,p}^{\text{pol}} = \gamma \phi_p r_p\bigl(s(i)\bigr) + \frac{1}{C} (1-\gamma) \phi_p \sum_{s_k \neq s(i) } r_p(s_k) w\bigl(s(i), s_k\bigr).
 \label{eq:arriving}
 \end{align}
-
-Finally, we need to relate the \ref{eq:arriving} to the pollen count data. To do this, we must consider that the pollen data are overdisperse - the counts are more variable than we might expect if we assumed they followed a  multinomial distribution. This overdispersion is the result of differential production and dispersal, but is also an artifact of comparing counts at a point location falling somewhere within any focal grid cell with grid-based average vegetation. To account for this, we model the pollen counts at pond $i$, denoted by $\bm{y}_i$, as
+Finally, we need to relate the arriving pollen $r_{i,p}^{\text{pol}}$ quantified in Equation~\ref{eq:arriving} to the pollen count data. To do this, we must consider that the pollen data are overdispersed - the counts are more variable than we might expect if they were assumed to follow a  multinomial distribution. This overdispersion is the result of differential pollen production and dispersal, but is also an artifact of comparing pollen counts at a point location (the pond) situated anywhere within a focal grid cell to a grid-based vegetation composition average. To account for this overdispersion, we model the pollen counts at pond $i$, denoted by $\bm{y}_i$, as
 dirichlet-multinomial where 
 \begin{align}
-\bm{y}_i \sim DM (n_i, \bm{\alpha}_i).
+\bm{y}_i \sim DM (n_i, \bm{r}_i^{\text{pol}})
 \label{eq:DM}
 \end{align}
+and $\bm{r}_i^{\text{pol}} = (r_{i,1}^{\text{pol}}, \ldots, r_{i,K}^{\text{pol}})$.
 The precision $\alpha_i$ is equal to the sum of \ref{eq:arriving} over all taxa
 \begin{align}
-\alpha_i = \sum_{p=1}^K \gamma \phi_p r(s(i)) + \frac{1}{C} (1-\gamma) \phi \sum_{s_k \neq s(i) } r(s_k) w(s(i), s_k).
+\alpha_i = \sum_{p=1}^K \Bigl[\gamma \phi_p r_p\bigl(s(i)\bigr) + \frac{1}{C} (1-\gamma) \phi_p \sum_{s_k \neq s(i) } r_p(s_k) w\bigl(s(i), s_k\bigr)\Bigr].
 \label{eq:alpha}
 \end{align}
-This precision parameter $\alpha$ is also affected by how close a lake is to the domain boundary. Since we do not have data outside of our domain, for any lake that falls close to a boundary we will miss including some of the pollen contributions from the vegetation growing outside the domain. The repercussion of this is that the local pollen is up-weighted because the sum of the weights of the grid cells contributing to a grid cell near the boundary is much less than the sum of the weights of the total potential neighborhood defined by C (see \ref{eq:alpha}. 
+The precision parameter $\alpha_i$ is also affected by the proximity of a lake to the domain boundary. We do not have data outside of the defined domain, so cannot quantify the pollen dispersed from vegetation outside the domain to lakes situated close to the boundary. The repercussion of this is that the sum of the weights of the grid cells contributing pollen to a focal cell close to the domain boundary is less than the sum of the weights of the total potential contributing neighborhood, defined as C. As a result of having a reduced contributing neighborhood, the local pollen contribution is effectively up-weighted relative to the non-local contribution (see Eqn.~\ref{eq:alpha} ). 
 
 \subsection{Numerical implementation}
 
@@ -342,7 +340,7 @@ along (and sample from) the joint posterior surface.
 
 \section{Results}
 
-\subsection{Expert elicitation of pre-settlement depth and site suitability}
+\subsection{Expert elicitation of biostratigraphic evidence for Eurpoean settlement and site suitability}
 
 Four experts participated in the elicitation exercise. For 59 out of
 185 sites, the experts were in total agreement: they all identified
@@ -367,7 +365,7 @@ pre-settlement sample uncertainty would be included into the modelling
 framework. Although this likely possible, it would increase the
 complexity of the statistical model. For the sake of simplicity, we
 filter suitable sites and assign pre-settlement depths in a systematic
-way based on the expert determinations.
+way based on expert determinations.
 
 % However, this elicitation exercise varies from those that
 % are typically conducted to construct priors; here we are uncertain
@@ -376,52 +374,66 @@ way based on the expert determinations.
 % assign pre-settlement depths in a systematic way based on the expert
 % determinations.
 
-Sites were considered unsuitable if: 1) the majority chose not to
+Sites were considered unsuitable if: 1) a majority chose not to
 assign a pre-settlement sample, or 2) if half of the experts chose not
 to assign a pre-settlement sample and the remaining half identified
-pre-settlement samples whose modelled ages were far from the
+pre-settlement samples whose modelled ages were ``far'' from the
 approximate time of settlement. There were 11 sites for which a
 majority of experts (3 or 4) did not assign a pre-settlement sample,
 indicating no consensus regarding the existence of a land-clearance
 signal. As such, these sites were deemed unsuitable for
-calibration. For our second criterion, we looked to existing age
+calibration. For our second criterion, we looked to existing age-depth
 models associated with our pollen cores. Modelled ages for the
 identified pre-settlement depths were compared to 1850, which serves
 as an approximate year of settlement in the upper midwest. Uncertainty
 associated with age estimates from age-depth models can be large, but
 there is also a tendency for us identify patterns when in fact there
-are none \cite{XXX}. This criterion is a crude way to try to account
-for the phenomenon.  There were seven sites for which half of the
+are none \cite{XXX}. This second suitability criterion is a crude way to account
+for this phenomenon.  There were seven sites for which half of the
 experts did not assign a pre-settlement sample and the other half
 identified depths whose estimated ages were more than 500 years away from
 1850. All unsuitable sites were excluded from further analysis.
 
 After completion of the elicitation exercise, a more thorough
-examination of the stratigraphic data used to calibrate age models, we
-noticed that several cores had core tops with dates much older than
-expected. Further investigation revealed that three of the cores
-included in our analysis were missing core tops. Core tops for both
-Lake Mary and Green Lake pre-date settlement, and therefore were
-discarded. The third core for Lake Kotiranta had a core top
-corresponding to the pre-settlement sample, and was retained for
-inclusion in the calibration data set. Interestingly, for each of
-these cores, 1-3 experts identified a pre-settlement sample (although
-to be fair, they likely made the assumption that the uppermost sample
-was in fact a surface sample). 
+examination of the stratigraphic data revealed that several cores had
+core tops with dates much older than expected - typically the date of
+a true core top corresponds with the year of sampling (with some
+margin of error). Further investigation uncovered that three of the
+cores included in our analysis were missing core tops. For both Lake
+Mary and Green Lake, we determined that the core tops pre-date
+settlement, and these sites were therefore were discarded \cite{lawrenz1979, XXX}. A third
+site, Lake Kotiranta, had a core top corresponding to the
+pre-settlement sample, and this sample was retained for inclusion in the
+calibration data set \cite{wright1969}. Interestingly, for each of these cores, 1-3
+experts identified a pre-settlement sample (although to be fair, they
+likely made the assumption that the uppermost sample was in fact a
+surface sample).
 
-The additional 48 short cores in the Calcote data set were not candidates for
-the elicitation exercise because they had only a core top and a
-pre-settlement sample recorded. We comtemplated their inclusion in our
-calibration data set because their pre-settlement samples are
-identified using different methodology (and analyst) than the
-remaining sites. We opted to include these samples, based on our
-confidence in the data set/analyst and the recognition that including
-these sites would result in a substantive increase in sample size.
+After the suitability screening, we were left with 165 long cores for
+which the experts had determined pre-settlement depths. For many of
+these cores, there was no consensus, which left us to determine how to
+assign our best estimate of pre-settlement. Ideally we would use a
+measure of central tendency, but given the sample resolution and an
+even number of experts, both the mean and the median were not
+options. With keeping in mind that we would rather err on the side of
+caution and choose a depth that was more certainly pre-settlement (deeper) than
+one that represented post-disturbance times (more shallow), we ordered the sample
+depths from greatest to smallest, and selected the second in this list
+(typically the second largest, although in some cases the two largest
+sample depths were equal).
 
-After suitability screening, we were left with 165 long cores plus 48
-additional short cores, for a total of 213 calibration.
+The additional 48 short cores from the Calcote data set were not
+candidates for the elicitation exercise because they had only a core
+top and a pre-settlement sample recorded. The decision to include this
+additional data in the calibration data set was debated - the
+pre-settlement samples for these cores were identified using different
+methodology (and analysts) than the remaining sites. In the end, we
+opted to include these samples as part of the calibration data set,
+based on our confidence in the data set (really our confidence in
+the analysts) and the recognition that including these sites would
+result in a substantive increase in sample size.
 
-XXX: How did we choose the depths?
+In total we had 213 pollen count samples in the calibration data set.
 
 \subsection{Exploratory data analysis}
 
@@ -443,17 +455,20 @@ abundant taxa. As expected, these pictures confirm that the
 relationship between sediment pollen and vegetation is complex. Note
 that the PLS pie map represents an aggregated version of the 8km
 gridded dataset, and that this coarsened data set is used for
-exploratory purposes only (pies would not be visible if the original
-scale were used).
+exploratory purposes only (pies would not be visible if drawn using
+the original scale).
 
 \subsection{Modelling results}
 
-Three chains were run for with a warmp-up of 250 iterations, followed
-by a sampling period of 10,000 iterations. Warm-up iterations were not
-used in further analysis. For a total of 30,000 iterations, the
-effective sample size of the joint log posterior was XXX. Trace plots
-for the joint log posterior show the efficient mixing achieved by the
-sampler \ref{XXX}.
+Three chains were run with a warm-up of 250 iterations, followed by a
+sampling period of 10,000 iterations. Warm-up iterations were not used
+in further analysis. For a total of 30,000 iterations, the effective
+sample size of the joint log posterior was 12,247 for the gaussian
+dispersed model, and XXX for the power-law dispersed model. Trace
+plots for the joint log posterior show the efficient mixing achieved
+by the sampler (See Figure~\ref{fig:trace} for trace plots from the
+gaussian dispersed model; power-law dispersed model trace plots show
+similar mixing, and are therefore omitted).
 
 Parameter estimates from the calibration model run allow us to
 quantify the relationship between the sediment pollen and the
@@ -466,41 +481,55 @@ vegetation, by taxon. We know this relationship is complicated, and
 the hope is that the calibration model allows us to better predict
 sediment pollen than if we tried to predict based on data alone. 
 
-In Figure~\ref{fig:focal_scaled}, we plot the raw pollen proportions
-against the vegetation proportions for each grid cell. The
-relationship between the pollen and vegetation is clearly not 1:1. In
-particular, we see that some taxa, such as beech, maple, other
-conifer, and tamarack, are not prolific pollen producers - they can
-appear in large proportions on the landscape, but do never appear in
-large proportion in the pollen record. (Note that it could also have
-been the case that the produced pollen may have been abundant, but
-travelled elsewhere.) We also point out that some relationships are
-difficult to identify, for example pine, where it varies from being
-sparse to abundant on the local landscape, but this provides little
-indication about the relative abundance of pine pollen.
+In Figure~\ref{fig:focal_scaled}, the raw pollen proportions are
+plotted against the vegetation proportions for each grid cell (red
+crosses). The relationship between the pollen and vegetation is
+clearly not 1:1. In particular, we see that some taxa, such as beech,
+maple, other conifer, and tamarack, are not prolific pollen producers
+- they can appear in large proportions on the landscape, but never
+appear in large proportion in the pollen record. (Note that
+alternatively it could have been the case that the produced pollen may
+have been abundant, but travelled elsewhere.) We also point out that
+some relationships are difficult to identify, for example pine, where
+it varies from being sparse to abundant on the local landscape, but
+this relative composition provides little indication about the
+relative abundance of pine pollen.
 
 Differential pollen production is one of the reasons these
 relationships are complicated - in the model, this is accounted for by
-the scaling parameter $\phi$. After scaling the vegetation in the pond
-cell by $\phi$, we can compare the raw pollen proportions with these
-pollen predictions (\ref{fig:focal_scaled}). Scaling by $\phi$ does seem to improve our pollen estimates; for many taxa, the black points have shifted towards the 1:1 line. However, the improvement is minimal, indicatins that something is still missing.
+the taxon-sepcific scaling parameter $\phi_k$. After scaling the
+vegetation in a pond cell by $\phi_k$, we can again compare the raw
+pollen proportions with these pollen predictions
+(\ref{fig:focal_scaled}; black dots). Scaling by $\phi$ does seem to
+improve our pollen estimates; for many taxa, the black points have
+shifted towards the 1:1 line. However, the improvement is minimal,
+indicating that something is still missing.
 
-In Figure~\ref{fig:preds}, we again plot raw pollen against the
-vegetation or predicted pollen by taxon, but here the predicted pollen
-is based on the local plus non-local predictions obtained from the
-full calibration model. Now that dispersal has been accounted for, we
-see that the raw versus predicted pollen points fall more closely
-along the 1:1 line. This indicates that in this region, dispersal
-processes account for much of the pollen that we see - scaling the
-local vegetation to account for differential production was not
-sufficient to predict deposited pollen. The model is less succesful at
-predicting Hemlock pollen. In Figure~\ref{fig:preds}. we see that the
-model underpredicts the pollen at sites where there is a high
-proportion of Hemlock. This suggests that pollen dispersing to these
-sites is estimated to make a larger contribution to the sediment
-pollen than it should for this taxon.
+In Figure~\ref{fig:preds}, we again plot the raw pollen proportions
+against both the vegetation (red crosses) and predicted pollen (black by
+taxon, but in this case the predicted pollen is based on the local plus
+non-local predictions obtained from the full calibration model. Now
+that dispersal has been accounted for, we see that the raw versus
+predicted pollen points fall more closely along the 1:1 line. This
+indicates that in our domain dispersal processes account for much of
+the pollen that arrive at any given location - scaling the local vegetation to account for
+differential production was not sufficient to predict deposited
+pollen. The model is less succesful at predicting Hemlock pollen. In
+Figure~\ref{fig:preds}. we see that the model underpredicts the pollen
+at sites where there is a high proportion of Hemlock. This suggests
+that pollen dispersing to these sites is estimated to make a larger
+contribution to the sediment pollen than it should for this taxon.
 
-XXX There are several cases where the model does not do a good job   
+There are two anomalous sites for which the model is unable to
+adequately account for the processes leading to the (relatively
+speaking) unusual compositional makeup of the deposited pollen. The
+first is Ocheda Lake, a large but shallow glacial kettle lake in
+Southwestern Minnesota. The pollen diagrams indicate a relative spike
+in deposited Maple pollen in the pre-settlement sample. The second is
+Tamarack Creek, a site situated in a wetland with high Tamarack pollen
+counts for the top 80 cm of sediment. At this site, the calibration
+sample is composed of 40 \% Tamarack, while all other fossil pollen
+sites contain a maximum of 1 \% Tamarack.
 
 Taxon-specific estimates for the production/dispersal parameter $\phi$
 form two distinct groups in $\phi$ parameter space: low to
@@ -541,7 +570,7 @@ can plot the data as heat maps by taxon. Differences in extent of these
 distributions are indicative of successful pollen dispersal. For
 example, for both Birch and Pine, we see that the distributions of
 sediment pollen extend well beyond the boundaries of those shown in the PLS
-data (Figures~\ref{fig:maps_compare_pine} \& \ref{fig:maps_compare_birch}). 
+data (Figures~\ref{fig:compare_maps_PINE} \& \ref{fig:compare_maps_BIRCH}). 
 
 To assess the assumption that all taxa share a dispersal kernel with
 spread controlled by the scalar $\psi$, we re-ran the model letting

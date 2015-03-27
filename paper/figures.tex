@@ -11,14 +11,40 @@
 \begin{figure}
 \centering
 \begin{tabular}{c}
-\includegraphics[width=5in]{figures/pie_plot_pollen_UMW_v01.pdf} \\
-\includegraphics[width=5in]{figures/pie_plot_pls_UMW_v01.pdf}
+\includegraphics[width=5in]{figures/pie_plot_pollen_UMW_v0_3.pdf} \\
+\includegraphics[width=5in]{figures/pie_plot_pls_UMW_v0_3.pdf}
 \end{tabular}
 \caption{Pie maps depicting the relative composition of pollen (top)
   and PLS vegetation (bottom) from the data. Note that the PLS data
   has been aggregated to a coarser resolution for illustrative
   purposes.}
 \label{fig:pie}
+\end{figure}
+
+%trace plots
+\begin{figure}
+\centering
+\begin{tabular}{ccc}
+%\includegraphics[width=5in]{figures/cal_trace.pdf}
+%\includepdf[nup=2x3]{figures/cal_trace.pdf}
+  \includegraphics[page=1,width=0.3\textwidth]{figures/cal_trace.pdf} &
+  \includegraphics[page=2,width=0.3\textwidth]{figures/cal_trace.pdf} &
+  \includegraphics[page=3,width=0.3\textwidth]{figures/cal_trace.pdf} \\
+  \includegraphics[page=4,width=0.3\textwidth]{figures/cal_trace.pdf} &
+  \includegraphics[page=5,width=0.3\textwidth]{figures/cal_trace.pdf} &
+  \includegraphics[page=6,width=0.3\textwidth]{figures/cal_trace.pdf} \\
+  \includegraphics[page=7,width=0.3\textwidth]{figures/cal_trace.pdf} &
+  \includegraphics[page=8,width=0.3\textwidth]{figures/cal_trace.pdf} &
+  \includegraphics[page=9,width=0.3\textwidth]{figures/cal_trace.pdf} \\
+  \includegraphics[page=10,width=0.3\textwidth]{figures/cal_trace.pdf} &
+  \includegraphics[page=11,width=0.3\textwidth]{figures/cal_trace.pdf} &
+  \includegraphics[page=12,width=0.3\textwidth]{figures/cal_trace.pdf} \\
+  \includegraphics[page=13,width=0.3\textwidth]{figures/cal_trace.pdf} &
+  \includegraphics[page=14,width=0.3\textwidth]{figures/cal_trace.pdf} &
+  \includegraphics[page=15,width=0.3\textwidth]{figures/cal_trace.pdf} 
+\end{tabular}
+\caption{Trace plots for the parameters in the gaussian dispersed calibration model, including $\phi_k$ for $k=1, \ldots, W$, $\psi$, and $\gamma$, as well as the joint log posterior, $\text{lp}$. Posterior estimates for each of the three runs are depicted in shades of grey. The 2.5\% and 97.5\% quantiles are indicated by the solid lines, while the 50\% quantiles are indicated by the hashed lines.}
+\label{fig:trace}
 \end{figure}
 
 %veg and pollen heat maps: pine
@@ -34,7 +60,7 @@
 \centering
 \includegraphics[width=7in]{figures/maps_compare_BIRCH.pdf}
 \caption{Heat maps showing the range limits of Birch in the PLS composition data (top) and the sediment pollen (bottom)}
-\label{fig:compare_maps_PINE}
+\label{fig:compare_maps_BIRCH}
 \end{figure}
 
 %pollen raw versus scaled focal
@@ -98,7 +124,7 @@
 \centering
 \includegraphics[width=7in]{figures/maps_veg.pdf}
 \caption{Heat maps of the PLS data, by taxon.}
-\label{fig:maps_pollen}
+\label{fig:maps_veg}
 \end{figure}
 
 
