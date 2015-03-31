@@ -42,7 +42,7 @@ model {
   vector[K] out_sum;    
   
   real sum_w;
-  real C;
+  real sum_w_pot;
   real max_r_new;
   int  max_r_new_idx;
 
@@ -53,9 +53,9 @@ model {
   psi      ~ uniform(0.1,2);
   gamma    ~ uniform(0,1);   
   
-  C <- 0;
+  sum_w_pot <- 0;
   for (v in 1:N_pot)
-    C <- C + d_pot[v,2] * exp(-square(d_pot[v,1])/square(psi));
+    sum_w_pot <- sum_w_pot + d_pot[v,2] * exp(-square(d_pot[v,1])/square(psi));
   //print("C = ", C);  
   
   w <- exp(-(d2)/square(psi));
@@ -86,7 +86,7 @@ model {
   
     //local vs. non-local
     //r_new[i] <- r_new[i] + out_sum*(1-gamma)/sum_w;
-    r_new[i] <- r_new[i] + out_sum*(1-gamma)/C;
+    r_new[i] <- r_new[i] + out_sum*(1-gamma)/sum_w_pot;
     
     //print(r_new[i]);
     //print(sum(r_new[i]));
@@ -136,5 +136,70 @@ model {
       for (k in 1:K) increment_log_prob( - lgamma(y[i,k] + 1) + lgamma(y[i,k] + alpha[k]) - lgamma(alpha[k]));
     }
     
+  }
+}
+generated quantities {
+  vector[N_cores] log_lik;
+
+  // declarations
+  matrix[N_cells,N_cores] w; 
+  vector[N_pot] w_pot;       
+  vector[K] r_new[N_cores];
+  vector[K] out_sum;    
+  
+  real sum_w;
+  real sum_w_pot;
+  real max_r_new;
+  int  max_r_new_idx;
+
+  sum_w_pot <- 0;
+  for (v in 1:N_pot)
+    sum_w_pot <- sum_w_pot + d_pot[v,2] * exp(-square(d_pot[v,1])/square(psi));
+  
+  w <- exp(-(d2)/square(psi));
+      
+  for (i in 1:N_cores){   
+    // local piece
+    r_new[i] <- gamma*r[idx_cores[i]];
+   
+    for (k in 1:K) {out_sum[k] <- 0;}
+    sum_w <- 0;
+    for (j in 1:N_cells){ 
+      if (j != idx_cores[i]){
+        out_sum <- out_sum + w[j,i]*r[j];
+      }  
+    }
+
+    r_new[i] <- r_new[i] + out_sum*(1-gamma)/sum_w_pot;
+    max_r_new <- 0;
+    for (k in 1:K){
+      if (r_new[i,k] > max_r_new){
+        max_r_new     <- r_new[i,k];
+        max_r_new_idx <- k;
+      }
+    }
+    
+    for (k in 1:K){
+      if (r_new[i,k] == 0){
+        r_new[i,k] <- 0.0001;
+        r_new[i,max_r_new_idx] <- r_new[i,max_r_new_idx] - 0.0001;
+        
+        print("warning: zero proportion; core: ", i, "; taxon: ", k, " -> adjusting");
+      }
+    }
+    
+    
+    {
+      real N;
+      real A;
+      vector[K] alpha;
+      
+      alpha <- phi .* r_new[i];
+      
+      A <- sum(alpha);
+      N <- sum(y[i]);     
+      log_lik[i] <- lgamma(N + 1) + lgamma(A) - lgamma(N + A);
+      for (k in 1:K)  log_lik[i] <- - lgamma(y[i,k] + 1) + lgamma(y[i,k] + alpha[k]) - lgamma(alpha[k]);
+    }
   }
 }

@@ -1,11 +1,11 @@
 
 import subprocess
 
-runs = [ ('cal_12taxa_mid_comp_v0.1_pl_bigC',
-          './calibration_pl_bigC.exe \
-          sample num_warmup=75 num_samples=300 save_warmup=1\
+runs = [ ('cal_12taxa_mid_comp_v0.2',
+          './calibration_bigC.exe \
+          sample num_warmup=250 num_samples=10000 save_warmup=1\
           data file=../r/dump/cal_data_12taxa_mid_comp_v0.1.dump \
-          output file=../output/12taxa_mid_comp_v0.1_pl_bigC.csv\
+          output file=../output/12taxa_mid_comp_v0.2.csv\
           random seed=42')]
 
 qsub = """\
