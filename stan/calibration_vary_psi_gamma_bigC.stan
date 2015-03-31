@@ -27,7 +27,7 @@ transformed data {
 parameters {
   vector<lower=0.01, upper=300>[K] phi;  // dirichlet precision pars
   vector<lower=0.1, upper=2>[K]    psi;  // dispersal par
-  real<lower=0, upper=1> gamma;          // local proportion par
+  vector<lower=0, upper=1>[K] gamma;          // local proportion par
 }
 
 transformed parameters {
@@ -84,7 +84,8 @@ model {
     */
     
     // local piece
-    r_new[i] <- gamma*r[idx_cores[i]];
+    for (k in 1:K)
+      r_new[i] <- gamma[k] * r[idx_cores[i]];
    
     for (k in 1:K) {out_sum[k] <- 0;}
     sum_w <- 0;
@@ -92,7 +93,7 @@ model {
     for (k in 1:K){
       for (j in 1:N_cells){ // change N_hood to N_cells
 	if (j != idx_cores[i]){
-	  out_sum[k] <- out_sum[k] + w[k][j,i]*r[j][k];
+	  out_sum[k] <- out_sum[k] + w[k][j,i] * r[j][k];
 	}  
       }
     }
@@ -104,7 +105,7 @@ model {
     
     //local vs. non-local
     for (k in 1:K)
-      r_new[i,k] <- r_new[i,k] + out_sum[k]*(1-gamma)/sum_w_pot[k];
+      r_new[i,k] <- r_new[i,k] + out_sum[k] * (1-gamma[k]) / sum_w_pot[k];
     
     //print(r_new[i]);
     //print(sum(r_new[i]));
@@ -153,9 +154,3 @@ model {
     
   }
 }
-// generated quantities {
-//   vector[N_cores] log_lik;
-//   for (n in 1:N_cores){
-//     log_lik[n] <- normal_log(y[n], X[n]*b, sigma);
-//   }
-// }

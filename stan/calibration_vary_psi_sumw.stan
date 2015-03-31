@@ -9,8 +9,6 @@ data {
   int<lower=0> K;                // number of taxa
   int<lower=0> N_cores;          // number of core sites
   int<lower=0> N_cells;          // number of spatial cells
-  int<lower=0> N_pot;           // number of potential contributing spatial cells
-
 
   int y[N_cores,K];              // pollen count data
   
@@ -18,7 +16,6 @@ data {
   
   vector[K] r[N_cells];          // pls proportions
   matrix[N_cells,N_cores] d2;    // distance matrix squared
-  matrix[N_pot, 2] d_pot;        // distances and counts of potential neighborhood
 }
 
 transformed data {
@@ -28,6 +25,7 @@ parameters {
   vector<lower=0.01, upper=300>[K] phi;  // dirichlet precision pars
   vector<lower=0.1, upper=2>[K]    psi;  // dispersal par
   real<lower=0, upper=1> gamma;          // local proportion par
+
 }
 
 transformed parameters {
@@ -42,7 +40,6 @@ model {
   vector[K] out_sum;    
   
   real sum_w;
-  vector[K] C;
   real max_r_new;
   int  max_r_new_idx;
 
@@ -54,14 +51,6 @@ model {
   }  
 
   print(psi);
-  
-  for (k in 1:K){
-    C[k] <- 0;
-
-    for (v in 1:N_pot)
-      C[k] <- C[k] + d_pot[v,2] * exp(-square(d_pot[v,1])/square(psi[k]));
-  //print("C = ", C);  
-  }
 
   for (k in 1:K){
     w[k] <- exp(-(d2)/square(psi[k]));
@@ -97,14 +86,13 @@ model {
       }
     }
 
-    //sum_w   <- sum(out_sum);
+    sum_w   <- sum(out_sum);
      
     //print("out_sum", sum(out_sum));
     //print("sum_w", sum_w);
     
     //local vs. non-local
-    for (k in 1:K)
-      r_new[i,k] <- r_new[i,k] + out_sum[k]*(1-gamma)/C[k];
+    r_new[i] <- r_new[i] + out_sum*(1-gamma)/sum_w;
     
     //print(r_new[i]);
     //print(sum(r_new[i]));
