@@ -150,6 +150,8 @@ generated quantities {
   vector[N_cores] log_lik;
 
  // declarations
+
+  {
   matrix[N_cells,N_cores] w; 
   vector[N_pot] w_pot;       
   vector[K] r_new[N_cores];
@@ -159,6 +161,10 @@ generated quantities {
   real sum_w_pot;
   real max_r_new;
   int  max_r_new_idx;
+
+  real N;
+  real A;
+  vector[K] alpha;
 
   sum_w_pot <- 0;
   for (v in 1:N_pot)
@@ -200,21 +206,15 @@ generated quantities {
         print("warning: zero proportion; core: ", i, "; taxon: ", k, " -> adjusting");
       }
     }
-    
-    
-    {
-      real N;
-      real A;
-      vector[K] alpha;
       
-      alpha <- phi .* r_new[i];
+    alpha <- phi .* r_new[i];
       
-      A <- sum(alpha);
-      N <- sum(y[i]);     
-
-      log_lik[i] <- lgamma(N + 1) + lgamma(A) - lgamma(N + A);
-      for (k in 1:K) log_lik[i] <- log_lik[i] - lgamma(y[i,k] + 1) + lgamma(y[i,k] + alpha[k]) - lgamma(alpha[k]);
-    }
+    A <- sum(alpha);
+    N <- sum(y[i]);     
+      
+    log_lik[i] <- lgamma(N + 1) + lgamma(A) - lgamma(N + A);
+    for (k in 1:K) log_lik[i] <- log_lik[i] - lgamma(y[i,k] + 1) + lgamma(y[i,k] + alpha[k]) - lgamma(alpha[k]);
+  }
     
   }
 }
