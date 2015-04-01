@@ -26,15 +26,20 @@ transformed data {
 
 parameters {
   vector<lower=0.01, upper=300>[K] phi;  // dirichlet precision pars
-  vector<lower=0.1, upper=2>[K]    psi;  // dispersal par
+  //  vector<lower=0.1, upper=2>[K]    psi;  // dispersal par
   real<lower=0, upper=1> gamma;          // local proportion par
+
+  vector<lower=log(0.1), upper=log(2)>[K] log_psi;
 
   real<lower=0, upper=2> mu_psi;             // psi hyperparameter
   real<lower=0> sigma_psi; 
 }
 
 transformed parameters {
+  vector[K] psi;
 
+  for (k in 1:K) 
+    psi[k] <- exp(log_psi[k]); 
 }
 
 model {
@@ -56,7 +61,8 @@ model {
   gamma     ~ uniform(0,1);   
   for (k in 1:K){
     //psi[k] ~ uniform(0.1,2);
-    psi[k] ~ normal(mu_psi, sigma_psi);
+    //psi[k] ~ normal(mu_psi, sigma_psi);
+    log_psi[k] ~ normal(mu_psi, sigma_psi);
   }  
 
   print(psi);

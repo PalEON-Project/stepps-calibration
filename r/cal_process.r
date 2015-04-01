@@ -22,8 +22,12 @@ suff_dat = '12taxa_mid_comp_v0.1'
 suff_fit = '12taxa_mid_comp_v0.1_pl_bigC'
 # suff_fit = '12taxa_mid_comp_v0.1_bigC_c1'
 
+suff_fit = '12taxa_mid_comp_g_v0.2'
+suff_fit = '12taxa_mid_comp_pl_v0.2'
+
 one_psi    = TRUE
 kernel     =  'pl'
+kernel     =  'gaussian'
 save_plots = TRUE
 rescale    = 1e6
 
@@ -63,7 +67,9 @@ if (one_psi){
 print(fit)
 summary(fit)$summary[,'mean'][1:npars]
 ess(fit)
-trace_plots(post, suff, save_plots=save_plots, fpath=path_figs1)
+trace_plots(post, npars, suff, save_plots=save_plots, fpath=path_figs1)
+
+waic(fit)
 
 # sink(sprintf('%s/%s/summary.txt', wd, path_figs1), type='output')
 sink(sprintf('%s/summary.txt', path_figs1), type='output')
@@ -89,7 +95,7 @@ phi_ub = apply(phi, 2, function(x) quantile(x, probs=0.975))
 phi_stats = data.frame(name=taxa, mu=phi_mean, lb=phi_lb, ub=phi_ub)
 
 p <- ggplot(data=phi_stats, aes(x=reorder(name, mu), y=mu)) + geom_point(size=4) + geom_errorbar(aes(ymin=lb, ymax=ub), width=.2) + 
-       xlab("Taxa") + ylab(expression(phi)) +
+       xlab("Taxon") + ylab(expression(phi)) +
        coord_flip() + theme_bw() + theme(axis.title.x=element_text(size=20), 
                                     axis.title.y=element_text(size=20), 
                                     axis.text.x=element_text(size=rel(1.3)),
@@ -111,7 +117,7 @@ if (!one_psi){
   psi_stats = data.frame(name=taxa, mu=psi_mean, lb=psi_lb, ub=psi_ub)
   
   p <- ggplot(data=psi_stats, aes(x=reorder(name, mu), y=mu)) + geom_point(size=4) + geom_errorbar(aes(ymin=lb, ymax=ub), width=.2) + 
-    xlab("Taxa") + ylab(expression(psi)) +
+    xlab("Taxon") + ylab(expression(psi)) +
     coord_flip() + theme_bw() + theme(axis.title.x=element_text(size=20), 
                                       axis.title.y=element_text(size=20), 
                                       axis.text.x=element_text(size=rel(1.3)),

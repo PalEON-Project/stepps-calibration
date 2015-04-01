@@ -10,10 +10,11 @@ us.fort <- fortify(us.shp, region='id')
 # trace plots
 # fit is a stanfit object
 # can pass true values as a list if known
-trace_plots <- function(post, suff="", save_plots=TRUE, fpath){
+trace_plots <- function(post, npars, suff="", save_plots=TRUE, fpath){
   
   n      = dim(post)[3]
-  labels = colnames(post[,1,])
+  idx = c(seq(1,npars), n)
+  labels = colnames(post[,1,idx])
   
   avg = summary(fit)$summary[,"mean"]
   
@@ -25,11 +26,12 @@ trace_plots <- function(post, suff="", save_plots=TRUE, fpath){
   }
   
   par(mfrow=c(1,1))
-  for (i in 1:n){
-    plot(post[,1,i], type="l", ylab=labels[i], xlab="iter")
-    abline(h=avg[i], col="blue")
-    abline(h=summary(fit)$summary[,"2.5%"][i], col='blue', lty=2)
-    abline(h=summary(fit)$summary[,"97.5%"][i], col='blue', lty=2)
+  for (i in 1:npars){
+    
+    plot(post[,1,idx[i]], type="l", ylab=labels[i], xlab="iter")
+    abline(h=avg[idx[i]], col="blue")
+    abline(h=summary(fit)$summary[,"2.5%"][idx[i]], col='blue', lty=2)
+    abline(h=summary(fit)$summary[,"97.5%"][idx[i]], col='blue', lty=2)
   }
   
   if (save_plots){
