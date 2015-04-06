@@ -26,20 +26,12 @@ transformed data {
 
 parameters {
   vector<lower=0.01, upper=300>[K] phi;  // dirichlet precision pars
-  //  vector<lower=0.1, upper=2>[K]    psi;  // dispersal par
-  real<lower=0, upper=1> gamma;          // local proportion par
-
-  vector<lower=log(0.1), upper=log(2)>[K] log_psi;
-
-  real<lower=0, upper=2> mu_psi;             // psi hyperparameter
-  real<lower=0> sigma_psi; 
+  vector<lower=0.1, upper=2>[K]    psi;  // dispersal par
+  vector<lower=0, upper=1>[K] gamma;          // local proportion par
 }
 
 transformed parameters {
-  vector[K] psi;
 
-  for (k in 1:K) 
-    psi[k] <- exp(log_psi[k]); 
 }
 
 model {
@@ -55,14 +47,10 @@ model {
   int  max_r_new_idx;
 
   // priors 
-  phi       ~ uniform(0.01,300);
-  mu_psi    ~ uniform(0, 2);
-  sigma_psi ~ cauchy(0, 4);
-  gamma     ~ uniform(0,1);   
+  phi   ~ uniform(0.01,300);
+  gamma ~ uniform(0,1);   
   for (k in 1:K){
-    //psi[k] ~ uniform(0.1,2);
-    //psi[k] ~ normal(mu_psi, sigma_psi);
-    log_psi[k] ~ normal(mu_psi, sigma_psi);
+    psi[k] ~ uniform(0.1,2);
   }  
 
   print(psi);
@@ -96,7 +84,8 @@ model {
     */
     
     // local piece
-    r_new[i] <- gamma*r[idx_cores[i]];
+    for (k in 1:K)
+      r_new[i] <- gamma[k] * r[idx_cores[i]];
    
     for (k in 1:K) {out_sum[k] <- 0;}
     sum_w <- 0;
@@ -104,7 +93,7 @@ model {
     for (k in 1:K){
       for (j in 1:N_cells){ // change N_hood to N_cells
 	if (j != idx_cores[i]){
-	  out_sum[k] <- out_sum[k] + w[k][j,i]*r[j][k];
+	  out_sum[k] <- out_sum[k] + w[k][j,i] * r[j][k];
 	}  
       }
     }
@@ -116,7 +105,7 @@ model {
     
     //local vs. non-local
     for (k in 1:K)
-      r_new[i,k] <- r_new[i,k] + out_sum[k]*(1-gamma)/sum_w_pot[k];
+      r_new[i,k] <- r_new[i,k] + out_sum[k] * (1-gamma[k]) / sum_w_pot[k];
     
     //print(r_new[i]);
     //print(sum(r_new[i]));
@@ -165,9 +154,83 @@ model {
     
   }
 }
-// generated quantities {
-//   vector[N_cores] log_lik;
-//   for (n in 1:N_cores){
-//     log_lik[n] <- normal_log(y[n], X[n]*b, sigma);
-//   }
-// }
+generated quantities{
+  vector[N_cores] log_lik;
+
+  {
+    // declarations
+    matrix[N_cells,N_cores] w[K];      
+    vector[K] r_new[N_cores];
+    vector[K] out_sum;    
+  
+    real sum_w;
+    vector[K] sum_w_pot;
+    real max_r_new;
+    int  max_r_new_idx;
+
+    real N;
+    real A;
+    vector[K] alpha;
+ 
+    for (k in 1:K){
+      sum_w_pot[k] <- 0;
+
+      for (v in 1:N_pot)
+	sum_w_pot[k] <- sum_w_pot[k] + d_pot[v,2] * exp(-square(d_pot[v,1])/square(psi[k]));
+    }
+
+    for (k in 1:K){
+      w[k] <- exp(-(d2)/square(psi[k]));
+    }
+  
+    for (i in 1:N_cores){
+    
+      // local piece
+      for (k in 1:K)
+	r_new[i] <- gamma[k] * r[idx_cores[i]];
+   
+      for (k in 1:K) {out_sum[k] <- 0;}
+      sum_w <- 0;
+    
+      for (k in 1:K){
+	for (j in 1:N_cells){ // change N_hood to N_cells
+	  if (j != idx_cores[i]){
+	    out_sum[k] <- out_sum[k] + w[k][j,i] * r[j][k];
+	  }  
+	}
+      }
+   
+      //local vs. non-local
+      for (k in 1:K)
+	r_new[i,k] <- r_new[i,k] + out_sum[k] * (1-gamma[k]) / sum_w_pot[k];
+    
+      // hacky!
+      // find taxon with highest proportional value
+      max_r_new <- 0;
+      for (k in 1:K){
+	if (r_new[i,k] > max_r_new){
+	  max_r_new     <- r_new[i,k];
+	  max_r_new_idx <- k;
+	}
+      }
+    
+      for (k in 1:K){
+	if (r_new[i,k] == 0){
+	  r_new[i,k] <- 0.0001;
+	  r_new[i,max_r_new_idx] <- r_new[i,max_r_new_idx] - 0.0001;
+        
+	  print("warning: zero proportion; core: ", i, "; taxon: ", k, " -> adjusting");
+	}
+      }
+      
+      alpha <- phi .* r_new[i];
+      
+      A <- sum(alpha);
+      N <- sum(y[i]);     
+
+      log_lik[i] <- lgamma(N + 1) + lgamma(A) - lgamma(N + A);
+      for (k in 1:K) log_lik[i] <- log_lik[i] - lgamma(y[i,k] + 1) + lgamma(y[i,k] + alpha[k]) - lgamma(alpha[k]);
+    
+    }
+  }
+}
