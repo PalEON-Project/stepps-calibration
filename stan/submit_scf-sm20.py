@@ -46,7 +46,7 @@ qsub = """\
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=andria.dawson@gmail.com
 
-cd $HOME/Documents/paleon/stepps2/calibration/stan
+cd $HOME/Documents/projects/stepps-calibration/stan
 export OMP_NUM_THREADS={threads}
 srun {command}
 """
