@@ -19,15 +19,21 @@ suff=''
 # suff_dat = '12taxa_upper_comp_v0.1'
 suff_dat = '12taxa_mid_comp_v0.1'
 # suff_fit = '12taxa_mid_comp_v0.1_vary_psi_bigC_c1'
-suff_fit = '12taxa_mid_comp_v0.1_pl_bigC'
+# suff_fit = '12taxa_mid_comp_v0.1_pl_bigC'
 # suff_fit = '12taxa_mid_comp_v0.1_bigC_c1'
 
-suff_fit = '12taxa_mid_comp_g_v0.2'
-suff_fit = '12taxa_mid_comp_pl_v0.2'
+# suff_fit = '12taxa_mid_comp_g_v0.3'
+suff_fit = '12taxa_mid_comp_pl_v0.3'
+# suff_fit = '12taxa_mid_comp_vary_psi_v0.3'
+# suff_fit = '12taxa_mid_comp_vary_psi_EPs_v0.3'
+# suff_fit = '12taxa_mid_comp_vary_psi_gamma_v0.3'
+# suff_fit = '12taxa_mid_comp_vary_psi_gamma_EPs_v0.3'
 
 one_psi    = TRUE
+one_gamma  = TRUE
+EPs        = FALSE
 kernel     =  'pl'
-kernel     =  'gaussian'
+# kernel     =  'gaussian'
 save_plots = TRUE
 rescale    = 1e6
 
@@ -47,22 +53,28 @@ load(sprintf('%s/cal_data_%s.rdata', path_data, suff_dat))
 
 fname = sprintf('%s/%s.csv', path_out, suff_fit)
 
-system(sprintf('r/fixup.pl %s', fname))
+# fix fixup.pl
+# system(sprintf('r/fixup.pl %s', fname))
 fit <- read_stan_csv(fname)
 post = rstan::extract(fit, permuted=FALSE, inc_warmup=FALSE)
 
 #####################################################################################
 # read in data and source utils
 #####################################################################################
+npars   = K # always have K phis
 if (kernel=='gaussian'){
-if (one_psi){
-  npars = K+2
-} else {
-  npars = 2*K+2
-}
+  if (one_psi){ npars = npars + 1 } else { npars = npars + K}
+  if (one_gamma){ npars = npars + 1 } else { npars = npars + K}
+  if (EPs & one_psi){ npars = npars + 2 + K } # mu and sigma, plus log_gamma
+  if (EPs & !one_psi & !one_gamma){ npars = npars + 2 + K } # mu and sigma, plus log_gamma
 } else if (kernel=='pl'){
   npars=K+3
 }
+
+# phi <- extract(fit, "phi")$phi
+# phi <- extract(fit, "psi")$psi
+
+par_idx = c(seq(1,npars), ncol(post[,1,]))
 
 print(fit)
 summary(fit)$summary[,'mean'][1:npars]
@@ -78,6 +90,9 @@ taxa
 cat('\n')
 print('Summary of posterior parameter vals:')
 get_quants(fit, npars)
+cat('\n')
+print('WAIC:')
+waic(fit)
 # unlink(sprintf('%s/%s/summary.txt', wd, path_figs1))
 # unlink(sprintf('%s/summary.txt', path_figs1))
 sink()

@@ -165,9 +165,110 @@ model {
     
   }
 }
-// generated quantities {
-//   vector[N_cores] log_lik;
-//   for (n in 1:N_cores){
-//     log_lik[n] <- normal_log(y[n], X[n]*b, sigma);
-//   }
-// }
+generated quantities {
+  vector[N_cores] log_lik;
+
+  // declarations
+  matrix[N_cells,N_cores] w[K];      
+  vector[K] r_new[N_cores];
+  vector[K] out_sum;    
+  
+  real sum_w;
+  vector[K] sum_w_pot;
+  real max_r_new;
+  int  max_r_new_idx;
+
+  real N;
+  real A;
+  vector[K] alpha;
+  for (k in 1:K){
+    sum_w_pot[k] <- 0;
+
+    for (v in 1:N_pot)
+      sum_w_pot[k] <- sum_w_pot[k] + d_pot[v,2] * exp(-square(d_pot[v,1])/square(psi[k]));
+  //print("C = ", C);  
+  }
+
+  for (k in 1:K){
+    w[k] <- exp(-(d2)/square(psi[k]));
+  }
+  
+  for (i in 1:N_cores){
+ /*   for (j in 1:N_hood){
+      if (idx_hood[i,j] > 0){
+        w[i,j] <- exp(-square(d[i,idx_hood[i,j]]/psi));
+      } else {
+        w[i,j] <- 0;
+      }
+     }
+   */ 
+   
+   /*
+    if (sum(r[idx_cores[i]]) == 0 ){
+      print("Cell ", idx_cores[i], " has NO vegetation! Neighborhood props will not sum to 1.");
+    }
+    */
+    
+    // local piece
+    r_new[i] <- gamma*r[idx_cores[i]];
+   
+    for (k in 1:K) {out_sum[k] <- 0;}
+    sum_w <- 0;
+    
+    for (k in 1:K){
+      for (j in 1:N_cells){ // change N_hood to N_cells
+	if (j != idx_cores[i]){
+	  out_sum[k] <- out_sum[k] + w[k][j,i]*r[j][k];
+	}  
+      }
+    }
+
+    //sum_w   <- sum(out_sum);
+     
+    //print("out_sum", sum(out_sum));
+    //print("sum_w", sum_w);
+    
+    //local vs. non-local
+    for (k in 1:K)
+      r_new[i,k] <- r_new[i,k] + out_sum[k]*(1-gamma)/sum_w_pot[k];
+    
+    //print(r_new[i]);
+    //print(sum(r_new[i]));
+    
+    /*
+    if (sum(r_new[i]) < 1-1e-6 ){
+      print("i ", i);
+      print("core props ", r[idx_cores[i]]);
+      print("sum r_new ", sum(r_new[i]));
+    }
+    */
+    
+    // hacky!
+    // find taxon with highest proportional value
+    max_r_new <- 0;
+    for (k in 1:K){
+      if (r_new[i,k] > max_r_new){
+        max_r_new     <- r_new[i,k];
+        max_r_new_idx <- k;
+       }
+    }
+    
+    for (k in 1:K){
+      if (r_new[i,k] == 0){
+        r_new[i,k] <- 0.0001;
+        r_new[i,max_r_new_idx] <- r_new[i,max_r_new_idx] - 0.0001;
+        
+        print("warning: zero proportion; core: ", i, "; taxon: ", k, " -> adjusting");
+      }
+    }
+      
+      alpha <- phi .* r_new[i];
+      
+      A <- sum(alpha);
+      N <- sum(y[i]);     
+
+      log_lik[i] <- lgamma(N + 1) + lgamma(A) - lgamma(N + A);
+      for (k in 1:K) log_lik[i] <- log_lik[i] - lgamma(y[i,k] + 1) + lgamma(y[i,k] + alpha[k]) - lgamma(alpha[k]);
+    
+  }
+}
