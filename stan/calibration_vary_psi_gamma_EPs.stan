@@ -30,22 +30,23 @@ parameters {
   //vector<lower=0, upper=1>[K] gamma;     // local proportion par
 
   vector<lower=log(0.1), upper=log(2)>[K] log_psi;
-  vector<lower=log(1e-15), upper=log(1)>[K] log_gamma;
+  //vector<lower=log(1e-15), upper=log(1)>[K] log_gamma;
+  vector<lower=0, upper=1>[K] gamma;
 
-  real<lower=0, upper=2> mu_psi;         // psi hyperparameter
+  real<lower=log(0.1), upper=log(2)> mu_psi;         // psi hyperparameter
   real<lower=0> sigma_psi;               // psi hyperparameter
 
-  real<lower=0, upper=1> mu_gamma;       // psi hyperparameter
+  real<lower=-100, upper=100> mu_gamma;       // psi hyperparameter
   real<lower=0> sigma_gamma;             // psi hyperparameter
 }
 
 transformed parameters {
   vector[K] psi;
-  vector[K] gamma;
+  //vector[K] gamma;
 
   for (k in 1:K){
     psi[k]   <- exp(log_psi[k]); 
-    gamma[k] <- exp(log_gamma[k]); 
+    //gamma[k] <- exp(log_gamma[k]); 
   }
 }
 
@@ -62,22 +63,18 @@ model {
   int  max_r_new_idx;
 
   // priors 
-  phi   ~ uniform(0.01,300);
-  //gamma ~ uniform(0,1);   
-  for (k in 1:K){
-    psi[k] ~ uniform(0.1,2);
-  }  
-
-  // priors 
-  mu_gamma    ~ uniform(0, 1);
-  sigma_gamma ~ cauchy(0, 4);
-  mu_psi      ~ uniform(0, 2);
-  sigma_psi   ~ cauchy(0, 4);
   phi         ~ uniform(0.01,300);
+  mu_gamma    ~ uniform(-10, 10);
+  sigma_gamma ~ cauchy(0, 10);
+  mu_psi      ~ uniform(log(0.1), log(2));
+  sigma_psi   ~ cauchy(0, 4);
+  //phi         ~ uniform(0.01,300);
   //gamma     ~ uniform(0,1); 
   for (k in 1:K){
     //psi[k] ~ uniform(0.1,2);
-    log_gamma[k] ~ normal(mu_gamma, sigma_gamma);
+    //log_gamma[k] ~ normal(mu_gamma, sigma_gamma);
+    increment_log_prob(- log(sigma_gamma) - log(gamma[k]) - log(1 - gamma[k]));
+    increment_log_prob(- square(logit(gamma[k]) - mu_gamma) / (2 * square(sigma_gamma)));
     log_psi[k]   ~ normal(mu_psi, sigma_psi);
   }  
 

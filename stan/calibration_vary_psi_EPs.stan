@@ -31,7 +31,7 @@ parameters {
 
   vector<lower=log(0.1), upper=log(2)>[K] log_psi;
 
-  real<lower=0, upper=2> mu_psi;             // psi hyperparameter
+  real<lower=log(0.1), upper=log(2)> mu_psi;             // psi hyperparameter
   real<lower=0> sigma_psi; 
 }
 
@@ -56,7 +56,7 @@ model {
 
   // priors 
   phi       ~ uniform(0.01,300);
-  mu_psi    ~ uniform(0, 2);
+  mu_psi    ~ uniform(log(0.1), log(2));
   sigma_psi ~ cauchy(0, 4);
   gamma     ~ uniform(0,1);   
   for (k in 1:K){
