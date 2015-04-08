@@ -26,7 +26,10 @@ transformed data {
 
 parameters {
   vector<lower=0.01, upper=300>[K] phi;  // dirichlet precision pars
-  real<lower=0, upper=1> gamma;          // local proportion par
+  vector<lower=0, upper=1>[K] gamma;
+
+  real<lower=-100, upper=100> mu_gamma;       // psi hyperparameter
+  real<lower=0> sigma_gamma;             // psi hyperparameter
 
   vector<lower=log(0.00001), upper=log(500)>[K] log_a;
   vector<lower=log(2), upper=log(100)>[K] log_b;
@@ -62,13 +65,17 @@ model {
 
   // priors 
   phi     ~ uniform(0.01,300);
-  gamma   ~ uniform(0,1); 
+  mu_gamma    ~ uniform(-10, 10);
+  sigma_gamma ~ cauchy(0, 10);
   mu_a    ~ uniform(log(0.00001), log(2));
   sigma_a ~ cauchy(0, 4);  
   mu_b    ~ uniform(log(2), log(100));
   sigma_b ~ cauchy(0, 4);  
   
   for (k in 1:K){
+    increment_log_prob(- log(sigma_gamma) - log(gamma[k]) - log(1 - gamma[k]));
+    increment_log_prob(- square(logit(gamma[k]) - mu_gamma) / (2 * square(sigma_gamma)));
+
     log_a[k] ~ normal(mu_a, sigma_a);
     log_b[k] ~ normal(mu_b, sigma_b);
   }  
@@ -103,7 +110,8 @@ model {
     */
     
     // local piece
-    r_new[i] <- gamma*r[idx_cores[i]];
+    for (k in 1:K)
+      r_new[i] <- gamma[k]*r[idx_cores[i]];
    
     for (k in 1:K) {out_sum[k] <- 0;}
     sum_w <- 0;
@@ -123,7 +131,7 @@ model {
     
     //local vs. non-local
     for (k in 1:K)
-      r_new[i,k] <- r_new[i,k] + out_sum[k]*(1-gamma)/sum_w_pot[k];
+      r_new[i,k] <- r_new[i,k] + out_sum[k]*(1-gamma[k])/sum_w_pot[k];
     
     //print(r_new[i]);
     //print(sum(r_new[i]));
@@ -174,9 +182,9 @@ model {
 }
 generated quantities {
   vector[N_cores] log_lik;
-
-  {
-  // declarations
+  
+{
+ // declarations
   matrix[N_cells,N_cores] w[K];      
   vector[K] r_new[N_cores];
   vector[K] out_sum;    
@@ -188,8 +196,8 @@ generated quantities {
 
   real N;
   real A;
-  vector[K] alpha;  
-  
+  vector[K] alpha;
+       
   for (k in 1:K){
     sum_w_pot[k] <- 0;
   
@@ -204,23 +212,10 @@ generated quantities {
   }
   
   for (i in 1:N_cores){
-    /*   for (j in 1:N_hood){
-	 if (idx_hood[i,j] > 0){
-	 w[i,j] <- exp(-square(d[i,idx_hood[i,j]]/psi));
-	 } else {
-	 w[i,j] <- 0;
-	 }
-	 }
-    */ 
-   
-    /*
-      if (sum(r[idx_cores[i]]) == 0 ){
-      print("Cell ", idx_cores[i], " has NO vegetation! Neighborhood props will not sum to 1.");
-      }
-    */
     
     // local piece
-    r_new[i] <- gamma*r[idx_cores[i]];
+    for (k in 1:K)
+      r_new[i] <- gamma[k]*r[idx_cores[i]];
    
     for (k in 1:K) {out_sum[k] <- 0;}
     sum_w <- 0;
@@ -232,27 +227,11 @@ generated quantities {
 	}  
       }
     }
-
-    //sum_w   <- sum(out_sum);
-     
-    //print("out_sum", sum(out_sum));
-    //print("sum_w", sum_w);
     
     //local vs. non-local
     for (k in 1:K)
-      r_new[i,k] <- r_new[i,k] + out_sum[k]*(1-gamma)/sum_w_pot[k];
-    
-    //print(r_new[i]);
-    //print(sum(r_new[i]));
-    
-    /*
-      if (sum(r_new[i]) < 1-1e-6 ){
-      print("i ", i);
-      print("core props ", r[idx_cores[i]]);
-      print("sum r_new ", sum(r_new[i]));
-      }
-    */
-    
+      r_new[i,k] <- r_new[i,k] + out_sum[k]*(1-gamma[k])/sum_w_pot[k];
+ 
     // hacky!
     // find taxon with highest proportional value
     max_r_new <- 0;
@@ -279,7 +258,6 @@ generated quantities {
 
     log_lik[i] <- lgamma(N + 1) + lgamma(A) - lgamma(N + A);
     for (k in 1:K) log_lik[i] <- log_lik[i] - lgamma(y[i,k] + 1) + lgamma(y[i,k] + alpha[k]) - lgamma(alpha[k]);
-  }
-    
-} 
+  }    
+  } 
 }
