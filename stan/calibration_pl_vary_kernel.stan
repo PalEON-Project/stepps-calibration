@@ -60,7 +60,7 @@ model {
     sum_w_pot[k] <- 0;
   
     for (v in 1:N_pot)
-      sum_w_pot <- sum_w_pot + d_pot[v,2] * (b[k]-2) * (b[k]-1) / ( 2 * pi() * a[k] * a[k] ) * pow( 1 + d_pot[v,1] / a[k], -b[k]) ; 
+      sum_w_pot[k] <- sum_w_pot[k] + d_pot[v,2] * (b[k]-2) * (b[k]-1) / ( 2 * pi() * a[k] * a[k] ) * pow( 1 + d_pot[v,1] / a[k], -b[k]) ; 
   }
 
   for (k in 1:K){
