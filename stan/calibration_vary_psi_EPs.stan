@@ -168,6 +168,7 @@ model {
 generated quantities {
   vector[N_cores] log_lik;
 
+  {
   // declarations
   matrix[N_cells,N_cores] w[K];      
   vector[K] r_new[N_cores];
@@ -268,7 +269,7 @@ generated quantities {
       N <- sum(y[i]);     
 
       log_lik[i] <- lgamma(N + 1) + lgamma(A) - lgamma(N + A);
-      for (k in 1:K) log_lik[i] <- log_lik[i] - lgamma(y[i,k] + 1) + lgamma(y[i,k] + alpha[k]) - lgamma(alpha[k]);
-    
+      for (k in 1:K) log_lik[i] <- log_lik[i] - lgamma(y[i,k] + 1) + lgamma(y[i,k] + alpha[k]) - lgamma(alpha[k]); 
+  }
   }
 }
