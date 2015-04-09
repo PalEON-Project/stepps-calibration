@@ -61,6 +61,8 @@ model {
   
     for (v in 1:N_pot)
       sum_w_pot[k] <- sum_w_pot[k] + d_pot[v,2] * (b[k]-2) * (b[k]-1) / ( 2 * pi() * a[k] * a[k] ) * pow( 1 + d_pot[v,1] / a[k], -b[k]) ; 
+
+    // print(sum_w_pot[k]);
   }
 
   for (k in 1:K){
@@ -117,6 +119,9 @@ model {
       
       A <- sum(alpha);
       N <- sum(y[i]);     
+
+      print("A = ", A);
+      print("N = ", N);
 
       increment_log_prob(lgamma(N + 1) + lgamma(A) - lgamma(N + A));
       for (k in 1:K) increment_log_prob( - lgamma(y[i,k] + 1) + lgamma(y[i,k] + alpha[k]) - lgamma(alpha[k]));
