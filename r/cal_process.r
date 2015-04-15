@@ -23,15 +23,20 @@ suff_dat = '12taxa_mid_comp_v0.1'
 # suff_fit = '12taxa_mid_comp_v0.1_bigC_c1'
 
 # suff_fit = '12taxa_mid_comp_g_v0.3'
-suff_fit = '12taxa_mid_comp_pl_v0.3'
+# suff_fit = '12taxa_mid_comp_pl_v0.3'
 # suff_fit = '12taxa_mid_comp_vary_psi_v0.3'
 # suff_fit = '12taxa_mid_comp_vary_psi_EPs_v0.3'
 # suff_fit = '12taxa_mid_comp_vary_psi_gamma_v0.3'
 # suff_fit = '12taxa_mid_comp_vary_psi_gamma_EPs_v0.3'
+# suff_fit = '12taxa_mid_comp_vary_gamma_EPs_v0.3'
 
-one_psi    = TRUE
-one_gamma  = TRUE
-EPs        = FALSE
+suff_fit = '12taxa_mid_comp_pl_vary_kernel_gamma_EPs_v0.3'
+
+one_psi    = FALSE
+one_gamma  = FALSE
+one_a      = TRUE
+one_b      = TRUE
+EPs        = TRUE
 kernel     =  'pl'
 # kernel     =  'gaussian'
 save_plots = TRUE
@@ -54,7 +59,7 @@ load(sprintf('%s/cal_data_%s.rdata', path_data, suff_dat))
 fname = sprintf('%s/%s.csv', path_out, suff_fit)
 
 # fix fixup.pl
-# system(sprintf('r/fixup.pl %s', fname))
+system(sprintf('r/fixup.pl %s', fname))
 fit <- read_stan_csv(fname)
 post = rstan::extract(fit, permuted=FALSE, inc_warmup=FALSE)
 
@@ -65,10 +70,16 @@ npars   = K # always have K phis
 if (kernel=='gaussian'){
   if (one_psi){ npars = npars + 1 } else { npars = npars + K}
   if (one_gamma){ npars = npars + 1 } else { npars = npars + K}
-  if (EPs & one_psi){ npars = npars + 2 + K } # mu and sigma, plus log_gamma
-  if (EPs & !one_psi & !one_gamma){ npars = npars + 2 + K } # mu and sigma, plus log_gamma
+  if (EPs & !one_psi & one_gamma){ npars = npars + 2 + K} # mu and sigma, plus log_gamma
+  if (EPs & !one_psi & !one_gamma){ npars = npars + 2 + K + K} # mu and sigma, plus log_gamma
+  if (EPs & one_psi & !one_gamma){ npars = npars + 2 + K} # mu and sigma, plus log_gamma
 } else if (kernel=='pl'){
-  npars=K+3
+  if (one_gamma){npars = npars + 1} else {npars = npars + K}
+  if (one_a){npars = npars + 1} else {npars = npars + K}
+  if (one_b){npars = npars + 1} else {npars = npars + K}
+  if (EPs & !one_gamma){ npars = npars + 2} # mu and sigma, plus log_gamma
+  if (EPs & !one_a){ npars = npars + 2 + K } # mu and sigma, plus log_gamma
+  if (EPs & !one_b){ npars = npars + 2 + K} # mu and sigma, plus log_gamma
 }
 
 # phi <- extract(fit, "phi")$phi
@@ -77,7 +88,7 @@ if (kernel=='gaussian'){
 par_idx = c(seq(1,npars), ncol(post[,1,]))
 
 print(fit)
-summary(fit)$summary[,'mean'][1:npars]
+summary(fit)$summary[,'mean'][par_idx]
 ess(fit)
 trace_plots(post, npars, suff, save_plots=save_plots, fpath=path_figs1)
 
@@ -85,6 +96,8 @@ waic(fit)
 
 # sink(sprintf('%s/%s/summary.txt', wd, path_figs1), type='output')
 sink(sprintf('%s/summary.txt', path_figs1), type='output')
+suff_fit
+cat('\n')
 print('The taxa modelled are:')
 taxa
 cat('\n')
@@ -101,49 +114,14 @@ sink()
 # compute preds and plot results
 #####################################################################################
 
-colsubstr = substr(colnames(post[,1,]),1,3)
-phi       = post[,1,which(colsubstr == 'phi')]
-phi_mean  = colMeans(phi)
-phi_lb = apply(phi, 2, function(x) quantile(x, probs=0.025))
-phi_ub = apply(phi, 2, function(x) quantile(x, probs=0.975))
+plot_par_vals(post, parname='phi', taxa, wd, path_figs1)
 
-phi_stats = data.frame(name=taxa, mu=phi_mean, lb=phi_lb, ub=phi_ub)
-
-p <- ggplot(data=phi_stats, aes(x=reorder(name, mu), y=mu)) + geom_point(size=4) + geom_errorbar(aes(ymin=lb, ymax=ub), width=.2) + 
-       xlab("Taxon") + ylab(expression(phi)) +
-       coord_flip() + theme_bw() + theme(axis.title.x=element_text(size=20), 
-                                    axis.title.y=element_text(size=20), 
-                                    axis.text.x=element_text(size=rel(1.3)),
-                                    axis.text.y=element_text(size=rel(1.3)))
-
-print(p)
-#   theme(axis.text.x = element_text(angle=60, hjust=1)) + 
-  #   theme(panel.background = element_blank())
-ggsave(p, filename=sprintf('%s/%s/phi.pdf', wd, path_figs1), width=8, height=6)
-
-
-if (!one_psi){
-  colsubstr = substr(colnames(post[,1,]),1,3)
-  psi       = post[,1,which(colsubstr == 'psi')]
-  psi_mean  = colMeans(psi)
-  psi_lb = apply(psi, 2, function(x) quantile(x, probs=0.025))
-  psi_ub = apply(psi, 2, function(x) quantile(x, probs=0.975))
-  
-  psi_stats = data.frame(name=taxa, mu=psi_mean, lb=psi_lb, ub=psi_ub)
-  
-  p <- ggplot(data=psi_stats, aes(x=reorder(name, mu), y=mu)) + geom_point(size=4) + geom_errorbar(aes(ymin=lb, ymax=ub), width=.2) + 
-    xlab("Taxon") + ylab(expression(psi)) +
-    coord_flip() + theme_bw() + theme(axis.title.x=element_text(size=20), 
-                                      axis.title.y=element_text(size=20), 
-                                      axis.text.x=element_text(size=rel(1.3)),
-                                      axis.text.y=element_text(size=rel(1.3)))
-  
-  print(p)
-  #   theme(axis.text.x = element_text(angle=60, hjust=1)) + 
-  #   theme(panel.background = element_blank())
-  ggsave(p, filename=sprintf('%s/%s/psi.pdf', wd, path_figs1), width=8, height=6)
+if ((kernel=='gaussian') & (!one_psi)){
+  plot_par_vals(post, parname='psi', taxa, wd, path_figs1)
 }
-
+if (!one_gamma){
+  plot_par_vals(post, parname='gamma', taxa, wd, path_figs1)
+}
 
 pollen_props = compute_props(y, taxa)
 
@@ -152,13 +130,13 @@ local_preds  = phi_scale_veg(fit, N_cores, r, idx_cores)
 
 local_pollen_veg_plot2(r, idx_cores, pollen_props, local_preds, taxa, suff, save_plots, fpath=path_figs1)
 
-C <- compute_C(post, N_pot, d_pot, kernel=kernel)
+sum_w <- build_sumw_pot(post, N_pot, d_pot, kernel=kernel, one_psi)
 
-preds_out = pollen_preds(post, N_cores, d, idx_cores, r, C, one_psi, kernel=kernel)
+preds_out = pollen_preds(post, N_cores, d, idx_cores, r, sum_w, one_psi, one_gamma, kernel=kernel)
 
 alpha = preds_out$alpha # DM precision pars
 preds = preds_out$preds
-sum_w = preds_out$sum_w
+# sum_w = preds_out$sum_w
 
 pollen_preds_plot(preds, pollen_props, N_cores, r, idx_cores, taxa, suff=suff, save_plots=save_plots, fpath=path_figs1)
 
@@ -176,7 +154,8 @@ N_locs = nrow(d_all)
 
 idx_locs = seq(1, N_locs)
 
-preds_out = pollen_preds(post, N_locs, d_all, idx_locs, r, C, one_psi, kernel=kernel)
+# pollen_preds <- function(post, N_cores, d, idx_cores, r, sum_w, one_psi, one_gamma, kernel){
+preds_out = pollen_preds(post, N_locs, d_all, idx_locs, r, sum_w, one_psi, one_gamma, kernel=kernel)
 preds = preds_out$preds
 
 

@@ -13,7 +13,7 @@ source('r/utils/build_data_funs.r')
 # set your working directory!
 # AD: wd = '~/Documents/projects/stepps-calibration'
 
-depth_type = 'upper'
+depth_type = 'mid'
 
 data_date = '2014-10-23'
 
@@ -26,9 +26,10 @@ path_convert = 'data/dict-comp2stepps.csv'                                      
 path_out = 'r/dump'                                                               # dump data file stored here
 
 # append to output filenames
-suff       = paste0(depth_type, '_comp_v0.1')                                
+suff       = paste0(depth_type, '_comp_test')                                
 
-states = c('michigan:north', 'minnesota', 'wisconsin')
+# states = c('michigan:north', 'minnesota', 'wisconsin')
+states = c('michigan:north')
 
 wd = getwd() 
 
@@ -199,15 +200,20 @@ N_pot = nrow(d_pot)
 # save the data; stan needs dump file, but use rdata for processing
 #####################################################################################
 
-dump(c('K', 'N_cores', 'N_cells', 'N_hood', 
+dump(c('K', 'N_cores', 'N_cells', #'N_hood', 
        'y', 'r', 
-       'idx_cores', 'idx_hood', 
-       'd','d2',
-       'N_pot', 'd_pot',
-       'taxa', 'centers_veg', 'centers_polA'), 
+       'idx_cores', #'idx_hood', 
+       'd',#,'d2',
+       'N_pot', 'd_pot'),
+       #'centers_veg', 'centers_polA'), 
      file=paste(wd, '/', path_out, '/cal_data_', K, 'taxa_', suff,'.dump',sep=""))
 
-save(K, N_cores, N_cells, N_hood, y, r, idx_cores, idx_hood, d, d2, N_pot, d_pot, taxa, centers_veg, centers_polA,
+save(K, N_cores, N_cells, N_hood, 
+     y, r, 
+     idx_cores, idx_hood, 
+     d, d2, 
+     N_pot, d_pot, 
+     taxa, centers_veg, centers_polA,
 file=paste(wd, '/', path_out, '/cal_data_', K, 'taxa_', suff,'.rdata',sep=""))
 
 #####################################################################################

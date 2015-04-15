@@ -39,8 +39,8 @@ get_phi_stats <- function(phi, taxa){
   phi_stats
 }
 
-
-compute_C <- function(post, N_pot, d_pot, kernel){
+# build the total potential neighborhood weighting
+build_sumw_pot <- function(post, N_pot, d_pot, kernel, one_psi){
   
   col_substr = substr(colnames(post[,1,]), 1, 3)
   if (kernel=='gaussian'){
@@ -50,16 +50,13 @@ compute_C <- function(post, N_pot, d_pot, kernel){
       psi   = colMeans(post[,1,which(col_substr == 'psi')])
     }
     
-    C = sum( d_pot[,2] * exp(-d_pot[,1]^2/psi^2) )
+    sum_w = sum( d_pot[,2] * exp(-d_pot[,1]^2/psi^2) )
   } else if (kernel=='pl'){
     a   = mean(post[,1,which(col_substr == 'a')])
     b   = mean(post[,1,which(col_substr == 'b')])
-    C = sum( d_pot[,2] * (b-1) * (b-2) / (2 * pi * a  * a) * (1 + d_pot[,1] / a)^(-b) )
+    sum_w = sum( d_pot[,2] * (b-1) * (b-2) / (2 * pi * a  * a) * (1 + d_pot[,1] / a)^(-b) )
   }
-  
-  
-  return(C)
-  
+  return(sum_w)
 }
 
 sum_hood_props <- function(post, C, N_pot, d_pot, kernel){
@@ -96,7 +93,7 @@ power_law <- function(d, a, b) {
 } 
 
 #predicted pollen based on weighted neighborhoods using estimated pars
-pollen_preds <- function(post, N_cores, d, idx_cores, r, C, one_psi, kernel){
+pollen_preds <- function(post, N_cores, d, idx_cores, r, sum_w, one_psi, one_gamma, kernel){
   
   iters   = dim(post)[1]
   K       = ncol(r)
@@ -107,29 +104,32 @@ pollen_preds <- function(post, N_cores, d, idx_cores, r, C, one_psi, kernel){
   #   phi   = summary(fit)$summary[,'mean'][1:K]
   #   psi   = summary(fit)$summary[,'mean'][K+1]
   #   gamma = summary(fit)$summary[,'mean'][K+2]
-  
+#   
   phi   = colMeans(post[,1,which(col_substr == 'phi')])
-  gamma = mean(post[,1,which(col_substr == 'gam')])
+#   gamma = mean(post[,1,which(col_substr == 'gam')])
   
   #   
-  sum_w = vector(length=N_cores, mode='numeric')
+#   sum_w = vector(length=N_cores, mode='numeric')
   r_new = matrix(NA, nrow=N_cores, ncol=K)
   preds = matrix(NA, nrow=N_cores, ncol=K)
   
+  if (one_gamma){
+    gamma = rep(mean(post[,1,which(col_substr == 'gam')]), K)
+  } else {
+    gamma = colMeans(post[,1,which(col_substr == 'gam')])
+  }
+  
   if (kernel=='gaussian'){
     if (one_psi){
-      psi   = mean(post[,1,which(col_substr == 'psi')])
+      psi   = rep(mean(post[,1,which(col_substr == 'psi')]), K)
     } else {
       psi   = colMeans(post[,1,which(col_substr == 'psi')])
     }
-    if (one_psi){
-      w = exp(-(d*d)/(psi*psi))
-    } else{
-      w = array(NA, c(K, N_cells, N_cores))
-      for (k in 1:K){ 
-        w[k,,] = exp(-(d*d)/(psi[k]*psi[k]))
-      }
-    }
+#     w = array(NA, c(K, N_cells, N_cores))
+#     for (k in 1:K){ 
+#       w[k,,] = exp(-(d*d)/(psi[k]*psi[k]))
+#     }
+    
   } else if (kernel=='pl'){
     print("Kernel type : (inverse) power law")
     a = mean(post[,1,which(col_substr == 'a')])
@@ -149,35 +149,44 @@ pollen_preds <- function(post, N_cores, d, idx_cores, r, C, one_psi, kernel){
     out_sum = rep(0, K)
     #     sum_w <- 0
     
-    if (one_psi){
-      for (j in 1:N_cells){ # changed N_hood to N_locs
-        if (j != idx_cores[i]){
-          #         if (idx_hood[i,j] > 0){
-          #           out_sum <- out_sum + w[i,j]*r[idx_hood[i,j],]
-          out_sum <- out_sum + w[j,i]*r[j,]
-        }  
-      }
-    } else {
+#     if (one_psi){
+#       for (j in 1:N_cells){ # changed N_hood to N_locs
+#         if (j != idx_cores[i]){
+#           #         if (idx_hood[i,j] > 0){
+#           #           out_sum <- out_sum + w[i,j]*r[idx_hood[i,j],]
+#           out_sum <- out_sum + w[j,i]*r[j,]
+#         }  
+#       }
+#     } else {
       for (k in 1:K){
         print(paste0('k = ', k))
         for (j in 1:N_cells){ # changed N_hood to N_locs
           if (j != idx_cores[i]){
             #         if (idx_hood[i,j] > 0){
             #           out_sum <- out_sum + w[i,j]*r[idx_hood[i,j],]
-            out_sum[k] <- out_sum[k] + w[k,j,i]*r[j,k]
+            #     for (k in 1:K){ 
+            #       w[k,,] = exp(-(d*d)/(psi[k]*psi[k]))
+            #     }
+            if (kernel == 'gaussian'){
+              w = exp(-(d[j,i]*d[j,i])/(psi[k]*psi[k]))
+            }
+            out_sum[k] <- out_sum[k] + w[j,i]*r[j,k]
+#             out_sum[k] <- out_sum[k] + w[k,j,i]*r[j,k]
           }  
         }
       }
       
-    }
+#     }
     #     sum_w   <- sum(out_sum)
     #     print(sum_w)
     
-    sum_w[i] = sum(out_sum)
+#     sum_w[i] = sum(out_sum)
     #     r_new[i,]  = gamma*r[idx_cores[i],] + (1-gamma)*out_sum/sum_w
-    r_new[i,]  = gamma*r[idx_cores[i],] + (1-gamma)*out_sum/C
-    preds[i,] = phi*r_new[i,]    
-    
+
+    for (k in 1:K){
+      r_new[i,k]  = gamma[k]*r[idx_cores[i],k] + (1-gamma[k])*out_sum[k]/sum_w
+      preds[i,k] = phi[k]*r_new[i,k]        
+    }
   }
   
   alpha = rowSums(preds)   
@@ -274,7 +283,7 @@ pollen_preds_distance <- function(post, N_cores, d, idx_cores, r, C, radius){
 }
 
 #predicted pollen based on weighted neighborhoods using estimated pars
-dispersal_decay <- function(post, dmat, C, radius, kernel){
+dispersal_decay <- function(post, dmat, sum_w_pot, radius, kernel){
   
   rescale = 1e6
   iters   = dim(post)[1]
@@ -305,7 +314,7 @@ dispersal_decay <- function(post, dmat, C, radius, kernel){
   for (rad in 1:length(radius)){
     idx_int    = which(dmat[,1]<radius[rad])#/rescale)
     sum_w_int  = sum(w[idx_int,1])
-    r_int[rad] = gamma + (1-gamma) / C * sum_w_int     
+    r_int[rad] = gamma + (1-gamma) / sum_w_pot * sum_w_int     
   }
   
   return(r_int)

@@ -79,10 +79,10 @@ model {
   mu_gamma    ~ uniform(-10, 10);
   sigma_gamma ~ cauchy(0, 10);
   // gamma   ~ uniform(0,1); 
-  mu_a    ~ uniform(log(1e-6), log(2));
-  sigma_a ~ cauchy(1e-6, 4);  
+  mu_a    ~ uniform(log(1e-6), log(500));
+  sigma_a ~ cauchy(1e-6, 2);  
   mu_b    ~ uniform(log(2), log(100));
-  sigma_b ~ cauchy(1e-6, 4);  
+  sigma_b ~ cauchy(1e-6, 2);  
   
   for (k in 1:K){
     log_a[k] ~ normal(mu_a, sigma_a);

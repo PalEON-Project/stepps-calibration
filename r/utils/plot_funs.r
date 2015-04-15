@@ -468,6 +468,30 @@ plot_alpha <- function(dat, fpath){
   }
 }
 
+plot_par_vals <- function(post, parname, taxa, wd, path_figs){
+  
+  colsubstr = substr(colnames(post[,1,]),1,3)
+  par_vals  = post[,1,which(colsubstr == substr(parname, 1, 3))]
+  par_mean  = colMeans(par_vals)
+  par_lb    = apply(par_vals, 2, function(x) quantile(x, probs=0.025))
+  par_ub    = apply(par_vals, 2, function(x) quantile(x, probs=0.975))
+  
+  par_stats = data.frame(name=taxa, mu=par_mean, lb=par_lb, ub=par_ub)
+  
+  p <- ggplot(data=par_stats, aes(x=reorder(name, mu), y=mu)) + 
+    geom_point(size=4) + geom_errorbar(aes(ymin=lb, ymax=ub), width=.2) + 
+    xlab("Taxon") + ylab(parse(text=parname)) +
+    coord_flip() + theme_bw() + theme(axis.title.x=element_text(size=20), 
+                                      axis.title.y=element_text(size=20), 
+                                      axis.text.x=element_text(size=rel(1.3)),
+                                      axis.text.y=element_text(size=rel(1.3)))
+  
+  print(p)
+  #   theme(axis.text.x = element_text(angle=60, hjust=1)) + 
+  #   theme(panel.background = element_blank())
+  ggsave(p, filename=sprintf('%s/%s/%s.pdf', wd, path_figs, parname), width=8, height=6)
+}
+
 theme_clean <- function(plot_obj){
   plot_obj <- plot_obj + theme(axis.ticks = element_blank(), 
                                axis.text.y = element_blank(), 

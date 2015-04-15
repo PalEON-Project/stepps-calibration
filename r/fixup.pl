@@ -5,7 +5,9 @@ open(STAN, "+<", $ARGV[0]) or die;
 # count samples and figure out if we need timing info
 $samples = 0;
 $needs_timing = 1;
+$adapt = 0;
 while (<STAN>) {
+    $adapt    = 1 if /Adaptation terminated/;
     $counting = 1 if /Adaptation terminated/;
     $counting = 0 if /Elapsed Time/;
     $count++ if $counting;
@@ -13,22 +15,23 @@ while (<STAN>) {
 }
 $samples = $count - 4;
 
-if ($needs_timing) {
+if ($needs_timing && $adapt) {
     print STAN "#  Elapsed Time: 666 seconds (Warm-up)\n";
     print STAN "#                666 seconds (Sampling)\n";
     print STAN "#                666 seconds (Total)\n";
 
-# rewind and replace "num_samples"
-seek(STAN, 0, SEEK_SET);
-while (<STAN>) {
-    $len = length();
-    if (/num_samples = /) {
-        seek(STAN, tell(STAN)-$len, SEEK_SET);
-        $new = sprintf("#     num_samples = %d", $samples);
-        $new = sprintf("%-*s\n", $len-1, $new);
-        print STAN $new;
-        last;
+    # rewind and replace "num_samples"
+    seek(STAN, 0, SEEK_SET);
+    while (<STAN>) {
+	$len = length();
+	if (/num_samples = /) {
+	    seek(STAN, tell(STAN)-$len, SEEK_SET);
+	    $new = sprintf("#     num_samples = %d", $samples);
+	    $new = sprintf("%-*s\n", $len-1, $new);
+	    print STAN $new;
+	    last;
+	}
     }
 }
-}
+
 close(STAN);
