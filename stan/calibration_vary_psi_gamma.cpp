@@ -2,7 +2,7 @@
 
 #include <stan/model/model_header.hpp>
 
-namespace calibration_vary_psi_model_namespace {
+namespace calibration_vary_psi_gamma_model_namespace {
 
 using std::vector;
 using std::string;
@@ -21,7 +21,7 @@ typedef Eigen::Matrix<double,Eigen::Dynamic,1> vector_d;
 typedef Eigen::Matrix<double,1,Eigen::Dynamic> row_vector_d;
 typedef Eigen::Matrix<double,Eigen::Dynamic,Eigen::Dynamic> matrix_d;
 
-class calibration_vary_psi_model : public prob_grad {
+class calibration_vary_psi_gamma_model : public prob_grad {
 private:
     int K;
     int N_cores;
@@ -33,10 +33,10 @@ private:
     matrix_d d2;
     matrix_d d_pot;
 public:
-    calibration_vary_psi_model(stan::io::var_context& context__,
+    calibration_vary_psi_gamma_model(stan::io::var_context& context__,
         std::ostream* pstream__ = 0)
         : prob_grad::prob_grad(0) {
-        static const char* function__ = "calibration_vary_psi_model_namespace::calibration_vary_psi_model(%1%)";
+        static const char* function__ = "calibration_vary_psi_gamma_model_namespace::calibration_vary_psi_gamma_model(%1%)";
         (void) function__; // dummy call to supress warning
         size_t pos__;
         (void) pos__; // dummy call to supress warning
@@ -154,10 +154,10 @@ public:
         param_ranges_i__.clear();
         num_params_r__ += K;
         num_params_r__ += K;
-        ++num_params_r__;
+        num_params_r__ += K;
     }
 
-    ~calibration_vary_psi_model() { }
+    ~calibration_vary_psi_gamma_model() { }
 
 
     void transform_inits(const stan::io::var_context& context__,
@@ -194,10 +194,11 @@ public:
             throw std::runtime_error("variable gamma missing");
         vals_r__ = context__.vals_r("gamma");
         pos__ = 0U;
-        context__.validate_dims("initialization", "gamma", "double", context__.to_vec());
-        double gamma(0);
-        gamma = vals_r__[pos__++];
-        try { writer__.scalar_lub_unconstrain(0,1,gamma); } catch (std::exception& e) {  throw std::runtime_error(std::string("Error transforming variable gamma: ") + e.what()); }
+        context__.validate_dims("initialization", "gamma", "vector_d", context__.to_vec(K));
+        vector_d gamma(K);
+        for (int j1__ = 0U; j1__ < K; ++j1__)
+            gamma(j1__) = vals_r__[pos__++];
+        try { writer__.vector_lub_unconstrain(0,1,gamma); } catch (std::exception& e) {  throw std::runtime_error(std::string("Error transforming variable gamma: ") + e.what()); }
         params_r__ = writer__.data_r();
         params_i__ = writer__.data_i();
     }
@@ -241,12 +242,12 @@ public:
         else
             psi = in__.vector_lub_constrain(0.10000000000000001,2,K);
 
-        T__ gamma;
+        Eigen::Matrix<T__,Eigen::Dynamic,1>  gamma;
         (void) gamma;   // dummy to suppress unused var warning
         if (jacobian__)
-            gamma = in__.scalar_lub_constrain(0,1,lp__);
+            gamma = in__.vector_lub_constrain(0,1,K,lp__);
         else
-            gamma = in__.scalar_lub_constrain(0,1);
+            gamma = in__.vector_lub_constrain(0,1,K);
 
 
         // transformed parameters
@@ -301,7 +302,9 @@ public:
                 stan::math::assign(get_base1_lhs(w,k,"w",1), exp(divide(minus(d2),square(get_base1(psi,k,"psi",1)))));
             }
             for (int i = 1; i <= N_cores; ++i) {
-                stan::math::assign(get_base1_lhs(r_new,i,"r_new",1), multiply(gamma,get_base1(r,get_base1(idx_cores,i,"idx_cores",1),"r",1)));
+                for (int k = 1; k <= K; ++k) {
+                    stan::math::assign(get_base1_lhs(r_new,i,"r_new",1), multiply(get_base1(gamma,k,"gamma",1),get_base1(r,get_base1(idx_cores,i,"idx_cores",1),"r",1)));
+                }
                 for (int k = 1; k <= K; ++k) {
                     stan::math::assign(get_base1_lhs(out_sum,k,"out_sum",1), 0);
                 }
@@ -314,7 +317,7 @@ public:
                     }
                 }
                 for (int k = 1; k <= K; ++k) {
-                    stan::math::assign(get_base1_lhs(get_base1_lhs(r_new,i,"r_new",1),k,"r_new",2), (get_base1(get_base1(r_new,i,"r_new",1),k,"r_new",2) + ((get_base1(out_sum,k,"out_sum",1) * (1 - gamma)) / get_base1(sum_w_pot,k,"sum_w_pot",1))));
+                    stan::math::assign(get_base1_lhs(get_base1_lhs(r_new,i,"r_new",1),k,"r_new",2), (get_base1(get_base1(r_new,i,"r_new",1),k,"r_new",2) + ((get_base1(out_sum,k,"out_sum",1) * (1 - get_base1(gamma,k,"gamma",1))) / get_base1(sum_w_pot,k,"sum_w_pot",1))));
                 }
                 stan::math::assign(max_r_new, 0);
                 for (int k = 1; k <= K; ++k) {
@@ -395,6 +398,7 @@ public:
         dims__.push_back(K);
         dimss__.push_back(dims__);
         dims__.resize(0);
+        dims__.push_back(K);
         dimss__.push_back(dims__);
         dims__.resize(0);
         dims__.push_back(N_cores);
@@ -411,19 +415,21 @@ public:
                      std::ostream* pstream__ = 0) const {
         vars__.resize(0);
         stan::io::reader<double> in__(params_r__,params_i__);
-        static const char* function__ = "calibration_vary_psi_model_namespace::write_array(%1%)";
+        static const char* function__ = "calibration_vary_psi_gamma_model_namespace::write_array(%1%)";
         (void) function__; // dummy call to supress warning
         // read-transform, write parameters
         vector_d phi = in__.vector_lub_constrain(0.01,300,K);
         vector_d psi = in__.vector_lub_constrain(0.10000000000000001,2,K);
-        double gamma = in__.scalar_lub_constrain(0,1);
+        vector_d gamma = in__.vector_lub_constrain(0,1,K);
         for (int k_0__ = 0; k_0__ < K; ++k_0__) {
             vars__.push_back(phi[k_0__]);
         }
         for (int k_0__ = 0; k_0__ < K; ++k_0__) {
             vars__.push_back(psi[k_0__]);
         }
-        vars__.push_back(gamma);
+        for (int k_0__ = 0; k_0__ < K; ++k_0__) {
+            vars__.push_back(gamma[k_0__]);
+        }
 
         if (!include_tparams__) return;
         // declare and define transformed parameters
@@ -480,10 +486,13 @@ public:
                 stan::math::assign(get_base1_lhs(w,k,"w",1), exp(divide(minus(d2),square(get_base1(psi,k,"psi",1)))));
             }
             for (int i = 1; i <= N_cores; ++i) {
-                stan::math::assign(get_base1_lhs(r_new,i,"r_new",1), multiply(gamma,get_base1(r,get_base1(idx_cores,i,"idx_cores",1),"r",1)));
+                for (int k = 1; k <= K; ++k) {
+                    stan::math::assign(get_base1_lhs(r_new,i,"r_new",1), multiply(get_base1(gamma,k,"gamma",1),get_base1(r,get_base1(idx_cores,i,"idx_cores",1),"r",1)));
+                }
                 for (int k = 1; k <= K; ++k) {
                     stan::math::assign(get_base1_lhs(out_sum,k,"out_sum",1), 0);
                 }
+                stan::math::assign(sum_w, 0);
                 for (int k = 1; k <= K; ++k) {
                     for (int j = 1; j <= N_cells; ++j) {
                         if (as_bool(logical_neq(j,get_base1(idx_cores,i,"idx_cores",1)))) {
@@ -492,7 +501,7 @@ public:
                     }
                 }
                 for (int k = 1; k <= K; ++k) {
-                    stan::math::assign(get_base1_lhs(get_base1_lhs(r_new,i,"r_new",1),k,"r_new",2), (get_base1(get_base1(r_new,i,"r_new",1),k,"r_new",2) + ((get_base1(out_sum,k,"out_sum",1) * (1 - gamma)) / get_base1(sum_w_pot,k,"sum_w_pot",1))));
+                    stan::math::assign(get_base1_lhs(get_base1_lhs(r_new,i,"r_new",1),k,"r_new",2), (get_base1(get_base1(r_new,i,"r_new",1),k,"r_new",2) + ((get_base1(out_sum,k,"out_sum",1) * (1 - get_base1(gamma,k,"gamma",1))) / get_base1(sum_w_pot,k,"sum_w_pot",1))));
                 }
                 stan::math::assign(max_r_new, 0);
                 for (int k = 1; k <= K; ++k) {
@@ -563,8 +572,10 @@ public:
             writer__.comma();
             o__ << "psi" << '.' << k_0__;
         }
-        writer__.comma();
-        o__ << "gamma";
+        for (int k_0__ = 1; k_0__ <= K; ++k_0__) {
+            writer__.comma();
+            o__ << "gamma" << '.' << k_0__;
+        }
         for (int k_0__ = 1; k_0__ <= N_cores; ++k_0__) {
             writer__.comma();
             o__ << "log_lik" << '.' << k_0__;
@@ -580,14 +591,14 @@ public:
                    std::ostream* pstream__ = 0) const {
         stan::io::reader<double> in__(params_r__,params_i__);
         stan::io::csv_writer writer__(o__);
-        static const char* function__ = "calibration_vary_psi_model_namespace::write_csv(%1%)";
+        static const char* function__ = "calibration_vary_psi_gamma_model_namespace::write_csv(%1%)";
         (void) function__; // dummy call to supress warning
         // read-transform, write parameters
         vector_d phi = in__.vector_lub_constrain(0.01,300,K);
         writer__.write(phi);
         vector_d psi = in__.vector_lub_constrain(0.10000000000000001,2,K);
         writer__.write(psi);
-        double gamma = in__.scalar_lub_constrain(0,1);
+        vector_d gamma = in__.vector_lub_constrain(0,1,K);
         writer__.write(gamma);
 
         // declare, define and validate transformed parameters
@@ -642,10 +653,13 @@ public:
                 stan::math::assign(get_base1_lhs(w,k,"w",1), exp(divide(minus(d2),square(get_base1(psi,k,"psi",1)))));
             }
             for (int i = 1; i <= N_cores; ++i) {
-                stan::math::assign(get_base1_lhs(r_new,i,"r_new",1), multiply(gamma,get_base1(r,get_base1(idx_cores,i,"idx_cores",1),"r",1)));
+                for (int k = 1; k <= K; ++k) {
+                    stan::math::assign(get_base1_lhs(r_new,i,"r_new",1), multiply(get_base1(gamma,k,"gamma",1),get_base1(r,get_base1(idx_cores,i,"idx_cores",1),"r",1)));
+                }
                 for (int k = 1; k <= K; ++k) {
                     stan::math::assign(get_base1_lhs(out_sum,k,"out_sum",1), 0);
                 }
+                stan::math::assign(sum_w, 0);
                 for (int k = 1; k <= K; ++k) {
                     for (int j = 1; j <= N_cells; ++j) {
                         if (as_bool(logical_neq(j,get_base1(idx_cores,i,"idx_cores",1)))) {
@@ -654,7 +668,7 @@ public:
                     }
                 }
                 for (int k = 1; k <= K; ++k) {
-                    stan::math::assign(get_base1_lhs(get_base1_lhs(r_new,i,"r_new",1),k,"r_new",2), (get_base1(get_base1(r_new,i,"r_new",1),k,"r_new",2) + ((get_base1(out_sum,k,"out_sum",1) * (1 - gamma)) / get_base1(sum_w_pot,k,"sum_w_pot",1))));
+                    stan::math::assign(get_base1_lhs(get_base1_lhs(r_new,i,"r_new",1),k,"r_new",2), (get_base1(get_base1(r_new,i,"r_new",1),k,"r_new",2) + ((get_base1(out_sum,k,"out_sum",1) * (1 - get_base1(gamma,k,"gamma",1))) / get_base1(sum_w_pot,k,"sum_w_pot",1))));
                 }
                 stan::math::assign(max_r_new, 0);
                 for (int k = 1; k <= K; ++k) {
@@ -708,7 +722,7 @@ public:
     }
 
     static std::string model_name() {
-        return "calibration_vary_psi_model";
+        return "calibration_vary_psi_gamma_model";
     }
 
 
@@ -726,9 +740,11 @@ public:
             param_name_stream__ << "psi" << '.' << k_0__;
             param_names__.push_back(param_name_stream__.str());
         }
-        param_name_stream__.str(std::string());
-        param_name_stream__ << "gamma";
-        param_names__.push_back(param_name_stream__.str());
+        for (int k_0__ = 1; k_0__ <= K; ++k_0__) {
+            param_name_stream__.str(std::string());
+            param_name_stream__ << "gamma" << '.' << k_0__;
+            param_names__.push_back(param_name_stream__.str());
+        }
 
         if (!include_gqs__ && !include_tparams__) return;
 
@@ -755,9 +771,11 @@ public:
             param_name_stream__ << "psi" << '.' << k_0__;
             param_names__.push_back(param_name_stream__.str());
         }
-        param_name_stream__.str(std::string());
-        param_name_stream__ << "gamma";
-        param_names__.push_back(param_name_stream__.str());
+        for (int k_0__ = 1; k_0__ <= K; ++k_0__) {
+            param_name_stream__.str(std::string());
+            param_name_stream__ << "gamma" << '.' << k_0__;
+            param_names__.push_back(param_name_stream__.str());
+        }
 
         if (!include_gqs__ && !include_tparams__) return;
 
@@ -775,7 +793,7 @@ public:
 
 int main(int argc, const char* argv[]) {
     try {
-        return stan::gm::command<calibration_vary_psi_model_namespace::calibration_vary_psi_model>(argc,argv);
+        return stan::gm::command<calibration_vary_psi_gamma_model_namespace::calibration_vary_psi_gamma_model>(argc,argv);
     } catch (std::exception& e) {
         std::cerr << std::endl << "Exception: " << e.what() << std::endl;
         std::cerr << "Diagnostic information: " << std::endl << boost::diagnostic_information(e) << std::endl;
