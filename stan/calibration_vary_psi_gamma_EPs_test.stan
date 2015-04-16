@@ -17,13 +17,14 @@ data {
   int idx_cores[N_cores];        // core cell indices
   
   vector[K] r[N_cells];          // pls proportions
-  matrix[N_cells,N_cores] d2;    // distance matrix squared
+  matrix[N_cells,N_cores] d;    // distance matrix squared
   matrix[N_pot, 2] d_pot;        // distances and counts of potential neighborhood
 }
-
 transformed data {
+  matrix[N_cells,N_cores] d2;    // distance matrix squared
+    
+  d2 <- d .* d ;
 }
-
 parameters {
   vector<lower=0.01, upper=300>[K] phi;  // dirichlet precision pars
   //vector<lower=0.1, upper=2>[K]    psi;  // dispersal par
@@ -83,7 +84,7 @@ model {
     log_psi[k]   ~ normal(mu_psi, sigma_psi);
   }  
 
-  print(psi);
+  //print(psi);
   
   for (k in 1:K){
     sum_w_pot[k] <- 0;
@@ -112,11 +113,7 @@ model {
     if (sum(r[idx_cores[i]]) == 0 ){
       print("Cell ", idx_cores[i], " has NO vegetation! Neighborhood props will not sum to 1.");
     }
-    */
-    
-    // local piece
-    for (k in 1:K)
-      r_new[i] <- gamma[k] * r[idx_cores[i]];
+    */     
    
     for (k in 1:K) {out_sum[k] <- 0;}
     sum_w <- 0;
@@ -129,17 +126,10 @@ model {
       }
     }
 
-    //sum_w   <- sum(out_sum);
-     
-    //print("out_sum", sum(out_sum));
-    //print("sum_w", sum_w);
-    
-    //local vs. non-local
+    //local plus non-local pieces non-local
     for (k in 1:K)
-      r_new[i,k] <- r_new[i,k] + out_sum[k] * (1-gamma[k]) / sum_w_pot[k];
-    
-    //print(r_new[i]);
-    //print(sum(r_new[i]));
+      r_new[i,k] <-  gamma[k] * r[idx_cores[i],k] + out_sum[k] * (1-gamma[k]) / sum_w_pot[k];
+
     
     /*
     if (sum(r_new[i]) < 1-1e-6 ){
@@ -149,24 +139,24 @@ model {
     }
     */
     
-    // hacky!
-    // find taxon with highest proportional value
-    max_r_new <- 0;
-    for (k in 1:K){
-      if (r_new[i,k] > max_r_new){
-        max_r_new     <- r_new[i,k];
-        max_r_new_idx <- k;
-       }
-    }
+    // // hacky!
+    // // find taxon with highest proportional value
+    // max_r_new <- 0;
+    // for (k in 1:K){
+    //   if (r_new[i,k] > max_r_new){
+    //     max_r_new     <- r_new[i,k];
+    //     max_r_new_idx <- k;
+    //    }
+    // }
     
-    for (k in 1:K){
-      if (r_new[i,k] == 0){
-        r_new[i,k] <- 0.0001;
-        r_new[i,max_r_new_idx] <- r_new[i,max_r_new_idx] - 0.0001;
+    // for (k in 1:K){
+    //   if (r_new[i,k] == 0){
+    //     r_new[i,k] <- 0.0001;
+    //     r_new[i,max_r_new_idx] <- r_new[i,max_r_new_idx] - 0.0001;
         
-        print("warning: zero proportion; core: ", i, "; taxon: ", k, " -> adjusting");
-      }
-    }
+    //     print("warning: zero proportion; core: ", i, "; taxon: ", k, " -> adjusting");
+    //   }
+    // }
     
     alpha <- phi .* r_new[i];
       
@@ -179,13 +169,13 @@ model {
 }
 generated quantities{
   vector[N_cores] log_lik;
-  vector[K] sum_w_pot;
+  vector[K] sum_w_pot;  
   vector[K] out_sum;
   vector[K] alpha;
 
   {
     // declarations
-    matrix[N_cells,N_cores] w[K];      
+    matrix[N_cells,N_cores] w[K];    
     vector[K] r_new[N_cores];  
     
     // real max_r_new;
@@ -220,10 +210,7 @@ generated quantities{
     }
     */
     
-    // local piece
-    for (k in 1:K)
-      r_new[i] <- gamma[k] * r[idx_cores[i]];
-   
+
     for (k in 1:K) {out_sum[k] <- 0;}
     //sum_w <- 0;
     
@@ -234,15 +221,10 @@ generated quantities{
 	}  
       }
     }
-
-    //sum_w   <- sum(out_sum);
-     
-    //print("out_sum", sum(out_sum));
-    //print("sum_w", sum_w);
     
-    //local vs. non-local
+    //local plus non-local pieces
     for (k in 1:K)
-      r_new[i,k] <- r_new[i,k] + out_sum[k] * (1-gamma[k]) / sum_w_pot[k];
+      r_new[i,k] <- gamma[k] * r[idx_cores[i],k] + out_sum[k] * (1-gamma[k]) / sum_w_pot[k];
     
     //print(r_new[i]);
     //print(sum(r_new[i]));
