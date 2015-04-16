@@ -10,11 +10,15 @@ us.fort <- fortify(us.shp, region='id')
 # trace plots
 # fit is a stanfit object
 # can pass true values as a list if known
-trace_plots <- function(post, npars, suff="", save_plots=TRUE, fpath){
+trace_plots <- function(fit, npars, N_cores, suff="", save_plots=TRUE, fpath){
+  
+  post = rstan::extract(fit, permuted=FALSE, inc_warmup=FALSE)
   
   n      = dim(post)[3]
-  idx = c(seq(1,npars), n)
+  idx = c(seq(1,n-N_cores-1), n)
   labels = colnames(post[,1,idx])
+  
+  ntrace = length(idx)
   
   avg = summary(fit)$summary[,"mean"]
   
@@ -26,7 +30,7 @@ trace_plots <- function(post, npars, suff="", save_plots=TRUE, fpath){
   }
   
   par(mfrow=c(1,1))
-  for (i in 1:npars){
+  for (i in 1:ntrace){
     
     plot(post[,1,idx[i]], type="l", ylab=labels[i], xlab="iter")
     abline(h=avg[idx[i]], col="blue")

@@ -29,6 +29,31 @@ waic <- function (stanfit){
   return (list (waic=waic_2, p_waic=p_waic_2, lppd=lppd, p_waic_1=p_waic_1))
 }
 
+# log likelihood vector; averaged over iterations
+log_lik <- function (fit){
+  log_lik <- extract(fit, "log_lik")$log_lik
+  log_lik_iter <- rowSums(log_lik)
+  log_lik_mean <- log(colMeans(exp(log_lik)))
+  return(list(log_lik=data.frame(log_lik=log_lik_mean), log_lik_iter=data.frame(log_lik_iter),sum_log_lik=sum(log_lik_mean)))
+}
+
+
+aic <- function(fit, npars){
+  log_lik <- extract(fit, "log_lik")$log_lik
+  log_lik_mean <- log(colMeans(exp(log_lik)))
+  aic = 2 * npars - 2 * sum(log_lik_mean)
+  return(aic)
+}
+
+# dic <- function(fit, npars){
+#   log_lik <- extract(stanfit, "log_lik")$log_lik
+#   d_bar <- log(colMeans(exp(log_lik)))
+#   d_theta_bar <- 
+#   aic = 2 * npars - 2 * sum(log_lik_mean)
+#   return(aic)
+# }
+
+
 get_phi_stats <- function(phi, taxa){
   phi_bar <- colMeans(phi)
   phi_L   <- apply(phi, 2, function(x){quantile(x, probs = (0.025))})
@@ -40,17 +65,21 @@ get_phi_stats <- function(phi, taxa){
 }
 
 # build the total potential neighborhood weighting
-build_sumw_pot <- function(post, N_pot, d_pot, kernel, one_psi){
+build_sumw_pot <- function(post, K, N_pot, d_pot, kernel, one_psi){
+  
+  sum_w = rep(NA, K)
   
   col_substr = substr(colnames(post[,1,]), 1, 3)
   if (kernel=='gaussian'){
     if (one_psi){
-      psi   = mean(post[,1,which(col_substr == 'psi')])
+      psi   = rep(mean(post[,1,which(col_substr == 'psi')]), K)
     } else {
       psi   = colMeans(post[,1,which(col_substr == 'psi')])
     }
     
-    sum_w = sum( d_pot[,2] * exp(-d_pot[,1]^2/psi^2) )
+    for (k in 1:K)
+      sum_w[k] = sum(d_pot[,2] * exp(-d_pot[,1]^2/psi[k]^2))
+    
   } else if (kernel=='pl'){
     a   = mean(post[,1,which(col_substr == 'a')])
     b   = mean(post[,1,which(col_substr == 'b')])
@@ -169,9 +198,11 @@ pollen_preds <- function(post, N_cores, d, idx_cores, r, sum_w, one_psi, one_gam
             #     }
             if (kernel == 'gaussian'){
               w = exp(-(d[j,i]*d[j,i])/(psi[k]*psi[k]))
-            }
-            out_sum[k] <- out_sum[k] + w[j,i]*r[j,k]
+              out_sum[k] <- out_sum[k] + w*r[j,k]
+            } else if (kernel == 'pl'){
+              out_sum[k] <- out_sum[k] + w[j,i]*r[j,k]
 #             out_sum[k] <- out_sum[k] + w[k,j,i]*r[j,k]
+            }
           }  
         }
       }
@@ -184,7 +215,7 @@ pollen_preds <- function(post, N_cores, d, idx_cores, r, sum_w, one_psi, one_gam
     #     r_new[i,]  = gamma*r[idx_cores[i],] + (1-gamma)*out_sum/sum_w
 
     for (k in 1:K){
-      r_new[i,k]  = gamma[k]*r[idx_cores[i],k] + (1-gamma[k])*out_sum[k]/sum_w
+      r_new[i,k]  = gamma[k]*r[idx_cores[i],k] + (1-gamma[k])*out_sum[k]/sum_w[k]
       preds[i,k] = phi[k]*r_new[i,k]        
     }
   }
