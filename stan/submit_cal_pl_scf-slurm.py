@@ -24,6 +24,12 @@ runs = [ ('cal_pl',
           sample num_warmup=250 num_samples=500 save_warmup=1\
           data file=../r/dump/cal_data_12taxa_mid_comp_v0.1.dump \
           output file=../output/cal_pl_Ka_Kgamma_EPs_v0.3.csv\
+          random seed=42'),
+         ('cal_pl_Ka_EPs_v0.3',
+          './cal_pl_Ka_EPs.exe \
+          sample num_warmup=250 num_samples=500 save_warmup=1\
+          data file=../r/dump/cal_data_12taxa_mid_comp_v0.1.dump \
+          output file=../output/cal_pl_Ka_EPs_v0.3.csv\
           random seed=42')
 ]
 
