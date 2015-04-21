@@ -4,38 +4,14 @@ import subprocess
 runs = [ ('cal_g_v0.3',
           './calibration.exe \
           sample num_warmup=250 num_samples=500 save_warmup=1\
-          data file=../r/dump/cal_data_12taxa_mid_comp_v0.1.dump \
-          output file=../output/12taxa_mid_comp_g_v0.3.csv\
+          data file=../r/dump/cal_data_12taxa_mid_comp_ALL_v0.1.dump \
+          output file=../output/12taxa_mid_comp_g_ALL_v0.3.csv\
           random seed=42'),
          ('cal_pl_v0.3',
           './calibration_pl.exe \
           sample num_warmup=250 num_samples=500 save_warmup=1\
-          data file=../r/dump/cal_data_12taxa_mid_comp_v0.1.dump \
-          output file=../output/12taxa_mid_comp_pl_v0.2.csv\
-          random seed=42'),
-         ('cal_vary_psi_v0.3',
-          './calibration_vary_psi.exe \
-          sample num_warmup=250 num_samples=500 save_warmup=1\
-          data file=../r/dump/cal_data_12taxa_mid_comp_v0.1.dump \
-          output file=../output/12taxa_mid_comp_vary_psi_v0.3.csv\
-          random seed=42'),
-         ('cal_vary_psi_EPs_v0.3',
-          './calibration_vary_psi.exe \
-          sample num_warmup=250 num_samples=500 save_warmup=1\
-          data file=../r/dump/cal_data_12taxa_mid_comp_v0.1.dump \
-          output file=../output/12taxa_mid_comp_vary_psi_v0.3.csv\
-          random seed=42'),
-         ('cal_vary_psi_gamma_v0.3',
-          './calibration_pl.exe \
-          sample num_warmup=250 num_samples=500 save_warmup=1\
-          data file=../r/dump/cal_data_12taxa_mid_comp_v0.1.dump \
-          output file=../output/12taxa_mid_comp_vary_psi_gamma_v0.3.csv\
-          random seed=42'),
-         ('cal_vary_psi_gamma_EPs_v0.3',
-          './calibration_vary_psi_gamma_EPs.exe \
-          sample num_warmup=250 num_samples=500 save_warmup=1\
-          data file=../r/dump/cal_data_12taxa_mid_comp_v0.1.dump \
-          output file=../output/12taxa_mid_comp_vary_psi_gamma_EPs_v0.3.csv\
+          data file=../r/dump/cal_data_12taxa_mid_comp_ALL_v0.1.dump \
+          output file=../output/12taxa_mid_comp_pl_ALL_v0.2.csv\
           random seed=42')
 ]
 
