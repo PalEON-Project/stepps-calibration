@@ -1,17 +1,17 @@
-
+B1;3201;0c
 import subprocess
 
 runs = [ ('cal_g_v0.3',
-          './calibration.exe \
+          './cal_g.exe \
           sample num_warmup=250 num_samples=500 save_warmup=1\
           data file=../r/dump/cal_data_12taxa_mid_comp_ALL_v0.1.dump \
-          output file=../output/12taxa_mid_comp_g_ALL_v0.3.csv\
+          output file=../output/cal_g_ALL_v0.3.csv\
           random seed=42'),
          ('cal_pl_v0.3',
-          './calibration_pl.exe \
+          './cal_pl.exe \
           sample num_warmup=250 num_samples=500 save_warmup=1\
           data file=../r/dump/cal_data_12taxa_mid_comp_ALL_v0.1.dump \
-          output file=../output/12taxa_mid_comp_pl_ALL_v0.2.csv\
+          output file=../output/cal_pl_ALL_v0.3.csv\
           random seed=42')
 ]
 
