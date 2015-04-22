@@ -11,6 +11,18 @@ runs = [ ('cal_g_v0.3',
           sample num_warmup=250 num_samples=500 save_warmup=1\
           data file=../r/dump/cal_data_12taxa_mid_comp_ALL_v0.2.dump \
           output file=../output/cal_pl_ALL_v0.3.csv\
+          random seed=42'),
+         ('cal_g_v0.3',
+          './cal_g.exe \
+          sample num_warmup=250 num_samples=500 save_warmup=1\
+          data file=../r/dump/cal_data_12taxa_mid_comp_UMW_v0.2.dump \
+          output file=../output/cal_g_UMW_v0.3.csv\
+          random seed=42'),
+         ('cal_pl_v0.3',
+          './cal_pl.exe \
+          sample num_warmup=250 num_samples=500 save_warmup=1\
+          data file=../r/dump/cal_data_12taxa_mid_comp_UMW_v0.2.dump \
+          output file=../output/cal_pl_UMW_v0.3.csv\
           random seed=42')
 ]
 
