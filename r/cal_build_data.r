@@ -19,7 +19,7 @@ data_date = '2014-10-23'
 
 ## relative to working directory!
 path_pollen  = paste0('data/cal_data_', depth_type, '_depth_', data_date, '.csv') # sh elicitation results
-# path_veg     = 'data/composition_v0.2.csv'                                        # composition model results
+path_veg_old     = 'data/composition_v0.2.csv'                                        # composition model results
 path_veg     = 'data/composition_v0.3.csv'                                        # composition model results
 path_map     = 'data/map_data/us_alb.shp'                                         # albers projected state map!
 path_convert = 'data/dict-comp2stepps.csv'                                        # conversion table
