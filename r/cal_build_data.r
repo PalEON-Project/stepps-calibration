@@ -19,17 +19,18 @@ data_date = '2014-10-23'
 
 ## relative to working directory!
 path_pollen  = paste0('data/cal_data_', depth_type, '_depth_', data_date, '.csv') # sh elicitation results
-path_veg     = 'data/composition_v0.2.csv'                                        # composition model results
+# path_veg     = 'data/composition_v0.2.csv'                                        # composition model results
+path_veg     = 'data/composition_v0.3.csv'                                        # composition model results
 path_map     = 'data/map_data/us_alb.shp'                                         # albers projected state map!
 path_convert = 'data/dict-comp2stepps.csv'                                        # conversion table
 
 path_out = 'r/dump'                                                               # dump data file stored here
 
 # append to output filenames
-suff       = paste0(depth_type, '_comp_test')                                
+suff       = paste0(depth_type, '_comp_ALL_v0.2')                                
 
-# states = c('michigan:north', 'minnesota', 'wisconsin')
-states = c('michigan:north')
+states = c('michigan:north', 'minnesota', 'wisconsin', 'michigan:south')
+# states = c('michigan:south')
 
 wd = getwd() 
 
@@ -118,6 +119,9 @@ centers_veg = cbind(veg_meta$x, veg_meta$y)
 #####################################################################################
 # reproject pollen coords from lat long to Albers
 #####################################################################################
+
+# Lake Ocheda Maple count set to 0
+pollen[pollen$id == 10971, 'MAPLE'] = 0
 
 #XXX: add pollen to albers function
 centers_pol = data.frame(cbind(pollen$long, pollen$lat))

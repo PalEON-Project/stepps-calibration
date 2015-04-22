@@ -10,7 +10,10 @@ source('r/utils/simDataFuns.r')
 # pollen   = read.table('data/pollen_se_sum.csv', header=TRUE)
 load('r/dump/cal_data_12taxa_mid_comp_v0.1.rdata')
 
+# load('r/dump/cal_data_12taxa_mid_mi_sp.rdata')
+
 v = '0_3'
+# v = 'mi_sp'
 
 ########################################################################################################
 ## pls pie map

@@ -33,18 +33,19 @@ suff_dat = '12taxa_mid_comp_v0.1'
 # suff_fit = '12taxa_mid_comp_pl_v0.3'
 # suff_fit = '12taxa_mid_comp_pl_vary_kernel_gamma_EPs_v0.3'
 
-kernel = run$kernel
+kernel   = run$kernel
 suff_fit = run$suff_fit
 
 if (kernel == 'gaussian'){
   one_psi    = run$one_psi
   one_gamma  = run$one_gamma
   EPs        = run$EPs
+} else if (kernel == 'pl'){
+  one_a      = run$one_a
+  one_b      = run$one_b
+  one_gamma  = run$one_gamma
+  EPs        = run$EPs
 }
-  
-one_a      = TRUE
-one_b      = TRUE
-
 
 save_plots = TRUE
 rescale    = 1e6
@@ -119,6 +120,9 @@ print(aic(fit, npars))
 
 log_lik(fit)
 
+# source('r/test_log_lik.r')
+# log_lik_iter(fit, N_cores, d, idx_cores, r, N_pot, d_pot, run)
+
 # sink(sprintf('%s/%s/summary.txt', wd, path_figs1), type='output')
 sink(sprintf('%s/summary.txt', path_figs1), type='output')
 suff_fit
@@ -152,6 +156,12 @@ if ((kernel=='gaussian') & (!one_psi)){
 if (!one_gamma){
   plot_par_vals(post, parname='gamma', taxa, wd, path_figs1)
 }
+if ((kernel=='pl') & (!one_a)){
+  plot_par_vals(post, parname='a', taxa, wd, path_figs1)
+}
+if ((kernel=='pl') & (!one_b)){
+  plot_par_vals(post, parname='b', taxa, wd, path_figs1)
+}
 
 pollen_props = compute_props(y, taxa)
 
@@ -160,9 +170,9 @@ local_preds  = phi_scale_veg(fit, N_cores, r, idx_cores)
 
 local_pollen_veg_plot2(r, idx_cores, pollen_props, local_preds, taxa, suff, save_plots, fpath=path_figs1)
 
-sum_w <- build_sumw_pot(post, K, N_pot, d_pot, kernel=kernel, one_psi)
+sum_w <- build_sumw_pot(post, K, N_pot, d_pot, run)
 
-preds_out = pollen_preds(post, N_cores, d, idx_cores, r, sum_w, one_psi, one_gamma, kernel=kernel)
+preds_out = pollen_preds(post, N_cores, d, idx_cores, r, sum_w, run)
 
 alpha = preds_out$alpha # DM precision pars
 preds = preds_out$preds

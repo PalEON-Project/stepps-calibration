@@ -30,7 +30,7 @@ waic <- function (stanfit){
 }
 
 # log likelihood vector; averaged over iterations
-log_lik <- function (fit){
+log_lik <- function(fit){
   log_lik <- extract(fit, "log_lik")$log_lik
   log_lik_iter <- rowSums(log_lik)
   log_lik_mean <- log(colMeans(exp(log_lik)))
@@ -65,25 +65,42 @@ get_phi_stats <- function(phi, taxa){
 }
 
 # build the total potential neighborhood weighting
-build_sumw_pot <- function(post, K, N_pot, d_pot, kernel, one_psi){
+build_sumw_pot <- function(post, K, N_pot, d_pot, run){
+  
+  kernel = run$kernel
   
   sum_w = rep(NA, K)
   
-  col_substr = substr(colnames(post[,1,]), 1, 3)
+  col_names = colnames(post[,1,])
+  par_names  = unlist(lapply(col_names, function(x) strsplit(x, "\\[")[[1]][1]))
+  
   if (kernel=='gaussian'){
+    one_psi = run$one_psi
     if (one_psi){
-      psi   = rep(mean(post[,1,which(col_substr == 'psi')]), K)
+      psi   = rep(mean(post[,1,which(par_names == 'psi')]), K)
     } else {
-      psi   = colMeans(post[,1,which(col_substr == 'psi')])
+      psi   = colMeans(post[,1,which(par_names == 'psi')])
     }
     
     for (k in 1:K)
       sum_w[k] = sum(d_pot[,2] * exp(-d_pot[,1]^2/psi[k]^2))
     
   } else if (kernel=='pl'){
-    a   = mean(post[,1,which(col_substr == 'a')])
-    b   = mean(post[,1,which(col_substr == 'b')])
-    sum_w = sum( d_pot[,2] * (b-1) * (b-2) / (2 * pi * a  * a) * (1 + d_pot[,1] / a)^(-b) )
+    one_a = run$one_a
+    if (one_a){
+      a = rep(mean(post[,1,which(par_names == 'a')]), K)
+    } else {
+      a = colMeans(post[,1,which(par_names == 'a')])
+    }
+    
+    one_b = run$one_b
+    if (one_b){
+      b = rep(mean(post[,1,which(par_names == 'b')]), K)
+    } else {
+      b = colMeans(post[,1,which(par_names == 'b')])
+    }
+    for (k in 1:K)
+      sum_w[k] = sum( d_pot[,2] * (b[k]-1) * (b[k]-2) / (2 * pi * a[k]  * a[k]) * (1 + d_pot[,1] / a[k])^(-b[k]) )
   }
   return(sum_w)
 }
@@ -92,20 +109,22 @@ sum_hood_props <- function(post, C, N_pot, d_pot, kernel){
   
   d_hood = d_pot[which((d_pot[,1]*1e6 <= 8000) & (d_pot[,1]*1e6 > 1e-10)),]
   
-  col_substr = substr(colnames(post[,1,]), 1, 3)
-  gamma   = mean(post[,1,which(col_substr == 'gam')])
+  col_names = colnames(post[,1,])
+  par_names  = unlist(lapply(col_names, function(x) strsplit(x, "\\[")[[1]][1]))
+ 
+  gamma   = mean(post[,1,which(par_names == 'gamma')])
   
   if (kernel=='gaussian'){
     if (one_psi){
-      psi   = mean(post[,1,which(col_substr == 'psi')])
+      psi   = mean(post[,1,which(par_names == 'psi')])
     } else {
-      psi   = colMeans(post[,1,which(col_substr == 'psi')])
+      psi   = colMeans(post[,1,which(par_names == 'psi')])
     }
     
     w_hood = d_hood[2] * exp(-d_hood[1]^2/psi^2) 
   } else if (kernel=='pl'){
-    a   = mean(post[,1,which(col_substr == 'a')])
-    b   = mean(post[,1,which(col_substr == 'b')])
+    a   = mean(post[,1,which(par_names == 'a')])
+    b   = mean(post[,1,which(par_names == 'b')])
     w_hood = d_hood[2] * (b-1) * (b-2) / (2 * pi * a  * a) * (1 + d_hood[1] / a)^(-b)
   }
   
@@ -122,98 +141,73 @@ power_law <- function(d, a, b) {
 } 
 
 #predicted pollen based on weighted neighborhoods using estimated pars
-pollen_preds <- function(post, N_cores, d, idx_cores, r, sum_w, one_psi, one_gamma, kernel){
+pollen_preds <- function(post, N_cores, d, idx_cores, r, sum_w, run){
+  
+  kernel  = run$kernel
+  one_gamma = run$one_gamma
   
   iters   = dim(post)[1]
   K       = ncol(r)
   N_cells = nrow(d)
   
-  col_substr = substr(colnames(post[,1,]), 1, 3)
-  
-  #   phi   = summary(fit)$summary[,'mean'][1:K]
-  #   psi   = summary(fit)$summary[,'mean'][K+1]
-  #   gamma = summary(fit)$summary[,'mean'][K+2]
-#   
-  phi   = colMeans(post[,1,which(col_substr == 'phi')])
-#   gamma = mean(post[,1,which(col_substr == 'gam')])
-  
-  #   
-#   sum_w = vector(length=N_cores, mode='numeric')
+  col_names = colnames(post[,1,])
+  par_names  = unlist(lapply(col_names, function(x) strsplit(x, "\\[")[[1]][1]))
+   
+  phi   = colMeans(post[,1,which(par_names == 'phi')])
+
   r_new = matrix(NA, nrow=N_cores, ncol=K)
   preds = matrix(NA, nrow=N_cores, ncol=K)
   
   if (one_gamma){
-    gamma = rep(mean(post[,1,which(col_substr == 'gam')]), K)
+    gamma = rep(mean(post[,1,which(par_names == 'gamma')]), K)
   } else {
-    gamma = colMeans(post[,1,which(col_substr == 'gam')])
+    gamma = colMeans(post[,1,which(par_names == 'gamma')])
   }
   
   if (kernel=='gaussian'){
+    one_psi = run$one_psi
     if (one_psi){
-      psi   = rep(mean(post[,1,which(col_substr == 'psi')]), K)
+      psi   = rep(mean(post[,1,which(par_names == 'psi')]), K)
     } else {
-      psi   = colMeans(post[,1,which(col_substr == 'psi')])
+      psi   = colMeans(post[,1,which(par_names == 'psi')])
     }
-#     w = array(NA, c(K, N_cells, N_cores))
-#     for (k in 1:K){ 
-#       w[k,,] = exp(-(d*d)/(psi[k]*psi[k]))
-#     }
-    
   } else if (kernel=='pl'){
     print("Kernel type : (inverse) power law")
-    a = mean(post[,1,which(col_substr == 'a')])
-    b = mean(post[,1,which(col_substr == 'b')])
-    w = (b-1) * (b-2) / (2 * pi * a  * a) * (1 + d / a) ^ (-b)
+    one_a = run$one_a
+    if (one_a){
+      a = rep(mean(post[,1,which(par_names == 'a')]), K)
+    } else {
+      a = colMeans(post[,1,which(par_names == 'a')])
+    }
+    
+    one_b = run$one_b
+    if (one_b){
+      b = rep(mean(post[,1,which(par_names == 'b')]), K)
+    } else {
+      b = colMeans(post[,1,which(par_names == 'b')])
+    }
+#     w = (b-1) * (b-2) / (2 * pi * a  * a) * (1 + d / a) ^ (-b)
   }
   
   for (i in 1:N_cores){
     print(i)
     
-    #       for (j in 1:N_hood){
-    #         if (idx_hood[i,j] > 0){
-    #           w[i,j] <- exp(-(d[idx_hood[i,j], i])^2/(psi)^2)
-    #         } 
-    #       }
-    
     out_sum = rep(0, K)
-    #     sum_w <- 0
-    
-#     if (one_psi){
-#       for (j in 1:N_cells){ # changed N_hood to N_locs
-#         if (j != idx_cores[i]){
-#           #         if (idx_hood[i,j] > 0){
-#           #           out_sum <- out_sum + w[i,j]*r[idx_hood[i,j],]
-#           out_sum <- out_sum + w[j,i]*r[j,]
-#         }  
-#       }
-#     } else {
       for (k in 1:K){
         print(paste0('k = ', k))
         for (j in 1:N_cells){ # changed N_hood to N_locs
           if (j != idx_cores[i]){
-            #         if (idx_hood[i,j] > 0){
-            #           out_sum <- out_sum + w[i,j]*r[idx_hood[i,j],]
-            #     for (k in 1:K){ 
-            #       w[k,,] = exp(-(d*d)/(psi[k]*psi[k]))
-            #     }
             if (kernel == 'gaussian'){
               w = exp(-(d[j,i]*d[j,i])/(psi[k]*psi[k]))
               out_sum[k] <- out_sum[k] + w*r[j,k]
             } else if (kernel == 'pl'){
-              out_sum[k] <- out_sum[k] + w[j,i]*r[j,k]
-#             out_sum[k] <- out_sum[k] + w[k,j,i]*r[j,k]
+              w = (b[k]-1) * (b[k]-2) / (2 * pi * a[k]  * a[k]) * (1 + d[j,i] / a[k]) ^ (-b[k])
+              out_sum[k] <- out_sum[k] + w*r[j,k]
             }
           }  
         }
       }
       
-#     }
-    #     sum_w   <- sum(out_sum)
-    #     print(sum_w)
-    
-#     sum_w[i] = sum(out_sum)
-    #     r_new[i,]  = gamma*r[idx_cores[i],] + (1-gamma)*out_sum/sum_w
-
     for (k in 1:K){
       r_new[i,k]  = gamma[k]*r[idx_cores[i],k] + (1-gamma[k])*out_sum[k]/sum_w[k]
       preds[i,k] = phi[k]*r_new[i,k]        
@@ -236,14 +230,15 @@ pollen_preds_distance <- function(post, N_cores, d, idx_cores, r, C, radius){
   K       = ncol(r)
   N_cells = nrow(d)
   
-  col_substr = substr(colnames(post[,1,]), 1, 3)
+  col_names = colnames(post[,1,])
+  par_names  = unlist(lapply(col_names, function(x) strsplit(x, "\\[")[[1]][1]))
   
-  phi   = colMeans(post[,1,which(col_substr == 'phi')])
-  gamma = mean(post[,1,which(col_substr == 'gam')])
+  phi   = colMeans(post[,1,which(par_names == 'phi')])
+  gamma = mean(post[,1,which(par_names == 'gamma')])
   if (one_psi){
-    psi   = mean(post[,1,which(col_substr == 'psi')])
+    psi   = mean(post[,1,which(par_names == 'psi')])
   } else {
-    psi   = colMeans(post[,1,which(col_substr == 'psi')])
+    psi   = colMeans(post[,1,which(par_names == 'psi')])
   }
   
   r_local = matrix(NA, nrow=N_cores, ncol=K)
@@ -314,38 +309,70 @@ pollen_preds_distance <- function(post, N_cores, d, idx_cores, r, C, radius){
 }
 
 #predicted pollen based on weighted neighborhoods using estimated pars
-dispersal_decay <- function(post, dmat, sum_w_pot, radius, kernel){
+dispersal_decay <- function(post, dmat, sum_w, radius, run, taxa){
+  
+  kernel = run$kernel
+  one_gamma = run$one_gamma
+  if (kernel == 'gaussian'){
+    one_psi = run$one_psi
+  } else if (kernel == 'pl'){
+    one_a = run$one_a
+    one_b = run$one_b
+  }
   
   rescale = 1e6
   iters   = dim(post)[1]
   K       = ncol(r)
   N_cells = nrow(d)
   
-  col_substr = substr(colnames(post[,1,]), 1, 3)
+  w = array(NA, c(K, nrow(dmat)))
   
-  phi   = colMeans(post[,1,which(col_substr == 'phi')])
-  gamma = mean(post[,1,which(col_substr == 'gam')])
+  col_names = colnames(post[,1,])
+  par_names  = unlist(lapply(col_names, function(x) strsplit(x, "\\[")[[1]][1]))
+  
+  phi   = colMeans(post[,1,which(par_names == 'phi')])
+  if (one_gamma){
+    gamma = rep(mean(post[,1,which(par_names == 'gamma')]), K)
+  } else {
+    gamma = colMeans(post[,1,which(par_names == 'gamma')])
+  }
   
   if (kernel=='gaussian'){
     if (one_psi){
-      psi   = mean(post[,1,which(col_substr == 'psi')])
+      psi   = rep(mean(post[,1,which(par_names == 'psi')]), K)
     } else {
-      psi   = colMeans(post[,1,which(col_substr == 'psi')])
+      psi   = colMeans(post[,1,which(par_names == 'psi')])
     }
-    w      = exp(-(dmat*dmat)/(psi*psi))
+    
+    for (k in 1:K){
+      w[k,] = exp(-(dmat*dmat)/(psi[k]*psi[k]))
+    }
   } else if (kernel=='pl'){
-    a = mean(post[,1,which(col_substr == 'a')])
-    b = mean(post[,1,which(col_substr == 'b')])
-    w = (b-1) * (b-2) / (2 * pi * a  * a) * (1 + dmat / a) ^ (-b)
+    if (one_a){
+      a = rep(mean(post[,1,which(par_names == 'a')]), K)
+    } else {
+      a = colMeans(post[,1,which(par_names == 'a')])
+    }
+    if (one_b){
+      b = rep(mean(post[,1,which(par_names == 'b')]), K)
+    } else {
+      b = colMeans(post[,1,which(par_names == 'b')])
+    }
+    for (k in 1:K){
+        w[k,] = (b[k]-1) * (b[k]-2) / (2 * pi * a[k]  * a[k]) * (1 + dmat / a[k]) ^ (-b[k])
+    }
   }
   
-  r_int  = vector(length=length(radius), mode='numeric')
-  C_test = sum(w)
+  r_int  = array(NA, c(length(radius), K) ) #vector(length=length(radius), mode='numeric')
+#   C_test = sum(w)
+  colnames(r_int) = taxa
   
   for (rad in 1:length(radius)){
-    idx_int    = which(dmat[,1]<radius[rad])#/rescale)
-    sum_w_int  = sum(w[idx_int,1])
-    r_int[rad] = gamma + (1-gamma) / sum_w_pot * sum_w_int     
+    for (k in 1:K){
+      idx_int    = which(dmat[,1]<radius[rad])#/rescale)
+      sum_w_int  = sum(w[k, idx_int])
+      r_int[rad, k] = gamma[k] + (1-gamma[k]) / sum_w[k] * sum_w_int     
+    }
   }
   
   return(r_int)

@@ -474,8 +474,10 @@ plot_alpha <- function(dat, fpath){
 
 plot_par_vals <- function(post, parname, taxa, wd, path_figs){
   
-  colsubstr = substr(colnames(post[,1,]),1,3)
-  par_vals  = post[,1,which(colsubstr == substr(parname, 1, 3))]
+  col_names = colnames(post[,1,])
+  par_names  = unlist(lapply(col_names, function(x) strsplit(x, "\\[")[[1]][1]))
+  par_vals  = post[,1,which(par_names == parname)]
+  
   par_mean  = colMeans(par_vals)
   par_lb    = apply(par_vals, 2, function(x) quantile(x, probs=0.025))
   par_ub    = apply(par_vals, 2, function(x) quantile(x, probs=0.975))
