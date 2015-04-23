@@ -69,16 +69,37 @@ run10 = list(suff_fit  = 'cal_pl_Ka_Kgamma_EPs_v0.3',
             one_b     = TRUE,
             one_gamma = FALSE, 
             EPs       = TRUE)
-# 
-# run5 = list(suff_fit  = 'test_cal_pl_WAIC', 
-#             kernel    = 'pl', 
-#             one_a     = TRUE,
-#             one_b     = TRUE,
-#             one_gamma = TRUE, 
-#             EPs       = FALSE)
+
+
+run_g = list(suff_fit  = 'cal_g_UMW_v0.3', 
+            kernel    = 'gaussian', 
+            one_psi   = TRUE, 
+            one_gamma = TRUE, 
+            EPs       = FALSE)
+run_pl = list(suff_fit  = 'cal_pl_UMW_v0.3', 
+            kernel    = 'pl', 
+            one_a     = TRUE,
+            one_b     = TRUE,
+            one_gamma = TRUE, 
+            EPs       = FALSE)
+
+
+run_g_all = list(suff_fit  = 'cal_g_ALL_v0.3', 
+             kernel    = 'gaussian', 
+             one_psi   = TRUE, 
+             one_gamma = TRUE, 
+             EPs       = FALSE)
+run_pl_all = list(suff_fit  = 'cal_pl_ALL_v0.3', 
+              kernel    = 'pl', 
+              one_a     = TRUE,
+              one_b     = TRUE,
+              one_gamma = TRUE, 
+              EPs       = FALSE)
 
 runs = list(run1, run2, run3, run4, run5, run6)
 runs = list(run3, run4, run5, run6, run7, run8, run9)
+
+runs = list(run_g, run_pl, run_g_all, run_pl_all)
 for (run in runs){
   source('r/cal_process.r')
 }

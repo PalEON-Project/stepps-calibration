@@ -184,28 +184,27 @@ pollen_preds_plot(preds, pollen_props, N_cores, r, idx_cores, taxa, suff=suff, s
 # vn_hood_props = sum_hood_props(post, C, N_pot, d_pot, kernel=kernel)
 # vn_hood_props
 # 
-# #####################################################################################
-# # potential pollen maps
-# #####################################################################################
-# 
-# d_all = t(rdist(as.matrix(centers_veg), as.matrix(centers_veg))/rescale)
-# 
-# N_locs = nrow(d_all)
-# 
-# idx_locs = seq(1, N_locs)
-# 
-# # pollen_preds <- function(post, N_cores, d, idx_cores, r, sum_w, one_psi, one_gamma, kernel){
-# preds_out = pollen_preds(post, N_locs, d_all, idx_locs, r, sum_w, one_psi, one_gamma, kernel=kernel)
-# preds = preds_out$preds
-# 
-# 
-# limits <- get_limits(centers_veg)
-# 
-# breaks = c(0, 0.01, 0.05, 0.10, 0.15, 0.2, 0.3, 0.4, 0.5, 0.6, 1)
-# # plot_data_maps_binned(r_mean, centers=centers_pls, taxa=taxa, K, T, breaks, suff=suff4, save_plots=save_plots)
-# 
-# plot_data_maps_binned(preds, centers_veg, taxa, K, breaks, limits, suff='pollen', save_plots, fpath=path_figs1)
-# 
+#####################################################################################
+# potential pollen maps
+#####################################################################################
+
+d_all = t(rdist(as.matrix(centers_veg), as.matrix(centers_veg))/rescale)
+
+N_locs = nrow(d_all)
+
+idx_locs = seq(1, N_locs)
+
+# pollen_preds <- function(post, N_cores, d, idx_cores, r, sum_w, one_psi, one_gamma, kernel){
+preds_out = pollen_preds(post, N_locs, d_all, idx_locs, r, sum_w, run)
+preds     = preds_out$preds
+
+limits <- get_limits(centers_veg)
+
+breaks = c(0, 0.01, 0.05, 0.10, 0.15, 0.2, 0.3, 0.4, 0.5, 0.6, 1)
+# plot_data_maps_binned(r_mean, centers=centers_pls, taxa=taxa, K, T, breaks, suff=suff4, save_plots=save_plots)
+
+plot_data_maps_binned(preds, centers_veg, taxa, K, breaks, limits, suff='predicted_pollen', save_plots, fpath=path_figs1)
+
 # #####################################################################################
 # # sum_w map
 # #####################################################################################
