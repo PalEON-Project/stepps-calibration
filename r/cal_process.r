@@ -17,7 +17,7 @@ suff=''
 
 # suff_dat = '12taxa_upper_comp_v0.1'
 # suff_dat = '12taxa_upper_comp_v0.1'
-suff_dat = '12taxa_mid_comp_v0.1'
+# suff_dat = '12taxa_mid_comp_v0.1'
 # suff_fit = '12taxa_mid_comp_v0.1_vary_psi_bigC_c1'
 # suff_fit = '12taxa_mid_comp_v0.1_pl_bigC'
 # suff_fit = '12taxa_mid_comp_v0.1_bigC_c1'
@@ -35,6 +35,7 @@ suff_dat = '12taxa_mid_comp_v0.1'
 
 kernel   = run$kernel
 suff_fit = run$suff_fit
+suff_dat = run$suff_dat
 
 if (kernel == 'gaussian'){
   one_psi    = run$one_psi
@@ -150,17 +151,21 @@ sink()
 
 plot_par_vals(post, parname='phi', taxa, wd, path_figs1)
 
-if ((kernel=='gaussian') & (!one_psi)){
-  plot_par_vals(post, parname='psi', taxa, wd, path_figs1)
+if (kernel=='gaussian'){ 
+  if (!one_psi){
+    plot_par_vals(post, parname='psi', taxa, wd, path_figs1)
+  }
 }
 if (!one_gamma){
   plot_par_vals(post, parname='gamma', taxa, wd, path_figs1)
 }
-if ((kernel=='pl') & (!one_a)){
-  plot_par_vals(post, parname='a', taxa, wd, path_figs1)
-}
-if ((kernel=='pl') & (!one_b)){
+if (kernel=='pl'){
+  if (!one_a){
+    plot_par_vals(post, parname='a', taxa, wd, path_figs1)
+  }
+  if (!one_b){
   plot_par_vals(post, parname='b', taxa, wd, path_figs1)
+  }
 }
 
 pollen_props = compute_props(y, taxa)

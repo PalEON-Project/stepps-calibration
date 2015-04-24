@@ -8,7 +8,7 @@ source('r/utils/simDataFuns.r')
 # load pls and pollen data
 # pls      = read.table(file='data/pls_UMW.csv', sep=",", row.names=NULL, header=TRUE)
 # pollen   = read.table('data/pollen_se_sum.csv', header=TRUE)
-load('r/dump/cal_data_12taxa_mid_comp_UMW_v0.2.rdata')
+# load('r/dump/cal_data_12taxa_mid_comp_UMW_v0.2.rdata')
 
 # load('r/dump/cal_data_12taxa_mid_mi_sp.rdata')
 

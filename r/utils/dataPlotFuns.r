@@ -100,10 +100,12 @@ pieMap=function(proportions,centers,restrict=FALSE,inputRestricted=FALSE,xlim=c(
                            proj4string=CRS('+init=epsg:3175'))
   plot(us.shp, add=T, lwd=2)
   n=length(centers[,1])
-  #   col_list = c("#1F78B4", "#33A02C", "#FF7F00", "#E31A1C", "#6A3D9A", "#B15928", 
-  #            "#FFFF99", "#A6CEE3", "#B2DF8A", "#FB9A99", "#FDBF6F", "#CAB2D6")
-  col_list = c("#1F78B4", "#E31A1C", "#33A02C", "#6A3D9A", "#B15928", "#FF7F00",
-               "#FFFF99", "#B2DF8A", "#A6CEE3", "#FDBF6F", "#FB9A99", "#CAB2D6")
+#     col_list = c("#1F78B4", "#33A02C", "#FF7F00", "#E31A1C", "#6A3D9A", "#B15928", 
+#              "#FFFF99", "#A6CEE3", "#B2DF8A", "#FB9A99", "#FDBF6F", "#CAB2D6")
+  col_list = c("#1F78B4", "#33A02C", "#E31A1C", "#6A3D9A", "#B15928", "#FF7F00", 
+               "#FFFF99", "#A6CEE3", "#B2DF8A", "#FB9A99", "#FDBF6F", "#CAB2D6")
+#   col_list = c("#1F78B4", "#E31A1C", "#33A02C", "#6A3D9A", "#B15928", "#FF7F00",
+#                "#FFFF99", "#B2DF8A", "#A6CEE3", "#FDBF6F", "#FB9A99", "#CAB2D6")
   cols     = col_list[1:ncol(proportions)]
 #   if (ncol(proportions)<13){
 #     cols     = col_list[1:ncol(proportions)]
@@ -143,7 +145,7 @@ pieMap=function(proportions,centers,restrict=FALSE,inputRestricted=FALSE,xlim=c(
   if (add_legend){
     legend.col=c(0,1,1,1,0,1,1,1) 
     #     900000,1500000
-    legend('topright', colnames(proportions), pch=rep(22,n), pt.cex=1.6, cex=1.2, pt.bg=cols, col=rep('black', n),
+    legend('topleft', colnames(proportions), pch=rep(22,n), pt.cex=1.6, cex=1.2, pt.bg=cols, col=rep('black', n),
            bg='white', ncol=2)
     title(main=main_title, cex.main=2)
   }
@@ -163,11 +165,14 @@ pieAdd= function (x, center, labels = names(x), edges = 200, radius = 0.8, densi
   nx <- length(dx)
   if (is.null(col)){ 
     col <- if (is.null(density)) 
-      #       col_list = c("#1F78B4", "#33A02C", "#FF7F00", "#E31A1C", "#6A3D9A", "#B15928", 
-      #                    "#FFFF99", "#A6CEE3", "#B2DF8A", "#FB9A99", "#FDBF6F", "#CAB2D6")
+#             col_list = c("#1F78B4", "#33A02C", "#FF7F00", "#E31A1C", "#6A3D9A", "#B15928", 
+#                          "#FFFF99", "#A6CEE3", "#B2DF8A", "#FB9A99", "#FDBF6F", "#CAB2D6")
+    col_list = c("#1F78B4", "#33A02C", "#E31A1C", "#6A3D9A", "#B15928", "#FF7F00", 
+                 "#FFFF99", "#A6CEE3", "#B2DF8A", "#FB9A99", "#FDBF6F", "#CAB2D6")
+    
 
-    col_list = c("#1F78B4", "#E31A1C", "#33A02C", "#6A3D9A", "#B15928", "#FF7F00",
-                 "#FFFF99", "#B2DF8A", "#A6CEE3", "#FDBF6F", "#FB9A99", "#CAB2D6")
+#     col_list = c("#1F78B4", "#E31A1C", "#33A02C", "#6A3D9A", "#B15928", "#FF7F00",
+#                  "#FFFF99", "#B2DF8A", "#A6CEE3", "#FDBF6F", "#FB9A99", "#CAB2D6")
     cols     = col_list[1:nx]
 #     if (ncol(proportions)<13){
 #       cols     = col_list[1:nx]

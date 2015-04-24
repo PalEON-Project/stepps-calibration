@@ -27,9 +27,10 @@ path_convert = 'data/dict-comp2stepps.csv'                                      
 path_out = 'r/dump'                                                               # dump data file stored here
 
 # append to output filenames
-suff       = paste0(depth_type, '_comp_ALL_v0.2')                                
+suff       = paste0(depth_type, '_comp_UMW_v0.2')                                
 
 states = c('michigan:north', 'minnesota', 'wisconsin', 'michigan:south')
+states = c('michigan:north', 'minnesota', 'wisconsin')#, 'michigan:south')
 # states = c('michigan:south')
 
 wd = getwd() 
