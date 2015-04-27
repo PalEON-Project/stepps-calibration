@@ -1,43 +1,41 @@
 
 import subprocess
 
-runs = [ ('cal_pl',
-          './cal_pl.exe \
-          sample num_warmup=250 num_samples=500 save_warmup=1\
-          data file=../r/dump/cal_data_12taxa_mid_comp_v0.1.dump \
-          output file=../output/cal_pl_v0.3.csv\
-          random seed=42'),
-         ('cal_pl_Kgamma_EPs_v0.3',
+# removed random seed=42 from call
+runs = [ ('cal_pl_Kgamma_EPs_v0.3',
           './cal_pl_Kgamma_EPs.exe \
           sample num_warmup=250 num_samples=500 save_warmup=1\
-          data file=../r/dump/cal_data_12taxa_mid_comp_v0.1.dump \
-          output file=../output/cal_pl_Kgamma_EPs_v0.3.csv\
-          random seed=42'),
+          data file=../r/dump/cal_data_12taxa_mid_comp_ALL_v0.2.dump \
+          output file=../output/cal_pl_Kgamma_EPs_ALL_v0.3.csv'),
          ('cal_pl_Ka_Kb_Kgamma_EPs_v0.3',
           './cal_pl_Ka_Kb_Kgamma_EPs.exe \
           sample num_warmup=250 num_samples=500 save_warmup=1\
-          data file=../r/dump/cal_data_12taxa_mid_comp_v0.1.dump \
-          output file=../output/cal_pl_Ka_Kb_Kgamma_EPs_v0.3.csv\
-          random seed=42'),
+          data file=../r/dump/cal_data_12taxa_mid_comp_ALL_v0.2.dump \
+          output file=../output/cal_pl_Ka_Kb_Kgamma_EPs_ALL_v0.3.csv'),
          ('cal_pl_Ka_Kgamma_EPs_v0.3',
           './cal_pl_Ka_Kgamma_EPs.exe \
           sample num_warmup=250 num_samples=500 save_warmup=1\
-          data file=../r/dump/cal_data_12taxa_mid_comp_v0.1.dump \
-          output file=../output/cal_pl_Ka_Kgamma_EPs_v0.3.csv\
-          random seed=42'),
+          data file=../r/dump/cal_data_12taxa_mid_comp_ALL_v0.2.dump \
+          output file=../output/cal_pl_Ka_Kgamma_EPs_ALL_v0.3.csv'),
          ('cal_pl_Ka_EPs_v0.3',
           './cal_pl_Ka_EPs.exe \
           sample num_warmup=250 num_samples=500 save_warmup=1\
-          data file=../r/dump/cal_data_12taxa_mid_comp_v0.1.dump \
-          output file=../output/cal_pl_Ka_EPs_v0.3.csv\
-          random seed=42'),
+          data file=../r/dump/cal_data_12taxa_mid_comp_ALL_v0.2.dump \
+          output file=../output/cal_pl_Ka_EPs_ALL_v0.3.csv'),
          ('cal_pl_Ka_Kb_EPs_v0.3',
           './cal_pl_Ka_Kb_EPs.exe \
           sample num_warmup=250 num_samples=500 save_warmup=1\
-          data file=../r/dump/cal_data_12taxa_mid_comp_v0.1.dump \
-          output file=../output/cal_pl_Ka_Kb_EPs_v0.3.csv\
-          random seed=42')
+          data file=../r/dump/cal_data_12taxa_mid_comp_ALL_v0.2.dump \
+          output file=../output/cal_pl_Ka_Kb_EPs_ALL_v0.3.csv')
 ]
+
+# ('cal_pl',
+#  './cal_pl.exe \
+#  sample num_warmup=250 num_samples=500 save_warmup=1\
+#  data file=../r/dump/cal_data_12taxa_mid_comp_v0.1.dump \
+#  output file=../output/cal_pl_v0.3.csv\
+#  random seed=42'),
+         
 
 qsub = """\
 #!/bin/sh
