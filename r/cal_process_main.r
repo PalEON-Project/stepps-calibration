@@ -116,7 +116,7 @@ pl_all = list(suff_fit  = 'cal_pl_ALL_v0.3',
                   one_b     = TRUE,
                   one_gamma = TRUE, 
                   EPs       = FALSE)
-pl_Kgamma = list(suff_fit  = 'cal_pl_Kgamma_ALL_v0.3', 
+pl_Kgamma = list(suff_fit  = 'cal_pl_Kgamma_EPs_ALL_v0.3', 
                  suff_dat = '12taxa_mid_comp_ALL_v0.2',
                  kernel    = 'pl', 
                  one_a     = TRUE,
