@@ -85,25 +85,51 @@ run_pl = list(suff_fit  = 'cal_pl_UMW_v0.3',
               one_gamma = TRUE, 
               EPs       = FALSE)
 
-
-run_g_all = list(suff_fit  = 'cal_g_ALL_v0.3', 
-                 suff_dat = '12taxa_mid_comp_ALL_v0.2',
-                 kernel    = 'gaussian', 
-                 one_psi   = TRUE, 
-                 one_gamma = TRUE, 
-                 EPs       = FALSE)
-run_pl_all = list(suff_fit  = 'cal_pl_ALL_v0.3', 
+g_all = list(suff_fit  = 'cal_g_ALL_v0.3', 
+             suff_dat = '12taxa_mid_comp_ALL_v0.2',
+             kernel    = 'gaussian', 
+             one_psi   = TRUE, 
+             one_gamma = TRUE, 
+             EPs       = FALSE)
+g_Kpsi = list(suff_fit  = 'cal_g_Kpsi_EPs_ALL_v0.3', 
+              suff_dat = '12taxa_mid_comp_ALL_v0.2',
+              kernel    = 'gaussian', 
+              one_psi   = FALSE, 
+              one_gamma = TRUE, 
+              EPs       = TRUE)
+g_Kpsi_Kgamma = list(suff_fit  = 'cal_g_Kpsi_Kgamma_EPs_ALL_v0.3',
+                     suff_dat = '12taxa_mid_comp_ALL_v0.2',
+                     kernel    = 'gaussian', 
+                     one_psi   = FALSE, 
+                     one_gamma = FALSE, 
+                     EPs       = TRUE)
+g_Kgamma = list(suff_fit  = 'cal_g_Kgamma_EPs_ALL_v0.3', 
+                suff_dat = '12taxa_mid_comp_ALL_v0.2',
+                kernel    = 'gaussian', 
+                one_psi   = TRUE, 
+                one_gamma = FALSE, 
+                EPs       = TRUE)
+pl_all = list(suff_fit  = 'cal_pl_ALL_v0.3', 
                   suff_dat = '12taxa_mid_comp_ALL_v0.2',
                   kernel    = 'pl', 
                   one_a     = TRUE,
                   one_b     = TRUE,
                   one_gamma = TRUE, 
                   EPs       = FALSE)
+pl_Kgamma = list(suff_fit  = 'cal_pl_Kgamma_ALL_v0.3', 
+                 suff_dat = '12taxa_mid_comp_ALL_v0.2',
+                 kernel    = 'pl', 
+                 one_a     = TRUE,
+                 one_b     = TRUE,
+                 one_gamma = FALSE, 
+                 EPs       = TRUE)
 
 runs = list(run1, run2, run3, run4, run5, run6)
 runs = list(run3, run4, run5, run6, run7, run8, run9)
 
-runs = list(run_g, run_pl, run_g_all, run_pl_all)
+# runs = list(run_g, run_pl, run_g_all, run_pl_all)
+
+runs = list(g_Kpsi, g_Kgamma, g_Kpsi_Kgamma, pl_Kgamma)
 for (run in runs){
   source('r/cal_process.r')
 }
