@@ -195,14 +195,22 @@ pollen_preds <- function(post, N_cores, d, idx_cores, r, sum_w, run){
     out_sum = rep(0, K)
       for (k in 1:K){
         print(paste0('k = ', k))
+        
+        if (kernel == 'gaussian'){
+          inv_psi2 = 1.0 / psi[k] / psi[k]
+        } else if (kernel == 'pl') {
+          pl_p1 = (b[k]-1) * (b[k]-2) / (2 * pi * a[k]  * a[k]) 
+        }
+        
+        
         for (j in 1:N_cells){ # changed N_hood to N_locs
           if (j != idx_cores[i]){
             if (kernel == 'gaussian'){
-              w = exp(-(d[j,i]*d[j,i])/(psi[k]*psi[k]))
-              out_sum[k] <- out_sum[k] + w*r[j,k]
+              w = exp( - ( d[j,i]*d[j,i] ) / inv_psi2 )
+              out_sum[k] <- out_sum[k] + w * r[j,k]
             } else if (kernel == 'pl'){
-              w = (b[k]-1) * (b[k]-2) / (2 * pi * a[k]  * a[k]) * (1 + d[j,i] / a[k]) ^ (-b[k])
-              out_sum[k] <- out_sum[k] + w*r[j,k]
+              w = pl_p1 * (1 + d[j,i] / a[k]) ^ (-b[k])
+              out_sum[k] <- out_sum[k] + w * r[j,k]
             }
           }  
         }
@@ -210,7 +218,7 @@ pollen_preds <- function(post, N_cores, d, idx_cores, r, sum_w, run){
       
     for (k in 1:K){
       r_new[i,k]  = gamma[k]*r[idx_cores[i],k] + (1-gamma[k])*out_sum[k]/sum_w[k]
-      preds[i,k] = phi[k]*r_new[i,k]        
+      preds[i,k]  = phi[k]*r_new[i,k]        
     }
   }
   
