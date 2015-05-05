@@ -242,8 +242,8 @@ plot_data_maps <- function(y, centers, taxa, K, limits, suff, save_plots, fpath=
   print(p)
   Sys.sleep(2)
   if (save_plots){
-    ggsave(file=paste(fpath, '/maps_', suff, 'cont.pdf', sep=''), scale=1)
-    ggsave(file=paste(fpath, '/maps_', suff, 'cont.eps', sep=''), scale=1)
+    ggsave(file=paste(fpath, '/maps_', suff, '_cont.pdf', sep=''), scale=1)
+    ggsave(file=paste(fpath, '/maps_', suff, '_cont.eps', sep=''), scale=1)
     #     dev.off()
   }
   return(p)
