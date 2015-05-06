@@ -143,7 +143,7 @@ power_law <- function(d, a, b) {
 #predicted pollen based on weighted neighborhoods using estimated pars
 pollen_preds <- function(post, N_cores, d, idx_cores, r, sum_w, run){
   
-  kernel  = run$kernel
+  kernel    = run$kernel
   one_gamma = run$one_gamma
   
   iters   = dim(post)[1]
@@ -206,7 +206,7 @@ pollen_preds <- function(post, N_cores, d, idx_cores, r, sum_w, run){
         for (j in 1:N_cells){ # changed N_hood to N_locs
           if (j != idx_cores[i]){
             if (kernel == 'gaussian'){
-              w = exp( - ( d[j,i]*d[j,i] ) / inv_psi2 )
+              w = exp( - ( d[j,i]*d[j,i] ) * inv_psi2 )
               out_sum[k] <- out_sum[k] + w * r[j,k]
             } else if (kernel == 'pl'){
               w = pl_p1 * (1 + d[j,i] / a[k]) ^ (-b[k])
