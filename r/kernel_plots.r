@@ -144,6 +144,38 @@ print(p)
 
 ggsave(p, filename=sprintf('%s/%s/%s.pdf', wd, path_figs, 'phi'), width=12, height=12)
 
+# gamma plot
+dat = data.frame(matrix(0, nrow=0, ncol=3))
+
+for (run in runs){
+  fname = sprintf('%s/%s.csv', path_out, run$suff_fit)
+  system(sprintf('r/fixup.pl %s', fname))
+  fit   = read_stan_csv(fname)
+  post  = rstan::extract(fit, permuted=FALSE, inc_warmup=FALSE)
+  
+  col_names = colnames(post[,1,])
+  par_names = unlist(lapply(col_names, function(x) strsplit(x, "\\[")[[1]][1]))
+  par_idx   = which(par_names == 'gamma')
+  par_vals  = post[,1,par_idx]
+  
+  if (length(par_idx)>1){
+    par_mean  = colMeans(par_vals)
+    par_lb    = apply(par_vals, 2, function(x) quantile(x, probs=0.025))
+    par_ub    = apply(par_vals, 2, function(x) quantile(x, probs=0.975))
+  } else {
+    par_mean  = rep(mean(par_vals), K)
+    par_lb    = rep(quantile(par_vals, probs=0.025), K)
+    par_ub    = rep(quantile(par_vals, probs=0.975), K)
+  }
+  
+  
+  par_stats = data.frame(name=taxa, mu=par_mean, lb=par_lb, ub=par_ub, handle=rep(run$handle, length(taxa)))
+  
+  dat = rbind(dat, par_stats)
+}
+
+ggsave(p, filename=sprintf('%s/%s/%s.pdf', wd, path_figs, 'phi'), width=12, height=12)
+
 # 
 # p <- ggplot(data=dat, aes(x=handle, y=mu, group=handle, colour=handle)) + 
 #   geom_point(size=4, position=position_dodge(width=1)) + 
