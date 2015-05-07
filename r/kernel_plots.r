@@ -2,6 +2,7 @@ library(rstan)
 library(ggplot2)
 library(fields, quietly=TRUE)
 library(RColorBrewer)
+library(reshape2)
 
 wd = getwd()
 
@@ -14,7 +15,7 @@ path_data  = 'r/dump'
 path_out   = 'output'
 path_figs  = 'figures'
 
-suff_dat = '12taxa_mid_comp_v0.1'
+suff_dat = '12taxa_mid_comp_ALL_v0.2'
 
 save_plots = TRUE
 rescale    = 1e6
@@ -30,26 +31,26 @@ load(sprintf('%s/cal_data_%s.rdata', path_data, suff_dat))
 
 path_out    = 'output'
 
-run1 = list(suff_fit  = 'cal_g_v0.3', 
+run1 = list(suff_fit  = 'cal_g_ALL_v0.3', 
             kernel    = 'gaussian', 
             one_psi   = TRUE, 
             one_gamma = TRUE, 
             EPs       = FALSE,
             handle    = 'G')
-run2 = list(suff_fit  = 'cal_g_Kpsi_Kgamma_EPs_v0.3', 
+run2 = list(suff_fit  = 'cal_g_Kpsi_Kgamma_EPs_ALL_v0.3', 
             kernel    = 'gaussian', 
             one_psi   = FALSE, 
             one_gamma = FALSE, 
             EPs       = TRUE,
             handle    = 'G_Kpsi_Kgamma')
-run3 = list(suff_fit  = 'cal_pl_v0.3', 
+run3 = list(suff_fit  = 'cal_pl_ALL_v0.3', 
             kernel    = 'pl', 
             one_a     = TRUE,
             one_b     = TRUE,
             one_gamma = TRUE, 
             EPs       = FALSE,
             handle    = 'PL')
-run4 = list(suff_fit  = 'cal_pl_Ka_Kgamma_EPs_v0.3', 
+run4 = list(suff_fit  = 'cal_pl_Ka_Kgamma_EPs_ALL_v0.3', 
             kernel    = 'pl', 
             one_a     = FALSE,
             one_b     = TRUE,
@@ -83,6 +84,7 @@ dmat = t(rdist(matrix(c(0,0), ncol=2), as.matrix(coord_pot, ncol=2))/rescale)
 dat = data.frame(matrix(0, nrow=0, ncol=4))
 for (run in runs){
   fname = sprintf('%s/%s.csv', path_out, run$suff_fit)
+  system(sprintf('r/fixup.pl %s', fname))
   fit   = read_stan_csv(fname)
   post  = rstan::extract(fit, permuted=FALSE, inc_warmup=FALSE)
   
@@ -95,8 +97,11 @@ for (run in runs){
 
 limits <- get_limits(centers_veg)
 
-p <- ggplot(dat) + geom_line(data=dat, aes(x=radius, y=value, colour=factor(handle))) 
-# p <- p + scale_colour_manual("Model", values=c('red', 'blue', 'black', 'green')) 
+p <- ggplot(dat) + 
+  geom_line(data=dat, aes(x=radius, y=value, linetype=factor(handle), colour=factor(handle)), size=0.9) 
+p <- p + scale_colour_manual("Model", values=c('darkorange', 'darkorange', 'royalblue4', 'royalblue4')) 
+p <- p + scale_linetype_manual("Model", values=c("solid", "dashed", "solid", "dashed")) + xlab("Radius") +
+  ylab("Cumulative density") 
 p <- p + facet_wrap(~variable, ncol=3) + theme_bw() + theme(panel.grid.major = element_blank(), 
                                                             panel.grid.minor = element_blank())
 
@@ -115,6 +120,7 @@ dat = data.frame(matrix(0, nrow=0, ncol=3))
 for (run in runs){
   fname = sprintf('%s/%s.csv', path_out, run$suff_fit)
   system(sprintf('r/fixup.pl %s', fname))
+  
   fit   = read_stan_csv(fname)
   post  = rstan::extract(fit, permuted=FALSE, inc_warmup=FALSE)
   
@@ -174,7 +180,18 @@ for (run in runs){
   dat = rbind(dat, par_stats)
 }
 
-ggsave(p, filename=sprintf('%s/%s/%s.pdf', wd, path_figs, 'phi'), width=12, height=12)
+p <- ggplot(data=dat, aes(x=reorder(name, mu), y=mu, group=handle, colour=handle)) + 
+  geom_point(size=4, position=position_dodge(width=0.5)) + 
+  geom_errorbar(aes(ymin=lb, ymax=ub), width=.2, position=position_dodge(width=0.5)) + 
+  xlab("Taxon") + ylab(parse(text='gamma')) +
+  coord_flip() + theme_bw() + theme(axis.title.x=element_text(size=20), 
+                                    axis.title.y=element_text(size=20), 
+                                    axis.text.x=element_text(size=rel(1.3)),
+                                    axis.text.y=element_text(size=rel(1.3)))
+
+print(p)
+
+ggsave(p, filename=sprintf('%s/%s/%s.pdf', wd, path_figs, 'gamma'), width=12, height=12)
 
 # 
 # p <- ggplot(data=dat, aes(x=handle, y=mu, group=handle, colour=handle)) + 
