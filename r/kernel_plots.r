@@ -95,6 +95,19 @@ for (run in runs){
   dat = rbind(dat, melt(run_dat, id=c('radius', 'handle')))
 }
 
+pol_fifty  = data.frame(radius=numeric(0), handle=character(0), variable=character(0), value=numeric(0))
+pol_ninety = data.frame(radius=numeric(0), handle=character(0), variable=character(0), value=numeric(0))
+
+models = as.vector(unique(dat$handle))
+for (model in models){
+  for (taxon in taxa){
+    dat_sub    = dat[(dat$handle == model) & (dat$variable == taxon), ]
+    pol_fifty  = rbind(pol_fifty, dat_sub[which.min(abs(dat_sub$value - 0.5)), ])
+    pol_ninety = rbind(pol_ninety, dat_sub[which.min(abs(dat_sub$value - 0.9)), ])
+  }
+}
+
+
 limits <- get_limits(centers_veg)
 
 p <- ggplot(dat) + 

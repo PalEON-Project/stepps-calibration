@@ -11,6 +11,7 @@ source('r/utils/simDataFuns.r')
 # load('r/dump/cal_data_12taxa_mid_comp_UMW_v0.2.rdata')
 
 # load('r/dump/cal_data_12taxa_mid_mi_sp.rdata')
+load('r/dump/cal_data_12taxa_mid_comp_ALL_v0.2.rdata')
 
 v = '0_3'
 # v = 'mi_sp'
@@ -66,7 +67,7 @@ pls_props  = t(apply(pls_coarse, 1, function(x) if (sum(x) != 0){x/sum(x)} else 
 shift=30000
 
 # postscript('r/data/figs/pie_plot_pls_UMW_v0.2.eps', width=8, height=6)
-pdf(paste0('figures/pie_plot_pls_UMW_v', v, '.pdf'), width=12, height=10)
+pdf(paste0('figures/pie_plot_pls_ALL_v', v, '.pdf'), width=12, height=10)
 par(mfrow=c(1,1))
 pieMap(proportions = pls_props, 
        centers  = knots_in,
@@ -110,7 +111,7 @@ colnames(centers) = c('x', 'y')
 # yhi = max(centersA[,2])
 
 #postscript('r/data/figs/pie_plot_pollen_UMW.eps', width=8, height=6)
-pdf(paste0('figures/pie_plot_pollen_UMW_v', v, '.pdf'), width=12, height=10)
+pdf(paste0('figures/pie_plot_pollen_ALL_v', v, '.pdf'), width=12, height=10)
 par(mfrow=c(1,1))
 pieMap(proportions = pollen_props, 
        centers  = centers,
