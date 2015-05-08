@@ -173,7 +173,7 @@ if (kernel=='pl'){
 pollen_props = compute_props(y, taxa)
 
 # scale the veg by phi
-local_preds  = phi_scale_veg(fit, N_cores, r, idx_cores)
+local_preds  = phi_scale_veg(post, N_cores, r, idx_cores)
 
 local_pollen_veg_plot2(r, idx_cores, pollen_props, local_preds, taxa, suff, save_plots, fpath=path_figs1)
 
