@@ -107,6 +107,14 @@ for (model in models){
   }
 }
 
+pol_fifty  = data.frame(pol_fifty, prop=rep(50, nrow(pol_fifty)))
+pol_ninety = data.frame(pol_ninety, prop=rep(90, nrow(pol_ninety)))
+
+pol_acc = rbind(pol_fifty, pol_ninety)
+
+p <- ggplot() + geom_point(data=pol_fifty, mapping=aes(x=reorder(radius, variable), y=variable, colour=handle))
+print(p)
+
 
 limits <- get_limits(centers_veg)
 
