@@ -187,6 +187,16 @@ preds = preds_out$preds
 
 pollen_preds_plot(preds, pollen_props, N_cores, r, idx_cores, taxa, suff=suff, save_plots=save_plots, fpath=path_figs1)
 
+# resids = (preds-pollen_props)#/pollen_props
+# # resids[which(pollen_props==0)] = 0
+# breaks = unique(classIntervals(resids, n = 10, style = "equal")$brks)
+# breaks=unique(quantile(as.vector(resids), probs=seq(0,1,0.1)))
+# breaks=c(0, 0.05, 0.07, 0.1, 0.2, 0.3, 0.7, 1.34)
+# breaks=c(-0.5, -0.25, -0.0001, 0.0001, 0.25, 0.5)
+# plot_pollen_maps_binned(resids, centers_polA, taxa, K, breaks, limits, suff=test, save_plots, fpath=path_figs)
+
+# plot_pollen_maps_binned(preds, centers_polA, taxa, K, breaks, limits, suff='', save_plots, fpath=path_figs)
+
 # # THIS IS WRONG!
 # vn_hood_props = sum_hood_props(post, C, N_pot, d_pot, kernel=kernel)
 # vn_hood_props

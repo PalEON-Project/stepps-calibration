@@ -145,7 +145,7 @@ pieMap=function(proportions,centers,restrict=FALSE,inputRestricted=FALSE,xlim=c(
   if (add_legend){
     legend.col=c(0,1,1,1,0,1,1,1) 
     #     900000,1500000
-    legend('topleft', colnames(proportions), pch=rep(22,n), pt.cex=1.6, cex=1.2, pt.bg=cols, col=rep('black', n),
+    legend('topright', colnames(proportions), pch=rep(22,n), pt.cex=1.6, cex=1.2, pt.bg=cols, col=rep('black', n),
            bg='white', ncol=2)
     title(main=main_title, cex.main=2)
   }
