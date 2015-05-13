@@ -939,7 +939,7 @@ gaussian and power law CDFs intersect - the cumulative pollen
 deposition is equal. To help interpret these curves, we determined the
 radius from the source needed to capture 50\% and 90\% of the
 deposited pollen for each model and each taxon
-(Table~\ref{table:pollen_acc}). As seen in Figure~\ref{fig:XXX}, the
+(Table~\ref{table:pollen_acc}). As seen in Figure~\ref{fig:cdf}, the
 CDFs for the two base models have two points of intersection,
 indicating changing relative rates of accumulation. The power law
 based model estimates a smaller radius needed to accumulate 50\% of
@@ -983,22 +983,34 @@ hardwood for the variable power law model.
 
 
 To visualize the dispersal patterns predicted by our model, we can
-estimate deposited pollen for each grid cell in the domain (previously
-we were estimating deposited pollen only at lakes for which we had
-pollen data) (Figure~\ref{fig:maps_pollen}). These spatial maps help
-us understand how the model treats dispersal. We can compare the maps
-of predicted relative pollen abundance with those depicting the
-relative tree abundance (Figure~\ref{fig:maps_veg}), remembering that the pollen predictions have
-been scaled for differential production. This scaling for differential
-production is particularly apparent for Tamarack. We know from the
-data that Tamarack pollen proportions are always lower than the
-vegetation proportions, and as a result, we expect that the model will
-predict low amounts of Tamarack pollen, which it does. To see how the
-model predicts dispersal by taxon, based on parameters estimated from
-that data, we can compare the vegetation and pollen ranges. The
-effects of dispersal are especially clear in the Pine and Oak cases,
-where we see pollen dispersing well beyond the range limits of the
-vegetation range boundaries.
+estimate the proportion of deposited pollen by taxon for each grid
+cell in the domain (previously we were estimating deposited pollen
+only at lakes for which we had pollen data)
+(Figures~\ref{fig:maps_pollen} \& \ref{fig:maps_pollen_pl}). These
+spatial maps help us understand how the models treat
+dispersal. Comparing these two figures illustrates the differences
+between these two models - the predicted sediment pollen maps for the
+variable power law model are much smoother. This is due to the
+increased accumulation of dispersed pollen at short distances relative
+to the gaussian, which predicts that the fastest accumulation rate of
+dispersed pollen occurs farther from the source (see
+Figure~\ref{fig:cdf}).
+
+
+We can also compare the predicted pollen maps with those depicting the
+relative tree abundance (Figure~\ref{fig:maps_veg}), remembering that
+the pollen predictions have been scaled to account for differential
+production (so we are comparing predicted sediment pollen with
+vegetation composition). This scaling for differential production is
+particularly apparent for Tamarack. We know from the data that
+Tamarack pollen proportions are always lower than the vegetation
+proportions, and as a result, we expect that the model will predict
+low amounts of Tamarack pollen, which it does. To see how the model
+predicts dispersal by taxon, based on parameters estimated from that
+data, we can compare the vegetation and pollen ranges. The effects of
+dispersal are especially clear in the Pine and Oak cases, where we see
+pollen dispersing well beyond the range limits of the vegetation range
+boundaries.
 
 \include{tables}
 \include{figures}
