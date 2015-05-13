@@ -43,7 +43,13 @@
   \includegraphics[page=14,width=0.3\textwidth]{figures/cal_trace.pdf} &
   \includegraphics[page=15,width=0.3\textwidth]{figures/cal_trace.pdf} 
 \end{tabular}
-\caption{Trace plots for the parameters in the gaussian dispersed calibration model, including $\phi_k$ for $k=1, \ldots, W$, $\psi$, and $\gamma$, as well as the joint log posterior, $\text{lp}$. Posterior estimates for each of the three runs are depicted in shades of grey. The 2.5\% and 97.5\% quantiles are indicated by the solid lines, while the 50\% quantiles are indicated by the hashed lines.}
+\caption{Trace plots for the parameters in the gaussian dispersed
+  calibration model, including $\phi_k$ for $k=1, \ldots, W$, $\psi$,
+  and $\gamma$, as well as the joint log posterior,
+  $\text{lp}$. Posterior estimates for each of the three runs are
+  depicted in shades of grey. The 2.5\% and 97.5\% quantiles are
+  indicated by the solid lines, while the 50\% quantiles are indicated
+  by the hashed lines.}
 \label{fig:trace}
 \end{figure}
 
@@ -51,7 +57,9 @@
 \begin{figure}
 \centering
 \includegraphics[width=7in]{figures/maps_compare_PINE.pdf}
-\caption{Heat maps showing the range limits of Pine in the PLS composition data (top) and the sediment pollen (bottom).}
+\caption{Heat maps showing the range limits of Pine in the PLS
+  composition data (top) and the pre-settlement calibration sediment
+  pollen data (bottom).}
 \label{fig:compare_maps_PINE}
 \end{figure}
 
@@ -59,23 +67,25 @@
 \begin{figure}
 \centering
 \includegraphics[width=7in]{figures/maps_compare_BIRCH.pdf}
-\caption{Heat maps showing the range limits of Birch in the PLS composition data (top) and the sediment pollen (bottom)}
+\caption{Heat maps showing the range limits of Birch in the PLS
+  composition data (top) and the pre-settlement calibration sediment
+  pollen data (bottom)}
 \label{fig:compare_maps_BIRCH}
 \end{figure}
 
 %pollen raw versus scaled focal
 \begin{figure}
 \centering
-\includegraphics[width=7in]{figures/pollen_focal_scaled_G.pdf}
-\caption{Pollen proportions plotted against local vegetation proportions (red crosses) or local vegetation proportion scaled by $\phi$ (black dots), by taxon.}
+\includegraphics[width=7in]{figures/pollen_phi_scaled_flexible.pdf}
+\caption{Pollen proportions plotted against local vegetation proportions (red crosses) or local vegetation proportion scaled by $\bm{\phi}$ for the variable gaussian kernel model (black dots) and the variable power law kernel model (blue dots), by taxon.}
 \label{fig:focal_scaled}
 \end{figure}
 
 %pollen raw versus predicted
 \begin{figure}
 \centering
-\includegraphics[width=7in]{figures/pollen_preds.pdf}
-\caption{Pollen proportions plotted against local vegetation proportions (red crosses) or model-predicted pollen (black dots), by taxon.}
+\includegraphics[width=7in]{figures/pollen_preds_flexible.pdf}
+\caption{Pollen proportions plotted against local vegetation proportions (red crosses) or model-predicted pollen for the variable gaussian kernel model (black dots) and the variable power law kernel model (blue dots), by taxon.}
 \label{fig:preds}
 \end{figure}
 
@@ -90,26 +100,29 @@
 %proportion pollen versus radius
 \begin{figure}
 \centering
-\includegraphics[width=7in]{figures/dispersal_vs_distance.pdf}
-\caption{Here we consider pollen produced by a focal cell, and plot the proportion of deposited pollen as a function of the radius of a circle centered at the focal cell.}
+\includegraphics[width=7in]{figures/kernel_discrete_cdfs.pdf}
+\caption{For each of the four considered models (gaussian base and
+  variable; power law base and variable), the proportion of deposited
+  (or accumulated) pollen is plotted as a function of radius for each
+  of the modelled taxa.}
 \label{fig:dvd}
 \end{figure}
 
-%psi: variable gaussian
-\begin{figure}
-\centering
-\includegraphics[width=7in]{figures/psi.pdf}
-\caption{Mean values of 95\% credible intervals for the estimated values of the dispersal kernel spread parameter $\psi$ for the variable gaussian kernel model, where both $\psi$ and $\gamma$ varied by taxon.}
-\label{fig:psi}
-\end{figure}
+% %psi: variable gaussian
+% \begin{figure}
+% \centering
+% \includegraphics[width=7in]{figures/psi.pdf}
+% \caption{Mean values of 95\% credible intervals for the estimated values of the dispersal kernel spread parameter $\psi$ for the variable gaussian kernel model, where both $\psi$ and $\gamma$ varied by taxon.}
+% \label{fig:psi}
+% \end{figure}
 
-%phi: vary phi case
-\begin{figure}
-\centering
-\includegraphics[width=7in]{figures/phi_vary_psi.pdf}
-\caption{Mean values of 95\% credible intervals for the estimated values of the differential production parameter $\phi$ for the case where $\psi$ varied by taxon.}
-\label{fig:phi_vary_psi}
-\end{figure}
+% %phi: vary phi case
+% \begin{figure}
+% \centering
+% \includegraphics[width=7in]{figures/phi_vary_psi.pdf}
+% \caption{Mean values of 95\% credible intervals for the estimated values of the differential production parameter $\phi$ for the case where $\psi$ varied by taxon.}
+% \label{fig:phi_vary_psi}
+% \end{figure}
 
 %potential pollen maps by taxon
 \begin{figure}
