@@ -1,6 +1,8 @@
 # stepps-calibration
 ==================
 
+This is a bit out of date...will fix later!
+
 This repository contains the STEPPS pollen-veg calibration model code and paper.
 
 To run the code:
