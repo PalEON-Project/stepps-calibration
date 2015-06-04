@@ -11,12 +11,12 @@
 \begin{figure}
 \centering
 \begin{tabular}{c}
-\includegraphics[width=5in]{figures/pie_plot_pollen_ALL_v0_3.pdf} \\
-\includegraphics[width=5in]{figures/pie_plot_pls_ALL_v0_3.pdf}
+\includegraphics[width=5in]{figures/pie_plot_pollen_ALL_v0_3.png} \\
+\includegraphics[width=5in]{figures/pie_plot_pls_ALL_v0_3.png}
 \end{tabular}
-\caption{Pie maps depicting the relative composition of pollen (top)
+\caption{Pie maps depicting the relative composition of tree genera of pollen (top)
   and PLS vegetation (bottom) from the data. Note that the PLS data
-  has been aggregated to a coarser resolution for illustrative
+  has been aggregated from 8 km to 34 km resolution for illustrative
   purposes.}
 \label{fig:pie}
 \end{figure}
@@ -27,26 +27,26 @@
 \begin{tabular}{ccc}
 %\includegraphics[width=5in]{figures/cal_trace.pdf}
 %\includepdf[nup=2x3]{figures/cal_trace.pdf}
-  \includegraphics[page=1,width=0.3\textwidth]{figures/cal_trace.pdf} &
-  \includegraphics[page=2,width=0.3\textwidth]{figures/cal_trace.pdf} &
-  \includegraphics[page=3,width=0.3\textwidth]{figures/cal_trace.pdf} \\
-  \includegraphics[page=4,width=0.3\textwidth]{figures/cal_trace.pdf} &
-  \includegraphics[page=5,width=0.3\textwidth]{figures/cal_trace.pdf} &
-  \includegraphics[page=6,width=0.3\textwidth]{figures/cal_trace.pdf} \\
-  \includegraphics[page=7,width=0.3\textwidth]{figures/cal_trace.pdf} &
-  \includegraphics[page=8,width=0.3\textwidth]{figures/cal_trace.pdf} &
-  \includegraphics[page=9,width=0.3\textwidth]{figures/cal_trace.pdf} \\
-  \includegraphics[page=10,width=0.3\textwidth]{figures/cal_trace.pdf} &
-  \includegraphics[page=11,width=0.3\textwidth]{figures/cal_trace.pdf} &
-  \includegraphics[page=12,width=0.3\textwidth]{figures/cal_trace.pdf} \\
-  \includegraphics[page=13,width=0.3\textwidth]{figures/cal_trace.pdf} &
-  \includegraphics[page=14,width=0.3\textwidth]{figures/cal_trace.pdf} &
-  \includegraphics[page=15,width=0.3\textwidth]{figures/cal_trace.pdf} 
+  \includegraphics[page=1,width=0.3\textwidth]{figures/cal_trace.png} &
+  \includegraphics[page=2,width=0.3\textwidth]{figures/cal_trace.png} &
+  \includegraphics[page=3,width=0.3\textwidth]{figures/cal_trace.png} \\
+  \includegraphics[page=4,width=0.3\textwidth]{figures/cal_trace.png} &
+  \includegraphics[page=5,width=0.3\textwidth]{figures/cal_trace.png} &
+  \includegraphics[page=6,width=0.3\textwidth]{figures/cal_trace.png} \\
+  \includegraphics[page=7,width=0.3\textwidth]{figures/cal_trace.png} &
+  \includegraphics[page=8,width=0.3\textwidth]{figures/cal_trace.png} &
+  \includegraphics[page=9,width=0.3\textwidth]{figures/cal_trace.png} \\
+  \includegraphics[page=10,width=0.3\textwidth]{figures/cal_trace.png} &
+  \includegraphics[page=11,width=0.3\textwidth]{figures/cal_trace.png} &
+  \includegraphics[page=12,width=0.3\textwidth]{figures/cal_trace.png} \\
+  \includegraphics[page=13,width=0.3\textwidth]{figures/cal_trace.png} &
+  \includegraphics[page=14,width=0.3\textwidth]{figures/cal_trace.png} &
+  \includegraphics[page=15,width=0.3\textwidth]{figures/cal_trace.png} 
 \end{tabular}
 \caption{Trace plots for the parameters in the gaussian dispersed
   calibration model, including $\phi_k$ for $k=1, \ldots, W$, $\psi$,
   and $\gamma$, as well as the joint log posterior,
-  $\text{lp}$. Posterior estimates for each of the three runs are
+  $\textit{lp}$. Posterior estimates for each of the three runs are
   depicted in shades of grey. The 2.5\% and 97.5\% quantiles are
   indicated by the solid lines, while the 50\% quantiles are indicated
   by the hashed lines.}
@@ -56,56 +56,64 @@
 %veg and pollen heat maps: pine
 \begin{figure}
 \centering
-\includegraphics[width=7in]{figures/maps_compare_PINE.pdf}
-\caption{Heat maps showing the range limits of Pine in the PLS
-  composition data (top) and the pre-settlement calibration sediment
-  pollen data (bottom).}
+\includegraphics[width=7in]{figures/maps_compare_PINE.png}
+\caption{Heat maps showing the relative abundances of pine in the PLS
+  composition data (top) and the pre-settlement era pollen data
+  (bottom).}
 \label{fig:compare_maps_PINE}
 \end{figure}
 
 %veg and pollen heat maps: birch
 \begin{figure}
 \centering
-\includegraphics[width=7in]{figures/maps_compare_BIRCH.pdf}
-\caption{Heat maps showing the range limits of Birch in the PLS
-  composition data (top) and the pre-settlement calibration sediment
-  pollen data (bottom)}
+\includegraphics[width=7in]{figures/maps_compare_BIRCH.png}
+\caption{Heat maps showing the relative abundances of birch in the PLS
+  composition data (top) and the pre-settlement era pollen data
+  (bottom).}
 \label{fig:compare_maps_BIRCH}
 \end{figure}
 
 %pollen raw versus scaled focal
 \begin{figure}
 \centering
-\includegraphics[width=7in]{figures/pollen_phi_scaled_flexible.pdf}
-\caption{Pollen proportions plotted against local vegetation proportions (red crosses) or local vegetation proportion scaled by $\bm{\phi}$ for the variable gaussian kernel model (black dots) and the variable power law kernel model (blue dots), by taxon.}
+\includegraphics[width=7in]{figures/pollen_phi_scaled_flexible.png}
+\caption{Pollen proportions plotted against local vegetation
+  proportions (red crosses) or local vegetation proportion scaled by
+  the pollen production factor$\bm{\phi}$ for the variable Gaussian
+  kernel model (black dots) and the variable Power law kernel model
+  (blue dots).}
 \label{fig:focal_scaled}
 \end{figure}
 
 %pollen raw versus predicted
 \begin{figure}
 \centering
-\includegraphics[width=7in]{figures/pollen_preds_flexible.pdf}
-\caption{Pollen proportions plotted against local vegetation proportions (red crosses) or model-predicted pollen for the variable gaussian kernel model (black dots) and the variable power law kernel model (blue dots), by taxon.}
+\includegraphics[width=7in]{figures/pollen_preds_flexible.png}
+\caption{Pollen proportions plotted against local vegetation
+  proportions (red crosses) or model-predicted pollen for the variable
+  Gaussian kernel model (black dots) and the variable Power law kernel
+  model (blue dots).}
 \label{fig:preds}
 \end{figure}
 
 %phi (differential production)
 \begin{figure}
 \centering
-\includegraphics[width=7in]{figures/phi.pdf}
-\caption{Mean values and 95\% credible intervals for the estimated values of the differential production parameter $\phi$.}
+\includegraphics[width=7in]{figures/phi.png}
+\caption{Mean values and 95\% credible intervals for the estimated
+  values of the differential production parameter $\phi$.}
 \label{fig:phi}
 \end{figure}
 
 %proportion pollen versus radius
 \begin{figure}
 \centering
-\includegraphics[width=7in]{figures/kernel_discrete_cdfs.pdf}
-\caption{For each of the four considered models (gaussian base and
-  variable; power law base and variable), the proportion of deposited
-  (or accumulated) pollen is plotted as a function of radius for each
-  of the modelled taxa.}
-\label{fig:dvd}
+\includegraphics[width=7in]{figures/kernel_discrete_cdfs.png}
+\caption{The proportion of deposited (or accumulated) pollen plotted
+  as a function of radius for each of the modelled taxa and for each
+  of the four considered models (Gaussian base and variable; Power law
+  base and variable).}
+\label{fig:cdf}
 \end{figure}
 
 % %psi: variable gaussian
@@ -127,15 +135,25 @@
 %potential pollen maps by taxon
 \begin{figure}
 \centering
-\includegraphics[width=7in]{figures/maps_pollen.pdf}
-\caption{Heat maps of model-predicted pollen for each grid cell in the domain, by taxon.}
-\label{fig:maps_pollen}
+\includegraphics[width=7in]{figures/maps_predicted_pollen_g_flexible.png}
+\caption{Heat maps of predicted pollen relative abundances from the
+  variable Gaussian model for each grid cell in the domain, by taxon.}
+\label{fig:maps_pollen_g}
+\end{figure}
+
+
+%potential pollen maps by taxon
+\begin{figure}
+\centering
+\includegraphics[width=7in]{figures/maps_predicted_pollen_pl_flexible.png}
+\caption{Heat maps of predicted pollen from the variable power law model for each grid cell in the domain, by taxon.}
+\label{fig:maps_pollen_pl}
 \end{figure}
 
 %PLS data maps by taxon
 \begin{figure}
 \centering
-\includegraphics[width=7in]{figures/maps_veg.pdf}
+\includegraphics[width=7in]{figures/maps_veg.png}
 \caption{Heat maps of the PLS data, by taxon.}
 \label{fig:maps_veg}
 \end{figure}
