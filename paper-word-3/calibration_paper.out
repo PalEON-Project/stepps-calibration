@@ -1,0 +1,18 @@
+\BOOKMARK [1][-]{section.1}{Introduction}{}% 1
+\BOOKMARK [1][-]{section.2}{Data}{}% 2
+\BOOKMARK [2][-]{subsection.2.1}{Spatial domain}{section.2}% 3
+\BOOKMARK [2][-]{subsection.2.2}{Public Land Survey \(PLS\) data}{section.2}% 4
+\BOOKMARK [2][-]{subsection.2.3}{Tree taxa}{section.2}% 5
+\BOOKMARK [2][-]{subsection.2.4}{Pollen data}{section.2}% 6
+\BOOKMARK [2][-]{subsection.2.5}{Identifying the EuroAmerican settlement horizon in pollen records via expert elicitation}{section.2}% 7
+\BOOKMARK [1][-]{section.3}{Calibration model}{}% 8
+\BOOKMARK [2][-]{subsection.3.1}{Model description}{section.3}% 9
+\BOOKMARK [2][-]{subsection.3.2}{Model priors}{section.3}% 10
+\BOOKMARK [2][-]{subsection.3.3}{Model variants}{section.3}% 11
+\BOOKMARK [2][-]{subsection.3.4}{Model comparison}{section.3}% 12
+\BOOKMARK [2][-]{subsection.3.5}{Numerical implementation}{section.3}% 13
+\BOOKMARK [1][-]{section.4}{Results}{}% 14
+\BOOKMARK [2][-]{subsection.4.1}{Expert elicitation of biostratigraphic evidence for European settlement and site suitability}{section.4}% 15
+\BOOKMARK [2][-]{subsection.4.2}{Exploratory data analysis}{section.4}% 16
+\BOOKMARK [2][-]{subsection.4.3}{Modelling results}{section.4}% 17
+\BOOKMARK [1][-]{section.5}{Summary and Conclusions}{}% 18

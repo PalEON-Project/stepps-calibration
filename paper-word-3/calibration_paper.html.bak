@@ -1,0 +1,2428 @@
+<img 
+src="calibration_paper0x.png" alt="PICT" >
+                                                                                         
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"  
+  "http://www.w3.org/TR/html4/loose.dtd">  
+<html > 
+<head><title>Calibrating the pollen-vegetation relationship</title> 
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+<meta name="generator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)"> 
+<meta name="originator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)"> 
+<!-- html --> 
+<meta name="src" content="calibration_paper.tex"> 
+<meta name="date" content="2015-06-04 22:28:00"> 
+<link rel="stylesheet" type="text/css" href="calibration_paper.css"> 
+</head><body 
+>
+   <div class="maketitle">
+                                                                                         <img 
+src="calibration_paper1x.png" alt="PICT" >
+<img 
+src="calibration_paper2x.png" alt="PICT" >
+                                                                                         
+                                                                                         <img 
+src="calibration_paper3x.png" alt="PICT" >
+<img 
+src="calibration_paper4x.png" alt="PICT" >
+                                                                                         
+
+<h2 class="titleHead">Calibrating the pollen-vegetation relationship</h2>
+<div class="author" ><span 
+class="cmr-12x-x-120">Andria Dawson, Christopher Paciorek, Jason McLachlan,</span>
+<br />      <span 
+class="cmr-12x-x-120">Simon Goring, John Williams, Stephen Jackson</span></div><br />
+<div class="date" ><span 
+class="cmr-12x-x-120">June 4, 2015</span></div>
+   </div>
+   <h3 class="sectionHead"><span class="titlemark">1   </span> <a 
+ id="x1-10001"></a>Introduction</h3>
+<!--l. 35--><p class="noindent" >Understanding forest ecosystems of the past provides valuable information about how these
+ecosystems respond to biotic and abiotic factors at timescales outside the realm of most direct
+ecological observations. In particular, in a world of changing climates, reconstructing past shifts in
+tree distributions and forest composition provides new information about climatic processes
+governing forest distributions and dynamics [<a 
+href="#Xgoring2015a">Goring et&#x00A0;al.</a>,&#x00A0;<a 
+href="#Xgoring2015a">in prep.</a>], and vegetation-atmosphere
+feedbacks [<a 
+href="#Xmatthes2015">Matthes et&#x00A0;al.</a>,&#x00A0;<a 
+href="#Xmatthes2015">in review.</a>]. The fossil pollen records extracted from lakes and mires are
+our primary source of data about prehistoric forest composition. Rigorous estimates of past forest
+composition and forest dynamics from these records relies on our ability to quantify the
+pollen-vegetation relationship.
+<!--l. 49--><p class="indent" >   Key challenges to quantitative reconstructions of past vegetation from pollen data are 1) the
+complex nature of the pollen-vegetation relationship and 2) the heavy anthropogenic
+imprint on contemporary plant communities. The processes governing pollen production,
+transport, and deposition have been the subject of palynological study for decades
+[<a 
+href="#Xtauber1965">Tauber</a>,&#x00A0;<a 
+href="#Xtauber1965">1965</a>,&#x00A0;<a 
+href="#Xjackson1994pollen">Jackson</a>,&#x00A0;<a 
+href="#Xjackson1994pollen">1994</a>,&#x00A0;<a 
+href="#Xjackson1999pollen">Jackson and Lyford</a>,&#x00A0;<a 
+href="#Xjackson1999pollen">1999</a>,&#x00A0;<a 
+href="#Xsugita2007theory1">Sugita</a>,&#x00A0;<a 
+href="#Xsugita2007theory1">2007a</a>,<a 
+href="#Xsugita2007theory2">b</a>,&#x00A0;<a 
+href="#Xprentice1988records">Prentice</a>,&#x00A0;<a 
+href="#Xprentice1988records">1988</a>]. The
+pollen found in lakes and mires usually arrives by wind, from plants that vary in their pollen
+productivity, the dispersibility of pollen grains, and transport vector. As a result, some plant
+species are highly overrepresented in sedimentary archives and most are underrepresented or
+absent. A wide variety of pollen-vegetation models (PVMs) have been developed including
+modern-analog based approaches [<a 
+href="#Xwilliams2003variations">Williams</a>,&#x00A0;<a 
+href="#Xwilliams2003variations">2003</a>], linear-regression [<a 
+href="#Xwebb1981estimating">Webb et&#x00A0;al.</a>,&#x00A0;<a 
+href="#Xwebb1981estimating">1981</a>],
+mechanistic models of pollen transport [<a 
+href="#Xsugita2007theory1">Sugita</a>,&#x00A0;<a 
+href="#Xsugita2007theory1">2007a</a>,<a 
+href="#Xsugita2007theory2">b</a>,&#x00A0;<a 
+href="#Xprentice1988records">Prentice</a>,&#x00A0;<a 
+href="#Xprentice1988records">1988</a>], and, most recently,
+Bayesian hierarchical models [<a 
+href="#Xpaciorek2009mapping">Paciorek and McLachlan</a>,&#x00A0;<a 
+href="#Xpaciorek2009mapping">2009</a>,&#x00A0;<a 
+href="#Xgarreta2010method">Garreta et&#x00A0;al.</a>,&#x00A0;<a 
+href="#Xgarreta2010method">2010</a>]. In these
+Bayesian models, pollen counts from a network of ponds are modelled as a function of gridded
+forest composition data, taking into account pollen dispersal from both local and non-local
+vegetation, differential pollen production, and process uncertainty. Using a Bayesian
+hierarchical model allows borrowing of information across space to estimate governing
+                                                                                         <img 
+src="calibration_paper5x.png" alt="PICT" >
+<img 
+src="calibration_paper6x.png" alt="PICT" >
+                                                                                         
+parameters at a regional scale, and to estimate the uncertainty associated with these
+parameters.
+<!--l. 75--><p class="indent" >   Some PVMs, notably the LOVE/REVEALS family of models [<a 
+href="#Xsugita2007theory1">Sugita</a>,&#x00A0;<a 
+href="#Xsugita2007theory1">2007a</a>,<a 
+href="#Xsugita2007theory2">b</a>], are calibrated
+using information about pollen productivity and dispersal traits for individual species and
+diffusion-based models of particulate transport. Other PVMs are calibrated against spatial
+networks of pollen assemblages extracted from surface sediment samples, which are then
+cross-referenced to contemporary spatial datasets of vegetation composition and abundance of the
+surrounding forests. These cross-referenced pollen and vegetation datasets are then use
+to make inferences about the processes that affect pollen production, dispersal, and
+deposition at the time of sampling. However, extending any inference about these processes
+to times prior to the time of sampling requires the assumption that pollen-vegetation
+relationships are stationary. This assumption of stationarity is questionable given that the
+contemporary landscape has been heavily modified by human land use. This land-use has
+transformed the composition and structure of contemporary forests and likely altered
+vegetation-pollen relationships for some taxa [<a 
+href="#Xkujawa2015">Kujawa et&#x00A0;al.</a>,&#x00A0;<a 
+href="#Xkujawa2015">in prep.</a>], perhaps by altering
+microclimatic factors including wind dynamics. Pollen-based paleoclimate reconstructions in
+Minnesota have a demonstrated bias if modern calibration datasets are used instead of
+pre-settlement datasets [<a 
+href="#Xst2014bias">St&#x00A0;Jacques et&#x00A0;al.</a>,&#x00A0;<a 
+href="#Xst2014bias">2014</a>]. Hence, any PVM that is calibrated using
+contemporary datasets may carry implicit and difficult-to-quantify biases when applied
+to make inferences about vegetation composition for time periods with less intensive
+land use. To circumvent these issues, we calibrate the pollen-vegetation relationship
+using newly developed datasets of forest composition and sediment pollen data that
+pre-dates European settlement, thereby avoiding the effects of settlement, agriculture, and
+industrialization.
+<!--l. 105--><p class="indent" >   These datasets are based on US Public Land Survey (PLS) records collected by surveyors prior
+to European settlement [<a 
+href="#Xbourdo1956review">Bourdo</a>,&#x00A0;<a 
+href="#Xbourdo1956review">1956</a>,&#x00A0;<a 
+href="#Xschulte2001original">Schulte and Mladenoff</a>,&#x00A0;<a 
+href="#Xschulte2001original">2001</a>].
+<!--l. 109--><p class="indent" >   To calibrate the pollen-vegetation relationship against the PLS forest composition data requires
+that we identify pollen samples that correspond to the pre-settlement era. These fossil pollen
+samples are drawn from longer sequences that typically come from lakes or peatlands, and consist
+of a series of depths and associated pollen counts broken down by taxon. Most pollen
+records also have radiocarbon dates of organic materials scattered along the core at
+locations not necessarily aligned with pollen counts. Other age controls include other
+radiometric dates (e.g. 210Pb), biostratigraphic markers (e.g. the rise in Ambrosia and other
+weedy taxa during EuroAmerican settlement), and geostratigraphic markers such as the
+core top whose age typically corresponds with the year of sampling. These age controls
+are then used to constrain age-depth models that allow inference of age at any depth
+throughout the core. However, inferred ages are uncertain, due to analytical errors during
+the laboratory radiocarbon dating process [<a 
+href="#Xward1978procedures">Ward and Wilson</a>,&#x00A0;<a 
+href="#Xward1978procedures">1978</a>], the conversion of
+radiocarbon to calendar years [<a 
+href="#Xreimer2013intcal13">Reimer et&#x00A0;al.</a>,&#x00A0;<a 
+href="#Xreimer2013intcal13">2013</a>], and potential differences between age of
+macrofossil material and age of sediment [<a 
+href="#Xblois2011methodological">Blois et&#x00A0;al.</a>,&#x00A0;<a 
+href="#Xblois2011methodological">2011</a>]. As in ecology, Bayesian
+hierarchical modeling approaches to age-depth models are rapidly gaining popularity for their
+ability to accommodate irregular probability distribution functions, multiple sources of
+uncertainty, and prior information [<a 
+href="#Xblaauw2011flexible">Blaauw et&#x00A0;al.</a>,&#x00A0;<a 
+href="#Xblaauw2011flexible">2011</a>,&#x00A0;<a 
+href="#Xbuck1999bcal">Buck et&#x00A0;al.</a>,&#x00A0;<a 
+href="#Xbuck1999bcal">1999</a>,&#x00A0;<a 
+href="#Xblaauw2005radiocarbon">Blaauw and
+Christen</a>,&#x00A0;<a 
+href="#Xblaauw2005radiocarbon">2005</a>,&#x00A0;<a 
+href="#Xramsey1995radiocarbon">Ramsey</a>,&#x00A0;<a 
+href="#Xramsey1995radiocarbon">1995</a>].
+<!--l. 134--><p class="indent" >   During European settlement, land-clearances led to noticeable increases in certain agricultural
+                                                                                         <img 
+src="calibration_paper7x.png" alt="PICT" >
+<img 
+src="calibration_paper8x.png" alt="PICT" >
+                                                                                         
+indicators that is reflected in the pollen records, especially <span 
+class="cmti-12">Ambrosia </span>[<a 
+href="#Xmcandrews1988human">McAndrews</a>,&#x00A0;<a 
+href="#Xmcandrews1988human">1988</a>]. This
+change in relative composition of <span 
+class="cmti-12">Ambrosia</span>, referred to as the <span 
+class="cmti-12">Ambrosia rise</span>, can be used to
+identify the pollen sample that best corresponds with pre-settlement - the pre-settlement pollen
+sample is the sample immediately prior to the first pollen sample that reflects the <span 
+class="cmti-12">Ambrosia rise</span>.
+The presence of an established biostratigraphic marker at the time of settlement eliminates the
+need to rely on uncertain age-depth models. However, time series of pollen counts are
+noisy, and in practice it can be difficult to precisely identify the settlement horizon. We
+deal with the uncertainty associated with <span 
+class="cmti-12">Ambrosia rise </span>identification using expert
+elicitation.
+<!--l. 159--><p class="indent" >   Here, we refine and calibrate a Bayesian hierarchical PVM, based on the STEPPS
+model [<a 
+href="#Xpaciorek2009mapping">Paciorek and McLachlan</a>,&#x00A0;<a 
+href="#Xpaciorek2009mapping">2009</a>], using newly developed settlement-era pollen and
+vegetation calibration datasets for the Upper Midwest. Specific advances include the
+building of a pre-settlement era identification of pre-settlement pollen samples from pollen
+time series through expert elicitation and the testing and comparison of two standard
+isometric dispersal kernels. We apply modelling results to develop new estimates of relative
+pollen productivity and source area, assess the relative importance of local and non-local
+pollen sources, and compare these results to prior estimates of source area and pollen
+productivity. This work lays the methodological foundation for rigorous reconstruction of past
+forest composition from fossil pollen data and all scripts are made publicly available at
+GitHub.
+<!--l. 174--><p class="noindent" >
+   <h3 class="sectionHead"><span class="titlemark">2   </span> <a 
+ id="x1-20002"></a>Data</h3>
+<!--l. 176--><p class="noindent" >
+   <h4 class="subsectionHead"><span class="titlemark">2.1   </span> <a 
+ id="x1-30002.1"></a>Spatial domain</h4>
+<!--l. 178--><p class="noindent" >Our study area is the upper Midwestern US, including Minnesota, Wisconsin, and Michigan. This
+region includes two major ecotones: the &#8220;Tension Zone&#8221; between northern mixed forests and
+temperature broadleaved deciduous forests and the prairie/forest/savanna ecotone. Both of
+these ecotones have been heavily modified by contemporary land use [<a 
+href="#Xgoring2015b">Goring et&#x00A0;al.</a>,&#x00A0;<a 
+href="#Xgoring2015b">in
+review.</a>].
+<!--l. 186--><p class="noindent" >
+   <h4 class="subsectionHead"><span class="titlemark">2.2   </span> <a 
+ id="x1-40002.2"></a>Public Land Survey (PLS) data</h4>
+<!--l. 189--><p class="noindent" >Prior to major European settlement, the US General Land Office conducted a Public Land Survey
+(PLS) throughout much of the United States to simplify the sale of federal lands. Surveyors
+documented section locations using trees as landmarks, and recorded genus or species, diameter,
+and location (azimuth and distance from corner). This data set provides a systematic survey of the
+forest before settlement, and has been used by foresters, ecologists, and historians to understand
+ecosystem and land-use change through time. In the Upper Midwest, the survey was conducted
+                                                                                         <img 
+src="calibration_paper9x.png" alt="PICT" >
+<img 
+src="calibration_paper10x.png" alt="PICT" >
+                                                                                         
+during XXXX-XXXX. Due to the slow-growing nature of temperate forests, including those in the
+Upper Midwest, we can think of the PLS data as a snapshot of forest composition in
+time.
+<!--l. 204--><p class="indent" >   Survey data for the Upper Midwest has been recently digitized, and aggregated to an 8km
+square grid [<span 
+class="cmbx-12">?</span>]. As a result of the sampling methodology, this aggregation results in small numbers
+of tree counts per grid cell. To overcome the variability arising from this we work with
+a smoothed version of the PLS data, based on a Bayesian spatial multinomial model
+[<span 
+class="cmbx-12">?</span>].
+<!--l. 211--><p class="noindent" >
+   <h4 class="subsectionHead"><span class="titlemark">2.3   </span> <a 
+ id="x1-50002.3"></a>Tree taxa</h4>
+<!--l. 212--><p class="noindent" >We focus on a subset of 10 tree genera and 2 functional groups that includes the most abundant
+taxa as well as less-abundant taxa of particular ecological importance. Our modelled taxa are: ash,
+beech, birch, elm, hemlock, maple, oak, pine, spruce, larch, as well as other conifer and other
+hardwood groups. These latter two groups include other minor tree species identified by surveyors
+but not explicitly included in the aforementioned list of taxa. The separation of other hardwood
+and conifers follows the standard classification of tree species into plant functional types in earth
+system and ecosystem models [<a 
+href="#Xcramer2001global">Cramer et&#x00A0;al.</a>,&#x00A0;<a 
+href="#Xcramer2001global">2001</a>,&#x00A0;<a 
+href="#Xgoring2015">Goring et&#x00A0;al.</a>,&#x00A0;<a 
+href="#Xgoring2015">2015</a>]. Additionally, the
+separation of other hardwood and conifers allows the calibration model to treat each group
+separately and tease out inherent differences between conifer and deciduous pollen production,
+although the variability in production and dispersal within each of these groups is still
+large.
+<!--l. 232--><p class="noindent" >
+   <h4 class="subsectionHead"><span class="titlemark">2.4   </span> <a 
+ id="x1-60002.4"></a>Pollen data</h4>
+<!--l. 234--><p class="noindent" >With the push for robust and reproducible research from the scientific community,
+paleoecoinformatics has responded with the development of tools that make it possible to
+access and query large datasets. One such tool that has made this work possible is the
+Neotoma database (<a 
+href="neotomadb.org" class="url" ><span 
+class="cmtt-12">neotomadb.org</span></a>; [<span 
+class="cmbx-12">?</span>]), which stores a variety of types of paleoecological
+data, including pollen data. Accessing this data can be done using the Neotoma API
+(<a 
+href="http://apps.neotomadb.org/explorer/" class="url" ><span 
+class="cmtt-12">http://apps.neotomadb.org/explorer/</span></a>), or using the R neotoma package [<a 
+href="#Xgoring2015">Goring
+et&#x00A0;al.</a>,&#x00A0;<a 
+href="#Xgoring2015">2015</a>]. Using R neotoma we identifed 184 sediment pollen cores in the Neotoma database in
+our spatial domain with the restriction that these sediment cores include at least some
+pollen samples believed to be from the last 2000 years. All of these pollen cores were
+sampled at multiple depths, often regularly spaced, and are hereafter referred to as long
+cores.
+<!--l. 249--><p class="indent" >   An additional 57 cores not available on Neotoma were contributed by independent researchers
+[<a 
+href="#Xkujawa2015">Kujawa et&#x00A0;al.</a>,&#x00A0;<a 
+href="#Xkujawa2015">in prep.</a>]. Of these 57, 9 were long cores (analogous to those from neotoma), while
+the remaining 48 had only core top and pre-settlement samples (at least in the data file we had
+access to), and are therefore referred to as short cores.
+<!--l. 255--><p class="indent" >   Associated with each of the cores is a table containing counts by taxon for each sampled depth.
+These counts are not certain - classifying pollen grains based on morphological features and
+                                                                                         <img 
+src="calibration_paper11x.png" alt="PICT" >
+<img 
+src="calibration_paper12x.png" alt="PICT" >
+                                                                                         
+relating them to plant taxa is often challenging as a result of (differential) preservation. Counts
+between palynologists for a single sample will also differ, but for experts this difference should be
+negligible [<span 
+class="cmbx-12">?</span>].
+<!--l. 263--><p class="indent" >   One of the challenges that arises when working with pollen data collected by several (or more)
+individuals is dealing with naming inconsistencies in the pollen taxonomies between sites. Both
+differing nomenclature and identified taxonomic resolution require that care be taken when
+standardizing pollen taxonomies. There arise cases where it may not be possible to associate
+certain pollen grains with plant taxa, and in these cases grains may be identified to type (e.g.
+Alnus-type), or placed into a group whose name is defined by their morphology (e.g. tricolporate).
+In this study, decisions regarding these poorly identified pollen grains were made on a case-by-case
+basis, although the total number of grains that fell into these ambiguous classes were
+few.
+<!--l. 276--><p class="indent" >   For each pollen core we are interested in the pre-settlement sample that is closest in time to the
+PLS data collection date (which is spatially varying). Typically, age-depth models are used to
+assign ages to sample depths to sediment cores. However, age-depth modelling is an uncertain
+process, with no consensus in the paleoecological community on a single best model or method.
+Instead, we rely on a panel of experts to interpret patterns in the pollen count data in order
+to identify pre-settlement sample estimates. All 185 long cores were suitable for this
+exercise.
+<!--l. 286--><p class="noindent" >
+   <h4 class="subsectionHead"><span class="titlemark">2.5   </span> <a 
+ id="x1-70002.5"></a>Identifying the EuroAmerican settlement horizon in pollen records via expert
+elicitation</h4>
+<!--l. 287--><p class="noindent" >Widespread land clearance during European settlement provided habitat for many non-arboreal
+colonizers, resulting in increases in non-arboreal taxa in pollen time series [<a 
+href="#Xmcandrews1988human">McAndrews</a>,&#x00A0;<a 
+href="#Xmcandrews1988human">1988</a>]. In
+the Upper Midwest, significant increases in ragweed (<span 
+class="cmti-12">Ambrosia</span>), docks and sorrels (<span 
+class="cmti-12">Rumex</span>), and
+grasses (<span 
+class="cmti-12">Poaceae</span>) are typically coincident with this settlement horizon. In principle, it is possible
+to identify the pre-settlement sample - the sample that falls immediately before these increases in
+agricultural indicator species. For many records the rises are sharp and determining the
+pre-settlement sample is easy, while other records are more ambiguous and placement relies on
+subjective judgment.
+<!--l. 299--><p class="indent" >   For this study, in the interest of reducing uncertainty, we want to: 1) identify pre-settlement
+samples using consistent methodology, and 2) assess the variability in assignment of pre-settlement
+among analysts. To address these questions, we asked a team of expert palynologists to identify
+the pre-settlement sample for 185 pollen records. Experts were provided with pollen
+diagrams depicting proportional changes through time as a function of depth for key
+indicator species and the ten most abundant arboreal taxa. Experts were prohibited
+from relying on stratigraphic dates (radiocarbon or other) or age-depth model estimates
+of sample age. In the case that there was no distinguishable pre-settlement sample,
+experts were instructed to report NA. In the case that experts were uncertain about their
+pre-settlement sample assignment, they were instructed to note this, with or without
+justification. Results from this exercise are used to define depths associated with pre-settlement
+samples. Pollen samples associated with these depths are placed into our calibration data
+                                                                                         <img 
+src="calibration_paper13x.png" alt="PICT" >
+<img 
+src="calibration_paper14x.png" alt="PICT" >
+                                                                                         
+set.
+<!--l. 317--><p class="noindent" >
+   <h3 class="sectionHead"><span class="titlemark">3   </span> <a 
+ id="x1-80003"></a>Calibration model</h3>
+<!--l. 319--><p class="noindent" >Here we describe the Bayesian hierarchical calibration model used to quantify the pollen-vegetation
+relationship. For the sake of clarity, we first provide an overview of the model, and then introduce
+the mathematical notation.
+<!--l. 324--><p class="indent" >   The pollen counts that we observe are a function of the vegetation on the landscape - the
+composition and abundance of trees on the landscape determines (in part) the composition and
+abundance of pollen that is deposited in the sediment. Determining how much pollen the
+surrounding vegetation contributes is a complex function of forest characteristics, climate
+(including wind), grain size and morphology, topography, and proximity of the vegetation to a
+deposition basin.
+<!--l. 332--><p class="indent" >   We work on a grid defined by the resolution of the gridded PLS data, and define each
+deposition site as having both local and non-local pollen contributions. Local contributions are
+made by the vegetation within the same grid cell as a site, and non-local contribution are
+made by vegetation from all other grid cells in the domain. The relative contributions of
+the local and non-local contributions are determined by a model parameter, with the
+restriction that the sum of all contributions from the pollen source area must sum to
+one.
+<!--l. 341--><p class="indent" >   Contributions from non-local grid cells are not all equal - their relative contributions are
+weighted using a dispersal kernel, which determines how likely it is for pollen to travel from one
+grid cell to another. Dispersal kernels are typically isometric, meaning that they depend only
+on the distance of the tree to the pond, and not the absolute position or direction. In
+reality, dispersal is not isometric, predominantly due to prevailing wind direction, but
+also as a result of other asymmetries in surface roughness and landscape structure.
+However, isometric dispersal kernels are are a reasonable and widely used approximation,
+because turbulent atmospheric mixing below the boundary layer tends to smooth out
+anisotropies.
+<!--l. 353--><p class="indent" >   Here we test two dispersal kernels: the Gaussian and the Inverse power-law. The Gaussian
+kernel is often used as a reference against more leptokurtic kernels such as the Inverse power law
+kernel, and can represent dispersal through diffusion. Although the Gaussian kernel has simpler
+mathematical representation, fatter-tailed kernels (such as the Inverse power-law) in
+general perform better than those with thinner tails (like the Gaussian or Exponential)
+when modelling pollen dispersal [<a 
+href="#Xdevaux2007modelling">Devaux et&#x00A0;al.</a>,&#x00A0;<a 
+href="#Xdevaux2007modelling">2007</a>,&#x00A0;<a 
+href="#Xausterlitz2004using">Austerlitz et&#x00A0;al.</a>,&#x00A0;<a 
+href="#Xausterlitz2004using">2004</a>]. However,
+dispersal data needed to validate pollen dispersal models are generally unavailable,
+especially at the large spatial scales needed to adequately test long-tailed kernels [<a 
+href="#Xclobert2012dispersal">Clobert
+et&#x00A0;al.</a>,&#x00A0;<a 
+href="#Xclobert2012dispersal">2012</a>].
+<!--l. 365--><p class="indent" >   Here, we choose two kernels that are representative of the short- and long-tail kernel classes,
+and compare between these generalized functional forms.
+<!--l. 372--><p class="indent" >   To determine the total non-local contribution, we sum the contributions of all grid cells in the
+domain that do not contain a given pond, where a contribution is equal to the weight assigned by
+the kernel multiplied with the vegetation proportion at that grid cell. Then, we sum the local
+                                                                                         <img 
+src="calibration_paper15x.png" alt="PICT" >
+<img 
+src="calibration_paper16x.png" alt="PICT" >
+                                                                                         
+and non-local contributions to obtain a single vector of proportions that represent the
+effective contributing vegetation. Finally, each component of this vector is scaled by a
+taxon-specific parameter (<span 
+class="cmmi-12">&#x03B3;</span>) that accounts for differential production of pollen among plant
+species.
+<!--l. 382--><p class="noindent" >
+   <h4 class="subsectionHead"><span class="titlemark">3.1   </span> <a 
+ id="x1-90003.1"></a>Model description</h4>
+<!--l. 384--><p class="noindent" >As previously mentioned, the spatial domain is defined as a regular grid composed of 8 km square
+grid cells. The grid is composed of discrete cells, but the underlying vegetation composition and
+dispersal spatial processes are assumed to be smooth. Spatial cells are indexed by <span 
+class="cmmi-12">s </span>= 1<span 
+class="cmmi-12">,</span><span 
+class="cmmi-12">&#x2026;</span><span 
+class="cmmi-12">,S</span>,
+where <span 
+class="cmmi-12">S </span>= 8013.
+<!--l. 390--><p class="indent" >   Pollen produced by vegetation within each grid cell can be deposited locally within that same
+grid cell, or can be dispersed into the neighborhood around that grid cell. For a focal grid
+cell <span 
+class="cmmi-12">s</span><sub><span 
+class="cmmi-8">i</span></sub>, the pollen produced by taxon <span 
+class="cmmi-12">p </span>within that cell that remains local is described
+by
+<!--l. 396--><p class="indent" >
+<table 
+class="align">
+                                        <tr><td 
+class="align-odd"><span 
+class="cmmi-12">&#x03B3;&#x03D5;</span><sub><span 
+class="cmmi-8">p</span></sub><span 
+class="cmmi-12">r</span><sub><span 
+class="cmmi-8">p</span></sub>(<span 
+class="cmmi-12">s</span><sub><span 
+class="cmmi-8">i</span></sub>)</td>                                        <td 
+class="align-even"></td>                                        <td 
+class="align-label"><a 
+ id="x1-9001r1"></a>(1)                                        </td></tr></table>
+<!--l. 400--><p class="indent" >   where <span 
+class="cmmi-12">&#x03B3; </span>is the proportion of pollen produced in <span 
+class="cmmi-12">s</span><sub><span 
+class="cmmi-8">i</span></sub> that is deposited locally, <span 
+class="cmmi-12">&#x03D5;</span><sub><span 
+class="cmmi-8">p</span></sub> is the scaling
+factor that accounts for differential production, and <span 
+class="cmmi-12">r</span><sub><span 
+class="cmmi-8">p</span></sub>(<span 
+class="cmmi-12">s</span><sub><span 
+class="cmmi-8">i</span></sub>) is the proportional abundance of taxon <span 
+class="cmmi-12">p</span>
+in <span 
+class="cmmi-12">s</span><sub><span 
+class="cmmi-8">i</span></sub>.
+<!--l. 405--><p class="indent" >   The remaining proportion (1 <span 
+class="cmsy-10x-x-120">- </span><span 
+class="cmmi-12">&#x03B3;</span>) of pollen produced in <span 
+class="cmmi-12">s</span><sub><span 
+class="cmmi-8">i</span></sub> is dispersed to other grid cells
+according to an isotropic dispersal kernel centered at <span 
+class="cmmi-12">s</span><sub><span 
+class="cmmi-8">i</span></sub>. The dispersal kernel weights all pollen
+dispersing away from the focal cell as a function of the distance from <span 
+class="cmmi-12">s</span><sub><span 
+class="cmmi-8">i</span></sub> to any neighboring cell <span 
+class="cmmi-12">s</span><sub><span 
+class="cmmi-8">k</span></sub>
+by <span 
+class="cmmi-12">w</span>(<span 
+class="cmmi-12">s</span><sub><span 
+class="cmmi-8">i</span></sub><span 
+class="cmmi-12">,s</span><sub><span 
+class="cmmi-8">k</span></sub>).
+<!--l. 411--><p class="indent" >   The two dispersal kernels considered here are: (i) the Gaussian and (ii) the Inverse
+power-law.
+<!--l. 414--><p class="indent" >   The Gaussian kernel, denoted <span 
+class="cmmi-12">w</span><sub><span 
+class="cmmi-8">g</span></sub>(<span 
+class="cmmi-12">s</span><sub><span 
+class="cmmi-8">i</span></sub><span 
+class="cmmi-12">,s</span><sub><span 
+class="cmmi-8">k</span></sub>), is written as
+                                                                                         <img 
+src="calibration_paper17x.png" alt="PICT" >
+<img 
+src="calibration_paper21x.png" alt="PICT" >
+                                                                                         
+<table 
+class="align">
+                             <tr><td 
+class="align-odd"><span 
+class="cmmi-12">w</span><sub><span 
+class="cmmi-8">g</span></sub>(<span 
+class="cmmi-12">s</span><sub><span 
+class="cmmi-8">i</span></sub><span 
+class="cmmi-12">,s</span><sub><span 
+class="cmmi-8">k</span></sub>) = exp <img 
+src="calibration_paper18x.png" alt="(          2)
+   d-(si,sk)-
+ -     &#x03C8;2"  class="left" align="middle"><span 
+class="cmmi-12">,</span></td>                             <td 
+class="align-even"></td>                             <td 
+class="align-label"><a 
+ id="x1-9002r2"></a>(2)                             </td></tr></table>
+where <span 
+class="cmmi-12">d</span>(<span 
+class="cmmi-12">s</span><sub><span 
+class="cmmi-8">i</span></sub><span 
+class="cmmi-12">,s</span><sub><span 
+class="cmmi-8">k</span></sub>) defines the distance between cells <span 
+class="cmmi-12">s</span><sub><span 
+class="cmmi-8">i</span></sub> and <span 
+class="cmmi-12">s</span><sub><span 
+class="cmmi-8">k</span></sub> and <span 
+class="cmmi-12">&#x03C8; &#x003E; </span>0 is a parameter that describes
+the spread of the kernel.
+<!--l. 421--><p class="indent" >   The Inverse power-law kernel, denoted by <span 
+class="cmmi-12">w</span><sub><span 
+class="cmmi-8">pl</span></sub>(<span 
+class="cmmi-12">s</span><sub><span 
+class="cmmi-8">i</span></sub><span 
+class="cmmi-12">,s</span><sub><span 
+class="cmmi-8">k</span></sub>), is given by
+<table 
+class="align">
+                      <tr><td 
+class="align-odd"><span 
+class="cmmi-12">w</span><sub><span 
+class="cmmi-8">pl</span></sub>(<span 
+class="cmmi-12">s</span><sub><span 
+class="cmmi-8">i</span></sub><span 
+class="cmmi-12">,s</span><sub><span 
+class="cmmi-8">k</span></sub>) = <img 
+src="calibration_paper19x.png" alt="(b---2)(b --1)
+     2&#x03C0;a2"  class="frac" align="middle"><img 
+src="calibration_paper20x.png" alt="(             )
+  1 + d(si,sk)
+         a"  class="left" align="middle"><sup><span 
+class="cmsy-8">-</span><span 
+class="cmmi-8">b</span></sup><span 
+class="cmmi-12">,</span></td>                      <td 
+class="align-even"></td>                      <td 
+class="align-label"><a 
+ id="x1-9003r3"></a>(3)                      </td></tr></table>
+where <span 
+class="cmmi-12">a &#x003E; </span>0 and <span 
+class="cmmi-12">b &#x003E; </span>2 are parameters that determine the kernel shape.
+<!--l. 427--><p class="indent" >   As expected, the weight assigned by both kernels is a decreasing function of distance - less
+pollen is distributed farther away.
+<!--l. 432--><p class="indent" >   We can then define the pollen produced by taxon <span 
+class="cmmi-12">p </span>dispersing from <span 
+class="cmmi-12">s</span><sub><span 
+class="cmmi-8">i</span></sub> to <span 
+class="cmmi-12">s</span><sub><span 
+class="cmmi-8">k</span></sub> by
+                                                                                         <img 
+src="calibration_paper22x.png" alt="PICT" >
+<img 
+src="calibration_paper28x.png" alt="PICT" >
+                                                                                         
+<table 
+class="align">
+                                 <tr><td 
+class="align-odd">(1 <span 
+class="cmsy-10x-x-120">- </span><span 
+class="cmmi-12">&#x03B3;</span>)<span 
+class="cmmi-12">&#x03D5;</span><sub><span 
+class="cmmi-8">p</span></sub><span 
+class="cmmi-12">r</span><sub><span 
+class="cmmi-8">p</span></sub>(<span 
+class="cmmi-12">s</span><sub><span 
+class="cmmi-8">i</span></sub>)<span 
+class="cmmi-12">w</span>(<span 
+class="cmmi-12">s</span><sub><span 
+class="cmmi-8">i</span></sub><span 
+class="cmmi-12">,s</span><sub><span 
+class="cmmi-8">k</span></sub>)<span 
+class="cmmi-12">.</span></td>                                 <td 
+class="align-even"></td>                                 <td 
+class="align-label"><a 
+ id="x1-9004r4"></a>(4)                                 </td></tr></table>
+<!--l. 451--><p class="indent" >   So far we have characterized the model from a source-based perspective, describing how pollen
+produced in grid cells is dispersed. We would like to quantify the pollen arriving at
+pond <span 
+class="cmmi-12">i </span>located in the grid cell <span 
+class="cmmi-12">s</span>(<span 
+class="cmmi-12">i</span>) - our data is counts of pollen grains that have been
+deposited in the sediment. This arriving pollen is equal to the sum of the contributions
+from all cells in the domain to the pollen pool in <span 
+class="cmmi-12">s</span>(<span 
+class="cmmi-12">i</span>), which includes both the locally
+deposited pollen plus the pollen dispersed to <span 
+class="cmmi-12">s</span>(<span 
+class="cmmi-12">i</span>) from all other grid cells in the domain.
+Therefore the pollen from taxon <span 
+class="cmmi-12">p </span>arriving at pond <span 
+class="cmmi-12">i</span>, referred to as <span 
+class="cmmi-12">r</span><sub><span 
+class="cmmi-8">i,p</span></sub><sup>pol</sup>, is given
+by
+<table 
+class="align">
+                  <tr><td 
+class="align-odd"><span 
+class="cmmi-12">r</span><sub><span 
+class="cmmi-8">i,p</span></sub><sup>pol</sup> = <span 
+class="cmmi-12">&#x03B3;&#x03D5;</span><sub><span 
+class="cmmi-8">p</span></sub><span 
+class="cmmi-12">r</span><sub><span 
+class="cmmi-8">p</span></sub><span class="big"><img 
+src="calibration_paper23x.png" alt="("  class="left" align="middle"></span><span 
+class="cmmi-12">s</span>(<span 
+class="cmmi-12">i</span>)<span class="big"><img 
+src="calibration_paper24x.png" alt=")"  class="left" align="middle"></span> + <img 
+src="calibration_paper25x.png" alt="1-
+C"  class="frac" align="middle">(1 <span 
+class="cmsy-10x-x-120">- </span><span 
+class="cmmi-12">&#x03B3;</span>)<span 
+class="cmmi-12">&#x03D5;</span><sub><span 
+class="cmmi-8">p</span></sub> <span 
+class="cmex-10x-x-120">&#x2211;</span>
+   <sub><span 
+class="cmmi-8">s</span><sub><span 
+class="cmmi-6">k</span></sub><span 
+class="cmmi-8">&#x2260;</span><span 
+class="cmmi-8">s</span><span 
+class="cmr-8">(</span><span 
+class="cmmi-8">i</span><span 
+class="cmr-8">)</span></sub><span 
+class="cmmi-12">r</span><sub><span 
+class="cmmi-8">p</span></sub>(<span 
+class="cmmi-12">s</span><sub><span 
+class="cmmi-8">k</span></sub>)<span 
+class="cmmi-12">w</span><span class="big"><img 
+src="calibration_paper26x.png" alt="("  class="left" align="middle"></span><span 
+class="cmmi-12">s</span>(<span 
+class="cmmi-12">i</span>)<span 
+class="cmmi-12">,s</span><sub><span 
+class="cmmi-8">k</span></sub><span class="big"><img 
+src="calibration_paper27x.png" alt=")"  class="left" align="middle"></span><span 
+class="cmmi-12">,</span></td>                  <td 
+class="align-even"></td>                  <td 
+class="align-label"><a 
+ id="x1-9005r5"></a>(5)                  </td></tr></table>
+where <span 
+class="cmmi-12">C </span>is a normalizing constant equal to the sum of the weights of all the cells to which pollen
+can be dispersed, defined be a rectangular region that covers and extends beyond the limits of the
+domain.
+<!--l. 470--><p class="indent" >   Finally, we need to relate the arriving pollen <span 
+class="cmmi-12">r</span><sub><span 
+class="cmmi-8">i,p</span></sub><sup>pol</sup> quantified in Equation&#x00A0;<a 
+href="#x1-9005r5">5<!--tex4ht:ref: eq:arriving --></a> to the pollen
+count data. To do this, we must consider that the pollen data are overdispersed - the counts are
+more variable than we might expect if they were assumed to follow a multinomial distribution.
+This overdispersion is mostly attributed to heterogeneity in the pollen production and dispersal
+processes that is not accounted for in our mathematical characterization, but is also an artifact of
+comparing pollen counts at a point location (the pond) situated anywhere within a focal grid cell
+to a grid-based vegetation composition average. To account for this overdispersion, we model
+                                                                                         <img 
+src="calibration_paper29x.png" alt="PICT" >
+<img 
+src="calibration_paper37x.png" alt="PICT" >
+                                                                                         
+the pollen counts at pond <span 
+class="cmmi-12">i</span>, denoted by <span 
+class="cmmib-10x-x-120">y</span><sub><span 
+class="cmmi-8">i</span></sub>, as dirichlet-multinomial (DM), which is a
+compound distribution used to account for overdispersion in multinomial count data
+(and tends to the multinomial distribution in the case of no overdispersion). We have
+that
+<table 
+class="align">
+                                    <tr><td 
+class="align-odd"><span 
+class="cmmib-10x-x-120">y</span><sub><span 
+class="cmmi-8">i</span></sub> <span 
+class="cmsy-10x-x-120">~ </span><span 
+class="cmmi-12">DM</span>(<span 
+class="cmmi-12">n</span><sub><span 
+class="cmmi-8">i</span></sub><span 
+class="cmmi-12">,</span><span 
+class="cmmib-10x-x-120">r</span><sub><span 
+class="cmmi-8">i</span></sub><sup>pol</sup>)</td>                                    <td 
+class="align-even"></td>                                    <td 
+class="align-label"><a 
+ id="x1-9006r6"></a>(6)                                    </td></tr></table>
+and <span 
+class="cmmib-10x-x-120">r</span><sub><span 
+class="cmmi-8">i</span></sub><sup>pol</sup> = (<span 
+class="cmmi-12">r</span><sub><span 
+class="cmmi-8">i,</span><span 
+class="cmr-8">1</span></sub><sup>pol</sup><span 
+class="cmmi-12">,</span><span 
+class="cmmi-12">&#x2026;</span><span 
+class="cmmi-12">,r</span><sub><span 
+class="cmmi-8">i,K</span></sub><sup>pol</sup>). The precision <span 
+class="cmmi-12">&#x03B1;</span><sub><span 
+class="cmmi-8">i</span></sub> is equal to the sum of (<a 
+href="#x1-9005r5">5<!--tex4ht:ref: eq:arriving --></a>) over all
+taxa
+<table 
+class="align">
+                <tr><td 
+class="align-odd"><span 
+class="cmmi-12">&#x03B1;</span><sub><span 
+class="cmmi-8">i</span></sub> = <span 
+class="cmex-10x-x-120">&#x2211;</span>
+  <sub><span 
+class="cmmi-8">p</span><span 
+class="cmr-8">=1</span></sub><sup><span 
+class="cmmi-8">K</span></sup><span class="bbig"><img 
+src="calibration_paper30x.png" alt="["  class="left" align="middle"></span><span 
+class="cmmi-12">&#x03B3;&#x03D5;</span><sub><span 
+class="cmmi-8">p</span></sub><span 
+class="cmmi-12">r</span><sub><span 
+class="cmmi-8">p</span></sub><span class="big"><img 
+src="calibration_paper31x.png" alt="("  class="left" align="middle"></span><span 
+class="cmmi-12">s</span>(<span 
+class="cmmi-12">i</span>)<span class="big"><img 
+src="calibration_paper32x.png" alt=")"  class="left" align="middle"></span> + <img 
+src="calibration_paper33x.png" alt="1-
+C"  class="frac" align="middle">(1 <span 
+class="cmsy-10x-x-120">- </span><span 
+class="cmmi-12">&#x03B3;</span>)<span 
+class="cmmi-12">&#x03D5;</span><sub><span 
+class="cmmi-8">p</span></sub> <span 
+class="cmex-10x-x-120">&#x2211;</span>
+   <sub><span 
+class="cmmi-8">s</span><sub><span 
+class="cmmi-6">k</span></sub><span 
+class="cmmi-8">&#x2260;</span><span 
+class="cmmi-8">s</span><span 
+class="cmr-8">(</span><span 
+class="cmmi-8">i</span><span 
+class="cmr-8">)</span></sub><span 
+class="cmmi-12">r</span><sub><span 
+class="cmmi-8">p</span></sub>(<span 
+class="cmmi-12">s</span><sub><span 
+class="cmmi-8">k</span></sub>)<span 
+class="cmmi-12">w</span><span class="big"><img 
+src="calibration_paper34x.png" alt="("  class="left" align="middle"></span><span 
+class="cmmi-12">s</span>(<span 
+class="cmmi-12">i</span>)<span 
+class="cmmi-12">,s</span><sub><span 
+class="cmmi-8">k</span></sub><span class="big"><img 
+src="calibration_paper35x.png" alt=")"  class="left" align="middle"></span><span class="bbig"><img 
+src="calibration_paper36x.png" alt="]"  class="left" align="middle"></span><span 
+class="cmmi-12">.</span></td>                <td 
+class="align-even"></td>                <td 
+class="align-label"><a 
+ id="x1-9007r7"></a>(7)                </td></tr></table>
+The precision parameter <span 
+class="cmmi-12">&#x03B1;</span><sub><span 
+class="cmmi-8">i</span></sub> is also affected by the proximity of a lake to the domain boundary. We
+do not have data outside of the defined domain, so cannot quantify the pollen dispersed from
+vegetation outside the domain to lakes situated close to the boundary. The repercussion of this is
+that the sum of the weights of the grid cells contributing pollen to a focal cell close to the domain
+boundary is less than the sum of the weights of the total potential contributing neighborhood,
+defined as C. As a result of having a reduced contributing neighborhood, the local pollen
+                                                                                         <img 
+src="calibration_paper38x.png" alt="PICT" >
+<img 
+src="calibration_paper39x.png" alt="PICT" >
+                                                                                         
+contribution is effectively up-weighted relative to the non-local contribution (see Eqn.&#x00A0;<a 
+href="#x1-9007r7">7<!--tex4ht:ref: eq:alpha --></a>
+).
+<!--l. 508--><p class="noindent" >
+   <h4 class="subsectionHead"><span class="titlemark">3.2   </span> <a 
+ id="x1-100003.2"></a>Model priors</h4>
+<!--l. 510--><p class="noindent" >We assign uninformative uniform priors to model parameters over wide intervals. We define the
+priors <span 
+class="cmmi-12">&#x03D5;</span><sub><span 
+class="cmmi-8">k</span></sub> <span 
+class="cmsy-10x-x-120">~</span> uniform(0<span 
+class="cmmi-12">, </span>300) for <span 
+class="cmmi-12">k </span>= 1<span 
+class="cmmi-12">,</span><span 
+class="cmmi-12">&#x2026;</span><span 
+class="cmmi-12">,K </span>and <span 
+class="cmmi-12">&#x03B3; </span><span 
+class="cmsy-10x-x-120">~</span> uniform(0<span 
+class="cmmi-12">, </span>1). In the case of the Gaussian
+kernel we define the prior <span 
+class="cmmi-12">&#x03C8;</span><span 
+class="cmmi-12">&#x00A0;</span>uniform(0<span 
+class="cmmi-12">, </span>2), while in the power law kernel case we have
+<span 
+class="cmmi-12">a</span><span 
+class="cmmi-12">&#x00A0;</span>uniform(0<span 
+class="cmmi-12">, </span>500) and <span 
+class="cmmi-12">b</span><span 
+class="cmmi-12">&#x00A0;</span>uniform(2<span 
+class="cmmi-12">, </span>100).
+<!--l. 517--><p class="noindent" >
+   <h4 class="subsectionHead"><span class="titlemark">3.3   </span> <a 
+ id="x1-110003.3"></a>Model variants</h4>
+<!--l. 519--><p class="noindent" >As described above, neither dispersal kernel (<span 
+class="cmmi-12">w</span><sub><span 
+class="cmmi-8">pl</span></sub> or <span 
+class="cmmi-12">w</span><sub><span 
+class="cmmi-8">g</span></sub>) nor the parameter <span 
+class="cmmi-12">&#x03B3; </span>vary by taxon. In this
+base variant, a single dispersal kernel defines how all pollen disperses, and a single parameter
+determines what proportions of total pollen of any given taxon remains local. We know
+that in reality pollen dispersal varies with taxon, because pollen grain morphology,
+size, weight, and preservability are all highly variable among plant taxa. Here, we let
+the data inform us as to whether there is sufficient evidence to support taxon-specific
+dispersal kernels and localness parameters through the use of exchangeable priors ?.
+So, we define the same prior distribution on each of the <span 
+class="cmmi-12">K </span>parameters in question,
+where the prior distribution is defined by shared hyperparameters. In the case where the
+variance hyperparameter is estimated to be relatively close to zero, we can conclude
+that there is not sufficient evidence to suggest that the parameter of interest varies by
+taxon.
+<!--l. 535--><p class="indent" >   For example, in the Gaussian kernel case we would like to know if there is enough
+support to warrant taxon specific values of <span 
+class="cmmi-12">&#x03D5;</span>. We define the exchangeable priors for taxon
+<span 
+class="cmmi-12">k </span>= 1<span 
+class="cmmi-12">,</span><span 
+class="cmmi-12">&#x2026;</span><span 
+class="cmmi-12">,K</span>
+<table 
+class="align">
+                                  <tr><td 
+class="align-odd"> log(<span 
+class="cmmi-12">&#x03C8;</span><sub><span 
+class="cmmi-8">k</span></sub>) <span 
+class="cmsy-10x-x-120">~</span> normal(<span 
+class="cmmi-12">&#x03BC;,&#x03C3;</span>)</td>                                  <td 
+class="align-even"></td>                                  <td 
+class="align-label"><a 
+ id="x1-11001r8"></a>(8)                                  </td></tr></table>
+                                                                                         <img 
+src="calibration_paper40x.png" alt="PICT" >
+<img 
+src="calibration_paper41x.png" alt="PICT" >
+                                                                                         
+where the prior on <span 
+class="cmmi-12">&#x03BC; </span>is uniform over the log of the prior interval used in the single-taxon case for
+<span 
+class="cmmi-12">&#x03C8;</span>, and the prior for <span 
+class="cmmi-12">&#x03C3; </span>is a half-Cauchy with mean of 0 and standard deviation of 2. In the Power
+law kernel case, when we let <span 
+class="cmmi-12">a </span>and/or <span 
+class="cmmi-12">b </span>vary, their exchangeable priors are analogous to the <span 
+class="cmmi-12">&#x03C8;</span>
+case. Note that in the Power law case, <span 
+class="cmmi-12">b </span>is allowed to vary by taxon when <span 
+class="cmmi-12">a </span>varies by
+taxon.
+<!--l. 548--><p class="indent" >   In the variable gamma case, we define a logit-normal prior for each <span 
+class="cmmi-12">&#x03B3;</span><sub><span 
+class="cmmi-8">k</span></sub>, where <span 
+class="cmmi-12">&#x03BC;</span><sub><span 
+class="cmmi-8">&#x03B3;</span></sub> <span 
+class="cmsy-10x-x-120">~</span> uniform(<span 
+class="cmsy-10x-x-120">-</span>2<span 
+class="cmmi-12">, </span>2)
+and <span 
+class="cmmi-12">&#x03C3;</span><sub><span 
+class="cmmi-8">&#x03B3;</span></sub> <span 
+class="cmsy-10x-x-120">~</span> Cauchy(0<span 
+class="cmmi-12">, </span>5) defined on [0<span 
+class="cmmi-12">,</span><span 
+class="cmsy-10x-x-120">&#x221E;</span>).
+<!--l. 552--><p class="indent" >   Allowing <span 
+class="cmmi-12">&#x03B3; </span>and/or the kernel to vary by taxon results in a total of 10 model variations as
+described in Table&#x00A0;<a 
+href="#x1-180005">5<!--tex4ht:ref: table:WAIC --></a>.
+<!--l. 555--><p class="noindent" >
+   <h4 class="subsectionHead"><span class="titlemark">3.4   </span> <a 
+ id="x1-120003.4"></a>Model comparison</h4>
+<!--l. 557--><p class="noindent" >To identify the set of candidate models, we first assessed the variance estimates for the
+exchangeable priors. In the case where there was insufficient evidence to support the case for
+taxon-specific parameters, as indicated by (i) an estimated variance close to zero and (ii)
+overlapping credible intervals for the posterior distributions of the taxon-specific parameters, the
+model was not considered as a candidate model.
+<!--l. 565--><p class="indent" >   Then to determine which kernel and model best fit the data set we perform a formal model
+comparison using the Wantanabe-Akaike Information Criterion (WAIC) [<a 
+href="#Xwatanabe2010asymptotic">Watanabe</a>,&#x00A0;<a 
+href="#Xwatanabe2010asymptotic">2010</a>]. The
+WAIC provides a relative measure of loss of information (as does the more familiar
+AIC) in a Bayesian context, avoiding the necessity of determining the number of model
+parameters (as required by AIC) while accounting for the full posterior distribution
+as opposed to conditioning on a single point estimate (as in AIC and DIC) [<a 
+href="#Xgelman2014understanding">Gelman
+et&#x00A0;al.</a>,&#x00A0;<a 
+href="#Xgelman2014understanding">2014</a>].
+<!--l. 575--><p class="noindent" >
+   <h4 class="subsectionHead"><span class="titlemark">3.5   </span> <a 
+ id="x1-130003.5"></a>Numerical implementation</h4>
+<!--l. 577--><p class="noindent" >We cannot directly sample from the joint posterior, so we rely on MCMC methods. With the goal
+of achieving more efficient sampling with respect to the effective sample size per unit time, we used
+the Stan statistical modeling software to estimate parameters [<a 
+href="#Xstan-software:2014">Stan Development Team</a>,&#x00A0;<a 
+href="#Xstan-software:2014">2014</a>].
+Stan implements a variant of the Hamiltonian Monte Carlo method called the No-U-Turn Sampler,
+which is a gradient based sampling method that uses these directional derivatives to make
+informed decisions about how to move along (and sample from) the joint posterior surface
+[<a 
+href="#Xhoffman2011nuts">Hoffman and Gelman</a>,&#x00A0;<a 
+href="#Xhoffman2011nuts">2011</a>].
+<!--l. 601--><p class="noindent" >
+   <h3 class="sectionHead"><span class="titlemark">4   </span> <a 
+ id="x1-140004"></a>Results</h3>
+                                                                                         <img 
+src="calibration_paper42x.png" alt="PICT" >
+<img 
+src="calibration_paper43x.png" alt="PICT" >
+                                                                                         
+<!--l. 603--><p class="noindent" >
+   <h4 class="subsectionHead"><span class="titlemark">4.1   </span> <a 
+ id="x1-150004.1"></a>Expert elicitation of biostratigraphic evidence for European settlement and site
+suitability</h4>
+<!--l. 605--><p class="noindent" >Four experts participated in the elicitation exercise. For 59 out of 185 sites, the experts were in
+total agreement: they all identified the same pre-settlement sample (53 cases) or agreed that no
+such sample could be identified (6 cases). The remaining sites varied in level of disagreement - in
+79 cases, experts identified two samples; in 39 cases 3 pre-settlement samples were identified; and
+in 8 cases there was no agreement. These results confirm our hypothesis that identification of
+biostratigraphic markers is subject to variability between analysts and is the first to quantify this
+uncertainty.
+<!--l. 615--><p class="indent" >   Of the 6 sites that experts agreed had no discernible settlement signal, two of these sites were
+at Rice Lake, which is an anomalous site overwhelmed by a wild rice (<span 
+class="cmti-12">Zizania</span>) and grass (<span 
+class="cmti-12">Poaceae</span>)
+signal, and does not show any indication of settlement. The remaining four included:
+Rossburg peat bog in Minnesota; Disterhaft Farm Bog in Wisconsin; Kirchner Marsh in
+Minnesota; and Stewarts Dark Lake in Wisconsin. Three of these four sites are bogs and
+marshes with local marshland non-arboreal plants growing at or near the coring location;
+these marshland plants may be swamping the signal from agricultural non-arboreal
+indicators.
+<!--l. 626--><p class="indent" >   Based on these results, we were subsequently faced with the challenge of establishing site
+suitability criteria to determine which sites to include in the calibration data set. Ideally, the now
+quantified pre-settlement sample uncertainty would be included into the modelling framework, but
+this option was rejected for now in favor of simplicity of the statistical model. Instead,
+we set rules for filtering suitable sites and assigning pre-settlement depths on expert
+determinations.
+<!--l. 634--><p class="indent" >   Based on these results, we were subsequently faced with the challenge of establishing site
+suitability criteria to determine which sites to include in the calibration data set. Ideally, the now
+quantified pre-settlement sample uncertainty would be included into the modelling framework.
+Although this is surely possible, it would increase the complexity of the statistical model. For the
+sake of simplicity, we filter suitable sites and assign pre-settlement depths in a systematic way
+based on expert determinations.
+<!--l. 650--><p class="indent" >   Sites were considered unsuitable if: 1) a majority chose not to assign a pre-settlement sample
+(12 sites), or 2) if half of the experts chose not to assign a pre-settlement sample and the remaining
+half identified pre-settlement samples whose modelled ages were far from the approximate time of
+settlement (7 sites). For this second criterion, we looked to existing age-depth models
+associated with the pollen cores. Modelled ages for the identified pre-settlement depths were
+compared to 1850 AD, which serves as an approximate year of settlement in the upper
+Midwest. Modeled ages were defined to be far from the expert-identified settlement
+horizon if discrepancies were ¿500 years All 19 unsuitable sites were excluded from further
+analysis.
+<!--l. 663--><p class="indent" >   After completion of the elicitation exercise, a follow-up examination of the stratigraphic data
+revealed several cores with core tops with dates much older than expected - typically the date of a
+true core top corresponds with the year of sampling (with some margin of error). Further
+investigation uncovered that three of the cores included in our analysis were missing core tops. For
+both Lake Mary and Green Lake, we determined that the core tops pre-date settlement, and these
+sites were therefore were discarded [<a 
+href="#Xwebb1971late">Webb</a>,&#x00A0;<a 
+href="#Xwebb1971late">1971</a>,&#x00A0;<a 
+href="#Xlawrenz1975">Lawrenz</a>,&#x00A0;<a 
+href="#Xlawrenz1975">1975</a>]. A third site, Lake Kotiranta,
+                                                                                         <img 
+src="calibration_paper44x.png" alt="PICT" >
+<img 
+src="calibration_paper45x.png" alt="PICT" >
+                                                                                         
+had a core top corresponding to the pre-settlement sample, and this sample was retained for
+inclusion in the calibration data set [<a 
+href="#Xwright1969">Wright et&#x00A0;al.</a>,&#x00A0;<a 
+href="#Xwright1969">1969</a>]. Interestingly, for each of these
+cores, 1-3 experts identified a pre-settlement sample (although to be fair, they made
+this judgment based solely on the stratigraphic diagram and no information about site
+characteristics, and likely assumed that the uppermost sample was in fact a surface
+sample).
+<!--l. 680--><p class="indent" >   After the suitability screening, we were left with 165 long cores. For many cores,
+there was no consensus, which left us to determine how to assign our best estimate of
+pre-settlement. Given the sample resolution and an even number of experts, neither the mean
+nor the median were options. Keeping in mind that we would rather err on the side
+of caution and choose a depth that was more certainly pre-settlement (deeper) than
+one that represented post-disturbance times (more shallow), we ordered the sample
+depths from deepest to shallowest, and selected the second in this list (typically the
+second deepest, although sometimes the two largest sample depths were equal). The
+additional 48 short cores from the Calcote dataset were not candidates for the elicitation
+exercise because they had only a core top and a pre-settlement sample recorded. The
+decision to include this additional data in the calibration data set was debated - the
+pre-settlement samples for these cores were identified using different methodology (and
+analysts) than the remaining sites. In the end, we opted to include these samples as part of
+the calibration data set, based on our confidence in the data set and analysts and the
+recognition that including these sites would result in a substantive increase in sample size. In
+total we had 213 pollen samples in the Upper Midwest settlement-era calibration data
+set.
+<!--l. 702--><p class="noindent" >
+   <h4 class="subsectionHead"><span class="titlemark">4.2   </span> <a 
+ id="x1-160004.2"></a>Exploratory data analysis</h4>
+<!--l. 704--><p class="noindent" >To visually assess the relationship between sediment pollen and tree taxa, we compare pie maps
+which depict the relative proportions of taxa across space (Figure&#x00A0;<a 
+href="#x1-180041">1<!--tex4ht:ref: fig:pie --></a>). In these maps the broadscale
+patterns are consistent with each other, with both pollen and PLS data capturing the major
+ecotones in the region [<a 
+href="#Xsolomon1985computer">Solomon and Webb</a>,&#x00A0;<a 
+href="#Xsolomon1985computer">1985</a>]. However, there are some striking
+differences. First, pine dominates the pollen records for most of the northern half of the
+domain. Second, in the vegetation composition data, some regions that have higher
+relative abundances of Hemlock, Tamarack, and Maple are not apparent or much less
+pronounced in the pollen data. These taxa are known to be underrepresented in the
+pollen record [<span 
+class="cmbx-12">?</span>]. As expected, these pictures confirm that pollen is able to capture
+key vegetational gradients, but that the relationship between pollen and vegetation is
+complex.
+<!--l. 719--><p class="indent" >   To further assess spatial distributions of pollen versus PLS data, we plot the data as heat maps
+by taxon. Differences in extent of these distributions indicate pollen dispersal beyond species range
+limits. For example, for both birch and pine, both of which are known to be overrepresented in
+pollen records, the distributions of sediment pollen extend well beyond the boundaries of those
+shown in the PLS data (Figures&#x00A0;<a 
+href="#x1-180063">3<!--tex4ht:ref: fig:compare_maps_PINE --></a> &amp; <a 
+href="#x1-180074">4<!--tex4ht:ref: fig:compare_maps_BIRCH --></a>).
+                                                                                         <img 
+src="calibration_paper46x.png" alt="PICT" >
+<img 
+src="calibration_paper47x.png" alt="PICT" >
+                                                                                         
+<!--l. 728--><p class="noindent" >
+   <h4 class="subsectionHead"><span class="titlemark">4.3   </span> <a 
+ id="x1-170004.3"></a>Modelling results</h4>
+<!--l. 731--><p class="noindent" >A total of ten models were considered - four with the Gaussian kernel, and six with
+the power-law kernel. For each model, three chains were run with a warm-up of 250
+iterations, followed by a sampling period of 10,000 iterations. Warm-up iterations were not
+used in further analysis. For a total of 30,000 iterations per model, the effective sample
+sizes of the joint log posterior ranged from 12,247 for the Gaussian kernel base model
+to XXXX for the XXX model. Effective sample sizes for the joint log posterior and
+parameter posteriors are given in Table&#x00A0;<span 
+class="cmbx-12">??</span>. Trace plots for the joint log posterior show the
+efficient mixing achieved by the sampler (See Figure&#x00A0;<a 
+href="#x1-180052">2<!--tex4ht:ref: fig:trace --></a> for trace plots from the Gaussian
+dispersed model; trace plots of other models show similar mixing, and are therefore
+omitted).
+<!--l. 744--><p class="indent" >   To compare among models, we first assess the estimates of the hyperparameters for the
+exchangeable priors. All parameter and hyperparameter estimates support the use of taxon-specific
+parameter values, except for the power-law models which allow <span 
+class="cmmi-12">b </span>to vary by taxon. In these cases,
+the estimated variance for the exchangeable prior for log(<span 
+class="cmmi-12">b</span>) is small (9e-6 for the variable <span 
+class="cmmi-12">a </span>and <span 
+class="cmmi-12">b</span>
+case; 1e-4 for the variable <span 
+class="cmmi-12">a</span>, <span 
+class="cmmi-12">b</span>, and gamma case). In addition, the 95 % credible intervals for the
+estimate of <span 
+class="cmmi-12">b</span><sub><span 
+class="cmmi-8">k</span></sub> for all <span 
+class="cmmi-12">k </span>overlap, supporting the conclusion that the values of <span 
+class="cmmi-12">b</span><sub><span 
+class="cmmi-8">k</span></sub> are not
+statistically different. In light of this, we reject these two power-law kernel variable <span 
+class="cmmi-12">b</span>
+models.
+<!--l. 756--><p class="indent" >   Out of the remaining eight candidate models (four with the Gaussian kernel; four with the
+power-law kernel) we compare the WAIC (Table&#x00A0;<a 
+href="#x1-180005">5<!--tex4ht:ref: table:WAIC --></a>). According to the WAIC the power
+law kernel outperforms the Gaussian kernel - even the most flexible Gaussian model
+(variable <span 
+class="cmmi-12">&#x03C8; </span>and <span 
+class="cmmi-12">&#x03B3;</span>) results in a WAIC that is higher than the least flexible power law
+kernel model (base model). The power law kernel model with variable <span 
+class="cmmi-12">a </span>and <span 
+class="cmmi-12">&#x03B3; </span>results in
+the lowest WAIC, indicating that it performs the best out of the suite of considered
+models. However, it is still of interest to make further comparisons between the two
+kernels - does the kernel formulation make a noticeable different in pollen production
+estimates and pollen predictions? One of the goals of this work is to use the calibrated
+pollen-vegetation relationship to estimate vegetation composition back through time,
+and therefore it is natural to think about how kernel selection affects predictions, if at
+all.
+<!--l. 772--><p class="indent" >   In light of this, we continue to compare the two base models (Gaussian and power law), as well
+as the models with the lowest WAIC for each kernel type - the Gaussian variable <span 
+class="cmmi-12">&#x03C8; </span>and <span 
+class="cmmi-12">&#x03B3; </span>model
+and the power law variable <span 
+class="cmmi-12">a </span>and <span 
+class="cmmi-12">&#x03B3; </span>model (hereafter referred to as the Gaussian or power law
+variable models).
+<!--l. 778--><p class="indent" >   In Figure&#x00A0;<a 
+href="#x1-180085">5<!--tex4ht:ref: fig:focal_scaled --></a>, the raw pollen proportions are plotted against the vegetation proportions for each
+grid cell (red crosses). The relationship between the pollen and vegetation is clearly not 1:1. In
+particular, we see that some taxa, such as beech, maple, other conifer, and tamarack, are not
+prolific pollen producers - they can appear in large proportions on the landscape, but never appear
+in large proportion in the pollen record. Some relationships are difficult to identify, for
+example pine, where it varies from sparse to abundant on the local landscape, but this
+relative composition provides little indication about the relative abundance of pine
+pollen.
+<!--l. 790--><p class="indent" >   These relationships are complicated in part because of differential pollen production, which the
+                                                                                         <img 
+src="calibration_paper48x.png" alt="PICT" >
+<img 
+src="calibration_paper49x.png" alt="PICT" >
+                                                                                         
+calibration modelaccounts for by the taxon-specific scaling parameter <span 
+class="cmmi-12">&#x03D5;</span><sub><span 
+class="cmmi-8">k</span></sub>. After scaling the local
+vegetation in a cell by <span 
+class="cmmi-12">&#x03D5;</span><sub><span 
+class="cmmi-8">k</span></sub>, we can again compare the raw pollen proportions with these pollen
+predictions (Figure&#x00A0;<a 
+href="#x1-180085">5<!--tex4ht:ref: fig:focal_scaled --></a>; black and blue dots). Here we show predictions only the variable gaussian
+and power law models, but note that the results are similar for the base models. Scaling by <span 
+class="cmmi-12">&#x03D5; </span>does
+improve our pollen estimates; for many taxa, the black points have shifted towards
+the 1:1 line. This is especially true for maple, tamarack, and other conifer, suggesting
+that these pollen-vegetation relationships are heavily influenced by local pollen sources.
+However, for most of the remaining taxa the improvement is minimal, indicating that
+simply scaling the local vegetation proportions is not sufficient to predict deposited
+pollen.
+<!--l. 806--><p class="indent" >   In Figure&#x00A0;<a 
+href="#x1-180096">6<!--tex4ht:ref: fig:preds --></a>, we again plot the raw pollen proportions against both the vegetation (red crosses)
+and predicted pollen for the variable models (Gaussian: black dots; power law: blue dots),
+but in this case the predicted pollen is based on the local plus non-local predictions
+obtained from the full calibration model. Now that non-local dispersal has been accounted
+for, the raw versus predicted pollen points fall more closely along the 1:1 line. This
+indicates that in our domain non-local dispersal processes account for much of the pollen
+that arrive at any given location. For most taxa, the improvement that we gain by
+using more flexible models versus the base models is not qualitatively obvious. This is
+not true for Hemlock - both base models underpredict Hemlock pollen at sites where
+there is relatively high proportion of Hemlock (although Hemlock pollen never exceeds
+28% at any site in our domain). This suggests that the relative contribution of local
+versus non-local hemlock pollen is estimated to be less than the true value, i.e. <span 
+class="cmmi-12">&#x03B3; </span>is too
+small.
+<!--l. 824--><p class="indent" >   In Figure&#x00A0;<a 
+href="#x1-180096">6<!--tex4ht:ref: fig:preds --></a>, we again plot the raw pollen proportions against both the vegetation (red
+crosses) and predicted pollen for the variable models (guassian: black dots; power law:
+blue dots) by taxon, but in this case the predicted pollen is based on the local plus
+non-local predictions obtained from the full calibration model. Now that dispersal has been
+accounted for, we see that the raw versus predicted pollen points fall more closely along
+the 1:1 line. This indicates that in our domain dispersal processes account for much of
+the pollen that arrive at any given location. For most taxa, the improvement that we
+gain by using more flexible models versus the base models is not qualitatively obvious.
+This is not true for Hemlock - both base models underpredict Hemlock pollen at sites
+where there is relatively high proportion of Hemlock (although Hemlock pollen never
+exceeds 28% at any site in our domain). This suggests that the relative contribution
+of local versus non-local pollen is estimated to be less than it should be, i.e. <span 
+class="cmmi-12">&#x03B3; </span>is too
+small.
+<!--l. 841--><p class="indent" >   There are two anomalous sites for which the model is unable to adequately account for the
+processes leading to the (relatively speaking) unusual compositional makeup of the deposited
+pollen. The first is Ocheda Lake, a large but shallow glacial kettle lake in Southwestern
+Minnesota. The pollen diagrams indicate a relative spike in deposited Maple pollen in the
+pre-settlement sample. The second is Tamarack Creek, a site situated in a wetland with high
+Tamarack pollen counts for the top 80 cm of sediment. At this site, the calibration sample is
+composed of 40 % Tamarack, while all other fossil pollen sites contain a maximum of 1 %
+Tamarack.
+<!--l. 852--><p class="indent" >   From each model we obtain taxon-specific estimates for the ratio of local to non-local pollen <span 
+class="cmmi-12">&#x03D5;</span>
+                                                                                         <img 
+src="calibration_paper50x.png" alt="PICT" >
+<img 
+src="calibration_paper51x.png" alt="PICT" >
+                                                                                         
+(Figure&#x00A0;<a 
+href="#x1-180107">7<!--tex4ht:ref: fig:phi --></a>). If these parameter estimates truly represent differential pollen production/dispersal,
+then these estimated values should be consistent across model variants, which is generally the case
+(Figure&#x00A0;<a 
+href="#x1-180107">7<!--tex4ht:ref: fig:phi --></a>). However, for several taxa including beech, Hemlock and Pine the variable power law
+kernel models predicts much larger <span 
+class="cmmi-12">&#x03D5; </span>values than the other models. However, in some of these cases
+the credible intervals are large, and overlap with competing estimates of <span 
+class="cmmi-12">&#x03D5;</span>, suggesting
+that these estimates may not be statistically different. Aside from the few uncertain
+values resulting from the variable power law model, the estimated values of <span 
+class="cmmi-12">&#x03D5; </span>form three
+distinct groups in <span 
+class="cmmi-12">&#x03D5; </span>parameter space: low, intermediate, and high production/dispersal
+(Figure&#x00A0;<a 
+href="#x1-180107">7<!--tex4ht:ref: fig:phi --></a>). The group of taxa with lowest production/dispersal in decreasing order are beech,
+maple, other conifer, and tamarack. This low production/dispersal pattern is evident in
+Figure&#x00A0;<a 
+href="#x1-180096">6<!--tex4ht:ref: fig:preds --></a>, where the representation of these taxa in the pollen records is consistently
+less than their representation on the landscape (except at a few anomalous ponds).
+Intermediate producers/dispersers, again in decreasing order, include other hardwood, oak, elm,
+hemlock, ash, and spruce. The high production/dispersal group includes pine and birch,
+which can also be seen in Figure&#x00A0;<a 
+href="#x1-180096">6<!--tex4ht:ref: fig:preds --></a> by their propensity to be over-represented in the
+pollen record relative to the landscape. These results agree in general with [<a 
+href="#Xprentice1986">Prentice and
+Webb</a>,&#x00A0;<a 
+href="#Xprentice1986">1986</a>], which analyzed the pollen-vegetation relationship for sites in Wisconsin and
+the Upper Peninsula of Michigan. In that work, pine and birch had the largest slopes
+(top producers/dispersers), and maple and tamarack as limited producers/dispersers.
+[<a 
+href="#Xjackson1990">Jackson</a>,&#x00A0;<a 
+href="#Xjackson1990">1990</a>] also found that Pine and Birch were good dispersers with effective source areas of
+1000m, while Maple was found to have a much smaller source area indicating limited
+dispersal.
+<!--l. 885--><p class="indent" >   For the base models, the local versus non-local weight parameter <span 
+class="cmmi-12">&#x03B3; </span>was estimated to have a
+mean of 0<span 
+class="cmmi-12">.</span>21 for the Gaussian kernel model and 0<span 
+class="cmmi-12">.</span>07 for the power law kernel model. These values
+indicate that 21% (or 7%) of the pollen produced by vegetation in a focal grid cell is
+deposited in that grid cell, while the remaining 79% (or 93%) disperses elsewhere in the
+domain.
+<!--l. 892--><p class="indent" >   When we allowed <span 
+class="cmmi-12">&#x03B3; </span>to vary by taxon in the variable models, the estimates for both kernels
+yielded similar results with overlapping 95 % credible intervals for all taxa except Pine and Oak
+(Table&#x00A0;<a 
+href="#x1-180005">5<!--tex4ht:ref: table:gamma --></a>). Birch, Other conifer, Ash, and Other hardwood all had lower estimates of <span 
+class="cmmi-12">&#x03B3;</span>,
+with mean posterior values all less than 0.12 (mean values ranging from 0.03 - 0.11).
+Those taxa with larger estimated values of <span 
+class="cmmi-12">&#x03B3; </span>were Hemlock, Tamarack, Maple, Beech,
+Spruce, and Elm. For both Pine and Oak, the variable Gaussian kernel models estimated
+higher values of <span 
+class="cmmi-12">&#x03B3;</span>. It is encouraging that these estimates of localness are similar for both
+variable case models, but based on these estimates alone we can compare only focal-cell
+contributions. Non-local dispersal is determined by the product of (1 <span 
+class="cmsy-10x-x-120">- </span><span 
+class="cmmi-12">&#x03B3;</span>) with the
+sum of the weights of all non-local cells, which in turn depends on the estimated kernel
+parameter(s).
+<!--l. 908--><p class="indent" >   For the base Gaussian kernel case, the spread parameter <span 
+class="cmmi-12">&#x03C8; </span>was estimated to be 204<span style="margin-left:0.3em" class="thinspace"></span>(192<span 
+class="cmmi-12">, </span>215)
+km. In the variable Gaussian model <span 
+class="cmmi-12">&#x03C8; </span>estimates ranged from 152 for Pine to 361 for Other
+hardwood (Figure&#x00A0;<span 
+class="cmbx-12">??</span>). For many taxa, 95% credible intervals are large; this is especially true for
+Tamarack, with a credible interval of (128, 553). For the base power law model, the kernel
+parameters <span 
+class="cmmi-12">a </span>and <span 
+class="cmmi-12">b </span>were estimated to be 0<span 
+class="cmmi-12">.</span>01<span style="margin-left:0.3em" class="thinspace"></span>(8<span 
+class="cmmi-12">.</span>29<span 
+class="cmmi-12">e </span><span 
+class="cmsy-10x-x-120">- </span>3<span 
+class="cmmi-12">, </span>0<span 
+class="cmmi-12">.</span>01) and 2<span 
+class="cmmi-12">.</span>03<span style="margin-left:0.3em" class="thinspace"></span>(2<span 
+class="cmmi-12">.</span>00<span 
+class="cmmi-12">, </span>2<span 
+class="cmmi-12">.</span>12). For the
+variable power law model case, the estimated <span 
+class="cmmi-12">b </span>value was almost identical to the base
+model 2<span 
+class="cmmi-12">.</span>06<span style="margin-left:0.3em" class="thinspace"></span>(2<span 
+class="cmmi-12">.</span>00<span 
+class="cmmi-12">, </span>2<span 
+class="cmmi-12">.</span>16). The <span 
+class="cmmi-12">a </span>estimates ranged from 2<span 
+class="cmmi-12">.</span>68<span 
+class="cmmi-12">e </span><span 
+class="cmsy-10x-x-120">- </span>3 for Beech to 0<span 
+class="cmmi-12">.</span>203 for
+                                                                                         <img 
+src="calibration_paper52x.png" alt="PICT" >
+<img 
+src="calibration_paper53x.png" alt="PICT" >
+                                                                                         
+Elm.
+<!--l. 919--><p class="indent" >   The most intuitive way to assess how these parameters affect pollen dispersal is to plot the
+proportion of deposited pollen as a function of radius from the pollen source. So, we plot
+<span 
+class="cmmi-12">&#x03B3; </span>+ (1 <span 
+class="cmsy-10x-x-120">- </span><span 
+class="cmmi-12">&#x03B3;</span>) <span 
+class="cmex-10x-x-120">&#x2211;</span>
+  <sub><span 
+class="cmmi-8">s</span><sub><span 
+class="cmmi-6">j</span></sub><span 
+class="cmmi-8">&#x2260;</span><span 
+class="cmmi-8">s</span><sub><span 
+class="cmmi-6">i</span></sub></sub><span 
+class="cmmi-12">w</span>(<span 
+class="cmmi-12">s</span>(<span 
+class="cmmi-12">i</span>)<span 
+class="cmmi-12">,s</span><sub><span 
+class="cmmi-8">j</span></sub>) for a hypothetical core (<span 
+class="cmmi-12">i</span>) centered on our potential discretized
+domain, where for a defined radius, cells are included in the non-local sum if the distance
+between <span 
+class="cmmi-12">s</span>(<span 
+class="cmmi-12">i</span>) and <span 
+class="cmmi-12">s</span><sub><span 
+class="cmmi-8">j</span></sub> is less than or equal to this radius. Then, for each taxon, we can plot
+cumulative density functions of the deposited pollen for each of the four considered models
+(Figure&#x00A0;<span 
+class="cmbx-12">??</span>). We note that the plotted based model functions are identical for all taxa (solid
+lines). For the variable models, we can see the effects of changes in magnitude in both
+<span 
+class="cmmi-12">&#x03C8; </span>for the Gaussian kernel, and <span 
+class="cmmi-12">a </span>for the variable kernel. The CDFs for the Gaussian
+kernel models all have a sigmoidal shape, where smaller values of <span 
+class="cmmi-12">&#x03C8; </span>correspond to a
+steeper slope indicating that relatively more pollen deposition happens close to the
+source. The contrast between the two most extreme <span 
+class="cmmi-12">&#x03C8; </span>values is seen the Pine (lowest)
+and Other hardwood (highest) variable Gaussian CDFs. For the variable power law
+model, for fixed <span 
+class="cmmi-12">b</span>, larger values of <span 
+class="cmmi-12">a </span>result in a more sigmoidal shape that resembles the
+Gaussian kernel, for example as seen with Elm where the variable model CDFs are nearly
+identical. Again for fixed <span 
+class="cmmi-12">b</span>, smaller values of <span 
+class="cmmi-12">a </span>results in a concave downward curve that
+shows that pollen is deposited closer to the source, but at a certain distance from the
+source - where the Gaussian and power law CDFs intersect - the cumulative pollen
+deposition is equal. To help interpret these curves, we determined the radius from the source
+needed to capture 50% and 90% of the deposited pollen for each model and each taxon
+(Table&#x00A0;<a 
+href="#x1-180005">5<!--tex4ht:ref: table:pollen_acc --></a>). As seen in Figure&#x00A0;<a 
+href="#x1-180118">8<!--tex4ht:ref: fig:cdf --></a>, the CDFs for the two base models have two points of
+intersection, indicating changing relative rates of accumulation. The power law based model
+estimates a smaller radius needed to accumulate 50% of the pollen, however, the Gaussian
+base model cdf asymptotes to one more quickly (shorter-tailed kernel). For the variable
+models, the taxon with the smallest radius from a pollen source needed to accumulate
+50% of the dispersed pollen was Hemlock (60 km for the variable Gaussian, and 28
+km for the the variable power law), while Other hardwood required the largest radius
+to accumulate the same percent (264 km for the variable Gaussian, 252 km for the
+variable power law). To capture 90% of the dispersed pollen required radii of 216 km
+for Pine up to 448 km for Other hardwood for the variable Gaussian model, and 292
+km for Hemlock to 476 km for Elm and Other hardwood for the variable power law
+model.
+<!--l. 990--><p class="indent" >   To visualize the dispersal patterns predicted by our model, we can estimate the proportion of
+deposited pollen by taxon for each grid cell in the domain (previously we were estimating deposited
+pollen only at lakes for which we had pollen data) (Figures&#x00A0;<span 
+class="cmbx-12">??</span> &amp; <a 
+href="#x1-1801310">10<!--tex4ht:ref: fig:maps_pollen_pl --></a>). These spatial
+maps help us understand how the models treat dispersal. Comparing these two figures
+illustrates the differences between these two models - the predicted sediment pollen
+maps for the variable power law model are much smoother. This is due to the increased
+accumulation of dispersed pollen at short distances relative to the Gaussian, which predicts that
+the fastest accumulation rate of dispersed pollen occurs farther from the source (see
+Figure&#x00A0;<a 
+href="#x1-180118">8<!--tex4ht:ref: fig:cdf --></a>).
+<!--l. 1005--><p class="indent" >   We can also compare the predicted pollen maps with those depicting the relative tree
+abundance (Figure&#x00A0;<a 
+href="#x1-1801411">11<!--tex4ht:ref: fig:maps_veg --></a>), remembering that the pollen predictions have been scaled to account for
+differential production (so we are comparing predicted sediment pollen with vegetation
+                                                                                         <img 
+src="calibration_paper54x.png" alt="PICT" >
+<img 
+src="calibration_paper55x.png" alt="PICT" >
+                                                                                         
+composition). This scaling for differential production is particularly apparent for Tamarack.
+We know from the data that Tamarack pollen proportions are always lower than the
+vegetation proportions, and as a result, we expect that the model will predict low amounts of
+Tamarack pollen, which it does. To see how the model predicts dispersal by taxon,
+based on parameters estimated from that data, we can compare the vegetation and
+pollen ranges. The effects of dispersal are especially clear in the Pine and Oak cases,
+where we see pollen dispersing well beyond the range limits of the vegetation range
+boundaries.
+<!--l. 1020--><p class="noindent" >
+   <h3 class="sectionHead"><span class="titlemark">5   </span> <a 
+ id="x1-180005"></a>Summary and Conclusions</h3>
+                                                                                         <img 
+src="calibration_paper56x.png" alt="PICT" >
+<img 
+src="calibration_paper57x.png" alt="PICT" >
+                                                                                         
+   <div class="table">
+                                                                                         <img 
+src="calibration_paper58x.png" alt="PICT" >
+<img 
+src="calibration_paper59x.png" alt="PICT" >
+                                                                                         
+<!--l. 3--><p class="indent" >   <a 
+ id="x1-180011"></a><hr class="float"><div class="float" 
+>
+                                                                                         <img 
+src="calibration_paper60x.png" alt="PICT" >
+<img 
+src="calibration_paper61x.png" alt="PICT" >
+                                                                                         
+<div class="center" 
+>
+<!--l. 3--><p class="noindent" >
+<div class="tabular">
+ <table id="TBL-2" class="tabular" 
+cellspacing="0" cellpadding="0"  
+><colgroup id="TBL-2-1g"><col 
+id="TBL-2-1"><col 
+id="TBL-2-2"><col 
+id="TBL-2-3"></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-2-1-"><td  style="white-space:nowrap; text-align:center;" id="TBL-2-1-1"  
+class="td11"> Kernel  </td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-1-2"  
+class="td11">     Model        </td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-1-3"  
+class="td11">WAIC</td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-2-2-"><td  style="white-space:nowrap; text-align:center;" id="TBL-2-2-1"  
+class="td11"> Gaussian </td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-2-2"  
+class="td11">      Base         </td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-2-3"  
+class="td11"> 13115 </td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-2-3-"><td  style="white-space:nowrap; text-align:center;" id="TBL-2-3-1"  
+class="td11"> Gaussian </td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-3-2"  
+class="td11"> Variable <span 
+class="cmmi-12">&#x03B3; </span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-3-3"  
+class="td11"> 13053</td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-2-4-"><td  style="white-space:nowrap; text-align:center;" id="TBL-2-4-1"  
+class="td11"> Gaussian </td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-4-2"  
+class="td11">    Variable <span 
+class="cmmi-12">&#x03C8;     </span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-4-3"  
+class="td11"> 13038 </td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-2-5-"><td  style="white-space:nowrap; text-align:center;" id="TBL-2-5-1"  
+class="td11"> Gaussian </td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-5-2"  
+class="td11"> Variable <span 
+class="cmmi-12">&#x03C8; </span>and <span 
+class="cmmi-12">&#x03B3; </span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-5-3"  
+class="td11"> 12953 </td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-2-6-"><td  style="white-space:nowrap; text-align:center;" id="TBL-2-6-1"  
+class="td11">Power law</td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-6-2"  
+class="td11">      Base         </td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-6-3"  
+class="td11"> 12853 </td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-2-7-"><td  style="white-space:nowrap; text-align:center;" id="TBL-2-7-1"  
+class="td11">Power law</td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-7-2"  
+class="td11">    Variable <span 
+class="cmmi-12">&#x03B3;     </span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-7-3"  
+class="td11"> 12789 </td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-2-8-"><td  style="white-space:nowrap; text-align:center;" id="TBL-2-8-1"  
+class="td11">Power law</td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-8-2"  
+class="td11">    Variable <span 
+class="cmmi-12">a     </span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-8-3"  
+class="td11"> 12702 </td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-2-9-"><td  style="white-space:nowrap; text-align:center;" id="TBL-2-9-1"  
+class="td11">Power law</td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-9-2"  
+class="td11"> Variable <span 
+class="cmmi-12">a </span>and <span 
+class="cmmi-12">b  </span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-9-3"  
+class="td11"><span 
+class="cmmi-12">b </span>EPC</td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-2-10-"><td  style="white-space:nowrap; text-align:center;" id="TBL-2-10-1"  
+class="td11">Power law</td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-10-2"  
+class="td11"> Variable <span 
+class="cmmi-12">a </span>and <span 
+class="cmmi-12">&#x03B3; </span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-10-3"  
+class="td11"> 12690 </td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-2-11-"><td  style="white-space:nowrap; text-align:center;" id="TBL-2-11-1"  
+class="td11">Power law</td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-11-2"  
+class="td11">Variable <span 
+class="cmmi-12">a</span>, <span 
+class="cmmi-12">b </span>and <span 
+class="cmmi-12">&#x03B3;</span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-11-3"  
+class="td11"><span 
+class="cmmi-12">b </span>EPC</td>
+
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-2-12-"><td  style="white-space:nowrap; text-align:center;" id="TBL-2-12-1"  
+class="td11">        </td></tr></table></div>
+<br /> <div class="caption" 
+><span class="id">Table&#x00A0;1:  </span><span  
+class="content">Wantanabe-Akaike  Information  Criterion  (WAIC)  values  for  eight  candidate
+models. EPC denotes the exchangeable prior collapse for the indicated parameter. Models
+that use the Power law kernel have lower WAIC values.</span></div><!--tex4ht:label?: x1-180011 -->
+</div>
+                                                                                         <img 
+src="calibration_paper62x.png" alt="PICT" >
+<img 
+src="calibration_paper63x.png" alt="PICT" >
+                                                                                         
+   </div><hr class="endfloat" />
+   </div>
+   <div class="table">
+                                                                                         <img 
+src="calibration_paper64x.png" alt="PICT" >
+<img 
+src="calibration_paper65x.png" alt="PICT" >
+                                                                                         
+<!--l. 46--><p class="indent" >   <a 
+ id="x1-180022"></a><hr class="float"><div class="float" 
+>
+                                                                                         <img 
+src="calibration_paper66x.png" alt="PICT" >
+<img 
+src="calibration_paper67x.png" alt="PICT" >
+                                                                                         
+<div class="center" 
+>
+<!--l. 46--><p class="noindent" >
+<div class="tabular">
+ <table id="TBL-3" class="tabular" 
+cellspacing="0" cellpadding="0"  
+><colgroup id="TBL-3-1g"><col 
+id="TBL-3-1"><col 
+id="TBL-3-2"><col 
+id="TBL-3-3"><col 
+id="TBL-3-4"></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-3-1-"><td  style="white-space:nowrap; text-align:center;" id="TBL-3-1-1"  
+class="td11">             </td><td  style="white-space:nowrap; text-align:center;" id="TBL-3-1-2"  
+class="td11">             </td><td colspan="2" style="white-space:nowrap; text-align:center;" id="TBL-3-1-3"  
+class="td11">                    <div class="multicolumn"  style="white-space:nowrap; text-align:center;">Model</div>
+</td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-3-2-"><td  style="white-space:nowrap; text-align:center;" id="TBL-3-2-1"  
+class="td11"> Common name </td><td  style="white-space:nowrap; text-align:center;" id="TBL-3-2-2"  
+class="td11">Scientific name</td><td  style="white-space:nowrap; text-align:center;" id="TBL-3-2-3"  
+class="td11">  <span 
+class="cmmi-12">&#x03B3; </span>(Variable Gaussian)   </td><td  style="white-space:nowrap; text-align:center;" id="TBL-3-2-4"  
+class="td11"> <span 
+class="cmmi-12">&#x03B3; </span>(Variable Power law)  </td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-3-3-"><td  style="white-space:nowrap; text-align:center;" id="TBL-3-3-1"  
+class="td11">     Ash         </td><td  style="white-space:nowrap; text-align:center;" id="TBL-3-3-2"  
+class="td11">   Fraxinus    </td><td  style="white-space:nowrap; text-align:center;" id="TBL-3-3-3"  
+class="td11">6.24E-2 (7.15E-3, 1.64E-1)</td><td  style="white-space:nowrap; text-align:center;" id="TBL-3-3-4"  
+class="td11">3.87E-2 (3.55E-4, 1.07E-1)</td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-3-4-"><td  style="white-space:nowrap; text-align:center;" id="TBL-3-4-1"  
+class="td11">     Beech       </td><td  style="white-space:nowrap; text-align:center;" id="TBL-3-4-2"  
+class="td11">    Fagus      </td><td  style="white-space:nowrap; text-align:center;" id="TBL-3-4-3"  
+class="td11">3.12E-1 (1.29E-1, 5.35E-1)</td><td  style="white-space:nowrap; text-align:center;" id="TBL-3-4-4"  
+class="td11">1.69E-1 (1.06E-2, 4.90E-1)</td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-3-5-"><td  style="white-space:nowrap; text-align:center;" id="TBL-3-5-1"  
+class="td11">     Birch        </td><td  style="white-space:nowrap; text-align:center;" id="TBL-3-5-2"  
+class="td11">    Betula      </td><td  style="white-space:nowrap; text-align:center;" id="TBL-3-5-3"  
+class="td11">9.90E-2 (3.71E-2, 1.58E-1)</td><td  style="white-space:nowrap; text-align:center;" id="TBL-3-5-4"  
+class="td11">2.77E-2 (5.69E-4, 7.82E-2)</td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-3-6-"><td  style="white-space:nowrap; text-align:center;" id="TBL-3-6-1"  
+class="td11">     Elm        </td><td  style="white-space:nowrap; text-align:center;" id="TBL-3-6-2"  
+class="td11">    Ulmus      </td><td  style="white-space:nowrap; text-align:center;" id="TBL-3-6-3"  
+class="td11">1.48E-1 (7.79E-2, 2.22E-1)</td><td  style="white-space:nowrap; text-align:center;" id="TBL-3-6-4"  
+class="td11">1.65E-1 (8.70E-2, 2.38E-1)</td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-3-7-"><td  style="white-space:nowrap; text-align:center;" id="TBL-3-7-1"  
+class="td11">   Hemlock     </td><td  style="white-space:nowrap; text-align:center;" id="TBL-3-7-2"  
+class="td11">    Tsuga      </td><td  style="white-space:nowrap; text-align:center;" id="TBL-3-7-3"  
+class="td11">4.63E-1 (3.67E-1, 5.53E-1)</td><td  style="white-space:nowrap; text-align:center;" id="TBL-3-7-4"  
+class="td11">2.70E-1 (8.76E-2, 4.52E-1)</td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-3-8-"><td  style="white-space:nowrap; text-align:center;" id="TBL-3-8-1"  
+class="td11">    Maple       </td><td  style="white-space:nowrap; text-align:center;" id="TBL-3-8-2"  
+class="td11">    Acer       </td><td  style="white-space:nowrap; text-align:center;" id="TBL-3-8-3"  
+class="td11">1.83E-1 (8.79E-2, 2.84E-1)</td><td  style="white-space:nowrap; text-align:center;" id="TBL-3-8-4"  
+class="td11">1.98E-1 (7.70E-2, 3.01E-1)</td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-3-9-"><td  style="white-space:nowrap; text-align:center;" id="TBL-3-9-1"  
+class="td11">     Oak        </td><td  style="white-space:nowrap; text-align:center;" id="TBL-3-9-2"  
+class="td11">   Quercus     </td><td  style="white-space:nowrap; text-align:center;" id="TBL-3-9-3"  
+class="td11">2.41E-1 (1.82E-1, 3.03E-1)</td><td  style="white-space:nowrap; text-align:center;" id="TBL-3-9-4"  
+class="td11">5.16E-2 (2.60E-3, 1.26E-1)</td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-3-10-"><td  style="white-space:nowrap; text-align:center;" id="TBL-3-10-1"  
+class="td11"> Other Conifer  </td><td  style="white-space:nowrap; text-align:center;" id="TBL-3-10-2"  
+class="td11">    Abies      </td><td  style="white-space:nowrap; text-align:center;" id="TBL-3-10-3"  
+class="td11">8.12E-2 (5.21E-3, 1.96E-1)</td><td  style="white-space:nowrap; text-align:center;" id="TBL-3-10-4"  
+class="td11">4.16E-2 (3.23E-4, 1.46E-1)</td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-3-11-"><td  style="white-space:nowrap; text-align:center;" id="TBL-3-11-1"  
+class="td11">Other Hardwood</td><td  style="white-space:nowrap; text-align:center;" id="TBL-3-11-2"  
+class="td11"> <sup><span 
+class="cmsy-8">*</span></sup> See caption </td><td  style="white-space:nowrap; text-align:center;" id="TBL-3-11-3"  
+class="td11">4.73E-2 (3.07E-3, 8.67E-2)</td><td  style="white-space:nowrap; text-align:center;" id="TBL-3-11-4"  
+class="td11">5.32E-2 (1.58E-3, 1.05E-1)</td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-3-12-"><td  style="white-space:nowrap; text-align:center;" id="TBL-3-12-1"  
+class="td11">     Pine        </td><td  style="white-space:nowrap; text-align:center;" id="TBL-3-12-2"  
+class="td11">    Pinus      </td><td  style="white-space:nowrap; text-align:center;" id="TBL-3-12-3"  
+class="td11">2.49E-1 (2.14E-1, 2.82E-1)</td><td  style="white-space:nowrap; text-align:center;" id="TBL-3-12-4"  
+class="td11">2.11E-2 (3.12E-3, 4.86E-2)</td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-3-13-"><td  style="white-space:nowrap; text-align:center;" id="TBL-3-13-1"  
+class="td11">    Spruce       </td><td  style="white-space:nowrap; text-align:center;" id="TBL-3-13-2"  
+class="td11">    Picea      </td><td  style="white-space:nowrap; text-align:center;" id="TBL-3-13-3"  
+class="td11">2.37E-1 (1.46E-1, 3.29E-1)</td><td  style="white-space:nowrap; text-align:center;" id="TBL-3-13-4"  
+class="td11">1.44E-1 (2.41E-2, 2.86E-1)</td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-3-14-"><td  style="white-space:nowrap; text-align:center;" id="TBL-3-14-1"  
+class="td11">   Tamarack     </td><td  style="white-space:nowrap; text-align:center;" id="TBL-3-14-2"  
+class="td11">    Larix      </td><td  style="white-space:nowrap; text-align:center;" id="TBL-3-14-3"  
+class="td11">4.25E-1 (2.23E-1, 6.48E-1)</td><td  style="white-space:nowrap; text-align:center;" id="TBL-3-14-4"  
+class="td11">3.66E-1 (2.09E-2, 6.22E-1)</td>
+
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-3-15-"><td  style="white-space:nowrap; text-align:center;" id="TBL-3-15-1"  
+class="td11">              </td></tr></table></div>
+<br /> <div class="caption" 
+><span class="id">Table&#x00A0;2: </span><span  
+class="content">Estimates of parameter <span 
+class="cmmi-12">&#x03B3;</span>, indicating the proportion of locally sourced pollen for
+the variable Gaussian model in which <span 
+class="cmmi-12">&#x03C8; </span>and <span 
+class="cmmi-12">&#x03B3; </span>both vary by taxon and the variable Power
+law kernel model in which <span 
+class="cmmi-12">a </span>and <span 
+class="cmmi-12">&#x03B3; </span>vary by taxon. For the base models, <span 
+class="cmmi-12">&#x03B3; </span>was estimate to
+be 0<span 
+class="cmmi-12">.</span>21(1<span 
+class="cmmi-12">.</span>96<span 
+class="cmmi-12">E </span><span 
+class="cmsy-10x-x-120">- </span>1<span 
+class="cmmi-12">, </span>2<span 
+class="cmmi-12">.</span>30<span 
+class="cmmi-12">E </span><span 
+class="cmsy-10x-x-120">- </span>1) for the Gaussian kernel model and 0<span 
+class="cmmi-12">.</span>07(3<span 
+class="cmmi-12">.</span>79<span 
+class="cmmi-12">E </span><span 
+class="cmsy-10x-x-120">- </span>2<span 
+class="cmmi-12">, </span>9<span 
+class="cmmi-12">.</span>53<span 
+class="cmmi-12">E </span><span 
+class="cmsy-10x-x-120">- </span>2)
+for the Power law kernel model. <sup><span 
+class="cmsy-8">*</span></sup> The Other Hardwood grouping is composed of: Alnus,
+Carya,  Cornus,  Cupressaceae,  Gleditsia,  Liquidambar,  Maclura,  Morus,  Nyssa,  Ostrya
+carpinus, Platanus, Populus, Robinia, Rosaceae, Salix, Tilia, Zanthoxylum, as well as any
+undifferentiated hardwood (e.g. pollen grains classified as Fagus backslashchar Nyssa, Betula
+backslashchar Corylus, etc.).</span></div><!--tex4ht:label?: x1-180022 -->
+</div>
+                                                                                         <img 
+src="calibration_paper68x.png" alt="PICT" >
+<img 
+src="calibration_paper69x.png" alt="PICT" >
+                                                                                         
+   </div><hr class="endfloat" />
+   </div>
+   <div class="table">
+                                                                                         <img 
+src="calibration_paper70x.png" alt="PICT" >
+<img 
+src="calibration_paper71x.png" alt="PICT" >
+                                                                                         
+<!--l. 101--><p class="indent" >   <a 
+ id="x1-180033"></a><hr class="float"><div class="float" 
+>
+                                                                                         <img 
+src="calibration_paper72x.png" alt="PICT" >
+<img 
+src="calibration_paper73x.png" alt="PICT" >
+                                                                                         
+<div class="center" 
+>
+<!--l. 101--><p class="noindent" >
+<div class="tabular">
+ <table id="TBL-4" class="tabular" 
+cellspacing="0" cellpadding="0"  
+><colgroup id="TBL-4-1g"><col 
+id="TBL-4-1"><col 
+id="TBL-4-2"><col 
+id="TBL-4-3"><col 
+id="TBL-4-4"><col 
+id="TBL-4-5"></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-4-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-4-1-1"  
+class="td11">             </td><td colspan="4" style="white-space:nowrap; text-align:center;" id="TBL-4-1-2"  
+class="td11">       <div class="multicolumn"  style="white-space:nowrap; text-align:center;">Model</div>
+</td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-4-2-"><td  style="white-space:nowrap; text-align:left;" id="TBL-4-2-1"  
+class="td11">                </td><td colspan="4" style="white-space:nowrap; text-align:right;" id="TBL-4-2-2"  
+class="td11"><!--cmidrule-->
+</td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-4-3-"><td  style="white-space:nowrap; text-align:left;" id="TBL-4-3-1"  
+class="td11">Taxon             </td><td colspan="2" style="white-space:nowrap; text-align:center;" id="TBL-4-3-2"  
+class="td11"> <div class="multicolumn"  style="white-space:nowrap; text-align:center;">Gaussian</div> </td><td colspan="2" style="white-space:nowrap; text-align:center;" id="TBL-4-3-4"  
+class="td11"><div class="multicolumn"  style="white-space:nowrap; text-align:center;">Power law</div>
+</td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-4-4-"><td  style="white-space:nowrap; text-align:left;" id="TBL-4-4-1"  
+class="td11">                </td><td colspan="2" style="white-space:nowrap; text-align:right;" id="TBL-4-4-2"  
+class="td11"><!--cmidrule--></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-4-5-"><td colspan="3" style="white-space:nowrap; text-align:left;" id="TBL-4-5-1"  
+class="td11">           </td><td colspan="2" style="white-space:nowrap; text-align:right;" id="TBL-4-5-4"  
+class="td11"><!--cmidrule-->
+</td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-4-6-"><td  style="white-space:nowrap; text-align:left;" id="TBL-4-6-1"  
+class="td11">              </td><td  style="white-space:nowrap; text-align:right;" id="TBL-4-6-2"  
+class="td11">50%</td><td  style="white-space:nowrap; text-align:right;" id="TBL-4-6-3"  
+class="td11">90%</td><td  style="white-space:nowrap; text-align:right;" id="TBL-4-6-4"  
+class="td11">50%</td><td  style="white-space:nowrap; text-align:right;" id="TBL-4-6-5"  
+class="td11">90%</td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-4-7-"><td  style="white-space:nowrap; text-align:left;" id="TBL-4-7-1"  
+class="td11">                </td><td colspan="2" style="white-space:nowrap; text-align:right;" id="TBL-4-7-2"  
+class="td11"><!--cmidrule--></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-4-8-"><td colspan="3" style="white-space:nowrap; text-align:left;" id="TBL-4-8-1"  
+class="td11">           </td><td colspan="2" style="white-space:nowrap; text-align:right;" id="TBL-4-8-4"  
+class="td11"><!--cmidrule-->
+</td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-4-9-"><td  style="white-space:nowrap; text-align:left;" id="TBL-4-9-1"  
+class="td11">Hemlock          </td><td  style="white-space:nowrap; text-align:right;" id="TBL-4-9-2"  
+class="td11">  60</td><td  style="white-space:nowrap; text-align:right;" id="TBL-4-9-3"  
+class="td11"> 280</td><td  style="white-space:nowrap; text-align:right;" id="TBL-4-9-4"  
+class="td11">  28</td><td  style="white-space:nowrap; text-align:right;" id="TBL-4-9-5"  
+class="td11"> 292</td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-4-10-"><td  style="white-space:nowrap; text-align:left;" id="TBL-4-10-1"  
+class="td11">Tamarack </td><td  style="white-space:nowrap; text-align:right;" id="TBL-4-10-2"  
+class="td11"> 96</td><td  style="white-space:nowrap; text-align:right;" id="TBL-4-10-3"  
+class="td11"> 328</td><td  style="white-space:nowrap; text-align:right;" id="TBL-4-10-4"  
+class="td11"> 120</td><td  style="white-space:nowrap; text-align:right;" id="TBL-4-10-5"  
+class="td11"> 428</td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-4-11-"><td  style="white-space:nowrap; text-align:left;" id="TBL-4-11-1"  
+class="td11">Pine                </td><td  style="white-space:nowrap; text-align:right;" id="TBL-4-11-2"  
+class="td11"> 100</td><td  style="white-space:nowrap; text-align:right;" id="TBL-4-11-3"  
+class="td11"> 216</td><td  style="white-space:nowrap; text-align:right;" id="TBL-4-11-4"  
+class="td11">  56</td><td  style="white-space:nowrap; text-align:right;" id="TBL-4-11-5"  
+class="td11"> 332</td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-4-12-"><td  style="white-space:nowrap; text-align:left;" id="TBL-4-12-1"  
+class="td11">Birch               </td><td  style="white-space:nowrap; text-align:right;" id="TBL-4-12-2"  
+class="td11"> 120</td><td  style="white-space:nowrap; text-align:right;" id="TBL-4-12-3"  
+class="td11"> 228</td><td  style="white-space:nowrap; text-align:right;" id="TBL-4-12-4"  
+class="td11"> 104</td><td  style="white-space:nowrap; text-align:right;" id="TBL-4-12-5"  
+class="td11"> 384</td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-4-13-"><td  style="white-space:nowrap; text-align:left;" id="TBL-4-13-1"  
+class="td11">Beech              </td><td  style="white-space:nowrap; text-align:right;" id="TBL-4-13-2"  
+class="td11"> 140</td><td  style="white-space:nowrap; text-align:right;" id="TBL-4-13-3"  
+class="td11"> 340</td><td  style="white-space:nowrap; text-align:right;" id="TBL-4-13-4"  
+class="td11">  32</td><td  style="white-space:nowrap; text-align:right;" id="TBL-4-13-5"  
+class="td11"> 300</td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-4-14-"><td  style="white-space:nowrap; text-align:left;" id="TBL-4-14-1"  
+class="td11">Oak                </td><td  style="white-space:nowrap; text-align:right;" id="TBL-4-14-2"  
+class="td11"> 140</td><td  style="white-space:nowrap; text-align:right;" id="TBL-4-14-3"  
+class="td11"> 304</td><td  style="white-space:nowrap; text-align:right;" id="TBL-4-14-4"  
+class="td11"> 104</td><td  style="white-space:nowrap; text-align:right;" id="TBL-4-14-5"  
+class="td11"> 380</td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-4-15-"><td  style="white-space:nowrap; text-align:left;" id="TBL-4-15-1"  
+class="td11">Other conifer    </td><td  style="white-space:nowrap; text-align:right;" id="TBL-4-15-2"  
+class="td11"> 144</td><td  style="white-space:nowrap; text-align:right;" id="TBL-4-15-3"  
+class="td11"> 276</td><td  style="white-space:nowrap; text-align:right;" id="TBL-4-15-4"  
+class="td11"> 124</td><td  style="white-space:nowrap; text-align:right;" id="TBL-4-15-5"  
+class="td11"> 396</td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-4-16-"><td  style="white-space:nowrap; text-align:left;" id="TBL-4-16-1"  
+class="td11">Spruce             </td><td  style="white-space:nowrap; text-align:right;" id="TBL-4-16-2"  
+class="td11"> 168</td><td  style="white-space:nowrap; text-align:right;" id="TBL-4-16-3"  
+class="td11"> 356</td><td  style="white-space:nowrap; text-align:right;" id="TBL-4-16-4"  
+class="td11"> 132</td><td  style="white-space:nowrap; text-align:right;" id="TBL-4-16-5"  
+class="td11"> 408</td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-4-17-"><td  style="white-space:nowrap; text-align:left;" id="TBL-4-17-1"  
+class="td11">Maple              </td><td  style="white-space:nowrap; text-align:right;" id="TBL-4-17-2"  
+class="td11"> 184</td><td  style="white-space:nowrap; text-align:right;" id="TBL-4-17-3"  
+class="td11"> 368</td><td  style="white-space:nowrap; text-align:right;" id="TBL-4-17-4"  
+class="td11"> 152</td><td  style="white-space:nowrap; text-align:right;" id="TBL-4-17-5"  
+class="td11"> 424</td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-4-18-"><td  style="white-space:nowrap; text-align:left;" id="TBL-4-18-1"  
+class="td11">Ash                </td><td  style="white-space:nowrap; text-align:right;" id="TBL-4-18-2"  
+class="td11"> 228</td><td  style="white-space:nowrap; text-align:right;" id="TBL-4-18-3"  
+class="td11"> 404</td><td  style="white-space:nowrap; text-align:right;" id="TBL-4-18-4"  
+class="td11"> 208</td><td  style="white-space:nowrap; text-align:right;" id="TBL-4-18-5"  
+class="td11"> 452</td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-4-19-"><td  style="white-space:nowrap; text-align:left;" id="TBL-4-19-1"  
+class="td11">Elm                </td><td  style="white-space:nowrap; text-align:right;" id="TBL-4-19-2"  
+class="td11"> 244</td><td  style="white-space:nowrap; text-align:right;" id="TBL-4-19-3"  
+class="td11"> 440</td><td  style="white-space:nowrap; text-align:right;" id="TBL-4-19-4"  
+class="td11"> 236</td><td  style="white-space:nowrap; text-align:right;" id="TBL-4-19-5"  
+class="td11"> 476</td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-4-20-"><td  style="white-space:nowrap; text-align:left;" id="TBL-4-20-1"  
+class="td11">Other hardwood</td><td  style="white-space:nowrap; text-align:right;" id="TBL-4-20-2"  
+class="td11"> 264</td><td  style="white-space:nowrap; text-align:right;" id="TBL-4-20-3"  
+class="td11"> 448</td><td  style="white-space:nowrap; text-align:right;" id="TBL-4-20-4"  
+class="td11"> 252</td><td  style="white-space:nowrap; text-align:right;" id="TBL-4-20-5"  
+class="td11"> 476</td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-4-21-"><td  style="white-space:nowrap; text-align:left;" id="TBL-4-21-1"  
+class="td11">              </td></tr></table></div>
+<br /> <div class="caption" 
+><span class="id">Table&#x00A0;3: </span><span  
+class="content">Radii (km) from a pollen source needed to capture 50% and 90% of the dispersed
+pollen for the variable gaussian and variable power law models. The gaussian base model
+estimated radii of 136 and 292 km to capture 50% and 90% of the dispersed pollen across
+all taxa, while the power law model estimated radii of 92 and 376 km.</span></div><!--tex4ht:label?: x1-180033 -->
+</div>
+                                                                                         <img 
+src="calibration_paper74x.png" alt="PICT" >
+<img 
+src="calibration_paper75x.png" alt="PICT" >
+                                                                                         
+   </div><hr class="endfloat" />
+   </div>
+                                                                                         <img 
+src="calibration_paper76x.png" alt="PICT" >
+<img 
+src="calibration_paper77x.png" alt="PICT" >
+                                                                                         
+                                                                                         <img 
+src="calibration_paper78x.png" alt="PICT" >
+<img 
+src="calibration_paper79x.png" alt="PICT" >
+                                                                                         
+<!--l. 11--><p class="indent" >   <hr class="figure"><div class="figure" 
+>
+                                                                                         <img 
+src="calibration_paper80x.png" alt="PICT" >
+<img 
+src="calibration_paper81x.png" alt="PICT" >
+                                                                                         
+<a 
+ id="x1-180041"></a>
+                                                                                         <img 
+src="calibration_paper82x.png" alt="PICT" >
+<img 
+src="calibration_paper83x.png" alt="PICT" >
+                                                                                         
+<div class="tabular"> <table id="TBL-5" class="tabular" 
+cellspacing="0" cellpadding="0"  
+><colgroup id="TBL-5-1g"><col 
+id="TBL-5-1"></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-5-1-"><td  style="white-space:nowrap; text-align:center;" id="TBL-5-1-1"  
+class="td11"><img 
+src="figures/pie_plot_pollen_ALL_v0_3.png" alt="PIC"  
+></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-5-2-"><td  style="white-space:nowrap; text-align:center;" id="TBL-5-2-1"  
+class="td11"><img 
+src="figures/pie_plot_pls_ALL_v0_3.png" alt="PIC"  
+> </td></tr></table>
+</div>
+<br /> <div class="caption" 
+><span class="id">Figure&#x00A0;1: </span><span  
+class="content">Pie maps depicting the relative composition of tree genera of pollen (top) and
+PLS vegetation (bottom) from the data. Note that the PLS data has been aggregated from
+8 km to 34 km resolution for illustrative purposes.</span></div><!--tex4ht:label?: x1-180041 -->
+                                                                                         <img 
+src="calibration_paper84x.png" alt="PICT" >
+<img 
+src="calibration_paper85x.png" alt="PICT" >
+                                                                                         
+<!--l. 22--><p class="indent" >   </div><hr class="endfigure">
+<!--l. 25--><p class="indent" >   <hr class="figure"><div class="figure" 
+>
+                                                                                         <img 
+src="calibration_paper86x.png" alt="PICT" >
+<img 
+src="calibration_paper87x.png" alt="PICT" >
+                                                                                         
+<a 
+ id="x1-180052"></a>
+                                                                                         <img 
+src="calibration_paper88x.png" alt="PICT" >
+<img 
+src="calibration_paper89x.png" alt="PICT" >
+                                                                                         
+
+<!--l. 28--><p class="noindent" ><img 
+src="figures/cal_trace.png" alt="PIC"  
+>
+<br /> <div class="caption" 
+><span class="id">Figure&#x00A0;2:  </span><span  
+class="content">Trace  plots  for  the  parameters  in  the  gaussian  dispersed  calibration  model,
+including <span 
+class="cmmi-12">&#x03D5;</span><sub><span 
+class="cmmi-8">k</span></sub> for <span 
+class="cmmi-12">k </span>= 1<span 
+class="cmmi-12">,</span><span 
+class="cmmi-12">&#x2026;</span><span 
+class="cmmi-12">,W</span>, <span 
+class="cmmi-12">&#x03C8;</span>, and <span 
+class="cmmi-12">&#x03B3;</span>, as well as the joint log posterior, <span 
+class="cmti-12">lp</span>. Posterior estimates
+for each of the three runs are depicted in shades of grey. The 2.5% and 97.5% quantiles are
+indicated by the solid lines, while the 50% quantiles are indicated by the hashed lines.</span></div><!--tex4ht:label?: x1-180052 -->
+                                                                                         <img 
+src="calibration_paper90x.png" alt="PICT" >
+<img 
+src="calibration_paper91x.png" alt="PICT" >
+                                                                                         
+<!--l. 54--><p class="indent" >   </div><hr class="endfigure">
+<!--l. 57--><p class="indent" >   <hr class="figure"><div class="figure" 
+>
+                                                                                         <img 
+src="calibration_paper92x.png" alt="PICT" >
+<img 
+src="calibration_paper93x.png" alt="PICT" >
+                                                                                         
+<a 
+ id="x1-180063"></a>
+                                                                                         <img 
+src="calibration_paper94x.png" alt="PICT" >
+<img 
+src="calibration_paper95x.png" alt="PICT" >
+                                                                                         
+
+<!--l. 59--><p class="noindent" ><img 
+src="figures/maps_compare_PINE.png" alt="PIC"  
+>
+<br /> <div class="caption" 
+><span class="id">Figure&#x00A0;3: </span><span  
+class="content">Heat maps showing the relative abundances of pine in the PLS composition data
+(top) and the pre-settlement era pollen data (bottom).</span></div><!--tex4ht:label?: x1-180063 -->
+                                                                                         <img 
+src="calibration_paper96x.png" alt="PICT" >
+<img 
+src="calibration_paper97x.png" alt="PICT" >
+                                                                                         
+<!--l. 64--><p class="indent" >   </div><hr class="endfigure">
+<!--l. 67--><p class="indent" >   <hr class="figure"><div class="figure" 
+>
+                                                                                         <img 
+src="calibration_paper98x.png" alt="PICT" >
+<img 
+src="calibration_paper99x.png" alt="PICT" >
+                                                                                         
+<a 
+ id="x1-180074"></a>
+                                                                                         <img 
+src="calibration_paper100x.png" alt="PICT" >
+<img 
+src="calibration_paper101x.png" alt="PICT" >
+                                                                                         
+
+<!--l. 69--><p class="noindent" ><img 
+src="figures/maps_compare_BIRCH.png" alt="PIC"  
+>
+<br /> <div class="caption" 
+><span class="id">Figure&#x00A0;4: </span><span  
+class="content">Heat maps showing the relative abundances of birch in the PLS composition data
+(top) and the pre-settlement era pollen data (bottom).</span></div><!--tex4ht:label?: x1-180074 -->
+                                                                                         <img 
+src="calibration_paper102x.png" alt="PICT" >
+<img 
+src="calibration_paper103x.png" alt="PICT" >
+                                                                                         
+<!--l. 74--><p class="indent" >   </div><hr class="endfigure">
+<!--l. 77--><p class="indent" >   <hr class="figure"><div class="figure" 
+>
+                                                                                         <img 
+src="calibration_paper104x.png" alt="PICT" >
+<img 
+src="calibration_paper105x.png" alt="PICT" >
+                                                                                         
+<a 
+ id="x1-180085"></a>
+                                                                                         <img 
+src="calibration_paper106x.png" alt="PICT" >
+<img 
+src="calibration_paper107x.png" alt="PICT" >
+                                                                                         
+
+<!--l. 79--><p class="noindent" ><img 
+src="figures/pollen_phi_scaled_flexible.png" alt="PIC"  
+>
+<br /> <div class="caption" 
+><span class="id">Figure&#x00A0;5: </span><span  
+class="content">Pollen proportions plotted against local vegetation proportions (red crosses) or
+local vegetation proportion scaled by the pollen production factor<span 
+class="cmmib-10x-x-120">&#x03D5; </span>for the variable Gaussian
+kernel model (black dots) and the variable Power law kernel model (blue dots).</span></div><!--tex4ht:label?: x1-180085 -->
+                                                                                         <img 
+src="calibration_paper108x.png" alt="PICT" >
+<img 
+src="calibration_paper109x.png" alt="PICT" >
+                                                                                         
+<!--l. 86--><p class="indent" >   </div><hr class="endfigure">
+<!--l. 89--><p class="indent" >   <hr class="figure"><div class="figure" 
+>
+                                                                                         <img 
+src="calibration_paper110x.png" alt="PICT" >
+<img 
+src="calibration_paper111x.png" alt="PICT" >
+                                                                                         
+<a 
+ id="x1-180096"></a>
+                                                                                         <img 
+src="calibration_paper112x.png" alt="PICT" >
+<img 
+src="calibration_paper113x.png" alt="PICT" >
+                                                                                         
+
+<!--l. 91--><p class="noindent" ><img 
+src="figures/pollen_preds_flexible.png" alt="PIC"  
+>
+<br /> <div class="caption" 
+><span class="id">Figure&#x00A0;6: </span><span  
+class="content">Pollen proportions plotted against local vegetation proportions (red crosses) or
+model-predicted pollen for the variable Gaussian kernel model (black dots) and the variable
+Power law kernel model (blue dots).</span></div><!--tex4ht:label?: x1-180096 -->
+                                                                                         <img 
+src="calibration_paper114x.png" alt="PICT" >
+<img 
+src="calibration_paper115x.png" alt="PICT" >
+                                                                                         
+<!--l. 97--><p class="indent" >   </div><hr class="endfigure">
+<!--l. 100--><p class="indent" >   <hr class="figure"><div class="figure" 
+>
+                                                                                         <img 
+src="calibration_paper116x.png" alt="PICT" >
+<img 
+src="calibration_paper117x.png" alt="PICT" >
+                                                                                         
+<a 
+ id="x1-180107"></a>
+                                                                                         <img 
+src="calibration_paper118x.png" alt="PICT" >
+<img 
+src="calibration_paper119x.png" alt="PICT" >
+                                                                                         
+
+<!--l. 102--><p class="noindent" ><img 
+src="figures/phi.png" alt="PIC"  
+>
+<br /> <div class="caption" 
+><span class="id">Figure&#x00A0;7: </span><span  
+class="content">Mean values and 95% credible intervals for the estimated values of the differential
+production parameter <span 
+class="cmmi-12">&#x03D5;</span>.</span></div><!--tex4ht:label?: x1-180107 -->
+                                                                                         <img 
+src="calibration_paper120x.png" alt="PICT" >
+<img 
+src="calibration_paper121x.png" alt="PICT" >
+                                                                                         
+<!--l. 106--><p class="indent" >   </div><hr class="endfigure">
+<!--l. 109--><p class="indent" >   <hr class="figure"><div class="figure" 
+>
+                                                                                         <img 
+src="calibration_paper122x.png" alt="PICT" >
+<img 
+src="calibration_paper123x.png" alt="PICT" >
+                                                                                         
+<a 
+ id="x1-180118"></a>
+                                                                                         <img 
+src="calibration_paper124x.png" alt="PICT" >
+<img 
+src="calibration_paper125x.png" alt="PICT" >
+                                                                                         
+
+<!--l. 111--><p class="noindent" ><img 
+src="figures/kernel_discrete_cdfs.png" alt="PIC"  
+>
+<br /> <div class="caption" 
+><span class="id">Figure&#x00A0;8: </span><span  
+class="content">The proportion of deposited (or accumulated) pollen plotted as a function of
+radius for each of the modelled taxa and for each of the four considered models (Gaussian
+base and variable; Power law base and variable).</span></div><!--tex4ht:label?: x1-180118 -->
+                                                                                         <img 
+src="calibration_paper126x.png" alt="PICT" >
+<img 
+src="calibration_paper127x.png" alt="PICT" >
+                                                                                         
+<!--l. 117--><p class="indent" >   </div><hr class="endfigure">
+<!--l. 136--><p class="indent" >   <hr class="figure"><div class="figure" 
+>
+                                                                                         <img 
+src="calibration_paper128x.png" alt="PICT" >
+<img 
+src="calibration_paper129x.png" alt="PICT" >
+                                                                                         
+<a 
+ id="x1-180129"></a>
+                                                                                         <img 
+src="calibration_paper130x.png" alt="PICT" >
+<img 
+src="calibration_paper131x.png" alt="PICT" >
+                                                                                         
+
+<!--l. 138--><p class="noindent" ><img 
+src="figures/maps_predicted_pollen_g_flexible.png" alt="PIC"  
+>
+<br /> <div class="caption" 
+><span class="id">Figure&#x00A0;9: </span><span  
+class="content">Heat maps of predicted pollen relative abundances from the variable Gaussian
+model for each grid cell in the domain, by taxon.</span></div><!--tex4ht:label?: x1-180129 -->
+                                                                                         <img 
+src="calibration_paper132x.png" alt="PICT" >
+<img 
+src="calibration_paper133x.png" alt="PICT" >
+                                                                                         
+<!--l. 142--><p class="indent" >   </div><hr class="endfigure">
+<!--l. 146--><p class="indent" >   <hr class="figure"><div class="figure" 
+>
+                                                                                         <img 
+src="calibration_paper134x.png" alt="PICT" >
+<img 
+src="calibration_paper135x.png" alt="PICT" >
+                                                                                         
+<a 
+ id="x1-1801310"></a>
+                                                                                         <img 
+src="calibration_paper136x.png" alt="PICT" >
+<img 
+src="calibration_paper137x.png" alt="PICT" >
+                                                                                         
+
+<!--l. 148--><p class="noindent" ><img 
+src="figures/maps_predicted_pollen_pl_flexible.png" alt="PIC"  
+>
+<br /> <div class="caption" 
+><span class="id">Figure&#x00A0;10: </span><span  
+class="content">Heat maps of predicted pollen from the variable power law model for each grid
+cell in the domain, by taxon.</span></div><!--tex4ht:label?: x1-1801310 -->
+                                                                                         <img 
+src="calibration_paper138x.png" alt="PICT" >
+<img 
+src="calibration_paper139x.png" alt="PICT" >
+                                                                                         
+<!--l. 151--><p class="indent" >   </div><hr class="endfigure">
+<!--l. 154--><p class="indent" >   <hr class="figure"><div class="figure" 
+>
+                                                                                         <img 
+src="calibration_paper140x.png" alt="PICT" >
+<img 
+src="calibration_paper141x.png" alt="PICT" >
+                                                                                         
+<a 
+ id="x1-1801411"></a>
+                                                                                         <img 
+src="calibration_paper142x.png" alt="PICT" >
+<img 
+src="calibration_paper143x.png" alt="PICT" >
+                                                                                         
+
+<!--l. 156--><p class="noindent" ><img 
+src="figures/maps_veg.png" alt="PIC"  
+>
+<br /> <div class="caption" 
+><span class="id">Figure&#x00A0;11: </span><span  
+class="content">Heat maps of the PLS data, by taxon.</span></div><!--tex4ht:label?: x1-1801411 -->
+                                                                                         <img 
+src="calibration_paper144x.png" alt="PICT" >
+<img 
+src="calibration_paper145x.png" alt="PICT" >
+                                                                                         
+<!--l. 159--><p class="indent" >   </div><hr class="endfigure">
+                                                                                         <img 
+src="calibration_paper146x.png" alt="PICT" >
+<img 
+src="calibration_paper147x.png" alt="PICT" >
+                                                                                         
+   <h3 class="likesectionHead"><a 
+ id="x1-190005"></a>References</h3>
+<!--l. 1--><p class="noindent" >
+  <div class="thebibliography">
+  <p class="bibitem" ><span class="biblabel">
+<a 
+ id="Xausterlitz2004using"></a><span class="bibsp">&#x00A0;&#x00A0;&#x00A0;</span></span>Frederic  Austerlitz,  Christopher&#x00A0;W  Dick,  Cyril  Dutech,  Etienne&#x00A0;K  Klein,  Sylvie
+  Oddou-Muratorio,  Peter&#x00A0;E  Smouse,  and  Victoria&#x00A0;L  Sork.   Using  genetic  markers  to
+  estimate the pollen dispersal curve. <span 
+class="cmti-12">Molecular Ecology</span>, 13(4):937&#8211;954, 2004.
+  </p>
+  <p class="bibitem" ><span class="biblabel">
+<a 
+ id="Xblaauw2005radiocarbon"></a><span class="bibsp">&#x00A0;&#x00A0;&#x00A0;</span></span>Maarten  Blaauw  and  J&#x00A0;Andrés  Christen.     Radiocarbon  peat  chronologies  and
+  environmental  change.    <span 
+class="cmti-12">Journal  of  the  Royal  Statistical  Society:  Series  C  (Applied</span>
+  <span 
+class="cmti-12">Statistics)</span>, 54(4):805&#8211;816, 2005.
+  </p>
+  <p class="bibitem" ><span class="biblabel">
+<a 
+ id="Xblaauw2011flexible"></a><span class="bibsp">&#x00A0;&#x00A0;&#x00A0;</span></span>Maarten Blaauw, J&#x00A0;Andrés Christen, et&#x00A0;al.   Flexible paleoclimate age-depth models
+  using an autoregressive gamma process. <span 
+class="cmti-12">Bayesian Analysis</span>, 6(3):457&#8211;474, 2011.
+  </p>
+  <p class="bibitem" ><span class="biblabel">
+<a 
+ id="Xblois2011methodological"></a><span class="bibsp">&#x00A0;&#x00A0;&#x00A0;</span></span>Jessica&#x00A0;L Blois, John&#x00A0;W Williams, Eric&#x00A0;C Grimm, Stephen&#x00A0;T Jackson, and Russell&#x00A0;W
+  Graham.  A methodological framework for assessing and reducing temporal uncertainty
+  in paleovegetation mapping from late-Quaternary pollen records.   <span 
+class="cmti-12">Quaternary Science</span>
+  <span 
+class="cmti-12">Reviews</span>, 30(15):1926&#8211;1939, 2011.
+  </p>
+  <p class="bibitem" ><span class="biblabel">
+<a 
+ id="Xbourdo1956review"></a><span class="bibsp">&#x00A0;&#x00A0;&#x00A0;</span></span>Eric&#x00A0;A Bourdo. A review of the general land office survey and of its use in quantitative
+  studies of former forests. <span 
+class="cmti-12">Ecology</span>, pages 754&#8211;768, 1956.
+  </p>
+  <p class="bibitem" ><span class="biblabel">
+<a 
+ id="Xbuck1999bcal"></a><span class="bibsp">&#x00A0;&#x00A0;&#x00A0;</span></span>Caitlin&#x00A0;E Buck, J&#x00A0;Andrés Christen, and Gary&#x00A0;N James.   BCal: an on-line Bayesian
+  radiocarbon calibration tool. <span 
+class="cmti-12">Internet Archaeology</span>, 7, 1999.
+  </p>
+  <p class="bibitem" ><span class="biblabel">
+<a 
+ id="Xclobert2012dispersal"></a><span class="bibsp">&#x00A0;&#x00A0;&#x00A0;</span></span>Jean Clobert, Michel Baguette, Tim&#x00A0;G Benton, James&#x00A0;M Bullock, and Simon Ducatez.
+  <span 
+class="cmti-12">Dispersal ecology and evolution</span>. Oxford University Press, 2012.
+  </p>
+  <p class="bibitem" ><span class="biblabel">
+<a 
+ id="Xcramer2001global"></a><span class="bibsp">&#x00A0;&#x00A0;&#x00A0;</span></span>Wolfgang  Cramer,  Alberte  Bondeau,  F&#x00A0;Ian  Woodward,  I&#x00A0;Colin  Prentice,  Richard&#x00A0;A
+  Betts,  Victor  Brovkin,  Peter&#x00A0;M  Cox,  Veronica  Fisher,  Jonathan&#x00A0;A  Foley,  Andrew&#x00A0;D
+                                                                                         <img 
+src="calibration_paper148x.png" alt="PICT" >
+<img 
+src="calibration_paper149x.png" alt="PICT" >
+                                                                                         
+  Friend, Chris Kucharik, Mark&#x00A0;R Lomas, Navin Ramankutty, Stephen Sitch, Benjamin
+  Smith,  Andrew  White,  and  Christine  Young-Molling.   Global  response  of  terrestrial
+  ecosystem structure and function to CO<sub><span 
+class="cmr-8">2</span></sub>  and climate change: results from six dynamic
+  global vegetation models. <span 
+class="cmti-12">Global Change Biology</span>, 7(4):357&#8211;373, 2001.
+  </p>
+  <p class="bibitem" ><span class="biblabel">
+<a 
+ id="Xdevaux2007modelling"></a><span class="bibsp">&#x00A0;&#x00A0;&#x00A0;</span></span>C&#x00A0;Devaux, C&#x00A0;Lavigne, F&#x00A0;Austerlitz, and EK&#x00A0;Klein.  Modelling and estimating pollen
+  movement in oilseed rape (<span 
+class="cmti-12">Brassica napus</span>) at the landscape scale using genetic markers.
+  <span 
+class="cmti-12">Molecular Ecology</span>, 16(3):487&#8211;499, 2007.
+  </p>
+  <p class="bibitem" ><span class="biblabel">
+<a 
+ id="Xgarreta2010method"></a><span class="bibsp">&#x00A0;&#x00A0;&#x00A0;</span></span>Vincent Garreta, Paul&#x00A0;A Miller, Joël Guiot, Christelle Hély, Simon Brewer, Martin&#x00A0;T
+  Sykes, and Thomas Litt. A method for climate and vegetation reconstruction through the
+  inversion of a dynamic vegetation model. <span 
+class="cmti-12">Climate Dynamics</span>, 35(2-3):371&#8211;389, 2010.
+  </p>
+  <p class="bibitem" ><span class="biblabel">
+<a 
+ id="Xgelman2014understanding"></a><span class="bibsp">&#x00A0;&#x00A0;&#x00A0;</span></span>Andrew Gelman, Jessica Hwang, and Aki Vehtari. Understanding predictive information
+  criteria for Bayesian models. <span 
+class="cmti-12">Statistics and Computing</span>, 24(6):997&#8211;1016, 2014.
+  </p>
+  <p class="bibitem" ><span class="biblabel">
+<a 
+ id="Xgoring2015"></a><span class="bibsp">&#x00A0;&#x00A0;&#x00A0;</span></span>Simon  Goring,  Andria  Dawson,  Gavin&#x00A0;L  Simpson,  Karthik  Ram,  Russ&#x00A0;W  Graham,
+  Eric&#x00A0;C  Grimm,  and  John&#x00A0;W  Williams.   neotoma:  A  programmatic  interface  to  the
+  Neotoma paleoecological database. <span 
+class="cmti-12">Open Quaternary</span>, 2015. doi: http://doi.org/10.5334/
+  oq.ab.
+  </p>
+  <p class="bibitem" ><span class="biblabel">
+<a 
+ id="Xgoring2015a"></a><span class="bibsp">&#x00A0;&#x00A0;&#x00A0;</span></span>Simon Goring et&#x00A0;al. Xxx. <span 
+class="cmti-12">XXX</span>, XXX:XXX, in prep.
+  </p>
+  <p class="bibitem" ><span class="biblabel">
+<a 
+ id="Xgoring2015b"></a><span class="bibsp">&#x00A0;&#x00A0;&#x00A0;</span></span>Simon Goring et&#x00A0;al. Xxx. <span 
+class="cmti-12">XXX</span>, XXX:XXX, in review.
+  </p>
+  <p class="bibitem" ><span class="biblabel">
+<a 
+ id="Xhoffman2011nuts"></a><span class="bibsp">&#x00A0;&#x00A0;&#x00A0;</span></span>Matthew&#x00A0;D Hoffman and Andrew Gelman. The No-U-Turn Sampler: Adaptively setting
+  path lengths in Hamiltonian Monte Carlo. <span 
+class="cmti-12">Journal of Machine Learning Research</span>, 15:1351
+  &#8211; 1381, 2011.
+  </p>
+  <p class="bibitem" ><span class="biblabel">
+<a 
+ id="Xjackson1990"></a><span class="bibsp">&#x00A0;&#x00A0;&#x00A0;</span></span>Stephen&#x00A0;T  Jackson.    Pollen  source  area  and  representation  in  small  lakes  of  the
+  northeastern United States. <span 
+class="cmti-12">Review of Palaeobotany and Palynology</span>, 63(1):53&#8211;76, 1990.
+                                                                                         <img 
+src="calibration_paper150x.png" alt="PICT" >
+<img 
+src="calibration_paper151x.png" alt="PICT" >
+                                                                                         
+  </p>
+  <p class="bibitem" ><span class="biblabel">
+<a 
+ id="Xjackson1994pollen"></a><span class="bibsp">&#x00A0;&#x00A0;&#x00A0;</span></span>Stephen&#x00A0;T  Jackson.   Pollen  and  spores  in  Quaternary  lake  sediments  as  sensors  of
+  vegetation  composition:  theoretical  models  and  empirical  evidence.    In  A.&#x00A0;Traverse,
+  editor, <span 
+class="cmti-12">Sedimentation of organic particles</span>, pages 253&#8211;286. Cambridge University Press,
+  Cambridge, 1994.
+  </p>
+  <p class="bibitem" ><span class="biblabel">
+<a 
+ id="Xjackson1999pollen"></a><span class="bibsp">&#x00A0;&#x00A0;&#x00A0;</span></span>Stephen&#x00A0;T Jackson and Mark&#x00A0;E Lyford.  Pollen dispersal models in Quaternary plant
+  ecology: assumptions, parameters, and prescriptions. <span 
+class="cmti-12">The Botanical Review</span>, 65(1):39&#8211;75,
+  1999.
+  </p>
+  <p class="bibitem" ><span class="biblabel">
+<a 
+ id="Xkujawa2015"></a><span class="bibsp">&#x00A0;&#x00A0;&#x00A0;</span></span>Ellen Kujawa et&#x00A0;al. Xxx. <span 
+class="cmti-12">XXX</span>, XXX:XXX, in prep.
+  </p>
+  <p class="bibitem" ><span class="biblabel">
+<a 
+ id="Xlawrenz1975"></a><span class="bibsp">&#x00A0;&#x00A0;&#x00A0;</span></span>R.W. Lawrenz. <span 
+class="cmti-12">The developmental paleoecology of Green Lake, Antrim County, Michigan</span>.
+  PhD thesis, Central Michigan University, 1975.
+  </p>
+  <p class="bibitem" ><span class="biblabel">
+<a 
+ id="Xmatthes2015"></a><span class="bibsp">&#x00A0;&#x00A0;&#x00A0;</span></span>J&#x00A0;Matthes et&#x00A0;al. Xxx. <span 
+class="cmti-12">XXX</span>, XXX:XXX, in review.
+  </p>
+  <p class="bibitem" ><span class="biblabel">
+<a 
+ id="Xmcandrews1988human"></a><span class="bibsp">&#x00A0;&#x00A0;&#x00A0;</span></span>John&#x00A0;H McAndrews. Human disturbance of North American forests and grasslands: the
+  fossil pollen record. In <span 
+class="cmti-12">Vegetation History</span>, pages 673&#8211;697. Springer, 1988.
+  </p>
+  <p class="bibitem" ><span class="biblabel">
+<a 
+ id="Xpaciorek2009mapping"></a><span class="bibsp">&#x00A0;&#x00A0;&#x00A0;</span></span>Christopher&#x00A0;J Paciorek and Jason&#x00A0;S McLachlan.   Mapping ancient forests: Bayesian
+  inference for spatio-temporal trends in forest composition using the fossil pollen proxy
+  record. <span 
+class="cmti-12">Journal of the American Statistical Association</span>, 104(486):608&#8211;622, 2009.
+  </p>
+  <p class="bibitem" ><span class="biblabel">
+<a 
+ id="Xprentice1988records"></a><span class="bibsp">&#x00A0;&#x00A0;&#x00A0;</span></span>Colin Prentice. Records of vegetation in time and space: the principles of pollen analysis.
+  In <span 
+class="cmti-12">Vegetation history</span>, pages 17&#8211;42. Kluwer Academic Publishers, Dordrecht, 1988.
+  </p>
+  <p class="bibitem" ><span class="biblabel">
+<a 
+ id="Xprentice1986"></a><span class="bibsp">&#x00A0;&#x00A0;&#x00A0;</span></span>IC&#x00A0;Prentice and T&#x00A0;Webb. Pollen percentages, tree abundances and the Fagerlind effect.
+  <span 
+class="cmti-12">Journal of Quaternary Science</span>, 1(1):35&#8211;43, 1986.
+                                                                                         <img 
+src="calibration_paper152x.png" alt="PICT" >
+<img 
+src="calibration_paper153x.png" alt="PICT" >
+                                                                                         
+  </p>
+  <p class="bibitem" ><span class="biblabel">
+<a 
+ id="Xramsey1995radiocarbon"></a><span class="bibsp">&#x00A0;&#x00A0;&#x00A0;</span></span>Christopher&#x00A0;Bronk Ramsey.  Radiocarbon calibration and analysis of stratigraphy; the
+  OxCal program. <span 
+class="cmti-12">Radiocarbon</span>, 37(2):425&#8211;430, 1995.
+  </p>
+  <p class="bibitem" ><span class="biblabel">
+<a 
+ id="Xreimer2013intcal13"></a><span class="bibsp">&#x00A0;&#x00A0;&#x00A0;</span></span>Paula&#x00A0;J  Reimer,  Edouard  Bard,  Alex  Bayliss,  J&#x00A0;Warren  Beck,  Paul&#x00A0;G  Blackwell,
+  Christopher Bronk&#x00A0;Ramsey, Caitlin&#x00A0;E Buck, Hai Cheng, R&#x00A0;Lawrence Edwards, Michael
+  Friedrich, et&#x00A0;al. IntCal13 and Marine13 radiocarbon age calibration curves 0-50,000 years
+  cal BP. <span 
+class="cmti-12">Radiocarbon</span>, 55(4):1869&#8211;1887, 2013.
+  </p>
+  <p class="bibitem" ><span class="biblabel">
+<a 
+ id="Xschulte2001original"></a><span class="bibsp">&#x00A0;&#x00A0;&#x00A0;</span></span>Lisa&#x00A0;A Schulte and David&#x00A0;J Mladenoff.  The original US public land survey records:
+  their use and limitations in reconstructing presettlement vegetation. <span 
+class="cmti-12">Journal of Forestry</span>,
+  99(10):5&#8211;10, 2001.
+  </p>
+  <p class="bibitem" ><span class="biblabel">
+<a 
+ id="Xsolomon1985computer"></a><span class="bibsp">&#x00A0;&#x00A0;&#x00A0;</span></span>Allen&#x00A0;M   Solomon   and   Thompson   Webb.       Computer-aided   reconstruction   of
+  late-Quaternary landscape dynamics.  <span 
+class="cmti-12">Annual Review of Ecology and Systematics</span>, pages
+  63&#8211;84, 1985.
+  </p>
+  <p class="bibitem" ><span class="biblabel">
+<a 
+ id="Xst2014bias"></a><span class="bibsp">&#x00A0;&#x00A0;&#x00A0;</span></span>JM&#x00A0;St&#x00A0;Jacques,  BF&#x00A0;Cumming,  DJ&#x00A0;Sauchyn,  and  JP&#x00A0;Smol.    The  bias  and  signal
+  attenuation present in conventional pollen-based climate reconstructions as assessed by
+  early climate data from Minnesota, USA. <span 
+class="cmti-12">PloS one</span>, 10(1):e0113806&#8211;e0113806, 2014.
+  </p>
+  <p class="bibitem" ><span class="biblabel">
+<a 
+ id="Xstan-software:2014"></a><span class="bibsp">&#x00A0;&#x00A0;&#x00A0;</span></span>Stan Development Team.  Stan: A C++ library for probability and sampling, Version
+  2.4, 2014. URL <a 
+href="http://mc-stan.org/" class="url" ><span 
+class="cmtt-12">http://mc-_stan.org/</span></a>.
+  </p>
+  <p class="bibitem" ><span class="biblabel">
+<a 
+ id="Xsugita2007theory1"></a><span class="bibsp">&#x00A0;&#x00A0;&#x00A0;</span></span>Shinya Sugita.  Theory of quantitative reconstruction of vegetation I: pollen from large
+  sites REVEALS regional vegetation composition. <span 
+class="cmti-12">The Holocene</span>, 17(2):229&#8211;241, 2007a.
+  </p>
+  <p class="bibitem" ><span class="biblabel">
+<a 
+ id="Xsugita2007theory2"></a><span class="bibsp">&#x00A0;&#x00A0;&#x00A0;</span></span>Shinya Sugita.  Theory of quantitative reconstruction of vegetation II: all you need is
+  LOVE. <span 
+class="cmti-12">The Holocene</span>, 17(2):243&#8211;257, 2007b.
+  </p>
+                                                                                         <img 
+src="calibration_paper154x.png" alt="PICT" >
+<img 
+src="calibration_paper155x.png" alt="PICT" >
+                                                                                         
+  <p class="bibitem" ><span class="biblabel">
+<a 
+ id="Xtauber1965"></a><span class="bibsp">&#x00A0;&#x00A0;&#x00A0;</span></span>H&#x00A0;Tauber.   Differential  pollen  dispersion  and  the  interpretation  of  pollen  diagrams.
+  Technical Report&#x00A0;89, 1965.
+  </p>
+  <p class="bibitem" ><span class="biblabel">
+<a 
+ id="Xward1978procedures"></a><span class="bibsp">&#x00A0;&#x00A0;&#x00A0;</span></span>Greame&#x00A0;K Ward and SR&#x00A0;Wilson. Procedures for comparing and combining radiocarbon
+  age determinations: a critique. <span 
+class="cmti-12">Archaeometry</span>, 20(1):19&#8211;31, 1978.
+  </p>
+  <p class="bibitem" ><span class="biblabel">
+<a 
+ id="Xwatanabe2010asymptotic"></a><span class="bibsp">&#x00A0;&#x00A0;&#x00A0;</span></span>Sumio Watanabe. Asymptotic equivalence of Bayes cross validation and widely applicable
+  information  criterion  in  singular  learning  theory.   <span 
+class="cmti-12">The  Journal  of  Machine  Learning</span>
+  <span 
+class="cmti-12">Research</span>, 11:3571&#8211;3594, 2010.
+  </p>
+  <p class="bibitem" ><span class="biblabel">
+<a 
+ id="Xwebb1971late"></a><span class="bibsp">&#x00A0;&#x00A0;&#x00A0;</span></span>Thompson Webb.   The late-and post-glacial sequence of climatic events in wisconsin
+  and east-central minnesota: Quantitative estimates derived from fossil pollen spectra by
+  multivariate statistical analysis, 1971.
+  </p>
+  <p class="bibitem" ><span class="biblabel">
+<a 
+ id="Xwebb1981estimating"></a><span class="bibsp">&#x00A0;&#x00A0;&#x00A0;</span></span>TIII Webb, SE&#x00A0;Howe, RHW Bradshaw, and KM&#x00A0;Heide.  Estimating plant abundances
+  from  pollen  percentages:  the  use  of  regression  analysis.   <span 
+class="cmti-12">Review of Palaeobotany and</span>
+  <span 
+class="cmti-12">Palynology</span>, 34(3):269&#8211;300, 1981.
+  </p>
+  <p class="bibitem" ><span class="biblabel">
+<a 
+ id="Xwilliams2003variations"></a><span class="bibsp">&#x00A0;&#x00A0;&#x00A0;</span></span>John&#x00A0;W  Williams.   Variations  in  tree  cover  in  north  america  since  the  last  glacial
+  maximum. <span 
+class="cmti-12">Global and Planetary Change</span>, 35(1):1&#8211;23, 2003.
+  </p>
+  <p class="bibitem" ><span class="biblabel">
+<a 
+ id="Xwright1969"></a><span class="bibsp">&#x00A0;&#x00A0;&#x00A0;</span></span>H.E.  Wright,  W.A.  Watts,  S.&#x00A0;Jelgersma,  J.C.B.  Waddington,  J.&#x00A0;Ogawa,  and  T.C.
+  Winter.   SP-11 glacial and vegetational history of northeastern Minnesota.   Technical
+  report, Minnesota Geological Survey, 1969.
+</p>
+  </div>
+    
+</body></html> 
+
+                                                                                         <img 
+src="calibration_paper156x.png" alt="PICT" >
+
+
