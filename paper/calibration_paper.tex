@@ -24,152 +24,206 @@
 
 \nocite{*}
 
-\title{Calibrating the pollen-vegetation relationship}
+\title{Calibrating pollen-vegetation relationships using 19-Century forest composition and pollen data}
 
 \author{Andria Dawson, Christopher Paciorek, Jason McLachlan,\\ Simon Goring, John W. Williams, Stephen Jackson}
 
 \maketitle
 
 \section{Introduction}
-
-Understanding forest ecosystems of the past provides valuable
-information about how these ecosystems respond to biotic and abiotic
-factors at timescales outside the realm of most direct ecological
-observations. In particular, in a world of changing climates,
-reconstructing past shifts in tree distributions and forest
+Understanding past forest composition and change provides valuable
+information about ecosystem response to biotic and abiotic factors at
+timescales outside the realm of most direct ecological observations
+\citep{jackson2007looking}. In particular, in a world of changing
+climates, reconstructing past shifts in tree distributions and forest
 composition provides new information about climatic processes
 governing forest distributions and dynamics \citep{goring2015a},
-and vegetation-atmosphere feedbacks \citep{matthes2015}. The
-fossil pollen records extracted from lakes and mires are our primary
-source of data about prehistoric forest composition. Rigorous
-estimates of past forest composition and forest dynamics from these
-records relies on our ability to quantify the pollen-vegetation
-relationship.
+forest responses to climatic changes (REFS), and vegetation-atmosphere
+feedbacks \citep{matthes2015}. The fossil pollen records extracted
+from lakes and mires are our primary source of data about prehistoric
+forest composition. Rigorous estimates of past forest composition and
+dynamics from these records relies on our ability to quantify the
+pollen-vegetation relationship.
 
 Key challenges to quantitative reconstructions of past vegetation from
 pollen data are 1) the complex nature of the pollen-vegetation
 relationship and 2) the heavy anthropogenic imprint on contemporary
-plant communities.  The processes governing pollen production,
+plant communities. The processes governing pollen production,
 transport, and deposition have been the subject of palynological study
-for decades \citep{tauber1965, jackson1994pollen, jackson1999pollen,
-  sugita2007theory1, sugita2007theory2, prentice1988records}. The
-pollen found in lakes and mires usually arrives by wind, from plants
-that vary in their pollen productivity, the dispersibility of pollen
-grains, and transport vector.  As a result, some plant species are
-highly overrepresented in sedimentary archives and most are
-underrepresented or absent.  A wide variety of pollen-vegetation
-models (PVMs) have been developed including modern-analog based
-approaches \citep{williams2003variations}, linear-regression
-\citep{webb1981estimating}, mechanistic models of pollen transport
-\citep{sugita2007theory1, sugita2007theory2, prentice1988records},
-and, most recently, Bayesian hierarchical models
-\citep{paciorek2009mapping, garreta2010method}. In these Bayesian
-models, pollen counts from a network of ponds are modelled as a
-function of gridded forest composition data, taking into account
-pollen dispersal from both local and non-local vegetation,
-differential pollen production, and process uncertainty. Using a
-Bayesian hierarchical model allows borrowing of information across
-space to estimate governing parameters at a regional scale, and to
-estimate the uncertainty associated with these parameters.
+for decades \citep{tauber1965, jacobson1981selection,
+  jackson1994pollen, jackson1999pollen, sugita2007theory1,
+  sugita2007theory2, prentice1988records}. The pollen found in lakes
+and mires usually arrives by wind, coming from plants that vary in
+their pollen productivity, dispersal, and pollination syndrome. Some
+plant taxa are highly overrepresented in sedimentary archives while
+others are underrepresented or absent. A wide variety of
+pollen-vegetation models (PVMs) have been developed including
+modern-analog based approaches \citep{williams2003variations},
+linear-regression \citep{webb1981estimating,
+  bradshaw1985relationships}, extended R-values
+\citep{parsons1981statistical, sugita1994pollen, sugita2007theory1,
+  sugita2007theory2} and, most recently, Bayesian hierarchical models
+\citep{paciorek2009mapping, garreta2010method}.  In these models,
+pollen dispersal can be assumed constant \citep{davis1963theory,
+  parsons1981statistical}, modeled as a simple inverse-square or other
+function \citep{webb1981estimating, calcote1995pollen,
+  jackson1998quantitative}, or parameterized using various
+pollen-transport models \citep{prentice1988records, sugita2007theory1,
+  sugita2007theory2, jackson1999pollen}. In \citet{paciorek2009mapping}  Bayesian approaches model
+pollen counts from a network of ponds as a function of gridded forest
+composition data, taking into account pollen dispersal (from both local
+and regional vegetation), differential pollen production, and process
+uncertainty. Using a Bayesian hierarchical model allows information to
+be borrowed across space to estimate governing parameters at a
+regional scale, and to estimate uncertainty associated with these
+parameters.
 
 Some PVMs, notably the LOVE/REVEALS family of models
 \citep{sugita2007theory1, sugita2007theory2}, are calibrated using
-information about pollen productivity and dispersal traits for
-individual species and diffusion-based models of particulate
-transport.  Other PVMs are calibrated against spatial networks of
-pollen assemblages extracted from surface sediment samples, which are
-then cross-referenced to contemporary spatial datasets of vegetation
-composition and abundance of the surrounding forests. These
-cross-referenced pollen and vegetation datasets are then use to make
-inferences about the processes that affect pollen production,
-dispersal, and deposition at the time of sampling. However, extending
-any inference about these processes to times prior to the time of
-sampling requires the assumption that pollen-vegetation relationships
-are stationary.  This assumption of stationarity is questionable given
-that the contemporary landscape has been heavily modified by human
-land use.  This land-use has transformed the composition and structure
-of contemporary forests and likely altered vegetation-pollen
-relationships for some taxa \citep{kujawa2015}, perhaps by altering
-microclimatic factors including wind dynamics.  Pollen-based
-paleoclimate reconstructions in Minnesota have a demonstrated bias if
-modern calibration datasets are used instead of pre-settlement
-datasets \citep{st2014bias}. Hence, any PVM that is calibrated using
-contemporary datasets may carry implicit and difficult-to-quantify
-biases when applied to make inferences about vegetation composition
-for time periods with less intensive land use.  To circumvent these
-issues, we calibrate the pollen-vegetation relationship using newly
-developed datasets of forest composition and sediment pollen data that
-pre-dates European settlement, thereby avoiding the effects of
-settlement, agriculture, and industrialization.
+information about pollen productivity and dispersal properties for
+individual species and diffusion-based models of particulate transport
+[e.g., \citet{prentice1985pollen}]. Other PVMs are calibrated against
+spatial networks of pollen assemblages extracted from surface sediment
+samples, which are then cross-referenced to contemporary spatial
+datasets of vegetation composition and abundance of the surrounding
+forests. These cross-referenced pollen and vegetation datasets are
+then used to make inferences about the processes that affect pollen
+production, dispersal, and deposition at the time of
+sampling. Extending any inference about these processes to times prior
+to the time of sampling requires the assumption that pollen-vegetation
+relationships are constant.
 
-These datasets are based on US Public Land Survey (PLS) records
+This assumption seems reasonable at first approximation; although tree
+taxa may vary in their productivity and dispersal both in space and
+time, the relative differences among taxa should be less variable
+[REF].  However, in view of the magnitude of both compositional and
+structural modification of vegetation by human land-use in the past
+two centuries, this assumption merits serious investigation and
+testing.  Human land-use might have altered vegetation-pollen
+relationships in at least four ways.  First, the modern landscape of
+the northeastern US consists of fragmented forests interspersed with
+open areas.  Although the pre-European landscape was also patchy
+(disturbances, lakes, wetlands, villages, cultivated areas), a much
+larger and more widespread fraction of the landscape consists now of
+unforested ‘arboreal-pollen desert’.  Second, because most forests of
+the region are now secondary, they may differ in density, biomass,
+size-structure, and age-structure.  Third, land clearance, forest
+management practices, and successional processes have led to
+fundamental changes in forest composition.  For example, Populus and
+Acer are more abundant than in the 19th century.  Finally, the overall
+pattern of forest mosaics in the region may be different – in some
+cases more spatially homogeneous (e.g., forest management practices)
+but in others more heterogeneous (e.g., locally idiosyncratic
+disturbance legacies).
+
+These changes in forest composition, structure, and landscape pattern
+may have had direct influences on pollen production and dispersal.
+Pollen production, for example, may be greater for trees growing in
+the open or at forest edges.  Pollen dispersal is affected by
+properties of both the forest canopy and the land surface
+\citep{jackson1999pollen}.  A more serious issue for pollen/vegetation
+relationships may be that at the landscape level, contemporary forests
+have no historical analogues.  Pollen-vegetation relationships are
+complicated by the Fagerlind effect, in which relative pollen
+representation of one taxon is affected by that of all other taxa
+contributing to an assemblage \citep{prentice1988records}.  Although
+the Fagerlind effect can be corrected for \citep{prentice1986,
+  jackson1995exploration}, empirical corrections are contingent on
+particular vegetational contexts \citep{jackson1998quantitative}.
+
+To date, no studies have examined presettlement pollen/vegetation
+relationships using quantitative vegetation data.  However,
+pollen-based paleoclimate reconstructions differed significantly
+depending on whether a modern or a pre-settlement pollen-data set was
+used in the calibration \citep{st2014bias}.  The development of
+quantitative presettlement vegetation reconstructions for the western
+Great Lakes region \citep{goring2015b}, together with the existence
+of numerous pollen profiles with presettlement pollen assemblages
+(www.neotomadb.org), provides an opportunity to develop an alternative
+pollen/vegetation calibration framework, focused on the early to
+mid-19th Century.  In this paper, we develop a pollen/vegetation
+calibration for a time period that predates European settlement,
+thereby avoiding the effects of settlement, agriculture, and
+industrialization.
+
+Vegetation from pre-EuroAmerican settlement in the upper midwestern
+United States is based on US Public Land Survey (PLS) records
 collected by surveyors prior to European settlement
-\citep{bourdo1956review, schulte2001original}.
+\citep{bourdo1956review, schulte2001original,
+  almendinger1996minnesota}. The PLS mapped the United States west and
+south of Ohio to provide a systematic 1$\times$1 mi grid for the sale
+of public lands \citep{stewart1935public, white1983history}. At
+section corners surveyors would place a stake as the official location
+marker, and then record the closest two to four trees, measuring
+distance to point center, diameter and the (often idiosyncratic)
+common name of these trees \citep{mladenoff2002narrowing}.  These
+point-level data were then standardized and aggregated, across the
+upper Midwest to a 64km$^2$ grid (8$\times$8 km) on an equal-area
+Albers projection (proj4: +\textit{init}=\textit{epsg}:3175) to
+account for changing survey instructions through time (cf. Stewart,
+1935) and to provide sufficient spatial resolution for regional scale
+analysis \citep{goring2015b}.
 
-To calibrate the pollen-vegetation relationship against the PLS forest
-composition data requires that we identify pollen samples that
-correspond to the pre-settlement era. These fossil pollen samples are
-drawn from longer sequences that typically come from lakes or
-peatlands, and consist of a series of depths and associated pollen
-counts broken down by taxon. Most pollen records also have radiocarbon
-dates of organic materials scattered along the core at locations not
-necessarily aligned with pollen counts. Other age controls include
-other radiometric dates (e.g. 210Pb), biostratigraphic markers
+Pollen assemblages represent the preserved cell walls of pollen
+released from forest plant communities, preserved within a
+depositional environment.  Pollen assemblages are obtained by coring
+depositional environments including lakes, mires, and forest hollows,
+among other location. To calibrate a PVM against PLS forest
+composition data, prior to major anthropogenic disturbance, requires
+pollen samples that are contemporaneous with the pre-settlement
+era. Contemporaneous pollen assemblages are identified largely by the
+estimated age of the pollen sample. Sample age is obtained from a
+chronology constructed using classical \citep{blaauw2010methods} or
+Bayesian \citep{blaauw2011flexible, buck1999bcal,
+  blaauw2005radiocarbon, ramsey1995radiocarbon} methods using dated
+material including radiocarbon (14$^C$) and other radiometric dates
+(e.g. $^{210}$Pb, $^137$Cs). Estimated sample dates for
+geochronological control points (dated material) are uncertain due to
+analytical errors during the laboratory radiocarbon dating process
+\citep{ward1978procedures}, the conversion of radiocarbon to calendar
+years \citep{reimer2013intcal13}, and potential differences between
+age of macrofossil material and age of sediment
+\citep{blois2011methodological}. In contrast biostratigraphic markers
 (e.g. the rise in Ambrosia and other weedy taxa during EuroAmerican
-settlement), and geostratigraphic markers such as the core top whose
-age typically corresponds with the year of sampling. These age
-controls are then used to constrain age-depth models that allow
-inference of age at any depth throughout the core. However, inferred
-ages are uncertain, due to analytical errors during the laboratory
-radiocarbon dating process \citep{ward1978procedures}, the conversion
-of radiocarbon to calendar years \citep{reimer2013intcal13}, and
-potential differences between age of macrofossil material and age of
-sediment \citep{blois2011methodological}. As in ecology, Bayesian
-hierarchical modeling approaches to age-depth models are rapidly
-gaining popularity for their ability to accommodate irregular
-probability distribution functions, multiple sources of uncertainty,
-and prior information \citep{blaauw2011flexible, buck1999bcal,
-  blaauw2005radiocarbon, ramsey1995radiocarbon}.
+settlement; \citet{mcandrews1988human}), and geostratigraphic markers
+(e.g., the ``modern'' core top) may have fewer sources of uncertainty,
+but rely on knowledge of elements within the core stratigraphy, and so
+maybe assigned higher precision than is suitable. To accurately obtain
+pre-settlement pollen assemblages and, particularly, to find
+assemblages contemporaneous with the PLS requires accurate and precise
+models of chronology for pollen cores, however, inferred ages are
+uncertain, and recent advances in age modeling mean that models for
+cores, many over 30 years old, may no longer be appropriate.
 
 During European settlement, land-clearances led to noticeable
 increases in certain agricultural indicators that is reflected in the
-pollen records, especially \textit{Ambrosia}
-\citep{mcandrews1988human}. This change in relative composition of
-\textit{Ambrosia}, referred to as the \textit{Ambrosia rise}, can be
-used to identify the pollen sample that best corresponds with
-pre-settlement - the pre-settlement pollen sample is the sample
-immediately prior to the first pollen sample that reflects the
-\textit{Ambrosia rise}. The presence of an established
+pollen records, especially Ambrosia \citep{mcandrews1988human}. This
+change in relativeabundance of Ambrosia, referred to as the
+\textit{Ambrosia rise}, can be used to identify the pollen sample that
+best corresponds with pre-settlement - the pre-settlement pollen
+sample is the sample immediately prior to the first pollen sample that
+reflects the Ambrosia rise. The presence of an established
 biostratigraphic marker at the time of settlement eliminates the need
 to rely on uncertain age-depth models. However, time series of pollen
 counts are noisy, and in practice it can be difficult to precisely
 identify the settlement horizon. We deal with the uncertainty
-associated with \textit{Ambrosia rise} identification using expert
-elicitation. 
+associated with Ambrosia rise identification using expert elicitation.
 
-% Calibrating the pollen-vegetation relationship using a process-based
-% statistical model informs us about the key regional-scale processes,
-% including differential production and dispersal, that transport pollen
-% from the tree to the sediment. Results from this calibration model are
-% a first step towards reconstructing past vegetation composition for
-% the US Upper Midwest. Using pre-settlement calibration data allows us
-% to more confidently assume that the pollen-vegetation relationship is
-% static back through time, at least up to a point. 
-
-Here, we refine and calibrate a Bayesian hierarchical PVM, based on
-the STEPPS model \citep{paciorek2009mapping}, using newly developed
-settlement-era pollen and vegetation calibration datasets for the
-Upper Midwest.  Specific advances include the building of a
-pre-settlement era identification of pre-settlement pollen samples
-from pollen time series through expert elicitation and the testing and
-comparison of two standard isometric dispersal kernels.  We apply
-modelling results to develop new estimates of relative pollen
-productivity and source area, assess the relative importance of local
-and non-local pollen sources, and compare these results to prior
-estimates of source area and pollen productivity.  This work lays the
-methodological foundation for rigorous reconstruction of past forest
-composition from fossil pollen data and all scripts are made publicly
-available at GitHub.
+Here we identify pre-settlement pollen assemblages through a series of
+steps to refine age models and an expert-elicitation exercise to
+identify the youngest sample immediately prior to expert-identified
+“Ambrosia” rises within individual stratigraphic sequences. We refine
+and calibrate a Bayesian hierarchical PVM, based on the STEPPS model
+\citep{paciorek2009mapping}, using newly developed settlement-era
+pollen and vegetation calibration datasets for the Upper
+Midwest. Specific advances include the building of a pre-settlement
+era identification of pre-settlement pollen samples from pollen time
+series through expert elicitation and the testing and comparison of
+two standard isometric dispersal kernels. We apply modelling results
+to develop new estimates of relative pollen productivity and source
+area, assess the relative importance of local and non-local pollen
+sources, and compare these results to prior estimates of source area
+and pollen productivity.
 
 \section{Data}
 
@@ -294,7 +348,8 @@ horizon. In principle, it is possible to identify the pre-settlement
 sample - the sample that falls immediately before these increases in
 agricultural indicator species. For many records the rises are sharp
 and determining the pre-settlement sample is easy, while other records
-are more ambiguous and placement relies on subjective judgment.
+are more ambiguous and placement relies on subjective judgment (see
+Figure~\ref{fig:elicit}).
 
 For this study, in the interest of reducing uncertainty, we want to:
 1) identify pre-settlement samples using consistent methodology, and
@@ -378,6 +433,10 @@ single vector of proportions that represent the effective contributing
 vegetation. Finally, each component of this vector is scaled by a
 taxon-specific parameter ($\gamma$) that accounts for differential
 production of pollen among plant species.
+
+This work lays the methodological foundation for rigorous
+reconstruction of past forest composition from fossil pollen data and
+all scripts are made publicly available at GitHub (link).
 
 \subsection{Model description}
 
@@ -610,7 +669,10 @@ level of disagreement - in 79 cases, experts identified two samples;
 in 39 cases 3 pre-settlement samples were identified; and in 8 cases
 there was no agreement. These results confirm our hypothesis that
 identification of biostratigraphic markers is subject to variability
-between analysts and is the first to quantify this uncertainty.
+between analysts and is the first to quantify this uncertainty. In
+Figure~\ref{fig:elicit}, pollen diagrams for two sites illustrate that
+in some cases the settlement horizon is clear, while in others, there
+is ambiguity.
 
 Of the 6 sites that experts agreed had no discernible settlement
 signal, two of these sites were at Rice Lake, which is an anomalous
@@ -761,13 +823,11 @@ model (variable $\psi$ and $\gamma$) results in a WAIC that is higher
 than the least flexible power law kernel model (base model). The power
 law kernel model with variable $a$ and $\gamma$ results in the lowest
 WAIC, indicating that it performs the best out of the suite of
-considered models. However, it is still of interest to make further
-comparisons between the two kernels - does the kernel formulation make
-a noticeable different in pollen production estimates and pollen
-predictions? One of the goals of this work is to use the calibrated
-pollen-vegetation relationship to estimate vegetation composition back
-through time, and therefore it is natural to think about how kernel
-selection affects predictions, if at all.
+considered models. Depite the WAIC relative model rankings, assessing
+the effect the kernel formulations have on pollen production estimates
+and predictions is still of value. PVM results will be used to make
+vegetation composition predictions back through time, and these
+predictions are determined (in part) by the dispersal kernel.
 
 In light of this, we continue to compare the two base models (Gaussian
 and power law), as well as the models with the lowest WAIC for each
@@ -813,30 +873,15 @@ pollen points fall more closely along the 1:1 line. This indicates
 that in our domain non-local dispersal processes account for much of
 the pollen that arrive at any given location. For most taxa, the
 improvement that we gain by using more flexible models versus the base
-models is not qualitatively obvious. This is not true for Hemlock -
-both base models underpredict Hemlock pollen at sites where there is
-relatively high proportion of Hemlock (although Hemlock pollen never
-exceeds 28\% at any site in our domain). This suggests that the
-relative contribution of local versus non-local hemlock pollen is
-estimated to be less than the true value, i.e. $\gamma$ is too small.
-
-
-In Figure~\ref{fig:preds}, we again plot the raw pollen proportions
-against both the vegetation (red crosses) and predicted pollen for the
-variable models (guassian: black dots; power law: blue dots) by taxon,
-but in this case the predicted pollen is based on the local plus
-non-local predictions obtained from the full calibration model. Now
-that dispersal has been accounted for, we see that the raw versus
-predicted pollen points fall more closely along the 1:1 line. This
-indicates that in our domain dispersal processes account for much of
-the pollen that arrive at any given location. For most taxa, the
-improvement that we gain by using more flexible models versus the base
-models is not qualitatively obvious. This is not true for Hemlock -
-both base models underpredict Hemlock pollen at sites where there is
-relatively high proportion of Hemlock (although Hemlock pollen never
-exceeds 28\% at any site in our domain). This suggests that the
-relative contribution of local versus non-local pollen is estimated to
-be less than it should be, i.e. $\gamma$ is too small.
+models is not qualitatively obvious. However, for Hemlock, there is an
+obvious improvement in our ability to predict sediment pollen with the
+more flexible models. Both base models underpredict Hemlock pollen at
+sites where there is relatively high proportion of Hemlock (although
+Hemlock pollen never exceeds 28\% at any site in our domain), but this
+is not the case for the variable Gaussian and Power Law models. This
+suggests that the relative contribution of local versus non-local
+hemlock pollen is estimated to be less than the true value,
+i.e. $\gamma$ is too small.
 
 There are two anomalous sites for which the model is unable to
 adequately account for the processes leading to the (relatively
