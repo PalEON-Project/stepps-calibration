@@ -14,6 +14,8 @@ data {
   int y[N_cores,K];              // pollen count data
   
   int idx_cores[N_cores];        // core cell indices
+  int N_hood[N_cores];            // hood cell counts by core
+  int idx_hood[N_cores, N_cells]; // hood cell indices
   
   vector[K] r[N_cells];          // composition proportions
   matrix[N_cells,N_cores] d;     // distance matrix 
@@ -106,11 +108,14 @@ model {
   for (i in 1:N_cores){        
     for (k in 1:K){
       out_sum[k] <- 0;
-      for (j in 1:N_cells){ // change N_hood to N_cells
-	if (j != idx_cores[i]){
-	  out_sum[k] <- out_sum[k] + w[k][j,i]*r[j][k];
-	}  
-      }
+      // for (j in 1:N_cells){ // change N_hood to N_cells
+      // 	if (j != idx_cores[i]){
+      // 	  out_sum[k] <- out_sum[k] + w[k][j,i]*r[j][k];
+      // 	}  
+      // }
+      for (j in 1:N_hood[i]){
+	out_sum[k] <- out_sum[k] + w[k][idx_hood[i,j],i]*r[idx_hood[i,j]][k];
+      }  
     }
 
     //local plus non-local piece
@@ -178,11 +183,14 @@ generated quantities {
     for (i in 1:N_cores){        
       for (k in 1:K){
 	out_sum[k] <- 0;
-	for (j in 1:N_cells){ // change N_hood to N_cells
-	  if (j != idx_cores[i]){
-	    out_sum[k] <- out_sum[k] + w[k][j,i]*r[j][k];
-	  }  
-	}
+	// for (j in 1:N_cells){ // change N_hood to N_cells
+	//   if (j != idx_cores[i]){
+	//     out_sum[k] <- out_sum[k] + w[k][j,i]*r[j][k];
+	//   }  
+	// }
+	for (j in 1:N_hood[i]){
+	  out_sum[k] <- out_sum[k] + w[k][idx_hood[i,j],i]*r[idx_hood[i,j]][k];
+	}  
       }
 
       //local plus non-local piece
