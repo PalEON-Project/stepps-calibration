@@ -15,6 +15,7 @@ data {
   
   int idx_cores[N_cores];            // core cell indices
   #matrix[N_cores, N_cells] idx_hood; // hood cell indices
+  int N_hood[N_cores];
   int idx_hood[N_cores, N_cells];
   
   vector[K] r[N_cells];          // composition proportions
@@ -64,13 +65,14 @@ model {
   for (i in 1:N_cores){   
    
     for (k in 1:K) {out_sum[k] <- 0;}
-    for (j in 1:N_cells){ // change N_hood to N_cells
-      if (idx_hood[i,j] != 0){
+    for (j in 1:N_hood[i]){
+    //for (j in 1:N_cells){ // change N_hood to N_cells
+    //if (idx_hood[i,j] != 0){
       //if (j != idx_cores[i]){
         //out_sum <- out_sum + w[j,i]*r[j];
 	out_sum <- out_sum + w[idx_hood[i,j],i]*r[idx_hood[i,j]];
-      }  
-    }
+    }  
+    //}
 
     r_new[i] <- gamma*r[idx_cores[i]] + out_sum*(1-gamma)/sum_w_pot;
         
