@@ -13,10 +13,12 @@ data {
 
   int y[N_cores,K];              // pollen count data
   
-  int idx_cores[N_cores];        // core cell indices
+  int idx_cores[N_cores];            // core cell indices
+  #matrix[N_cores, N_cells] idx_hood; // hood cell indices
+  int idx_hood[N_cores, N_cells];
   
-  vector[K] r[N_cells];          // pls proportions
-  matrix[N_cells,N_cores] d;    // distance matrix squared
+  vector[K] r[N_cells];          // composition proportions
+  matrix[N_cells,N_cores] d;     // distance matrix
   matrix[N_pot, 2] d_pot;        // distances and counts of potential neighborhood
 }
 transformed data {
@@ -63,8 +65,10 @@ model {
    
     for (k in 1:K) {out_sum[k] <- 0;}
     for (j in 1:N_cells){ // change N_hood to N_cells
-      if (j != idx_cores[i]){
-        out_sum <- out_sum + w[j,i]*r[j];
+      if (idx_hood[i,j] != 0){
+      //if (j != idx_cores[i]){
+        //out_sum <- out_sum + w[j,i]*r[j];
+	out_sum <- out_sum + w[idx_hood[i,j],i]*r[idx_hood[i,j]];
       }  
     }
 
@@ -123,10 +127,19 @@ generated quantities {
    
       for (k in 1:K) {out_sum[k] <- 0;}
       for (j in 1:N_cells){ // change N_hood to N_cells
-	if (j != idx_cores[i]){
-	  out_sum <- out_sum + w[j,i]*r[j];
+	if (idx_hood[i,j] != 0){
+	  //if (j != idx_cores[i]){
+	  //out_sum <- out_sum + w[j,i]*r[j];
+	  out_sum <- out_sum + w[idx_hood[i,j],i]*r[idx_hood[i,j]];
 	}  
       }
+
+      // for (k in 1:K) {out_sum[k] <- 0;}
+      // for (j in 1:N_cells){ // change N_hood to N_cells
+      // 	if (j != idx_cores[i]){
+      // 	  out_sum <- out_sum + w[j,i]*r[j];
+      // 	}  
+      // }
 
       r_new[i] <- gamma*r[idx_cores[i]] + out_sum*(1-gamma)/sum_w_pot;
     
