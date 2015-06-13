@@ -78,7 +78,7 @@ model {
       // 	}  
       // }
       for (j in 1:N_hood[i]){
-	out_sum <- out_sum + w[idx_hood[i,j],i]*r[idx_hood[i,j]];
+	out_sum[k] <- out_sum[k] + w[idx_hood[i,j],i]*r[idx_hood[i,j]][k];
       }  
     }
     
@@ -149,7 +149,7 @@ generated quantities{
       for (k in 1:K){
 	out_sum[k] <- 0;
 	for (j in 1:N_hood[i]){
-	  out_sum <- out_sum + w[idx_hood[i,j],i]*r[idx_hood[i,j]];
+	  out_sum[k] <- out_sum[k] + w[idx_hood[i,j],i]*r[idx_hood[i,j]][k];
 	}  
       }
 
