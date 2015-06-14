@@ -26,8 +26,8 @@ transformed data {
 parameters {
   vector<lower=0.01, upper=300>[K] phi;  // dirichlet precision pars
   real<lower=0, upper=1> gamma;          // local proportion par
-  real<lower=0, upper=500> a;            // dispersal kernel par
-  real<lower=2, upper=100> b;            // dispersal kernel par
+  real<lower=1e-4, upper=500> a;            // dispersal kernel par
+  real<lower=2.001, upper=6> b;            // dispersal kernel par
 }
 transformed parameters {
 
@@ -51,8 +51,8 @@ model {
   // priors 
   phi      ~ uniform(0.01,300);
   gamma    ~ uniform(0,1);
-  a        ~ uniform(0, 500);   
-  b        ~ uniform(2, 100) ; 
+  a        ~ uniform(1e-4, 500);   
+  b        ~ uniform(2.001, 6) ; 
 
   sum_w_pot <- 0;
   for (v in 1:N_pot)
@@ -96,6 +96,8 @@ model {
     //   }
     // }
  
+    print("r_new[i] = ", r_new[i]);
+
     alpha <- phi .* r_new[i];
       
     A <- sum(alpha);

@@ -37,11 +37,11 @@ parameters {
   real<lower=-2, upper=2> mu_gamma;  // gamma hyperparameter
   real<lower=0> sigma_gamma;             // gamma hyperparameter
 
-  vector<lower=log(1e-6), upper=log(500)>[K] log_a;
-  real<lower=2, upper=100> b;
+  vector<lower=log(1e-4), upper=log(500)>[K] log_a;
+  real<lower=2.001, upper=6> b;
 
-  real<lower=log(1e-6), upper=log(500)> mu_a;
-  real<lower=1e-6> sigma_a;
+  real<lower=log(1e-4), upper=log(500)> mu_a;
+  real<lower=1e-5> sigma_a;
 }
 transformed parameters {
   vector[K] a;
@@ -72,9 +72,10 @@ model {
   phi     ~ uniform(0.01,300);
   mu_gamma    ~ uniform(-2, 2);
   sigma_gamma ~ cauchy(0, 5); 
-  mu_a    ~ uniform(log(1e-6), log(500));
-  sigma_a ~ cauchy(1e-6, 2);  
-  
+  mu_a    ~ uniform(log(1e-4), log(500));
+  sigma_a ~ cauchy(1e-5, 2);  
+  b ~ uniform(2.001, 6);  
+
   for (k in 1:K){
     log_a[k] ~ normal(mu_a, sigma_a);
     increment_log_prob(- log(sigma_gamma) - log(gamma[k]) - log(1 - gamma[k]));

@@ -34,11 +34,11 @@ parameters {
   vector<lower=0.01, upper=300>[K] phi;  // dirichlet precision pars
   real<lower=0, upper=1> gamma;          // localness pars
 
-  vector<lower=log(1e-6), upper=log(500)>[K] log_a;
-  real<lower=2, upper=100> b;
+  vector<lower=log(1e-4), upper=log(500)>[K] log_a;
+  real<lower=2.001, upper=6> b;
 
-  real<lower=log(1e-6), upper=log(500)> mu_a;
-  real<lower=1e-6> sigma_a;
+  real<lower=log(1e-4), upper=log(500)> mu_a;
+  real<lower=1e-5> sigma_a;
 }
 transformed parameters {
   vector[K] a;
@@ -68,12 +68,16 @@ model {
   // priors 
   phi     ~ uniform(0.01,300);
   gamma   ~ uniform(0,1);
-  mu_a    ~ uniform(log(1e-6), log(500));
-  sigma_a ~ cauchy(1e-6, 2);  
-  
+  mu_a    ~ uniform(log(1e-4), log(500));
+  sigma_a ~ cauchy(1e-5, 2);  
+  b       ~ uniform(2.001, 6);
+
   for (k in 1:K){
     log_a[k] ~ normal(mu_a, sigma_a);
   }  
+
+  print("a = ", a);
+  print("b = ", b);
   
   for (k in 1:K){
     //kernel_p1[k] <-  (b[k]-2) * (b[k]-1) / ( 2 * pi() * a[k] * a[k] );
@@ -104,10 +108,14 @@ model {
       }  
     }
 
+    print("gamma = ", gamma);
+
     //local plus non-local piece
-    for (k in 1:K)
+    for (k in 1:K){
+      print("sum_w_pot[k] = ", sum_w_pot[k]);
+      print("out_sum[k] = ", out_sum[k]);
       r_new[i,k] <- gamma*r[idx_cores[i],k] + out_sum[k]*(1-gamma)/sum_w_pot[k];
-        
+    }
     // // hacky!
     // // find taxon with highest proportional value
     // max_r_new <- 0;
@@ -115,7 +123,7 @@ model {
     //   if (r_new[i,k] > max_r_new){
     //     max_r_new     <- r_new[i,k];
     //     max_r_new_idx <- k;
-    //    }
+    //    }q
     // }
     
     // for (k in 1:K){
@@ -126,7 +134,9 @@ model {
     //     print("warning: zero proportion; core: ", i, "; taxon: ", k, " -> adjusting");
     //   }
     //}
-      
+
+    print("r_new[i] = ", r_new[i]);
+
     alpha <- phi .* r_new[i];
     A     <- sum(alpha);     
 
