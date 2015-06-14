@@ -15,11 +15,12 @@ source('r/utils/build_data_funs.r')
 
 depth_type = 'mid'
 
-data_date = '2014-10-23'
+# data_date = '2014-10-23'
+data_date = '2015-06-10'
 
 ## relative to working directory!
 path_pollen  = paste0('data/cal_data_', depth_type, '_depth_', data_date, '.csv') # sh elicitation results
-path_veg_old     = 'data/composition_v0.2.csv'                                        # composition model results
+path_veg_old = 'data/composition_v0.2.csv'                                        # composition model results
 path_veg     = 'data/composition_v0.3.csv'                                        # composition model results
 path_map     = 'data/map_data/us_alb.shp'                                         # albers projected state map!
 path_convert = 'data/dict-comp2stepps.csv'                                        # conversion table
@@ -27,10 +28,10 @@ path_convert = 'data/dict-comp2stepps.csv'                                      
 path_out = 'r/dump'                                                               # dump data file stored here
 
 # append to output filenames
-suff       = paste0(depth_type, '_comp_UMW_v0.2')                                
+suff       = paste0(depth_type, '_comp_ALL_v0.3')                                
 
 states = c('michigan:north', 'minnesota', 'wisconsin', 'michigan:south')
-states = c('michigan:north', 'minnesota', 'wisconsin')#, 'michigan:south')
+# states = c('michigan:north', 'minnesota', 'wisconsin')#, 'michigan:south')
 # states = c('michigan:south')
 
 wd = getwd() 
@@ -124,6 +125,9 @@ centers_veg = cbind(veg_meta$x, veg_meta$y)
 # Lake Ocheda Maple count set to 0
 pollen[pollen$id == 10971, 'MAPLE'] = 0
 
+# Tamarack Creek count set to 0
+pollen[pollen$id == 2624, 'TAMARACK'] = 0
+
 #XXX: add pollen to albers function
 centers_pol = data.frame(cbind(pollen$long, pollen$lat))
 colnames(centers_pol) = c('x', 'y')
@@ -155,6 +159,38 @@ y = unname(round(as.matrix(y))) # stan needs integers and no names
 # build idx_core and idx_hood
 #####################################################################################
 
+# idx_cores = vector(length=N_cores)
+# 
+# for (i in 1:nrow(centers_polA)){
+#   core_site = centers_polA[i,]
+#   d = rdist(matrix(core_site, ncol=2), as.matrix(centers_veg))
+#   idx_cores[i] = which.min(d)
+# }
+# 
+# # visual check: cores and nearest cell should be close to each other!
+# plot(centers_veg[idx_cores,1], centers_veg[idx_cores,2])
+# points(centers_polA[,1], centers_polA[,2], col='blue', pch=8)
+# plot(us.shp, add=T, lwd=2)
+# 
+# # XXX: do we still need this? can we just use idx_cores
+# # whole domain as neighborhood
+# idx_hood   = matrix(0, nrow=N_cores, ncol=N_cells)
+# 
+# for (i in 1:nrow(centers_polA)){ 
+#   hood_cells = seq(1, N_cells)
+#   hood_cells = hood_cells[-idx_cores[i]]
+#   idx_hood[i,1:length(hood_cells)] = hood_cells
+# }
+# 
+# N_hood = ncol(idx_hood)
+# 
+# # distance matrix
+# d = t(rdist(as.matrix(centers_veg[idx_cores,], ncol=2), as.matrix(centers_veg))/dist.scale) # ponds at centroids - area based
+# # d = t(rdist(as.matrix(centers_polA, ncol=2), as.matrix(centers_veg))/dist.scale) # ponds as points in cell
+# d2 = d * d # XXX: is it more efficient to read in d2?
+# # d2t = t(d2)
+
+
 idx_cores = vector(length=N_cores)
 
 for (i in 1:nrow(centers_polA)){
@@ -169,20 +205,24 @@ points(centers_polA[,1], centers_polA[,2], col='blue', pch=8)
 plot(us.shp, add=T, lwd=2)
 
 # XXX: do we still need this? can we just use idx_cores
-# whole domain as neighborhood
-idx_hood   = matrix(0, nrow=N_cores, ncol=N_cells)
+# neighborhood a circle of radius 700 km
+idx_hood = matrix(0, nrow=N_cores, ncol=N_cells)
+N_hood   = vector(length=N_cores)
 
 for (i in 1:nrow(centers_polA)){ 
-  hood_cells = seq(1, N_cells)
+  d_core = rdist(matrix(centers_veg[idx_cores[i],], ncol=2), as.matrix(centers_veg))
+#   rdist(as.matrix(centers_polA[i,]), as.matrix(centers_veg))
+  hood_cells = which(d_core <= 700*1000)
   hood_cells = hood_cells[-idx_cores[i]]
   idx_hood[i,1:length(hood_cells)] = hood_cells
+  N_hood[i] = length(hood_cells)
 }
 
-N_hood = ncol(idx_hood)
+# N_hood = ncol(idx_hood)
 
 # distance matrix
-d = t(rdist(as.matrix(centers_veg[idx_cores,], ncol=2), as.matrix(centers_veg))/dist.scale) # ponds at centroids - area based
-# d = t(rdist(as.matrix(centers_polA, ncol=2), as.matrix(centers_veg))/dist.scale) # ponds as points in cell
+# d = t(rdist(as.matrix(centers_veg[idx_cores,], ncol=2), as.matrix(centers_veg))/dist.scale) # ponds at centroids - area based
+d = t(rdist(as.matrix(centers_polA, ncol=2), as.matrix(centers_veg))/dist.scale) # ponds as points in cell
 d2 = d * d # XXX: is it more efficient to read in d2?
 # d2t = t(d2)
 
@@ -192,9 +232,24 @@ d2 = d * d # XXX: is it more efficient to read in d2?
 #####################################################################################
 library(plyr)
 
-x_pot = seq(-528000, 528000, by=8000)
-y_pot = seq(-416000, 416000, by=8000)
-coord_pot = expand.grid(x_pot, y_pot)
+# xlo = min(centers_veg[,1])
+# xhi = max(centers_veg[,1])
+# ylo = min(centers_veg[,2])
+# yhi = max(centers_veg[,2])
+
+# x_pot =  
+# 
+# x_pot = seq(-528000, 528000, by=8000)
+# y_pot = seq(-416000, 416000, by=8000)
+# coord_pot = expand.grid(x_pot, y_pot)
+# 
+# d_pot = t(rdist(matrix(c(0,0), ncol=2), as.matrix(coord_pot, ncol=2))/dist.scale)
+# d_pot = unname(as.matrix(count(d_pot)))
+# 
+# N_pot = nrow(d_pot)
+
+coord_pot = seq(-700000, 700000, by=8000)
+coord_pot = expand.grid(coord_pot, coord_pot)
 
 d_pot = t(rdist(matrix(c(0,0), ncol=2), as.matrix(coord_pot, ncol=2))/dist.scale)
 d_pot = unname(as.matrix(count(d_pot)))
@@ -205,9 +260,9 @@ N_pot = nrow(d_pot)
 # save the data; stan needs dump file, but use rdata for processing
 #####################################################################################
 
-dump(c('K', 'N_cores', 'N_cells', #'N_hood', 
+dump(c('K', 'N_cores', 'N_cells', 'N_hood', 
        'y', 'r', 
-       'idx_cores', #'idx_hood', 
+       'idx_cores', 'idx_hood', 
        'd',#,'d2',
        'N_pot', 'd_pot'),
        #'centers_veg', 'centers_polA'), 

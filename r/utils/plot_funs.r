@@ -281,8 +281,11 @@ plot_data_maps_binned <- function(y, centers, taxa, K, breaks, limits, suff, sav
   
   prop_dat$type = rep('PLS', nrow(prop_dat))
   
+  library(RColorBrewer)
+  
+  
   p <- ggplot() + geom_tile(data=prop_dat, aes(x=x, y=y, fill=factor(props))) + 
-    scale_fill_manual(values = tim.colors(length(breaks)), labels=breaklabels, name='Proportions') + 
+    scale_fill_manual(values = gray.colors(length(breaks), start = 0.0, end = 1.0, gamma = 2.2, alpha = NULL), labels=breaklabels, name='Proportions') + 
     coord_fixed() #+ scale_x_continuous(limits$xlims) + scale_y_continuous(limits$ylims)
   p <- add_map_albers(p, us.shp, limits, rescale)
   p <- p + facet_wrap(~taxon, ncol=6)
@@ -291,6 +294,28 @@ plot_data_maps_binned <- function(y, centers, taxa, K, breaks, limits, suff, sav
   #   p <- p + theme(strip.text.x = element_blank(),
   #                  strip.text.y = element_blank())
   p <- p + theme(strip.background = element_blank())
+  
+#   p <- ggplot() + geom_tile(data=prop_dat, aes(x=x, y=y, fill=factor(props))) + 
+#     scale_fill_manual(values = rev(brewer.pal(length(breaks), name="Greys")), labels=breaklabels, name='Proportions') + 
+#     coord_fixed() #+ scale_x_continuous(limits$xlims) + scale_y_continuous(limits$ylims)
+#   p <- add_map_albers(p, us.shp, limits, rescale)
+#   p <- p + facet_wrap(~taxon, ncol=6)
+#   p <- theme_clean(p) #+ theme(strip.text.y = element_text(size = rel(1.5)), strip.text.x = element_text(size = rel(1.5)))
+#   
+#   #   p <- p + theme(strip.text.x = element_blank(),
+#   #                  strip.text.y = element_blank())
+#   p <- p + theme(strip.background = element_blank())
+  
+#   p <- ggplot() + geom_tile(data=prop_dat, aes(x=x, y=y, fill=factor(props))) + 
+#     scale_fill_manual(values = tim.colors(length(breaks)), labels=breaklabels, name='Proportions') + 
+#     coord_fixed() #+ scale_x_continuous(limits$xlims) + scale_y_continuous(limits$ylims)
+#   p <- add_map_albers(p, us.shp, limits, rescale)
+#   p <- p + facet_wrap(~taxon, ncol=6)
+#   p <- theme_clean(p) #+ theme(strip.text.y = element_text(size = rel(1.5)), strip.text.x = element_text(size = rel(1.5)))
+#   
+#   #   p <- p + theme(strip.text.x = element_blank(),
+#   #                  strip.text.y = element_blank())
+#   p <- p + theme(strip.background = element_blank())
   
   print(p)
   Sys.sleep(2)

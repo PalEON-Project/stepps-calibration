@@ -13,27 +13,8 @@ path_data  = 'r/dump'
 path_out   = 'output'
 path_figs  = 'figures'
 
-suff=''
-
-rerun = TRUE
-
-# suff_dat = '12taxa_upper_comp_v0.1'
-# suff_dat = '12taxa_upper_comp_v0.1'
-# suff_dat = '12taxa_mid_comp_v0.1'
-# suff_fit = '12taxa_mid_comp_v0.1_vary_psi_bigC_c1'
-# suff_fit = '12taxa_mid_comp_v0.1_pl_bigC'
-# suff_fit = '12taxa_mid_comp_v0.1_bigC_c1'
-
-# run = list(suff_fit = '12taxa_mid_comp_g_v0.3', kernel = 'gaussian', one_psi = TRUE, one_gamma = TRUE, EPs = FALSE)
-# run = list(suff_fit = '12taxa_mid_comp_vary_psi_EPs_v0.3', kernel = 'gaussian', one_psi = FALSE, one_gamma = TRUE, EPs = TRUE)
-# run = list(suff_fit = '12taxa_mid_comp_vary_psi_gamma_EPs_v0.3', kernel = 'gaussian', one_psi = FALSE, one_gamma = FALSE, EPs = TRUE)
-# run = list(suff_fit = '12taxa_mid_comp_vary_gamma_EPs_v0.3', kernel = 'gaussian', one_psi = TRUE, one_gamma = FALSE, EPs = TRUE)
-
-# run = list(suff_fit = '12taxa_mid_comp_vary_psi_v0.3', kernel = 'gaussian', one_psi = FALSE, one_gamma = TRUE, EPs = FALSE)
-
-# kernel     =  'pl'
-# suff_fit = '12taxa_mid_comp_pl_v0.3'
-# suff_fit = '12taxa_mid_comp_pl_vary_kernel_gamma_EPs_v0.3'
+suff  =''
+rerun = FALSE
 
 kernel   = run$kernel
 suff_fit = run$suff_fit
@@ -197,21 +178,14 @@ pollen_preds_plot(preds, pollen_props, N_cores, r, idx_cores, taxa, suff=suff, s
 
 # plot_pollen_maps_binned(preds, centers_polA, taxa, K, breaks, limits, suff='', save_plots, fpath=path_figs)
 
-# # THIS IS WRONG!
-# vn_hood_props = sum_hood_props(post, C, N_pot, d_pot, kernel=kernel)
-# vn_hood_props
-# 
-# #####################################################################################
-# # potential pollen maps
-# #####################################################################################
-
-d_all = t(rdist(as.matrix(centers_veg), as.matrix(centers_veg))/rescale)
-
-N_locs = nrow(d_all)
-
-idx_locs = seq(1, N_locs)
-
+ 
+#####################################################################################
+# potential pollen maps
+#####################################################################################
 if (rerun){
+  d_all     = t(rdist(as.matrix(centers_veg), as.matrix(centers_veg))/rescale)
+  N_locs    = nrow(d_all)
+  idx_locs  = seq(1, N_locs)
   preds_out = pollen_preds(post, N_locs, d_all, idx_locs, r, sum_w, run)
   preds     = preds_out$preds
   save(preds, file=paste0(path_figs1, '/preds_all.rdata'))
