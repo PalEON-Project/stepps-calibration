@@ -37,13 +37,13 @@ parameters {
   real<lower=-2, upper=2> mu_gamma;  // gamma hyperparameter
   real<lower=0> sigma_gamma;             // gamma hyperparameter
 
-   vector<lower=log(1e-6), upper=log(500)>[K] log_a;
-  vector<lower=log(2), upper=log(100)>[K] log_b;
+  vector<lower=log(1e-4), upper=log(500)>[K] log_a;
+  vector<lower=log(2.001), upper=log(6)>[K] log_b;
 
-  real<lower=log(1e-6), upper=log(500)> mu_a;
-  real<lower=1e-6> sigma_a;
-  real<lower=log(2), upper=log(100)> mu_b;
-  real<lower=1e-6> sigma_b;
+  real<lower=log(1e-4), upper=log(500)> mu_a;
+  real<lower=1e-5> sigma_a;
+  real<lower=log(2.001), upper=log(6)> mu_b;
+  real<lower=1e-5> sigma_b;
 }
 transformed parameters {
   vector[K] a;
@@ -76,10 +76,12 @@ model {
   phi         ~ uniform(0.01,300);
   mu_gamma    ~ uniform(-2, 2);
   sigma_gamma ~ cauchy(0, 5); 
-  mu_a        ~ uniform(log(1e-6), log(500));
-  sigma_a     ~ cauchy(1e-6, 2);  
-  mu_b        ~ uniform(log(2), log(100));
-  sigma_b     ~ cauchy(1e-6, 2);  
+  //mu_a        ~ uniform(log(1e-6), log(500));
+  mu_a        ~ uniform(log(1e-4), log(500));
+  sigma_a     ~ cauchy(1e-5, 2);  
+  //mu_b        ~ uniform(log(2), log(100));
+  mu_b        ~ uniform(log(2.001), log(6));
+  sigma_b     ~ cauchy(1e-5, 2);  
   
   for (k in 1:K){
     log_a[k] ~ normal(mu_a, sigma_a);
@@ -140,12 +142,21 @@ model {
     //     print("warning: zero proportion; core: ", i, "; taxon: ", k, " -> adjusting");
     //   }
     //}
-      
+    
+    print("phi = ", phi);
+    print("r_new[i] ", r_new[i]);
+
     alpha <- phi .* r_new[i];
-    A     <- sum(alpha);     
+    A     <- sum(alpha);    
+
+    print("A = ", A);
 
     increment_log_prob(lgamma_Nplus1[i] + lgamma(A) - lgamma(N[i] + A));
-    for (k in 1:K) increment_log_prob( - lgamma(y[i,k] + 1) + lgamma(y[i,k] + alpha[k]) - lgamma(alpha[k]));
+    for (k in 1:K){
+      print("y[i,k] = ", y[i,k]);
+      print("alpha[k] = ", alpha[k]);
+      increment_log_prob( - lgamma(y[i,k] + 1) + lgamma(y[i,k] + alpha[k]) - lgamma(alpha[k]));
+    }
   }
 }
 generated quantities {

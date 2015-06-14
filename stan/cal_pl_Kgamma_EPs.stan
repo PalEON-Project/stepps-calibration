@@ -31,8 +31,8 @@ parameters {
   real<lower=-2, upper=2> mu_gamma;       // psi hyperparameter
   real<lower=0> sigma_gamma;             // psi hyperparameter
 
-  real<lower=1e-6, upper=500> a;
-  real<lower=2, upper=100> b;
+  real<lower=1e-4, upper=500> a;
+  real<lower=2.001, upper=6> b;
 }
 transformed parameters {
 }
@@ -55,8 +55,8 @@ model {
   phi         ~ uniform(0.01,300);
   mu_gamma    ~ uniform(-2, 2);
   sigma_gamma ~ cauchy(0, 5);
-  a           ~ uniform(0, 500);   
-  b           ~ uniform(2, 100) ; 
+  a           ~ uniform(1e-4, 500);   
+  b           ~ uniform(2.001, 6) ; 
   
   for (k in 1:K){
     increment_log_prob(- log(sigma_gamma) - log(gamma[k]) - log(1 - gamma[k]));

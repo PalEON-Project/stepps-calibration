@@ -38,9 +38,9 @@ parameters {
   vector<lower=log(2), upper=log(100)>[K] log_b;
 
   real<lower=log(1e-6), upper=log(500)> mu_a;
-  real<lower=1e-6> sigma_a;
+  real<lower=1e-5> sigma_a;
   real<lower=log(2), upper=log(100)> mu_b;
-  real<lower=1e-6> sigma_b;
+  real<lower=1e-5> sigma_b;
 }
 transformed parameters {
   vector[K] a;
@@ -72,10 +72,10 @@ model {
   // priors 
   phi         ~ uniform(0.01,300);
   gamma       ~ uniform(0,1);
-  mu_a        ~ uniform(log(1e-6), log(500));
-  sigma_a     ~ cauchy(1e-6, 2);  
-  mu_b        ~ uniform(log(2), log(100));
-  sigma_b     ~ cauchy(1e-6, 2);  
+  mu_a        ~ uniform(log(1e-4), log(500));
+  sigma_a     ~ cauchy(1e-5, 2);  
+  mu_b        ~ uniform(log(2.001), log(6));
+  sigma_b     ~ cauchy(1e-5, 2);  
   
   for (k in 1:K){
     log_a[k] ~ normal(mu_a, sigma_a);
