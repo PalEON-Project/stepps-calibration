@@ -14,6 +14,7 @@ ids = c(314, 1884)
 sh = elicit[(elicit$datasetID %in% ids), ]
 
 dat <- get_download(ids)
+save(dat, file='dat.rdata')
 
 for (i in 1:length(ids)){
   
@@ -40,9 +41,13 @@ for (i in 1:length(ids)){
 #              type = c("h","l","g"), sort = "wa", zones = Zones,
 #              zoneNames = c(LETTERS[1:6]))
 
-  col1 ="steelblue3"
-  col2 = "orange" 
+  col1 ="darkblue"
+  col2 = "red" 
 #   col2 = "darkgrey"
+  
+  col1 = "darkgrey"  
+  col2 = "grey"
+
   Zones <- core.dat$Depth[unique(unlist(sh[i, 9:12]))]
 
   fname=paste0('figures/', x$dataset$dataset.meta$collection.handle, '_', ids[i] )

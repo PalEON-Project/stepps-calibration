@@ -1,6 +1,7 @@
 library(ggplot2)
 require(gridExtra)
 library(maptools)
+library(RColorBrewer)
 
 us.shp <- readShapeLines('data/map_data/us_alb.shp',
                          proj4string=CRS('+init=epsg:3175'))
@@ -281,11 +282,12 @@ plot_data_maps_binned <- function(y, centers, taxa, K, breaks, limits, suff, sav
   
   prop_dat$type = rep('PLS', nrow(prop_dat))
   
-  library(RColorBrewer)
-  
+  cols = rev(brewer.pal(length(breaks), name="BrBG"))
+#   cols = tim.colors(length(breaks))
+#   cols = gray.colors(length(breaks), start = 0.0, end = 1.0, gamma = 2.2, alpha = NULL)
   
   p <- ggplot() + geom_tile(data=prop_dat, aes(x=x, y=y, fill=factor(props))) + 
-    scale_fill_manual(values = gray.colors(length(breaks), start = 0.0, end = 1.0, gamma = 2.2, alpha = NULL), labels=breaklabels, name='Proportions') + 
+    scale_fill_manual(values = cols, labels=breaklabels, name='Proportions') + 
     coord_fixed() #+ scale_x_continuous(limits$xlims) + scale_y_continuous(limits$ylims)
   p <- add_map_albers(p, us.shp, limits, rescale)
   p <- p + facet_wrap(~taxon, ncol=6)
@@ -295,34 +297,12 @@ plot_data_maps_binned <- function(y, centers, taxa, K, breaks, limits, suff, sav
   #                  strip.text.y = element_blank())
   p <- p + theme(strip.background = element_blank())
   
-#   p <- ggplot() + geom_tile(data=prop_dat, aes(x=x, y=y, fill=factor(props))) + 
-#     scale_fill_manual(values = rev(brewer.pal(length(breaks), name="Greys")), labels=breaklabels, name='Proportions') + 
-#     coord_fixed() #+ scale_x_continuous(limits$xlims) + scale_y_continuous(limits$ylims)
-#   p <- add_map_albers(p, us.shp, limits, rescale)
-#   p <- p + facet_wrap(~taxon, ncol=6)
-#   p <- theme_clean(p) #+ theme(strip.text.y = element_text(size = rel(1.5)), strip.text.x = element_text(size = rel(1.5)))
-#   
-#   #   p <- p + theme(strip.text.x = element_blank(),
-#   #                  strip.text.y = element_blank())
-#   p <- p + theme(strip.background = element_blank())
-  
-#   p <- ggplot() + geom_tile(data=prop_dat, aes(x=x, y=y, fill=factor(props))) + 
-#     scale_fill_manual(values = tim.colors(length(breaks)), labels=breaklabels, name='Proportions') + 
-#     coord_fixed() #+ scale_x_continuous(limits$xlims) + scale_y_continuous(limits$ylims)
-#   p <- add_map_albers(p, us.shp, limits, rescale)
-#   p <- p + facet_wrap(~taxon, ncol=6)
-#   p <- theme_clean(p) #+ theme(strip.text.y = element_text(size = rel(1.5)), strip.text.x = element_text(size = rel(1.5)))
-#   
-#   #   p <- p + theme(strip.text.x = element_blank(),
-#   #                  strip.text.y = element_blank())
-#   p <- p + theme(strip.background = element_blank())
-  
   print(p)
   Sys.sleep(2)
+  
   if (save_plots){
     ggsave(file=paste(fpath, '/maps_', suff, '.pdf', sep=''), scale=1)
     ggsave(file=paste(fpath, '/maps_', suff, '.eps', sep=''), scale=1)
-    #     dev.off()
   }
   return(p)
 }
@@ -354,8 +334,12 @@ plot_pollen_maps_binned <- function(y, centers, taxa, K, breaks, limits, suff, s
                                           taxon = rep(taxa[k], N)))
   }
   
+#   cols = tim.colors(length(breaks))
+  cols = rev(brewer.pal(length(breaks), 'BrBG'))
+  
   p <- ggplot() + geom_point(data=prop_dat, aes(x=x, y=y, colour=factor(props)), shape=19) + 
-    scale_colour_manual(values = tim.colors(length(breaks)), labels=breaklabels, name='Proportions') + 
+#     scale_colour_manual(values = tim.colors(length(breaks)), labels=breaklabels, name='Proportions') + 
+    scale_colour_manual(values = cols, labels=breaklabels, name='Proportions') + 
     coord_fixed() #+ scale_x_continuous(limits$xlims) + scale_y_continuous(limits$ylims)
   p <- add_map_albers(p, us.shp, limits, rescale)
   p <- p + facet_wrap(~taxon, ncol=6)
@@ -470,6 +454,8 @@ plot_both_maps_binned <- function(y_pol,  y_veg, centers_pol, centers_veg, taxa,
     pol = prop_dat_pol[prop_dat_pol$taxon == taxa[k], ]
     
     cols = tim.colors(length(breaks))
+#     cols = rev(brewer.pal(length(breaks), 'BrBG'))
+#     cols = terrain.colors(length(breaks), alpha = 1)
     veg_facs = sort(unique(veg$props))
     pol_facs = sort(unique(pol$props))
     

@@ -70,7 +70,7 @@ pl_Ka_Kgamma = list(suff_fit  = 'cal_pl_Ka_Kgamma_EPs_ALL_v0.3',
 runs = list(pl, pl_Ka, pl_Ka_Kb, pl_Ka_Kb_Kgamma, pl_Kgamma, pl_Ka_Kgamma)
 runs = list(pl, pl_Ka, pl_Ka_Kb, pl_Ka_Kb_Kgamma, pl_Kgamma, pl_Ka_Kgamma)
 runs = list(pl_Ka_Kb, pl_Ka_Kb_Kgamma, pl_Kgamma, pl_Ka_Kgamma)
-runs = list(g)
+runs = list(pl_Ka_Kgamma)
 for (run in runs){
   source('r/cal_process.r')
 }

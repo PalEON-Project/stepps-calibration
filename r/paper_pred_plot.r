@@ -2,6 +2,8 @@ library(rstan)
 library(ggplot2)
 library(fields, quietly=TRUE)
 library(RColorBrewer)
+library(grid)
+library(reshape2)
 
 wd = getwd()
 
@@ -19,16 +21,24 @@ suff_dat = '12taxa_mid_comp_ALL_v0.2'
 save_plots = TRUE
 rescale    = 1e6
 
-#####################################################################################
+#########################################################################################################################################
 # read in data and source utils
-#####################################################################################
-
+#########################################################################################################################################
 source(file.path(path_utils, 'process_funs.r'))
 source(file.path(path_utils, 'plot_funs.r'))
 
 load(sprintf('%s/cal_data_%s.rdata', path_data, suff_dat))
 
-path_out    = 'output'
+#########################################################################################################################################
+
+limits <- get_limits(centers_veg)
+
+breaks = c(0, 0.01, 0.05, 0.10, 0.15, 0.2, 0.3, 0.4, 0.5, 0.6, 1)
+# plot_data_maps_binned(r_mean, centers=centers_pls, taxa=taxa, K, T, breaks, suff=suff4, save_plots=save_plots)
+
+plot_data_maps_binned(r, centers_veg, taxa, K, breaks, limits, suff='veg', save_plots, fpath=path_figs)
+
+#########################################################################################################################################
 
 g = list(suff_fit  = 'cal_g_ALL_v0.3', 
          kernel    = 'gaussian', 
@@ -69,10 +79,13 @@ pl_Ka_Kgamma = list(suff_fit  = 'cal_pl_Ka_Kgamma_EPs_ALL_v0.3',
 
 
 
-# runs = list(g, pl)
+runs = list(g, pl)
+type = 'base'
 # runs = list(g, g_Kpsi_Kgamma)
 # runs = list(pl, pl_Ka_Kgamma)
-runs = list(g_Kpsi_Kgamma, pl_Ka_Kgamma)
+# runs = list(g_Kpsi_Kgamma, pl_Ka_Kgamma)
+
+runs = list(g, pl, g_Kpsi_Kgamma, pl_Ka_Kgamma)
 
 taxa[which(taxa == 'OTHER.CONIFER')] = 'OTHER CON'
 taxa[which(taxa == 'OTHER.HARDWOOD')] = 'OTHER HW'
@@ -91,18 +104,18 @@ for (run in runs){
   fit   = read_stan_csv(fname)
   post  = rstan::extract(fit, permuted=FALSE, inc_warmup=FALSE)
   
-#   sum_w <- build_sumw_pot(post, K, N_pot, d_pot, run)
-#   preds_out = pollen_preds(post, N_cores, d, idx_cores, r, sum_w, run)
-#   preds     = preds_out$preds
-#   colnames(preds) = taxa
-#   
-#   preds_melt = melt(preds)
-#   preds_melt = cbind(preds_melt, pollen_props_melt[,3], r_melt[,3], rep(run$handle, nrow(preds_melt)))
-#   colnames(preds_melt) = c('core', 'taxon', 'pred', 'data', 'veg', 'run')
-#   
-# #   preds_df = data.frame(name=taxa, t(preds), handle=rep(run$handle, length(taxa)))
-#   
-#   dat = rbind(dat, preds_melt)
+  sum_w <- build_sumw_pot(post, K, N_pot, d_pot, run)
+  preds_out = pollen_preds(post, N_cores, d, idx_cores, r, sum_w, run)
+  preds     = preds_out$preds
+  colnames(preds) = taxa
+  
+  preds_melt = melt(preds)
+  preds_melt = cbind(preds_melt, pollen_props_melt[,3], r_melt[,3], rep(run$handle, nrow(preds_melt)))
+  colnames(preds_melt) = c('core', 'taxon', 'pred', 'data', 'veg', 'run')
+  
+#   preds_df = data.frame(name=taxa, t(preds), handle=rep(run$handle, length(taxa)))
+  
+  pred_dat = rbind(pred_dat, preds_melt)
 
 
   phi_out = phi_scale_veg(post, N_cores, r, idx_cores)
@@ -114,36 +127,21 @@ for (run in runs){
   phi_scaled_dat = rbind(phi_scaled_dat, phi_out_melt)
 }
 
-p <- ggplot(dat) + geom_point(data=dat, mapping=aes(x=veg, y=data, shape=3), colour='red') 
-p <- p + scale_shape_identity()
-p <- p + geom_point(data=dat, mapping=aes(x=pred, y=data, colour=run, shape=16), alpha=0.6) + scale_colour_manual(values=c("black", "deepskyblue2"))
-# p <- p + scale_alpha_manual(values=c(0,0.5))
-p <- p + geom_abline(intercept=0, slope=1, colour="grey56", linetype="dashed")
-p <- p + xlab("veg or predicted pollen") + ylab("raw pollen")
-p <- p + xlim(0,1) + ylim(0,1)
-p <- p + facet_wrap(~taxon)
-p <- p + theme_bw()
-p <- p + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
-print(p)
+types = c('base', 'flexible')
 
-ggsave(p, filename=sprintf('%s/%s/%s.pdf', wd, path_figs, 'pollen_preds_paper_pl'), width=12, scale=1)
-
-
-# plot the phi scaled veg versus 
-p <- ggplot(phi_scaled_dat) + geom_point(data=phi_scaled_dat, mapping=aes(x=veg, y=data, shape=3), colour='red') 
-p <- p + scale_shape_identity()
-p <- p + geom_point(data=phi_scaled_dat, mapping=aes(x=phi_pred, y=data, colour=run, shape=16), alpha=0.6) + scale_colour_manual(values=c("black", "deepskyblue2"))
-# p <- p + scale_alpha_manual(values=c(0,0.5))
-p <- p + geom_abline(intercept=0, slope=1, colour="grey56", linetype="dashed")
-p <- p + xlab("veg or predicted pollen") + ylab("raw pollen")
-p <- p + xlim(0,1) + ylim(0,1)
-p <- p + facet_wrap(~taxon)
-p <- p + theme_bw()
-p <- p + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
-print(p)
-
-ggsave(p, filename=sprintf('%s/%s/%s.pdf', wd, path_figs, 'pollen_phi_scaled_paper_flexible'), width=12, scale=1)
-
+for (type in types) {
+  
+  if (type == 'base') {
+    dat = pred_dat[which(pred_dat$run %in% c('pl')),]
+    phi_scaled = phi_scaled_dat[which(phi_scaled_dat$run %in% c('pl')),]
+  } else if (type == 'flexible') {
+    dat = pred_dat[which(pred_dat$run %in% c('pl_Ka_Kgamma')),]
+    phi_scaled = phi_scaled_dat[which(phi_scaled_dat$run %in% c('pl_Ka_Kgamma')),]
+  }
+  
+  plot_pollen_preds_paper(dat, path_figs, type)
+  plot_pollen_phi_scaled_paper(phi_scaled, path_figs, type) 
+}
 
 # runs = list(run4)
 # 
@@ -213,14 +211,18 @@ for (run in runs){
   par_lb    = apply(par_vals, 2, function(x) quantile(x, probs=0.025))
   par_ub    = apply(par_vals, 2, function(x) quantile(x, probs=0.975))
   
-  par_stats = data.frame(name=taxa, mu=par_mean, lb=par_lb, ub=par_ub, handle=rep(run$handle, length(taxa)))
+  par_stats = data.frame(name=taxa, mu=par_mean, lb=par_lb, ub=par_ub, Model=rep(run$handle, length(taxa)))
   
   dat = rbind(dat, par_stats)
 }
 
-p <- ggplot(data=dat, aes(x=reorder(name, mu), y=mu, group=handle, colour=handle)) + 
+
+greys = brewer.pal(10, "Greys")[c(4,5,7,9)]
+
+p <- ggplot(data=dat, aes(x=reorder(name, mu), y=mu, group=Model, colour=Model)) + 
   geom_point(size=4, position=position_dodge(width=0.5)) + 
   geom_errorbar(aes(ymin=lb, ymax=ub), width=.2, position=position_dodge(width=0.5)) + 
+  scale_colour_manual(values=greys) +
   xlab("Taxon") + ylab(parse(text='phi')) +
   coord_flip() + theme_bw() + theme(axis.title.x=element_text(size=20), 
                                     axis.title.y=element_text(size=20), 
@@ -229,7 +231,7 @@ p <- ggplot(data=dat, aes(x=reorder(name, mu), y=mu, group=handle, colour=handle
 
 print(p)
 
-ggsave(p, filename=sprintf('%s/%s/%s.pdf', wd, path_figs, 'phi'), width=12, height=12)
+ggsave(p, filename=sprintf('%s/%s/%s.pdf', wd, path_figs, 'phi'), width=12, height=10)
 
 # gamma plot
 dat = data.frame(matrix(0, nrow=0, ncol=3))
