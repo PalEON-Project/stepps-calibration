@@ -332,7 +332,8 @@ record was required to include several pollen samples within the last
 to this project, were contributed by independent researchers
 \citep{kujawa2015}. The new records included 9 longer records and 48
 records for which data was only available from the core top and
-pre-settlement assemblages.
+pre-settlement assemblages, hereafter referred to as before-after
+records.
 
 Classifying pollen grains based on morphological features and relating
 them to plant taxa is labour intensive and highly skilled as a result
@@ -350,18 +351,30 @@ using a translation table based on the table used in \url{neotoma}
 \citep{goring}, which is reported as supplemental material.
 
 \subsection{Identifying the EuroAmerican settlement horizon in pollen records via expert elicitation}
+
+Age-depth modelling of sediment requires assumptions about
+depositional processes that can be difficult to quantify, resulting in
+potentially uncertain age-depth predictions. Instead, we rely on a
+panel of experts to interpret patterns in the pollen count data in
+order to identify representative pre-settlement samples at each of the
+185 fossil pollen sites for which we have count time series.
+
 Widespread land clearance during European settlement provided habitat
-for many non-arboreal colonizers, resulting in increases in
-non-arboreal taxa in pollen time series \citep{mcandrews1988human}. In
-the Upper Midwest, significant increases in ragweed
-(\textit{Ambrosia}), docks and sorrels (\textit{Rumex}), and grasses
-(\textit{Poaceae}) are typically coincident with this settlement
-horizon. In principle, it is possible to identify the pre-settlement
-sample - the sample that falls immediately before these increases in
-agricultural indicator species. For many records the rises are sharp
-and determining the pre-settlement sample is easy, while other records
-are more ambiguous and placement relies on subjective judgment (see
-Figure~\ref{fig:elicit}).
+for many ruderal plants, resulting in increases in non-arboreal taxa
+in pollen time series \citep{mcandrews1988human}. In the Upper
+Midwest, significant increases in ragweed (\textit{Ambrosia}), docks
+and sorrels (\textit{Rumex}), and grasses (\textit{Poaceae}) typically
+mark this settlement horizon. Here we use expert elicitation to
+identify the representative pre-settlement sample - the sample that
+falls immediately before these increases in agricultural indicator
+species. All expert elicitation relies on judgement. Additional
+uncertainty in pre-settlement sample identification varies widely
+among sites as a result of the chronological density of pollen
+samples, time-averaging of sediments, the rapiditay of forest
+clearance and landscape transformation, and the pollen representation
+of dominant trees, which can dampen or amplify the \textit{Ambrosia}
+signal. At some sites, the settlement horizon is unambiguous, while at
+others the transition is less clear (see Figure~\ref{fig:elicit}).
 
 For this study, in the interest of reducing uncertainty, we want to:
 1) identify pre-settlement samples using consistent methodology, and
@@ -393,7 +406,8 @@ the landscape - the composition and abundance of trees on the
 landscape determines (in part) the composition and abundance of pollen
 that is deposited in the sediment. Determining how much pollen the
 surrounding vegetation contributes is a complex function of forest
-characteristics, climate (including wind), grain size and morphology,
+characteristics (e.g. composition, structure, patchiness, spatial
+stationarity) , climate (including wind), grain size and morphology,
 topography, and proximity of the vegetation to a deposition basin.
 
 We work on a grid defined by the resolution of the gridded PLS data,
@@ -410,12 +424,13 @@ relative contributions are weighted using a dispersal kernel, which
 determines how likely it is for pollen to travel from one grid cell to
 another. Dispersal kernels are typically isometric, meaning that they
 depend only on the distance of the tree to the pond, and not the
-absolute position or direction. In reality, dispersal is not
-isometric, predominantly due to prevailing wind direction, but also as
-a result of other asymmetries in surface roughness and landscape
-structure. However, isometric dispersal kernels are are a reasonable
-and widely used approximation, because turbulent atmospheric mixing
-below the boundary layer tends to smooth out anisotropies.
+absolute position or direction. In reality, dispersal may not be
+isometric, owing to prevailing wind directions during the
+pollen-dispersal seasons, regional topography, surface roughness, and
+vegetation patchiness on the landscape. However, isometric dispersal
+kernels are a reasonable and widely used approximation, because
+turbulent atmospheric mixing below the boundary layer tends to smooth
+out anisotropies.
 
 Here we test two dispersal kernels: the Gaussian and the Inverse
 power-law. The Gaussian kernel is often used as a reference against
@@ -459,10 +474,10 @@ dispersal spatial processes are assumed to be smooth. Spatial cells
 are indexed by $s=1,\ldots,S$, where $S=8013$.
 
 Pollen produced by vegetation within each grid cell can be deposited
-locally within that same grid cell, or can be dispersed into the
-neighborhood around that grid cell. For a focal grid cell
-$s_i$, the pollen produced by taxon $p$ within that cell that remains
-local is described by
+within that grid cell, or can be dispersed into the neighborhood
+around that grid cell. For a focal grid cell $s_i$, the pollen
+produced by taxon $p$ within that cell that remains local is described
+by
 
 \begin{align}
 \gamma \phi_p r_p(s_i)
@@ -592,16 +607,17 @@ the parameter $\gamma$ vary by taxon. In this base variant, a single
 dispersal kernel defines how all pollen disperses, and a single
 parameter determines what proportions of total pollen of any given
 taxon remains local. We know that in reality pollen dispersal varies
-with taxon, because pollen grain morphology, size, weight, and
-preservability are all highly variable among plant taxa. Here, we let
-the data inform us as to whether there is sufficient evidence to
-support taxon-specific dispersal kernels and localness parameters
-through the use of exchangeable priors ?. So, we define the same prior
-distribution on each of the $K$ parameters in question, where the prior
-distribution is defined by shared hyperparameters. In the case where
-the variance hyperparameter is estimated to be relatively close to
-zero, we can conclude that there is not sufficient evidence to suggest
-that the parameter of interest varies by taxon.
+with taxon, because pollen-grain morphology, size, and weight, and
+release mechanism all vary systematically among plant taxa
+\citep{jackson1999pollen}. Here, we let the data inform us as to
+whether there is sufficient evidence to support taxon-specific
+dispersal kernels and localness parameters through the use of
+exchangeable priors ?. So, we define the same prior distribution on
+each of the $K$ parameters in question, where the prior distribution
+is defined by shared hyperparameters. In the case where the variance
+hyperparameter is estimated to be relatively close to zero, we can
+conclude that there is not sufficient evidence to suggest that the
+parameter of interest varies by taxon.
 
 For example, in the Gaussian kernel case we would like to know
 if there is enough support to warrant taxon specific values of
@@ -701,18 +717,18 @@ Based on these results, we were subsequently faced with the challenge
 of establishing site suitability criteria to determine which sites to
 include in the calibration data set. Ideally, the now quantified
 pre-settlement sample uncertainty would be included into the modelling
-framework, but this option was rejected for now in favor of simplicity
-of the statistical model. Instead, we set rules for filtering suitable
+framework, but this option was rejected in favor of simplicity of the
+statistical model. Accordingly, we set rules for filtering suitable
 sites and assigning pre-settlement depths on expert determinations.
 
-Based on these results, we were subsequently faced with the challenge
-of establishing site suitability criteria to determine which sites to
-include in the calibration data set. Ideally, the now quantified
-pre-settlement sample uncertainty would be included into the modelling
-framework. Although this is surely possible, it would increase the
-complexity of the statistical model. For the sake of simplicity, we
-filter suitable sites and assign pre-settlement depths in a systematic
-way based on expert determinations.
+%% Based on these results, we faced the challenge of establishing site
+%% suitability criteria to determine which sites to include in the
+%% calibration data set. Ideally, the now quantified pre-settlement
+%% sample uncertainty would be included into the modelling
+%% framework. Although this is surely possible, it would increase the
+%% complexity of the statistical model. For the sake of simplicity, we
+%% filter suitable sites and assign pre-settlement depths in a systematic
+%% way based on expert determinations.
 
 % However, this elicitation exercise varies from those that
 % are typically conducted to construct priors; here we are uncertain
@@ -734,6 +750,44 @@ from the expert-identified settlement horizon if discrepancies were
 >500 years All 19 unsuitable sites were excluded from further
 analysis.
 
+We also considered the representativeness of the pollen records. To
+reconstruct vegetation at a regional scale, we need pollen records
+that represent composition representative of what we would find on a
+larger spatial scale. However, it is likely that some sites were
+sampled as a result of their (relatively speaking) unusual
+compositional makeup. We identified two anomalous sites. The first is
+Ocheda Lake, a large but shallow glacial kettle lake in Southwestern
+Minnesota. The pollen diagrams indicate a relative spike in deposited
+\textit{Acer rubrum} pollen in the sample identified as being
+representative of pre-settlement composition. This is likely a
+misidentification - \text{Acer rubrum} is not found in Southwestern
+Minnesota. It is possible that this pollen comes from \textit{Acer
+  negra}, however this species is also uncommon, occuring only along
+riverbeds. Assuming that this pollen is indeed from the genus
+\textit{Acer}, we assume that the high count is a result of an
+\textit{Acer} falling into the sample. As such, at this site we set
+the \textit{Acer} pollen count to zero. The second anomalous site is
+Tamarack Creek, a Tamarack bog situated in an unglaciated wetland in
+what is know as the Driftless Area of western Wisconsin. This site is
+characterized by unusually high Tamarack pollen counts for the top 80
+cm of sediment. In particular, the sample classified as pre-settlement
+is composed of 40 \% Tamarack, while all other fossil pollen sites
+contain a maximum of 1 \% Tamarack. Tamarack bogs are not common in
+this region, so we set the \textit{Larix} count to zero to remove the
+local signal, and use the remaining counts to represent copmosition
+from beyond the bog.
+
+%% There are two anomalous sites for which the model is
+%% unable to adequately account for the processes leading to the
+%% (relatively speaking) unusual compositional makeup of the deposited
+%% pollen. The first is Ocheda Lake, a large but shallow glacial kettle
+%% lake in Southwestern Minnesota. The pollen diagrams indicate a
+%% relative spike in deposited Maple pollen in the pre-settlement
+%% sample. The second is Tamarack Creek, a site situated in a wetland
+%% with high Tamarack pollen counts for the top 80 cm of sediment. At
+%% this site, the calibration sample is composed of 40 \% Tamarack, while
+%% all other fossil pollen sites contain a maximum of 1 \% Tamarack.
+
 After completion of the elicitation exercise, a follow-up examination
 of the stratigraphic data revealed several cores with core tops with
 dates much older than expected - typically the date of a true core top
@@ -743,8 +797,8 @@ included in our analysis were missing core tops. For both Lake Mary
 and Green Lake, we determined that the core tops pre-date settlement,
 and these sites were therefore were discarded \citep{webb1971late,
   lawrenz1975}. A third site, Lake Kotiranta, had a core top
-corresponding to the pre-settlement sample, and this sample was
-retained for inclusion in the calibration data set
+previously identified as a representative pre-settlement sample, and
+this sample was retained for inclusion in the calibration data set
 \citep{wright1969}. Interestingly, for each of these cores, 1-3
 experts identified a pre-settlement sample (although to be fair, they
 made this judgment based solely on the stratigraphic diagram and no
@@ -761,17 +815,17 @@ pre-settlement (deeper) than one that represented post-disturbance
 times (more shallow), we ordered the sample depths from deepest to
 shallowest, and selected the second in this list (typically the second
 deepest, although sometimes the two largest sample depths were equal).
-The additional 48 short cores from the Calcote dataset were not
-candidates for the elicitation exercise because they had only a core
-top and a pre-settlement sample recorded. The decision to include this
-additional data in the calibration data set was debated - the
-pre-settlement samples for these cores were identified using different
-methodology (and analysts) than the remaining sites. In the end, we
-opted to include these samples as part of the calibration data set,
-based on our confidence in the data set and analysts and the
-recognition that including these sites would result in a substantive
-increase in sample size. In total we had 213 pollen samples in the
-Upper Midwest settlement-era calibration data set.
+The additional 48 before-after records were not candidates for the
+elicitation exercise (they consist of only a core top and
+pre-settlement sample). The decision to include this additional data
+in the calibration data set was debated - the pre-settlement samples
+for these cores were identified using different methodology (and
+analysts) than the remaining sites. In the end, we opted to include
+these samples as part of the calibration data set, based on our
+confidence in the data set and analysts and the recognition that
+including these sites would result in a substantive increase in sample
+size. In total we had 213 pollen samples in the Upper Midwest
+settlement-era calibration data set.
 
 \subsection{Exploratory data analysis}
 
@@ -894,17 +948,6 @@ is not the case for the variable Gaussian and Power Law models. This
 suggests that the relative contribution of local versus non-local
 hemlock pollen is estimated to be less than the true value,
 i.e. $\gamma$ is too small.
-
-There are two anomalous sites for which the model is unable to
-adequately account for the processes leading to the (relatively
-speaking) unusual compositional makeup of the deposited pollen. The
-first is Ocheda Lake, a large but shallow glacial kettle lake in
-Southwestern Minnesota. The pollen diagrams indicate a relative spike
-in deposited Maple pollen in the pre-settlement sample. The second is
-Tamarack Creek, a site situated in a wetland with high Tamarack pollen
-counts for the top 80 cm of sediment. At this site, the calibration
-sample is composed of 40 \% Tamarack, while all other fossil pollen
-sites contain a maximum of 1 \% Tamarack.
 
 From each model we obtain taxon-specific estimates for the ratio of
 local to non-local pollen $\phi$ (Figure~\ref{fig:phi}). If these
