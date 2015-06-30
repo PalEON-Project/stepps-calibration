@@ -545,13 +545,15 @@ pollen plus the pollen dispersed to $s(i)$ from all other grid cells
 in the domain. Therefore the pollen from taxon $p$ arriving at pond
 $i$, referred to as $r_{i,p}^{\text{pol}}$, is given by
 \begin{align}
-r_{i,p}^{\text{pol}} = \gamma \phi_p r_p\bigl(s(i)\bigr) + \frac{1}{C} (1-\gamma) \phi_p \sum_{s_k \neq s(i) } r_p(s_k) w\bigl(s(i), s_k\bigr),
+r_{i,p}^{\text{pol}} = \gamma \phi_p r_p\bigl(s(i)\bigr) + \frac{1}{\Omega} (1-\gamma) \phi_p \sum_{s_k \neq s(i) } r_p(s_k) w\bigl(s(i), s_k\bigr),
 \label{eq:arriving}
 \end{align}
-where $C$ is a normalizing constant equal to the sum of the weights of
-all the cells to which pollen can be dispersed, defined be a
-rectangular region that covers and extends beyond the limits of the
-domain.
+where $\Omega$ is a normalizing scalar equal to the sum of the weights
+of all the cells to which pollen can be dispersed, defined to be a
+circle of radius 700 km. Note that $\Omega$ depends on the dispersal
+kernel, and therefore varies as a function of dispersal kernel
+parameters. However, given a set of parameter estimates, $\Omega$ is
+constant across the domain.
 
 Finally, we need to relate the arriving pollen $r_{i,p}^{\text{pol}}$
 quantified in Equation~\ref{eq:arriving} to the pollen count data. To
@@ -576,7 +578,7 @@ and $\bm{r}_i^{\text{pol}} = (r_{i,1}^{\text{pol}}, \ldots,
 r_{i,K}^{\text{pol}})$.  The precision $\alpha_i$ is equal to the sum
 of (\ref{eq:arriving}) over all taxa
 \begin{align}
-\alpha_i = \sum_{p=1}^K \Bigl[\gamma \phi_p r_p\bigl(s(i)\bigr) + \frac{1}{C} (1-\gamma) \phi_p \sum_{s_k \neq s(i) } r_p(s_k) w\bigl(s(i), s_k\bigr)\Bigr].
+\alpha_i = \sum_{p=1}^K \Bigl[\gamma \phi_p r_p\bigl(s(i)\bigr) + \frac{1}{\Omega} (1-\gamma) \phi_p \sum_{s_k \neq s(i) } r_p(s_k) w\bigl(s(i), s_k\bigr)\Bigr].
 \label{eq:alpha}
 \end{align}
 The precision parameter $\alpha_i$ is also affected by the proximity
@@ -598,7 +600,7 @@ intervals. We define the priors $\phi_k \sim \text{uniform}(0, 300)$ for
 $k=1, \ldots, K$ and $\gamma \sim \text{uniform}(0,1)$. In the case of the
 Gaussian kernel we define the prior $\psi ~ \text{uniform}(0, 2)$, while in
 the power law kernel case we have $a ~ \text{uniform}(0, 500)$ and
-$b~\text{uniform}(2, 100)$.
+$b~\text{uniform}(2, 6)$.
 
 \subsection{Model variants}
 
@@ -612,12 +614,12 @@ release mechanism all vary systematically among plant taxa
 \citep{jackson1999pollen}. Here, we let the data inform us as to
 whether there is sufficient evidence to support taxon-specific
 dispersal kernels and localness parameters through the use of
-exchangeable priors ?. So, we define the same prior distribution on
-each of the $K$ parameters in question, where the prior distribution
-is defined by shared hyperparameters. In the case where the variance
-hyperparameter is estimated to be relatively close to zero, we can
-conclude that there is not sufficient evidence to suggest that the
-parameter of interest varies by taxon.
+exchangeable priors \citep{XXX}. So, we define the same prior
+distribution on each of the $K$ parameters in question, where the
+prior distribution is defined by shared hyperparameters. In the case
+where the variance hyperparameter is estimated to be relatively close
+to zero, we can conclude that there is not sufficient evidence to
+suggest that the parameter of interest varies by taxon.
 
 For example, in the Gaussian kernel case we would like to know
 if there is enough support to warrant taxon specific values of
@@ -789,21 +791,39 @@ from beyond the bog.
 %% all other fossil pollen sites contain a maximum of 1 \% Tamarack.
 
 After completion of the elicitation exercise, a follow-up examination
-of the stratigraphic data revealed several cores with core tops with
-dates much older than expected - typically the date of a true core top
-corresponds with the year of sampling (with some margin of
-error). Further investigation uncovered that three of the cores
-included in our analysis were missing core tops. For both Lake Mary
-and Green Lake, we determined that the core tops pre-date settlement,
-and these sites were therefore were discarded \citep{webb1971late,
-  lawrenz1975}. A third site, Lake Kotiranta, had a core top
-previously identified as a representative pre-settlement sample, and
-this sample was retained for inclusion in the calibration data set
-\citep{wright1969}. Interestingly, for each of these cores, 1-3
-experts identified a pre-settlement sample (although to be fair, they
-made this judgment based solely on the stratigraphic diagram and no
-information about site characteristics, and likely assumed that the
+of the stratigraphic data revealed several cores with top samples that
+were older (and deeper) than expected. Typically the date of a true
+core top corresponds with the year of sampling (with some margin of
+error). Further investigation uncovered that five of the cores
+included in our analysis were missing core tops. For Lake Mary, Green
+Lake, Chippewa Bog, and Ryerse Lake, we determined that the core tops
+pre-date settlement, and these sites were therefore discarded
+\citep{webb1971late, lawrenz1975}. A third site, Lake Kotiranta, had a
+core top previously identified as a representative pre-settlement
+sample, and this sample was retained for inclusion in the calibration
+data set \citep{wright1969}. Interestingly, for each of these cores,
+1-3 experts identified a pre-settlement sample (although to be fair,
+they made this judgment based solely on the stratigraphic diagram and
+no information about site characteristics, and likely assumed that the
 uppermost sample was in fact a surface sample).
+
+
+% After completion of the elicitation exercise, a follow-up examination
+% of the stratigraphic data revealed several cores with core tops with
+% dates much older than expected - typically the date of a true core top
+% corresponds with the year of sampling (with some margin of
+% error). Further investigation uncovered that three of the cores
+% included in our analysis were missing core tops. For both Lake Mary
+% and Green Lake, we determined that the core tops pre-date settlement,
+% and these sites were therefore were discarded \citep{webb1971late,
+%   lawrenz1975}. A third site, Lake Kotiranta, had a core top
+% previously identified as a representative pre-settlement sample, and
+% this sample was retained for inclusion in the calibration data set
+% \citep{wright1969}. Interestingly, for each of these cores, 1-3
+% experts identified a pre-settlement sample (although to be fair, they
+% made this judgment based solely on the stratigraphic diagram and no
+% information about site characteristics, and likely assumed that the
+% uppermost sample was in fact a surface sample).
 
 After the suitability screening, we were left with 165 long cores. For
 many cores, there was no consensus, which left us to determine how to
@@ -914,40 +934,40 @@ composition provides little indication about the relative abundance of
 pine pollen.
 
 These relationships are complicated in part because of differential
-pollen production, which the calibration modelaccounts for by the
+pollen production, which the calibration model accounts for by the
 taxon-specific scaling parameter $\phi_k$. After scaling the local
-vegetation in a cell by $\phi_k$, we can again compare the raw pollen
-proportions with these pollen predictions
-(Figure~\ref{fig:focal_scaled}; black and blue dots). Here we show
-predictions only the variable gaussian and power law models, but note
-that the results are similar for the base models. Scaling by $\phi$
-does improve our pollen estimates; for many taxa, the black points
-have shifted towards the 1:1 line. This is especially true for maple,
-tamarack, and other conifer, suggesting that these pollen-vegetation
-relationships are heavily influenced by local pollen sources. However,
-for most of the remaining taxa the improvement is minimal, indicating
-that simply scaling the local vegetation proportions is not sufficient
-to predict deposited pollen.
+vegetation in a cell by $\phi_k$, we can compare the raw pollen
+proportions with the phi-scaled vegetation
+(Figure~\ref{fig:focal_scaled}; black dots). Here we show the scaled
+vegetation for the variable Power law model, but note that the results
+are similar for the variable Gaussian as well as the base
+models. Scaling by $\phi$ does improve our pollen estimates; for many
+taxa, the black points have shifted towards the 1:1 line. This is
+especially true for maple, tamarack, and other conifer, suggesting
+that these pollen-vegetation relationships are heavily influenced by
+local pollen sources. However, for most of the remaining taxa the
+improvement is minimal, indicating that simply scaling the local
+vegetation proportions is not sufficient to predict deposited pollen.
 
-In Figure~\ref{fig:preds}, we again plot the raw pollen proportions
-against both the vegetation (red crosses) and predicted pollen for the
-variable models (Gaussian: black dots; power law: blue dots), but in
-this case the predicted pollen is based on the local plus non-local
-predictions obtained from the full calibration model. Now that
-non-local dispersal has been accounted for, the raw versus predicted
-pollen points fall more closely along the 1:1 line. This indicates
-that in our domain non-local dispersal processes account for much of
-the pollen that arrive at any given location. For most taxa, the
-improvement that we gain by using more flexible models versus the base
-models is not qualitatively obvious. However, for Hemlock, there is an
-obvious improvement in our ability to predict sediment pollen with the
-more flexible models. Both base models underpredict Hemlock pollen at
-sites where there is relatively high proportion of Hemlock (although
-Hemlock pollen never exceeds 28\% at any site in our domain), but this
-is not the case for the variable Gaussian and Power Law models. This
-suggests that the relative contribution of local versus non-local
-hemlock pollen is estimated to be less than the true value,
-i.e. $\gamma$ is too small.
+In Figure~\ref{fig:preds}, we plot the raw pollen proportions against
+both the vegetation (red crosses) and predicted pollen for the
+variable Power law model (black dots). In this case the predicted
+pollen is based on the local plus non-local predictions obtained from
+the full calibration model. Now that non-local dispersal has been
+accounted for, the raw versus predicted pollen points fall more
+closely along the 1:1 line. This indicates that in our domain
+non-local dispersal processes account for much of the pollen that
+arrive at any given location. For most taxa, the improvement that we
+gain by using more flexible models versus the base models is not
+qualitatively obvious. However, for Hemlock, there is an obvious
+improvement in our ability to predict sediment pollen with the more
+flexible models. Both base models underpredict Hemlock pollen at sites
+where there is relatively high proportion of Hemlock (although Hemlock
+pollen never exceeds 28\% at any site in our domain), but this is not
+the case for the variable Gaussian and Power Law models. This suggests
+that the relative contribution of local versus non-local hemlock
+pollen is estimated to be less than the true value, i.e. $\gamma$ is
+too small.
 
 From each model we obtain taxon-specific estimates for the ratio of
 local to non-local pollen $\phi$ (Figure~\ref{fig:phi}). If these
