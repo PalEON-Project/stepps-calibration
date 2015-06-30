@@ -317,6 +317,7 @@ pollen_preds_distance <- function(post, N_cores, d, idx_cores, r, C, radius){
 }
 
 #predicted pollen based on weighted neighborhoods using estimated pars
+# dispersal_decay(post, d_pot, sum_w, radius/rescale, run, taxa)
 dispersal_decay <- function(post, dmat, sum_w, radius, run, taxa){
   
   kernel = run$kernel
@@ -353,7 +354,7 @@ dispersal_decay <- function(post, dmat, sum_w, radius, run, taxa){
     }
     
     for (k in 1:K){
-      w[k,] = exp(-(dmat*dmat)/(psi[k]*psi[k]))
+      w[k,] = dmat[,2] * exp(-(dmat[,1] * dmat[,1])/(psi[k] * psi[k]))
     }
   } else if (kernel=='pl'){
     if (one_a){
@@ -367,7 +368,7 @@ dispersal_decay <- function(post, dmat, sum_w, radius, run, taxa){
       b = colMeans(post[,1,which(par_names == 'b')])
     }
     for (k in 1:K){
-        w[k,] = (b[k]-1) * (b[k]-2) / (2 * pi * a[k]  * a[k]) * (1 + dmat / a[k]) ^ (-b[k])
+        w[k,] = dmat[,2] * (b[k]-1) * (b[k]-2) / (2 * pi * a[k]  * a[k]) * (1 + dmat[,1] / a[k]) ^ (-b[k])
     }
   }
   

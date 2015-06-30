@@ -7,30 +7,34 @@ library(reshape2)
 
 wd = getwd()
 
-#####################################################################################
+###############################################################################################################
 # user pars
-#####################################################################################
+###############################################################################################################
 
 path_utils = 'r/utils'
 path_data  = 'r/dump'
 path_out   = 'output'
 path_figs  = 'figures'
 
-suff_dat = '12taxa_mid_comp_ALL_v0.2'
+suff_dat = '12taxa_mid_comp_ALL_v0.3'
 
 save_plots = TRUE
 rescale    = 1e6
 
-#########################################################################################################################################
+###############################################################################################################
 # read in data and source utils
-#########################################################################################################################################
+###############################################################################################################
+
 source(file.path(path_utils, 'process_funs.r'))
 source(file.path(path_utils, 'plot_funs.r'))
+source(file.path(path_utils, 'paper_plot_funs.r'))
+source(file.path(wd, 'r', 'runs.r'))
 
 load(sprintf('%s/cal_data_%s.rdata', path_data, suff_dat))
 
-#########################################################################################################################################
-
+###############################################################################################################
+# plot the modelled composition
+###############################################################################################################
 limits <- get_limits(centers_veg)
 
 breaks = c(0, 0.01, 0.05, 0.10, 0.15, 0.2, 0.3, 0.4, 0.5, 0.6, 1)
@@ -38,63 +42,17 @@ breaks = c(0, 0.01, 0.05, 0.10, 0.15, 0.2, 0.3, 0.4, 0.5, 0.6, 1)
 
 plot_data_maps_binned(r, centers_veg, taxa, K, breaks, limits, suff='veg', save_plots, fpath=path_figs)
 
-#########################################################################################################################################
-
-g = list(suff_fit  = 'cal_g_ALL_v0.3', 
-         kernel    = 'gaussian', 
-         one_psi   = TRUE, 
-         one_gamma = TRUE, 
-         EPs       = FALSE,
-         handle    = 'g')
-pl = list(suff_fit  = 'cal_pl_ALL_v0.3', 
-          kernel    = 'pl', 
-          one_a     = TRUE, 
-          one_b     = TRUE,
-          one_gamma = TRUE, 
-          EPs       = FALSE,
-          handle    = 'pl')
-
-g_Kpsi_Kgamma = list(suff_fit  = 'cal_g_Kpsi_Kgamma_EPs_ALL_v0.3', 
-                     kernel    = 'gaussian', 
-                     one_psi   = FALSE, 
-                     one_gamma = FALSE, 
-                     EPs       = TRUE,
-                     handle    = 'g_Kpsi_Kgamma')
-pl_Ka_Kgamma = list(suff_fit  = 'cal_pl_Ka_Kgamma_EPs_ALL_v0.3', 
-                    kernel    = 'pl', 
-                    one_a     = FALSE, 
-                    one_b     = TRUE,
-                    one_gamma = FALSE, 
-                    EPs       = TRUE,
-                    handle    = 'pl_Ka_Kgamma')
-
-# pl_Ka_Kgamma = list(suff_fit  = 'cal_pl_Ka_Kgamma_EPs_ALL_v0.3', 
-#                     suff_dat = '12taxa_mid_comp_ALL_v0.2',
-#                     kernel    = 'pl', 
-#                     one_a     = FALSE,
-#                     one_b     = TRUE,
-#                     one_gamma = FALSE, 
-#                     EPs       = TRUE,
-#                     handle    = 'pl_Ka_Kgamma')
-
-
-
-runs = list(g, pl)
-type = 'base'
-# runs = list(g, g_Kpsi_Kgamma)
-# runs = list(pl, pl_Ka_Kgamma)
-# runs = list(g_Kpsi_Kgamma, pl_Ka_Kgamma)
-
-runs = list(g, pl, g_Kpsi_Kgamma, pl_Ka_Kgamma)
+###############################################################################################################
+###############################################################################################################
 
 taxa[which(taxa == 'OTHER.CONIFER')] = 'OTHER CON'
 taxa[which(taxa == 'OTHER.HARDWOOD')] = 'OTHER HW'
 
-pollen_props = compute_props(y, taxa)
+pollen_props      = compute_props(y, taxa)
 pollen_props_melt = melt(compute_props(y, taxa))
 
 colnames(r) = taxa
-r_melt = melt(r[idx_cores, ])
+r_melt      = melt(r[idx_cores, ])
 
 phi_scaled_dat = data.frame(matrix(0, nrow=0, ncol=6))
 pred_dat       = data.frame(matrix(0, nrow=0, ncol=6))
@@ -113,10 +71,7 @@ for (run in runs){
   preds_melt = cbind(preds_melt, pollen_props_melt[,3], r_melt[,3], rep(run$handle, nrow(preds_melt)))
   colnames(preds_melt) = c('core', 'taxon', 'pred', 'data', 'veg', 'run')
   
-#   preds_df = data.frame(name=taxa, t(preds), handle=rep(run$handle, length(taxa)))
-  
   pred_dat = rbind(pred_dat, preds_melt)
-
 
   phi_out = phi_scale_veg(post, N_cores, r, idx_cores)
   colnames(phi_out) = taxa
@@ -127,31 +82,15 @@ for (run in runs){
   phi_scaled_dat = rbind(phi_scaled_dat, phi_out_melt)
 }
 
-types = c('base', 'flexible')
+handles = as.vector(unique(pred_dat$run))
+for (run in handles) {
 
-for (type in types) {
+  dat        = pred_dat[which(pred_dat$run %in% run),]
+  phi_scaled = phi_scaled_dat[which(phi_scaled_dat$run %in% run),]
   
-  if (type == 'base') {
-    dat = pred_dat[which(pred_dat$run %in% c('pl')),]
-    phi_scaled = phi_scaled_dat[which(phi_scaled_dat$run %in% c('pl')),]
-  } else if (type == 'flexible') {
-    dat = pred_dat[which(pred_dat$run %in% c('pl_Ka_Kgamma')),]
-    phi_scaled = phi_scaled_dat[which(phi_scaled_dat$run %in% c('pl_Ka_Kgamma')),]
-  }
-  
-  plot_pollen_preds_paper(dat, path_figs, type)
-  plot_pollen_phi_scaled_paper(phi_scaled, path_figs, type) 
+  plot_pollen_preds_paper(dat, path_figs, run)
+  plot_pollen_phi_scaled_paper(phi_scaled, path_figs, run) 
 }
-
-# runs = list(run4)
-# 
-# fname = sprintf('%s/%s.csv', path_out, run5$suff_fit)
-# fit_pl  = read_stan_csv(fname)
-# post_pl = rstan::extract(fit_pl, permuted=FALSE, inc_warmup=FALSE)
-# 
-# fname = sprintf('%s/%s.csv', path_out, run1$suff_fit)
-# fit_g  = read_stan_csv(fname)
-# post_g = rstan::extract(fit_g, permuted=FALSE, inc_warmup=FALSE)
 
 ############################################################################################################
 # dispersal cdf
@@ -159,11 +98,21 @@ for (type in types) {
 
 radius = seq(8000,1000000, by=4000)
 
-x_pot = seq(-528000, 528000, by=8000)
-y_pot = seq(-416000, 416000, by=8000)
-coord_pot = expand.grid(x_pot, y_pot)
+# x_pot = seq(-528000, 528000, by=8000)
+# y_pot = seq(-416000, 416000, by=8000)
+# coord_pot = expand.grid(x_pot, y_pot)
+# 
+# dmat = t(rdist(matrix(c(0,0), ncol=2), as.matrix(coord_pot, ncol=2))/rescale)
 
-dmat = t(rdist(matrix(c(0,0), ncol=2), as.matrix(coord_pot, ncol=2))/rescale)
+coord_pot = seq(-700000, 700000, by=8000)
+coord_pot = expand.grid(coord_pot, coord_pot)
+
+d_pot = t(rdist(matrix(c(0,0), ncol=2), as.matrix(coord_pot, ncol=2))/dist.scale)
+
+# want a circular region
+idx_circ  = which(d_pot[,1] > 0.7)
+coord_pot = coord_pot[idx_circ, ]
+d_pot     = d_pot[idx_circ, ]
 
 dat = data.frame(matrix(0, nrow=0, ncol=4))
 for (run in runs){
@@ -172,7 +121,7 @@ for (run in runs){
   post  = rstan::extract(fit, permuted=FALSE, inc_warmup=FALSE)
   
   sum_w = build_sumw_pot(post, K, N_pot, d_pot, run)
-  r_int = dispersal_decay(post, dmat, sum_w, radius/rescale, run, taxa)
+  r_int = dispersal_decay(post, d_pot, sum_w, radius/rescale, run, taxa)
   
   run_dat = data.frame(radius = radius/1e3, r_int, handle=rep(run$handle, length(radius)))
   dat = rbind(dat, melt(run_dat, id=c('radius', 'handle')))
@@ -217,7 +166,7 @@ for (run in runs){
 }
 
 
-greys = brewer.pal(10, "Greys")[c(4,5,7,9)]
+greys = brewer.pal(9, "Greys")[c(4,5,7,9)]
 
 p <- ggplot(data=dat, aes(x=reorder(name, mu), y=mu, group=Model, colour=Model)) + 
   geom_point(size=4, position=position_dodge(width=0.5)) + 

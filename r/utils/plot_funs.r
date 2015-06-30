@@ -282,10 +282,11 @@ plot_data_maps_binned <- function(y, centers, taxa, K, breaks, limits, suff, sav
   
   prop_dat$type = rep('PLS', nrow(prop_dat))
   
-  cols = rev(brewer.pal(length(breaks), name="BrBG"))
-#   cols = tim.colors(length(breaks))
+#   cols = rev(brewer.pal(length(breaks), name="BrBG"))
+  cols = tim.colors(length(breaks))
 #   cols = gray.colors(length(breaks), start = 0.0, end = 1.0, gamma = 2.2, alpha = NULL)
-  
+#   cols = terrain.colors(length(breaks)) 
+
   p <- ggplot() + geom_tile(data=prop_dat, aes(x=x, y=y, fill=factor(props))) + 
     scale_fill_manual(values = cols, labels=breaklabels, name='Proportions') + 
     coord_fixed() #+ scale_x_continuous(limits$xlims) + scale_y_continuous(limits$ylims)
@@ -334,8 +335,9 @@ plot_pollen_maps_binned <- function(y, centers, taxa, K, breaks, limits, suff, s
                                           taxon = rep(taxa[k], N)))
   }
   
-#   cols = tim.colors(length(breaks))
-  cols = rev(brewer.pal(length(breaks), 'BrBG'))
+  cols = tim.colors(length(breaks))
+#   cols = terrain.colors(length(breaks))
+#   cols = rev(brewer.pal(length(breaks), 'BrBG'))
   
   p <- ggplot() + geom_point(data=prop_dat, aes(x=x, y=y, colour=factor(props)), shape=19) + 
 #     scale_colour_manual(values = tim.colors(length(breaks)), labels=breaklabels, name='Proportions') + 
@@ -436,6 +438,9 @@ melt_dat <- function(y, centers, breaks, taxa){
   
 }
 
+
+# plot_both_maps_binned(y,  r, centers_polA, centers_veg, taxa, taxa_list=10, K, breaks, limits, suff, save_plots, fpath=path_figs)
+
 plot_both_maps_binned <- function(y_pol,  y_veg, centers_pol, centers_veg, taxa, taxa_list, K, breaks, limits, suff, save_plots, fpath){
   
   N_pol = nrow(centers_pol)
@@ -460,7 +465,7 @@ plot_both_maps_binned <- function(y_pol,  y_veg, centers_pol, centers_veg, taxa,
     pol_facs = sort(unique(pol$props))
     
     p <- ggplot() + geom_tile(data=veg, aes(x=x, y=y, fill=factor(props)), alpha=1) + 
-      scale_fill_manual(values = cols[veg_facs], labels=breaklabels, name='Proportions') + 
+      scale_fill_manual(values = cols[veg_facs], labels=breaklabels[veg_facs], name='Proportions') + 
       coord_fixed() 
     p <- add_map_albers(p, us.shp, limits, rescale)
     p <- theme_clean(p) 
@@ -470,7 +475,7 @@ plot_both_maps_binned <- function(y_pol,  y_veg, centers_pol, centers_veg, taxa,
     
     q <- ggplot() + geom_point(data=pol, aes(x=x, y=y, colour=factor(props)), shape=19, size=3) + 
       #       scale_colour_manual(values = brewer.pal(length(breaks),"Spectral")) + 
-      scale_colour_manual(values = cols[pol_facs], labels=breaklabels, name='Proportions') + 
+      scale_colour_manual(values = cols[pol_facs], labels=breaklabels[pol_facs], name='Proportions') + 
       coord_fixed() #+ scale_x_continuous(limits$xlims) + scale_y_continuous(limits$ylims)
     q <- add_map_albers(q, us.shp, limits, rescale)
     q <- theme_clean(q) 
@@ -479,6 +484,11 @@ plot_both_maps_binned <- function(y_pol,  y_veg, centers_pol, centers_veg, taxa,
                    panel.grid.minor = element_blank())
     #q <- q + theme(legend.position="none")
     
+#     maxWidth = grid::unit.pmax(p$widths[2:5], q$widths[2:5])
+#     p$widths[2:5] <- as.list(maxWidth)
+#     q$widths[2:5] <- as.list(maxWidth)
+#     g <- grid.arrange(p, q, ncol=1)
+
     g <- arrangeGrob(p, q, nrow=2)
     print(g)
     

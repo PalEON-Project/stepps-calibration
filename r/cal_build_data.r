@@ -2,6 +2,7 @@ library(sp)
 library(rgdal)
 library(fields)
 library(maptools)
+library(plyr)
 gpclibPermit()
 
 source('r/utils/build_data_funs.r')
@@ -230,30 +231,17 @@ d2 = d * d # XXX: is it more efficient to read in d2?
 # calculate potential d
 # used to determine C normalizing constant in the non-local contribution term
 #####################################################################################
-library(plyr)
-
-# xlo = min(centers_veg[,1])
-# xhi = max(centers_veg[,1])
-# ylo = min(centers_veg[,2])
-# yhi = max(centers_veg[,2])
-
-# x_pot =  
-# 
-# x_pot = seq(-528000, 528000, by=8000)
-# y_pot = seq(-416000, 416000, by=8000)
-# coord_pot = expand.grid(x_pot, y_pot)
-# 
-# d_pot = t(rdist(matrix(c(0,0), ncol=2), as.matrix(coord_pot, ncol=2))/dist.scale)
-# d_pot = unname(as.matrix(count(d_pot)))
-# 
-# N_pot = nrow(d_pot)
-
 coord_pot = seq(-700000, 700000, by=8000)
 coord_pot = expand.grid(coord_pot, coord_pot)
 
 d_pot = t(rdist(matrix(c(0,0), ncol=2), as.matrix(coord_pot, ncol=2))/dist.scale)
-d_pot = unname(as.matrix(count(d_pot)))
 
+# want a circular region
+idx_circ  = which(d_pot[,1] > 0.7)
+coord_pot = coord_pot[idx_circ, ]
+d_pot     = d_pot[idx_circ, ]
+
+d_pot = unname(as.matrix(count(d_pot)))
 N_pot = nrow(d_pot)
 
 #####################################################################################
@@ -265,7 +253,6 @@ dump(c('K', 'N_cores', 'N_cells', 'N_hood',
        'idx_cores', 'idx_hood', 
        'd',#,'d2',
        'N_pot', 'd_pot'),
-       #'centers_veg', 'centers_polA'), 
      file=paste(wd, '/', path_out, '/cal_data_', K, 'taxa_', suff,'.dump',sep=""))
 
 save(K, N_cores, N_cells, N_hood, 
