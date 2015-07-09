@@ -250,6 +250,54 @@ plot_data_maps <- function(y, centers, taxa, K, limits, suff, save_plots, fpath=
   return(p)
 }
 
+plot_data_maps_col <- function(y, centers, taxa, K, limits, suff, save_plots, fpath=subDir){
+  
+  rescale=1000000
+  N = nrow(centers)
+  
+  if (is.null(taxa)){taxa=seq(1,K)}
+  
+  #   y = t(y)
+  
+  props_data = t(apply(y, 1, function(x) if (sum(x) > 0) {x/sum(x)} else {x}))
+  #colnames(props_data) = taxa
+  
+  prop_dat = data.frame(props=numeric(0), x=integer(0), y=integer(0), taxon=character())
+  for (k in 1:K){
+    prop_dat = rbind(prop_dat, data.frame(props = props_data[,k], 
+                                          x     = centers[,1],#*rescale, 
+                                          y     = centers[,2],#*rescale, 
+                                          taxon = rep(taxa[k], N)))
+  }
+  
+  prop_dat$type = rep('PLS', nrow(prop_dat))
+  
+  p <- ggplot() + geom_tile(data=prop_dat, aes(x=x, y=y, fill=props)) + 
+    scale_fill_gradientn(colours=tim.colors(), name='Proportions') + 
+    coord_fixed() #+ scale_x_continuous(limits$xlims) + scale_y_continuous(limits$ylims)
+  p <- add_map_albers(p, us.shp, limits, rescale)
+  p <- p + facet_wrap(~taxon, ncol=12)
+  p <- theme_clean(p) 
+  p <- p + theme(strip.background = element_blank(), strip.text.x = element_blank())#+ theme(strip.text.y = element_text(size = rel(1.5)), strip.text.x = element_text(size = rel(1.5)))
+  
+  #   p <- p + theme(strip.text.x = element_blank(),
+  #                  strip.text.y = element_blank())
+  p <- p + theme(strip.background = element_blank())
+  
+  print(p)
+  Sys.sleep(2)
+  if (save_plots){
+    fname = paste0(fpath,  '/maps_', suff, '_cont_1col.pdf', sep='')
+    ggsave(file=fname, scale=1, width=12)
+    sys_str = paste("pdfcrop", fname, fname, sep=' ')
+    system(sys_str)
+#     ggsave(file=paste(fpath, '/maps_', suff, '_cont.1col.eps', sep=''), scale=1)
+    #     dev.off()
+  }
+  return(p)
+}
+
+
 plot_data_maps_binned <- function(y, centers, taxa, K, breaks, limits, suff, save_plots, fpath=subDir){
   
   rescale=1000000

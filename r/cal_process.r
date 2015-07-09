@@ -14,7 +14,7 @@ path_out   = 'output'
 path_figs  = 'figures'
 
 suff  =''
-rerun = FALSE
+rerun = TRUE
 
 kernel   = run$kernel
 suff_fit = run$suff_fit
@@ -187,10 +187,11 @@ if (rerun){
   N_locs    = nrow(d_all)
   idx_locs  = seq(1, N_locs)
   preds_out = pollen_preds(post, N_locs, d_all, idx_locs, r, sum_w, run)
-  preds     = preds_out$preds
-  save(preds, file=paste0(path_figs1, '/preds_all.rdata'))
+  pp        = preds_out$preds
+  centers_pp = centers_veg
+  save(pp, centers_pp, file=paste0(path_figs1, '/pp_all.rdata'))
 } else {
-  load(file=paste0(path_figs1, '/preds_all.rdata'))
+  load(file=paste0(path_figs1, '/pp_all.rdata'))
 }
   
 limits <- get_limits(centers_veg)
@@ -198,9 +199,9 @@ limits <- get_limits(centers_veg)
 breaks = c(0, 0.01, 0.05, 0.10, 0.15, 0.2, 0.3, 0.4, 0.5, 0.6, 1)
 # plot_data_maps_binned(r_mean, centers=centers_pls, taxa=taxa, K, T, breaks, suff=suff4, save_plots=save_plots)
 
-plot_data_maps_binned(preds, centers_veg, taxa, K, breaks, limits, suff='predicted_pollen', save_plots, fpath=path_figs1)
+plot_data_maps_binned(pp, centers_pp, taxa, K, breaks, limits, suff='predicted_pollen', save_plots, fpath=path_figs1)
 
-plot_data_maps(preds, centers_veg, taxa, K, limits, suff='predicted_pollen', save_plots, fpath=path_figs1)
+plot_data_maps(pp, centers_pp, taxa, K, limits, suff='predicted_pollen', save_plots, fpath=path_figs1)
 
 # #####################################################################################
 # # sum_w map
