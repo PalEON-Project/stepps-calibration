@@ -45,17 +45,24 @@ for (i in 1:length(ids)){
   col2 = "red" 
 #   col2 = "darkgrey"
   
-  col1 = "darkgrey"  
-  col2 = "grey"
+  col2 = "gray11"  
+  col1 = "gray48"
 
   Zones <- core.dat$Depth[unique(unlist(sh[i, 9:12]))]
+
+  core.dat = chooseTaxa(core.dat, n.occ=5)
+  colnames(core.dat)[colnames(core.dat) == 'OSTRYCAR'] = 'OSTRYA'
+  colnames(core.dat)[colnames(core.dat) == 'ALNUSX'] = 'ALNUS'
+  colnames(core.dat)[colnames(core.dat) == 'PINUSX'] = 'PINUS'  
+  colnames(core.dat)[colnames(core.dat) == 'ACERX'] = 'ACER'
+  colnames(core.dat)[colnames(core.dat) == 'ASTERX'] = 'ASTER'
 
   fname=paste0('figures/', x$dataset$dataset.meta$collection.handle, '_', ids[i] )
   pdf(file=paste0(fname, ".pdf"), width=10)
   print(Stratiplot(Depth ~ . , data = chooseTaxa(core.dat, n.occ=5),
              type = c("h","l","g"), sort = "var", drawLegend = FALSE, 
              zones=Zones, zoneNames="", col.zones=col2, 
-             xlab="Pollen percentages", lwd.zones = 2.5, lty.zones = 2,
+             xlab="Pollen percentages", lwd.zones = 2.6, lty.zones = 2,
              col.line = col1,
              col.symbol = 'white',
              col.refline = 'white',
