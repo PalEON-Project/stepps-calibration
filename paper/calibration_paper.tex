@@ -10,9 +10,19 @@
 \usepackage{pdfpages}
 \usepackage{booktabs}
 \usepackage{multirow}
+%% \usepackage{siunitx} % Formats the units and values
+\usepackage{pgfplotstable} % Generates table from .csv
+\usepackage{longtable}
+\usepackage{pdflscape}
 
 %% \usepackage{caption}
 %% \captionsetup{justification=justified}
+
+%% % Setup siunitx:
+%% \sisetup{
+%%   round-mode          = places, % Rounds numbers
+%%   round-precision     = 2, % to 2 places
+%% }
 
 \newcommand{\kron}{\raisebox{1pt}{\ensuremath{\:\otimes\:}}} 
 \newcommand{\lgamma}{\text{lgamma}} 
@@ -246,14 +256,19 @@ expert bias.
 In this work, we refine and calibrate a Bayesian hierarchical PVM,
 based on the STEPPS model \citep{paciorek2009mapping}, using newly
 developed settlement-era pollen and vegetation calibration datasets
-for the Upper Midwest. Specific advances include the building of a
-pre-settlement era identification of pre-settlement pollen samples
-from pollen time series through expert elicitation and the testing and
-comparison of two standard isometric dispersal kernels. We apply
-modelling results to develop new estimates of relative pollen
-productivity and source area, assess the relative importance of local
-and non-local pollen sources, and compare these results to prior
-estimates of source area and pollen productivity.
+for the Upper Midwest. We then use these results to predict
+settlement-era vegetation composition.
+
+Specific advances include the building of a pre-settlement era
+identification of pre-settlement pollen samples from pollen time
+series through expert elicitation and the testing and comparison of
+two standard isometric dispersal kernels. We apply modelling results
+to develop new estimates of relative pollen productivity and source
+area, assess the relative importance of local and non-local pollen
+sources, and compare these results to prior estimates of source area
+and pollen productivity. Finally, we assess our ability to predict
+vegetation composition by comparing spatial predictions with the
+settlement-era forest composition data.
 
 \section{Data}
 
@@ -661,7 +676,68 @@ accounting for the full posterior distribution as opposed to
 conditioning on a single point estimate (as in AIC and DIC)
 \citep{gelman2014understanding}.
 
-\subsection{Numerical implementation}
+\section{Prediction model}
+
+To predict vegetation composition, we need: 1) sediment pollen data
+corresponding to the time at which we would like to make predictions,
+2) estimates of parameters that describe the pollen-vegetation
+relationship obatined from the calibration model, and 3) estimates of
+the spatial covariance of the vegetation composition.
+
+The structure of the relationship between the pollen counts and
+vegetation is identical to Equations~\ref{eq:DM} \& \ref{eq:arriving},
+but in the prediction model the underlying vegetation process is not
+known. The underlying composition, denoted $g$ is modelled as a
+gaussian process such that
+\begin{align*}
+\bm{g}_p \sim \text{MVN}(\mu_p, \eta_p \, \exp(d/\rho_p)),
+\end{align*}
+where $\eta_p$ and $\rho_p$ are taxon-specific spatial covariance
+parameters and $\mu_p$ is the taxon-specific mean.  The covariance
+paramaters $\eta_p$ and $\rho_p$ ara estimated \textit{a priori} by
+fitting a gaussian process to the settlement-era composition data.
+The proportional vegetation $r_p(s)$ is linked to the underlying
+corresponding spatial process $g_p(s)$ through an additive log-ratio
+sum-to-one constraint
+\begin{align*}
+r_p(s) = \frac{ \text{exp}(g_p(s))}{ \sum_{k=1}^K \exp (g_p(s)) }.
+\end{align*} 
+The full prediction model (not described here) used to estimate
+composition at multiple times accounts for covariance across both time
+and space. 
+
+Estimating the underlying vegetation process at each spatial location
+in the domain is computationally intractable, therefore the underlying
+gaussian process is estimated using a gaussian predictive process
+model in which the process is estimated at specified knots locations
+and then scaled up to the full domain (see \cite{XXX}). Here we use
+120 knot locations, whose locations are determined using the kmeans
+clustering algorithm \cite{XXX}.
+
+Settlement-era vegetation composition is estimated for the subdomain
+composed of Minnesota, Wisconsin, and the Upper Peninsula of Michigan
+using the settlement-era sediment pollen calibration data set for a
+suite of underlying candidate calibration models. Note that we omit
+the Lower Peninsula from this subdomain because it is disjoint and
+distant, and as such we do not expect significant contributions to
+deposited pollen in our subdomain to originate from there.
+
+The dissimilarity between the predicted composition for different
+underlying calibration models and the PLS composition estimates is
+determined by measuring the Euclidean distance between the two sets of
+multi-category outcomes at each grid cell. 
+
+More specifically, we compare the settlement-era PLS composition
+estimates $\bm{r}(s(i))$ with the posterior mean of the composition
+estimates obtained from the prediction model
+$\bm{\hat{r}}(s(i))$. Then, for location $s(i)$ the dissimilarity is
+\begin{align*}
+\left( \sum_{p=1}^{P} (r_p(s(i)) - \hat{r}(s(i)))^2 \right).
+\end{align*}
+Total dissimilarity is obtained for each set of predictions by summing
+the dissimilarity values over all locations.
+
+\section{Numerical implementation}
 
 We cannot directly sample from the joint posterior, so we rely on MCMC
 methods. With the goal of achieving more efficient sampling with
@@ -671,7 +747,13 @@ statistical modeling software to estimate parameters
 Hamiltonian Monte Carlo method called the No-U-Turn Sampler, which is
 a gradient based sampling method that uses these directional
 derivatives to make informed decisions about how to move along (and
-sample from) the joint posterior surface \citep{hoffman2011nuts}.
+sample from) the joint posterior surface \citep{hoffman2011nuts}. 
+
+The complex nature of the prediction model in combination with the
+domain size make it prohibitively slow to estimate prediction model
+parameters. To overcome this issue, we modified the Stan software to
+it call a function which analytically computes the model gradient,
+allowing us to use parallel computation via openMP.
 
 % Our model was coded in the Stan bugs-like language, then converted
 % to C++ code using the Stan translator, compiled using GCC, and run
@@ -903,7 +985,7 @@ power-law kernel variable $b$ models.
 
 Out of the remaining eight candidate models (four with the Gaussian
 kernel; four with the power-law kernel) we compare the WAIC
-(Table~\ref{table:WAIC}). According to the WAIC the power law kernel
+(Table~\ref{table:GOF}). According to the WAIC the power law kernel
 outperforms the Gaussian kernel - even the most flexible Gaussian
 model (variable $\psi$ and $\gamma$) results in a WAIC that is higher
 than the least flexible power law kernel model (base model). The power
@@ -1136,6 +1218,30 @@ data, we can compare the vegetation and pollen ranges. The effects of
 dispersal are especially clear in the Pine and Oak cases, where we see
 pollen dispersing well beyond the range limits of the vegetation range
 boundaries.
+
+\subsection{Vegetation composition predictions}
+
+We estimated settlement-era vegetation composition based on the
+prediction model for four candidate calibration submodels (Gaussian
+base and variable; Power law base and variable). Composition was
+estimated using the NUTS sampler with a warm-up period of 150
+iterations, followed by a sampling period of 1000
+iterations. Effective sample sizes were XXXX.
+
+Dissimilarity maps for each of the candidate models illustrate that it
+is difficult to distinguish between the competing predictions
+(Figure~\ref{fig:maps_l2}). These maps also highlight the increased
+difficulty with resolving composition in areas that compositionally
+unique relative to the greater regional patterns such as the Big Woods
+in Minnesota.
+
+Total dissimilarity scores were computed for each set of predictions
+(Table~\ref{table:GOF}). According to the Brier score, the
+composition estimates obtained from the prediction model with the
+underlying base Power law calibration model are closest to the data
+(Full Brier = 62.00), while the prediction model with underlying
+variable Gaussian calibration model are the farthest (Full Brier =
+68.82).
 
 \section{Summary and Conclusions}
 

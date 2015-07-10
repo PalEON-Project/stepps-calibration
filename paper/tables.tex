@@ -1,46 +1,306 @@
 
+% \begin{landscape}
+%   \begin{longtable}{ccccccccc}
+% {Site}&{ID}&{Lat}&{Long}&{PI}&{Depth}&{Neotoma}&{Calibration}&{Notes}\\
+% {Albert Lea Lake}&{12016}&{43.65820}&{-93.28940}&{Cushing, Edward J.}&{70}&{Y}&{Y}&{}\\
+% {Lake Allie}&{29}&{44.81380}&{-94.56750}&{McAndrews, John H.}&{50}&{Y}&{Y}&{}\\
+% {Andrus Lake}&{205}&{46.70000}&{-85.04028}&{Shane, Linda C. K.}&{15.25}&{Y}&{Y}&{}\\
+% {Bad Medicine Lake}&{223}&{47.13333}&{-95.38333}&{McAndrews, John H.}&{20}&{Y}&{Y}&{}\\
+% {Black Bass Lake}&{241}&{46.12806}&{-93.70389}&{McAndrews, John H.}&{10}&{Y}&{Y}&{}\\
+% {Beckman Lake}&{249}&{45.42500}&{-93.18333}&{Swain, Patricia C.}&{83}&{Y}&{Y}&{}\\
+% {Beckman Lake}&{3062}&{45.42500}&{-93.18333}&{Swain, Patricia C.}&{35}&{Y}&{Y}&{}\\
+% {Big John Pond}&{272}&{47.55833}&{-94.96667}&{Almendinger, John C.}&{40}&{Y}&{Y}&{}\\
+% {Billy's Lake}&{275}&{46.28333}&{-94.58333}&{Jacobson, George L., Jr.}&{220}&{Y}&{Y}&{}\\
+% {Blandin Pond}&{280}&{47.13333}&{-93.66667}&{Cushing, Edward J.}&{41}&{Y}&{Y}&{}\\
+% {Blomford Lake}&{10973}&{45.49600}&{-93.15700}&{Cushing, Edward J.}&{40}&{Y}&{Y}&{}\\
+% {Blue Mounds Creek}&{287}&{43.08333}&{-89.86667}&{Davis, Anthony M.}&{11}&{Y}&{Y}&{}\\
+% {Bob Lake}&{296}&{46.63361}&{-92.61472}&{McAndrews, John H.}&{20}&{Y}&{Y}&{}\\
+% {Bog D}&{298}&{47.18333}&{-95.16667}&{McAndrews, John H.}&{70}&{Y}&{Y}&{}\\
+% {Bossuot Lake}&{305}&{44.29611}&{-93.73417}&{McAndrews, John H.}&{60}&{Y}&{Y}&{}\\
+% {Brown Lake }&{313}&{45.78333}&{-89.48333}&{Shane, Linda C. K.}&{14.25}&{Y}&{Y}&{}\\
+% {Brown's Bay, Lake Minnetonka}&{314}&{44.96667}&{-93.55000}&{Shane, Linda C. K.}&{59.5}&{Y}&{Y}&{}\\
+% {Burntside Lake}&{325}&{47.92417}&{-91.99472}&{Wright, Herbert E., Jr.}&{20}&{Y}&{Y}&{}\\
+% {Camp 11 Lake}&{332}&{46.66667}&{-88.01667}&{Brubaker, Linda B.}&{10}&{Y}&{Y}&{}\\
+% {Camp 12 Lake}&{333}&{45.98611}&{-89.37500}&{Shane, Linda C. K.}&{17.25}&{Y}&{Y}&{}\\
+% {Campbell Lake}&{334}&{44.70583}&{-93.50000}&{McAndrews, John H.}&{50}&{Y}&{Y}&{}\\
+% {Camp Lake}&{13057}&{45.41330}&{-95.39800}&{Cushing, Edward J.}&{40}&{Y}&{Y}&{}\\
+% {Canyon Lake}&{3055}&{46.83333}&{-87.92139}&{Davis, Margaret B.}&{18}&{Y}&{Y}&{}\\
+% {Cedar Bog Lake}&{352}&{45.41111}&{-93.19722}&{Cushing, Edward J.}&{190}&{Y}&{Y}&{}\\
+% {Cedar Bog Lake}&{369}&{45.41111}&{-93.19722}&{Cushing, Edward J.}&{190}&{Y}&{N}&{C}\\
+% {Chub Lake}&{12010}&{44.57480}&{-93.22240}&{Cushing, Edward J.}&{195}&{Y}&{Y}&{}\\
+% {Cindy Pond}&{382}&{47.18333}&{-94.91667}&{McAndrews, John H.}&{20}&{Y}&{Y}&{}\\
+% {Cottonwood Lake}&{12005}&{44.62430}&{-95.69190}&{Cushing, Edward J.}&{25}&{Y}&{Y}&{}\\
+% {Cottonwood Lake }&{515}&{45.76111}&{-96.01667}&{McAndrews, John H.}&{40}&{Y}&{Y}&{}\\
+% {Crazy Pond}&{521}&{47.18333}&{-95.73333}&{McAndrews, John H.}&{40}&{Y}&{Y}&{}\\
+% {Cub Lake}&{532}&{44.70000}&{-84.95833}&{Rasmussen, Jack B.}&{24}&{Y}&{Y}&{}\\
+% {Dalton Lake}&{545}&{46.17389}&{-95.91528}&{McAndrews, John H.}&{40}&{Y}&{Y}&{}\\
+% {Dark Lake}&{546}&{45.27500}&{-91.47500}&{Winkler, Marjorie Green}&{150}&{Y}&{Y}&{}\\
+% {Deans Lake}&{12007}&{44.77830}&{-93.45460}&{Shane, Linda C. K.}&{80}&{Y}&{Y}&{}\\
+% {Demont Lake}&{679}&{43.48000}&{-85.00000}&{Kapp, Ronald O.}&{60}&{Y}&{Y}&{}\\
+% {Denton Lake}&{681}&{45.85000}&{-89.31667}&{Shane, Linda C. K.}&{22.25}&{Y}&{Y}&{}\\
+% {Devils Lake }&{684}&{43.42730}&{-89.73850}&{Maher, Louis J., Jr.}&{22.5}&{Y}&{Y}&{}\\
+% {Disterhaft Farm Bog}&{700}&{43.91694}&{-89.16694}&{Maher, Louis J., Jr.}&{}&{Y}&{N}&{A}\\
+% {Disterhaft Farm Bog}&{3081}&{43.91694}&{-89.16694}&{Baker, Richard G.}&{80}&{Y}&{Y}&{}\\
+% {Dogfish Lake}&{717}&{48.18333}&{-92.18333}&{Waddington, Jean C.B.}&{25}&{Y}&{Y}&{}\\
+% {Dunnigan Lake}&{774}&{47.70833}&{-91.64167}&{Shane, Linda C. K.}&{19.75}&{Y}&{Y}&{}\\
+% {East Twin Lake }&{781}&{45.33333}&{-93.50833}&{McAndrews, John H.}&{30}&{Y}&{Y}&{}\\
+% {Eggert Lake}&{786}&{44.47056}&{-93.61972}&{McAndrews, John H.}&{40}&{Y}&{Y}&{}\\
+% {Lake Emily}&{12008}&{44.31350}&{-93.92620}&{Shane, Linda C. K.}&{153}&{Y}&{Y}&{}\\
+% {Everhart Lake}&{12024}&{43.61980}&{-93.44240}&{Cushing, Edward J.}&{35}&{Y}&{Y}&{}\\
+% {Faith Pond}&{817}&{47.28333}&{-95.10000}&{McAndrews, John H.}&{30}&{Y}&{Y}&{}\\
+% {Farquar Lake}&{822}&{44.75778}&{-93.16667}&{McAndrews, John H.}&{50}&{Y}&{Y}&{}\\
+% {Fawn Lake}&{10974}&{45.40990}&{-93.05700}&{Cushing, Edward J.}&{40}&{Y}&{Y}&{}\\
+% {Fawn Lake}&{824}&{46.21889}&{-94.75333}&{McAndrews, John H.}&{30}&{Y}&{Y}&{}\\
+% {Fox Pond}&{846}&{47.16500}&{-95.55833}&{McAndrews, John H.}&{50}&{Y}&{Y}&{}\\
+% {Frains Lake}&{847}&{42.33000}&{-83.63000}&{Kerfoot, Wilson Charles}&{410}&{Y}&{Y}&{}\\
+% {French Lake}&{850}&{44.95000}&{-94.41667}&{Grimm, Eric Christopher}&{660}&{Y}&{Y}&{}\\
+% {Frovold Lake}&{10975}&{45.38000}&{-95.56800}&{Cushing, Edward J.}&{30}&{Y}&{Y}&{}\\
+% {Gass Lake}&{860}&{44.05000}&{-87.73333}&{Webb, Sara L.}&{60}&{Y}&{Y}&{}\\
+% {George Lake}&{869}&{44.23333}&{-93.87083}&{McAndrews, John H.}&{40}&{Y}&{Y}&{}\\
+% {Goldsmith Lake}&{967}&{46.58333}&{-92.46667}&{McAndrews, John H.}&{20}&{Y}&{Y}&{}\\
+% {Goose Lake}&{10976}&{44.99500}&{-94.59600}&{Cushing, Edward J.}&{35}&{Y}&{Y}&{}\\
+% {Goose Lake}&{982}&{44.99500}&{-94.59600}&{Cushing, Edward J.}&{35}&{Y}&{N}&{C}\\
+% {Grice Pond}&{990}&{47.20000}&{-95.75000}&{McAndrews, John H.}&{30}&{Y}&{Y}&{}\\
+% {Hanson Marsh}&{1004}&{43.43306}&{-89.67500}&{Maher, Louis J., Jr.}&{\ }&{Y}&{N}&{B}\\
+% {Hell's Kitchen Lake}&{3131}&{46.18333}&{-89.70000}&{Swain, Albert M.}&{90}&{Y}&{Y}&{}\\
+% {Hemo Pond}&{1032}&{47.21667}&{-95.78333}&{McAndrews, John H.}&{60}&{Y}&{Y}&{}\\
+% {Horse Pond}&{1109}&{47.19028}&{-95.87222}&{McAndrews, John H.}&{40}&{Y}&{Y}&{}\\
+% {Hostage Lake}&{1111}&{46.55000}&{-94.13333}&{Almendinger, John C.}&{40}&{Y}&{Y}&{}\\
+% {Hug Lake}&{1134}&{47.95833}&{-90.93333}&{Swain, Albert M.}&{24}&{Y}&{Y}&{}\\
+% {Hustler Lake}&{1138}&{48.23333}&{-92.15833}&{Shane, Linda C. K.}&{26.75}&{Y}&{Y}&{}\\
+% {Iola Bog}&{1151}&{44.50000}&{-89.11694}&{Maher, Louis J., Jr.}&{90}&{Y}&{Y}&{}\\
+% {Irvin Lake}&{1153}&{47.13556}&{-93.64361}&{Cushing, Edward J.}&{25}&{Y}&{Y}&{}\\
+% {Irwin Smith Bog}&{13047}&{45.03500}&{-83.64000}&{Jackson, Steven T.}&{16.5}&{Y}&{Y}&{}\\
+% {Jacobson Lake}&{3138}&{46.41694}&{-92.71694}&{Watts, William A.}&{125}&{Y}&{Y}&{}\\
+% {Jones Lake }&{15274}&{45.42917}&{-93.98333}&{McAndrews, John H.}&{20}&{Y}&{Y}&{}\\
+% {Kegan Lake}&{1446}&{44.75833}&{-93.11667}&{McAndrews, John H.}&{30}&{Y}&{Y}&{}\\
+% {Kellys Hollow}&{1447}&{45.30000}&{-90.35000}&{Heide, Kathleen M.}&{3}&{Y}&{N}&{B}\\
+% {Kellys Hollow}&{3452}&{45.30000}&{-90.35000}&{Heide, Kathleen M.}&{21}&{Y}&{Y}&{}\\
+% {Kellners Lake}&{1448}&{44.23806}&{-87.84806}&{Maher, Louis J., Jr.}&{60}&{Y}&{Y}&{}\\
+% {Kimble Pond}&{13032}&{44.22010}&{-93.84200}&{Umbanhowar, Charles E., Jr.}&{1910.5}&{Y}&{Y}&{}\\
+% {Kirchner Marsh}&{1520}&{44.77240}&{-93.12490}&{Wright, Herbert E., Jr.}&{}&{Y}&{N}&{A}\\
+% {Kirchner Marsh}&{3455}&{44.77240}&{-93.12490}&{Wright, Herbert E., Jr.}&{22}&{Y}&{Y}&{}\\
+% {Kitchner Lake}&{1524}&{45.66667}&{-87.45500}&{Davis, Margaret B.}&{60}&{Y}&{Y}&{}\\
+% {Kotiranta Lake}&{1548}&{46.72000}&{-92.62000}&{Wright, Herbert E., Jr.}&{4}&{Y}&{N}&{B}\\
+% {Kryzewinski Lake}&{1552}&{46.35333}&{-92.87028}&{McAndrews, John H.}&{30}&{Y}&{Y}&{}\\
+% {Lake 27}&{1581}&{45.06667}&{-84.78333}&{Bernabo, J. Christopher}&{20}&{Y}&{Y}&{}\\
+% {Lake Ann}&{1584}&{45.42500}&{-93.68750}&{McAndrews, John H.}&{60}&{Y}&{Y}&{}\\
+% {Lake Ann}&{3468}&{45.42500}&{-93.68750}&{Shane, Linda C. K.}&{}&{Y}&{N}&{B}\\
+% {Lake Carlson}&{1588}&{44.80090}&{-93.16170}&{Wright, Herbert E., Jr.}&{50}&{Y}&{Y}&{}\\
+% {Lake Carlson}&{3473}&{44.80090}&{-93.16170}&{Wright, Herbert E., Jr.}&{50}&{Y}&{N}&{C}\\
+% {Last Lake}&{12004}&{45.45190}&{-95.24380}&{Alwin, Baird C.}&{40}&{Y}&{Y}&{}\\
+% {Lewis Lake}&{1629}&{45.74944}&{-93.36417}&{McAndrews, John H.}&{40}&{Y}&{Y}&{}\\
+% {Lily Lake }&{1633}&{45.05000}&{-92.82500}&{Eyster-Smith, Nancy M.}&{1345}&{Y}&{Y}&{}\\
+% {Little Bass Lake}&{1639}&{47.28333}&{-93.60000}&{Swain, Patricia C.}&{1300}&{Y}&{Y}&{}\\
+% {Little Pine Lake}&{1643}&{45.28333}&{-91.48333}&{Gajewski, Konrad J.}&{150}&{Y}&{Y}&{}\\
+% {Lake of the Clouds }&{3482}&{48.00000}&{-91.11667}&{Craig, Alan J.}&{62}&{Y}&{Y}&{}\\
+% {Lake of the Clouds }&{3483}&{48.00000}&{-91.11667}&{Swain, Albert M.}&{9}&{Y}&{Y}&{}\\
+% {Lost Lake }&{1665}&{46.72000}&{-87.97000}&{Brubaker, Linda B.}&{10}&{Y}&{Y}&{}\\
+% {Little Dollar Lake}&{12001}&{46.18720}&{-85.30960}&{Futyma, Richard P.}&{12}&{Y}&{Y}&{}\\
+% {Lybeck Lake}&{12014}&{45.67900}&{-95.71700}&{Cushing, Edward J.}&{55}&{Y}&{Y}&{}\\
+% {Lake Mabel}&{1685}&{44.45000}&{-93.61306}&{McAndrews, John H.}&{}&{Y}&{N}&{A}\\
+% {Martin Pond}&{1708}&{47.18333}&{-94.93333}&{McAndrews, John H.}&{50}&{Y}&{Y}&{}\\
+% {McCraney Pond}&{1720}&{47.17806}&{-95.69806}&{McAndrews, John H.}&{30}&{Y}&{Y}&{}\\
+% {McNearny Lake}&{1725}&{46.42722}&{-84.95833}&{Shane, Linda C. K.}&{5.75}&{Y}&{Y}&{}\\
+% {McNearny Lake}&{3485}&{46.42722}&{-84.95833}&{Shane, Linda C. K.}&{7.75}&{Y}&{Y}&{}\\
+% {McNearny Lake}&{3486}&{46.42722}&{-84.95833}&{Shane, Linda C. K.}&{8.75}&{Y}&{Y}&{}\\
+% {Lake Mendota}&{1735}&{43.10000}&{-89.41667}&{Winkler, Marjorie Green}&{65.5}&{Y}&{Y}&{}\\
+% {Lake Mendota}&{3488}&{43.10000}&{-89.41667}&{Winkler, Marjorie Green}&{}&{Y}&{N}&{A}\\
+% {Lake Minnie}&{1757}&{47.24000}&{-95.01000}&{McAndrews, John H.}&{40}&{Y}&{Y}&{}\\
+% {Lake Minnie}&{3492}&{47.24000}&{-95.01000}&{McAndrews, John H.}&{60}&{Y}&{Y}&{}\\
+% {Monson Lake}&{12006}&{45.33000}&{-95.28970}&{Cushing, Edward J.}&{80}&{Y}&{Y}&{}\\
+% {Mud Lake}&{12013}&{45.86070}&{-95.46570}&{Cushing, Edward J.}&{65}&{Y}&{Y}&{}\\
+% {Mud Lake }&{1777}&{44.22722}&{-93.83083}&{McAndrews, John H.}&{40}&{Y}&{Y}&{}\\
+% {Mud Lake }&{1778}&{46.86667}&{-94.75000}&{Almendinger, John C.}&{50}&{Y}&{Y}&{}\\
+% {Murphy Lake}&{1781}&{44.71111}&{-93.34056}&{McAndrews, John H.}&{90}&{Y}&{Y}&{}\\
+% {Myrtle Lake}&{1786}&{47.98333}&{-93.38333}&{Janssen, C. Roel}&{186}&{Y}&{Y}&{}\\
+% {Nels Lake}&{1793}&{48.03333}&{-91.90000}&{Shane, Linda C. K.}&{20.75}&{Y}&{Y}&{}\\
+% {Oak Glen Lake}&{13056}&{43.93430}&{-93.08760}&{Cushing, Edward J.}&{258}&{Y}&{Y}&{}\\
+% {Ocheda Lake}&{10971}&{43.59000}&{-95.64000}&{Cushing, Edward J.}&{36}&{Y}&{Y}&{}\\
+% {Olson Lake}&{10977}&{46.51370}&{-93.66190}&{Cushing, Edward J.}&{1080}&{Y}&{Y}&{}\\
+% {Lake Onamia}&{1830}&{46.06833}&{-93.68000}&{McAndrews, John H.}&{30}&{Y}&{Y}&{}\\
+% {Ondris Pond}&{1831}&{46.35000}&{-94.40000}&{Jacobson, George L., Jr.}&{210}&{Y}&{Y}&{}\\
+% {Otto Mielke Lake}&{1840}&{45.93333}&{-89.62500}&{Shane, Linda C. K.}&{22.25}&{Y}&{Y}&{}\\
+% {Pennington Lake}&{1884}&{45.78056}&{-93.27306}&{McAndrews, John H.}&{50}&{Y}&{Y}&{}\\
+% {Perch Lake}&{12009}&{46.19590}&{-95.47240}&{Cushing, Edward J.}&{80}&{Y}&{Y}&{}\\
+% {Peterson Slough}&{1891}&{46.96667}&{-95.31667}&{Almendinger, John C.}&{100}&{Y}&{Y}&{}\\
+% {Pogonia Bog Pond}&{3541}&{45.03333}&{-93.63333}&{Cushing, Edward J.}&{35}&{Y}&{Y}&{}\\
+% {Pleasant Lake }&{1955}&{44.58889}&{-93.56667}&{McAndrews, John H.}&{40}&{Y}&{Y}&{}\\
+% {Pogonia Bog Pond}&{3558}&{45.03333}&{-93.63333}&{Cushing, Edward J.}&{330}&{Y}&{Y}&{}\\
+% {Portage Lake}&{1966}&{47.08139}&{-94.11333}&{McAndrews, John H.}&{35}&{Y}&{Y}&{}\\
+% {Lake Rachel}&{12011}&{45.80780}&{-95.56160}&{Cushing, Edward J.}&{35}&{Y}&{Y}&{}\\
+% {Radtke Lake}&{2011}&{43.40000}&{-88.10000}&{Webb, Sara L.}&{52}&{Y}&{Y}&{}\\
+% {Reichow}&{2051}&{47.18778}&{-95.77500}&{McAndrews, John H.}&{30}&{Y}&{Y}&{}\\
+% {Reidel Lake}&{2053}&{46.21194}&{-95.28417}&{Almquist-Jacobson, Heather}&{496}&{Y}&{Y}&{}\\
+% {Rholl Lake}&{2062}&{47.60000}&{-96.16667}&{McAndrews, John H.}&{20}&{Y}&{Y}&{}\\
+% {Rice Lake}&{2066}&{46.92222}&{-95.57500}&{McAndrews, John H.}&{}&{Y}&{N}&{A}\\
+% {Rice Lake}&{3568}&{46.92222}&{-95.57500}&{McAndrews, John H.}&{}&{Y}&{N}&{A}\\
+% {Round Grove Lake}&{10983}&{44.71800}&{-94.50000}&{Cushing, Edward J.}&{45}&{Y}&{Y}&{}\\
+% {Rossburg Bog}&{2290}&{46.58333}&{-93.60000}&{Wright, Herbert E., Jr.}&{}&{Y}&{N}&{A}\\
+% {Ruby Lake}&{2309}&{45.28333}&{-91.45833}&{Winkler, Marjorie Green}&{150}&{Y}&{Y}&{}\\
+% {Rutz Lake}&{2314}&{44.87000}&{-93.87000}&{Waddington, Jean C.B.}&{560}&{Y}&{Y}&{}\\
+% {Rutz Lake}&{2318}&{44.87000}&{-93.87000}&{Waddington, Jean C.B.}&{560}&{Y}&{N}&{C}\\
+% {Sedivy Lake}&{2354}&{47.20889}&{-95.83333}&{McAndrews, John H.}&{60}&{Y}&{Y}&{}\\
+% {Seidel}&{3620}&{44.45000}&{-87.51556}&{Maher, Louis J., Jr.}&{40}&{Y}&{Y}&{}\\
+% {Shagawa Lake}&{2375}&{47.91667}&{-91.86667}&{Bradbury, J. Platt}&{40}&{Y}&{Y}&{}\\
+% {Sharkey Lake}&{13029}&{44.59390}&{-93.41480}&{Umbanhowar, Charles E., Jr.}&{}&{Y}&{N}&{B}\\
+% {Silver Lake }&{2383}&{44.90000}&{-94.20000}&{McAndrews, John H.}&{70}&{Y}&{Y}&{}\\
+% {Siseebakwet South}&{2394}&{47.13333}&{-93.68333}&{Cushing, Edward J.}&{41}&{Y}&{Y}&{}\\
+% {Solum Lake}&{2581}&{46.66222}&{-96.25000}&{McAndrews, John H.}&{40}&{Y}&{Y}&{}\\
+% {South Stanchfield Lake}&{2584}&{45.72500}&{-93.46667}&{McAndrews, John H.}&{30}&{Y}&{Y}&{}\\
+% {South Heron Lake}&{10970}&{43.75000}&{-95.27000}&{Cushing, Edward J.}&{36}&{Y}&{Y}&{}\\
+% {Spectacle Lake}&{2585}&{45.57222}&{-93.40833}&{McAndrews, John H.}&{40}&{Y}&{Y}&{}\\
+% {Spirit Lake }&{2586}&{46.47000}&{-86.95833}&{Davis, Margaret B.}&{20}&{Y}&{Y}&{}\\
+% {St. Catherines Lake}&{2600}&{44.62694}&{-93.43250}&{McAndrews, John H.}&{50}&{Y}&{Y}&{}\\
+% {Stone Lake}&{2605}&{45.40000}&{-93.52222}&{McAndrews, John H.}&{30}&{Y}&{Y}&{}\\
+% {Stone Lake Tamarack Swamp}&{2607}&{44.89167}&{-93.69167}&{Swain, Patricia C.}&{}&{Y}&{N}&{B}\\
+% {Stone Lake Tamarack Swamp}&{3780}&{44.89167}&{-93.69167}&{Swain, Patricia C.}&{}&{Y}&{N}&{A}\\
+% {Stewart's Dark Lake}&{3781}&{45.30000}&{-91.45000}&{Peters, M. A.}&{}&{Y}&{N}&{A}\\
+% {Sunfish Lake}&{2613}&{44.87472}&{-93.10000}&{McAndrews, John H.}&{40}&{Y}&{Y}&{}\\
+% {Tamarack Creek}&{2624}&{44.15000}&{-91.45000}&{Davis, Anthony M.}&{13}&{Y}&{Y}&{}\\
+% {Terhell Pond}&{2638}&{47.18778}&{-95.77056}&{McAndrews, John H.}&{40}&{Y}&{Y}&{}\\
+% {Third Lake}&{3784}&{48.10833}&{-92.01667}&{Swain, Patricia C.}&{184}&{Y}&{Y}&{}\\
+% {Thompson}&{2640}&{47.20000}&{-96.08333}&{McAndrews, John H.}&{30}&{Y}&{Y}&{}\\
+% {Third Lake}&{3786}&{48.10833}&{-92.01667}&{Swain, Patricia C.}&{40}&{Y}&{Y}&{}\\
+% {Third Lake}&{3788}&{48.10833}&{-92.01667}&{Swain, Patricia C.}&{60}&{Y}&{Y}&{}\\
+% {Toenjes Lake}&{2648}&{45.40972}&{-93.98139}&{McAndrews, John H.}&{60}&{Y}&{Y}&{}\\
+% {Twin Lakes}&{2881}&{45.84889}&{-93.16778}&{McAndrews, John H.}&{50}&{Y}&{Y}&{}\\
+% {Union Lake}&{12015}&{45.82070}&{-95.34840}&{Cushing, Edward J.}&{45}&{Y}&{Y}&{}\\
+% {Upper Graven Lake}&{2888}&{46.18444}&{-95.30694}&{Almquist-Jacobson, Heather}&{160}&{Y}&{Y}&{}\\
+% {Vestaburg Bog}&{3831}&{43.41667}&{-84.88333}&{Gilliam, Jeanne A.}&{618}&{Y}&{Y}&{}\\
+% {Weber Lake}&{3837}&{47.47167}&{-91.66000}&{Fries, Magnus}&{60}&{Y}&{Y}&{}\\
+% {Wentzel's Pond}&{2948}&{46.95000}&{-94.95000}&{Almendinger, John C.}&{55}&{Y}&{Y}&{}\\
+% {West Olaf Lake}&{13051}&{46.60430}&{-96.19800}&{Nelson, David M.}&{165}&{Y}&{Y}&{}\\
+% {White Lily Lake}&{2952}&{46.08611}&{-93.10278}&{McAndrews, John H.}&{40}&{Y}&{Y}&{}\\
+% {Wintergreen Lake}&{2961}&{42.40000}&{-85.38333}&{Bailey, Robert E.}&{68}&{Y}&{Y}&{}\\
+% {Wolsfeld Lake}&{3031}&{45.00800}&{-93.57700}&{Grimm, Eric Christopher}&{714}&{Y}&{Y}&{}\\
+% {Wolverine Lake}&{3032}&{46.42917}&{-85.66111}&{Futyma, Richard P.}&{15}&{Y}&{Y}&{}\\
+% {Wood Lake}&{3035}&{45.33333}&{-90.08333}&{Heide, Kathleen M.}&{100}&{Y}&{Y}&{}\\
+% {Yellow Dog Pond}&{3047}&{46.75000}&{-87.95000}&{Brubaker, Linda B.}&{}&{Y}&{N}&{A}\\
+% {Ziebell Lake}&{12012}&{46.05720}&{-95.26630}&{Cushing, Edward J.}&{50}&{Y}&{Y}&{}\\
+% {Adeline}&{CLH8}&{45.30200}&{-91.19400}&{R. Calcote}&{28.5}&{N}&{Y}&{}\\
+% {Elevenses}&{CLH1}&{46.38200}&{-91.49600}&{R. Calcote}&{26.5}&{N}&{Y}&{}\\
+% {Eska}&{CLH9}&{45.19150}&{-90.60789}&{R. Calcote}&{17.5}&{N}&{Y}&{}\\
+% {Fallison}&{CLH7}&{45.99390}&{-89.61883}&{R. Calcote}&{23.5}&{N}&{Y}&{}\\
+% {Ferr01X}&{CLH2}&{46.01300}&{-92.12500}&{R. Calcote}&{}&{N}&{N}&{A}\\
+% {HellHole}&{CLH3}&{45.78650}&{-92.21900}&{R. Calcote}&{16.5}&{N}&{Y}&{}\\
+% {Lily}&{CLH4}&{45.90100}&{-92.27200}&{R. Calcote}&{34.5}&{N}&{Y}&{}\\
+% {Lone02}&{CLH5}&{45.93200}&{-92.23590}&{R. Calcote}&{17.5}&{N}&{Y}&{}\\
+% {Warner}&{CLH6}&{46.12100}&{-92.03900}&{M. Tweiten}&{38.5}&{N}&{Y}&{}\\
+% {Adventure}&{CLHPRE1}&{46.09000}&{-91.94000}&{R. Calcote}&{29.5}&{N}&{Y}&{}\\
+% {Benach}&{CLHPRE2}&{45.92710}&{-92.25600}&{R. Calcote}&{14.5}&{N}&{Y}&{}\\
+% {BlueJ}&{CLHPRE3}&{46.40700}&{-91.52800}&{R. Calcote}&{24.5}&{N}&{Y}&{}\\
+% {Brozie}&{CLHPRE4}&{45.95990}&{-92.10840}&{R. Calcote}&{39.5}&{N}&{Y}&{}\\
+% {Camp2G}&{CLHPRE5}&{46.50213}&{-91.41097}&{R. Calcote}&{78.5}&{N}&{Y}&{}\\
+% {Chase}&{CLHPRE6}&{45.92670}&{-92.46800}&{R. Calcote}&{19.5}&{N}&{Y}&{}\\
+% {Cheney}&{CLHPRE7}&{46.38200}&{-91.70100}&{R. Calcote}&{36.5}&{N}&{Y}&{}\\
+% {Clubhouse}&{CLHPRE8}&{45.93950}&{-92.05720}&{R. Calcote}&{39.5}&{N}&{Y}&{}\\
+% {Corwick}&{CLHPRE9}&{45.94770}&{-92.19700}&{R. Calcote}&{19.5}&{N}&{Y}&{}\\
+% {Crestview}&{CLHPRE10}&{46.27400}&{-91.69300}&{R. Calcote}&{23.5}&{N}&{Y}&{}\\
+% {DeepPine}&{CLHPRE11}&{46.54300}&{-91.35000}&{R. Calcote}&{12.5}&{N}&{Y}&{}\\
+% {DeerPrint}&{CLHPRE12}&{46.36000}&{-91.61900}&{R. Calcote}&{26.5}&{N}&{Y}&{}\\
+% {FirstPine}&{CLHPRE13}&{46.65141}&{-91.23631}&{R. Calcote}&{13.5}&{N}&{Y}&{}\\
+% {Genos}&{CLHPRE14}&{45.92800}&{-92.08300}&{R. Calcote}&{39.5}&{N}&{Y}&{}\\
+% {Horseshoe}&{CLHPRE15}&{45.86180}&{-92.27860}&{R. Calcote}&{32.5}&{N}&{Y}&{}\\
+% {Jakes}&{CLHPRE16}&{46.56780}&{-91.30020}&{R. Calcote}&{69.5}&{N}&{Y}&{}\\
+% {LittleRound}&{CLHPRE17}&{46.01260}&{-92.22590}&{R. Calcote}&{29.75}&{N}&{Y}&{}\\
+% {Menke}&{CLHPRE18}&{45.87200}&{-92.34100}&{R. Calcote}&{17.5}&{N}&{Y}&{}\\
+% {Metz01}&{CLHPRE19}&{46.31800}&{-91.68800}&{R. Calcote}&{38.5}&{N}&{Y}&{}\\
+% {Perch}&{CLHPRE20}&{45.90360}&{-92.06090}&{R. Calcote}&{52.75}&{N}&{Y}&{}\\
+% {Sawdust}&{CLHPRE21}&{46.57128}&{-91.27224}&{R. Calcote}&{16.5}&{N}&{Y}&{}\\
+% {Tomahawk}&{CLHPRE22}&{45.92400}&{-91.96100}&{R. Calcote}&{59}&{N}&{Y}&{}\\
+% {Wade}&{CLHPRE23}&{45.98437}&{-92.16812}&{R. Calcote}&{25.5}&{N}&{Y}&{}\\
+% {Wagner}&{CLHPRE24}&{46.20300}&{-91.85800}&{R. Calcote}&{27.5}&{N}&{Y}&{}\\
+% {West8Mile}&{CLHPRE25}&{46.42300}&{-91.48000}&{R. Calcote}&{69.5}&{N}&{Y}&{}\\
+% {WestTwin}&{CLHPRE26}&{46.68380}&{-91.06300}&{R. Calcote}&{54.5}&{N}&{Y}&{}\\
+% {Arrowhead}&{CLHPRE27}&{45.90634}&{-89.69024}&{R. Calcote}&{28.75}&{N}&{Y}&{}\\
+% {BigStGermain}&{CLHPRE28}&{45.93430}&{-89.51979}&{R. Calcote}&{28.25}&{N}&{Y}&{}\\
+% {Eagle}&{CLHPRE29}&{45.93222}&{-89.20819}&{R. Calcote}&{44.75}&{N}&{Y}&{}\\
+% {LittleSpider}&{CLHPRE30}&{45.97115}&{-89.70842}&{R. Calcote}&{25.25}&{N}&{Y}&{}\\
+% {Lost}&{CLHPRE31}&{45.96554}&{-89.48312}&{R. Calcote}&{24.25}&{N}&{Y}&{}\\
+% {Otter}&{CLHPRE32}&{45.94293}&{-89.22145}&{R. Calcote}&{26.75}&{N}&{Y}&{}\\
+% {CircleLily}&{CLHPRE33}&{46.15909}&{-89.91917}&{R. Calcote}&{45.25}&{N}&{Y}&{}\\
+% {Round}&{CLHPRE34}&{46.17186}&{-89.71024}&{R. Calcote}&{34.75}&{N}&{Y}&{}\\
+% {BigPortage}&{CLHPRE35}&{46.12560}&{-89.28492}&{R. Calcote}&{44.75}&{N}&{Y}&{}\\
+% {Moon}&{CLHPRE36}&{45.91788}&{-89.43436}&{R. Calcote}&{23.25}&{N}&{Y}&{}\\
+% {Nelson}&{CLHPRE37}&{45.93042}&{-89.35716}&{R. Calcote}&{23.75}&{N}&{Y}&{}\\
+% {Oxbow}&{CLHPRE38}&{46.24088}&{-89.68285}&{R. Calcote}&{31.75}&{N}&{Y}&{}\\
+% {Vandercook}&{CLHPRE39}&{45.98215}&{-89.68521}&{R. Calcote}&{35.25}&{N}&{Y}&{}\\
+% {Day}&{CLHPRE40}&{46.06342}&{-89.70490}&{R. Calcote}&{37.75}&{N}&{Y}&{}\\
+% {Katinka}&{CLHPRE41}&{46.20538}&{-89.79261}&{R. Calcote}&{19.75}&{N}&{Y}&{}\\
+% {Nebish}&{CLHPRE42}&{46.05198}&{-89.59071}&{R. Calcote}&{22.75}&{N}&{Y}&{}\\
+% {Spruce}&{CLHPRE43}&{46.05323}&{-89.56696}&{R. Calcote}&{33.75}&{N}&{Y}&{}\\
+% {Pallette09F}&{CLHPRE44}&{46.06652}&{-89.60388}&{R. Calcote}&{25.85}&{N}&{Y}&{}\\
+% {Allequash07X}&{CLHPRE45}&{46.03694}&{-89.62884}&{R. Calcote}&{34.25}&{N}&{Y}&{}\\
+% {BigMuskie07X}&{CLHPRE46}&{45.92086}&{-89.69964}&{R. Calcote}&{39.75}&{N}&{Y}&{}\\
+% {Crystal07X}&{CLHPRE47}&{46.15675}&{-89.17803}&{R. Calcote}&{19.25}&{N}&{Y}&{}\\
+% {Sparkling07X}&{CLHPRE48}&{46.00865}&{-89.69970}&{R. Calcote}&{31.25}&{N}&{Y}&{}
+%   \end{longtable}
+% \end{landscape}
+
+
+% \pgfplotstableset{
+% }
+
+
+ % \begin{table}[h!]
+ %  \begin{center}
+ %    \caption{XXX.}
+ %    \label{table1}
+    \pgfplotstabletypeset[
+      begin table=\begin{landscape}\begin{longtable},
+      end table=\end{longtable}\end{landscape},
+      multicolumn names, % allows to have multicolumn names
+      col sep=comma, % the seperator in our .csv file
+      font=\small,
+       display columns/0/.style={string type},
+      display columns/1/.style={string type},
+%      display columns/0/.style={string type},
+%      display columns/0/.style={string type},
+      display columns/4/.style={string type},
+%      display columns/0/.style={string type},
+      display columns/6/.style={string type},
+      display columns/7/.style={string type},
+      display columns/8/.style={string type},
+      empty cells with=\ ,
+      every head row/.style={
+		before row={\toprule},
+		after row={\midrule\endhead}},
+		every last row/.style={after row=\bottomrule\\
+\caption{This is a Table with Data}\\%
+                            \label{tab:DataTable}\\%
+}, % rule at bottom
+    ]{../../stepps-data/data/meta_2015-07-03.csv} % filename/path to file
+%   \end{center}
+% \end{table}
+
 \begin{table}
 \begin{center}
-\begin{tabular}{ccc} 
+\begin{tabular}{cccc} 
 \toprule
-Kernel    & Model                          & WAIC  \\ \midrule
-Gaussian  & Base                           & 13115 \\
-Gaussian  & Variable $\gamma$              & 13053 \\
-Gaussian  & Variable $\psi$                & 13038 \\   
-Gaussian  & Variable $\psi$ and $\gamma$   & 12953 \\
-Power law & Base                           & 12853 \\
-Power law & Variable $\gamma$              & 12789 \\
-Power law & Variable $a$                   & 12702 \\
-Power law & Variable $a$ and $b$           & $b$ EPC   \\
-Power law & Variable $a$ and $\gamma$      & 12690 \\  
-Power law & Variable $a$, $b$ and $\gamma$ & $b$ EPC   \\
+Kernel    & Model                          & WAIC ($\times 10^{-4}$) & Dissimilarity \\ \midrule
+Gaussian  & Base                           & 1.312   & 2062 \\
+Gaussian  & Variable $\gamma$              & 1.310   &  -   \\
+Gaussian  & Variable $\psi$                & 1.304   &  -   \\   
+Gaussian  & Variable $\psi$ and $\gamma$   & 1.295   & 2078 \\
+Power law & Base                           & 1.285   & 1979 \\
+Power law & Variable $\gamma$              & 1.279   &  -   \\
+Power law & Variable $a$                   & 1.270   &  -   \\
+Power law & Variable $a$ and $b$           & $b$ EPC &  -   \\
+Power law & Variable $a$ and $\gamma$      & 1.269   & 2044 \\  
+Power law & Variable $a$, $b$ and $\gamma$ & $b$ EPC &  -   \\
 \bottomrule
 \end{tabular}
-\caption{Wantanabe-Akaike Information Criterion (WAIC) values for
-  eight candidate models. EPC denotes the exchangeable prior collapse
-  for the indicated parameter. Models that use the Power law kernel
-  have lower WAIC values.}
+\caption{XXX Goodness-of-fit measures for both the calibration and the
+  prediction model for different underlying dispersal
+  formulations. Wantanabe-Akaike Information Criterion (WAIC) values
+  for the candidate models. EPC denotes an exchangeable prior collapse
+  for the indicated parameter. Overall, models with the Power law
+  kernel have lower WAIC values.}
 \end{center}
-\label{table:WAIC}
+\label{table:GOF}
 \vspace{2cm}
 \end{table}
-
-
-% \begin{table}
-% \begin{center}
-% \begin{tabular}{ccccccccccccc} 
-% \toprule
-% Model & Ash & Beech & Birch & Elm & Hemlock & Maple & Oak & Other conifer &  Other hardwood & Pine & Spruce & Tamarack \\ \midrule
-% Gaussian base      & multicolumn{12}{*}{0.21} \\   
-% Power law base     & & multicolumn{12}{*}{0.07} \\   
-% Gaussian variable  & 0.06 (0.01, 0.15) & 0.31 (0.13, 0.52) & 0.10 (0.05, 0.16) & 0.14 (0.07, 0.22) & 0.46 (0.37, 0.56) & 0.18 (0.10, 0.28) & 0.24 (0.18, 0.30) & 0.09 (0.01, 0.19) & 0.05 (0.01, 0.09) & 0.25 (0.21, 0.28) & 0.23 (0.13, 0.34) & 0.44 (0.23, 0.65) \\   
-% Power law variable & 0.03 (3.55e-4, 0.11) & 0.17 (0.01, 0.49) & 0.03 (5.69e-4, 0.08) & 0.17 (0.09,0.24)& 0.27 (0.09, 0.45) & 0.20 (0.08, 0.30) & 0.05 (2.60e-3, 0.13) & 0.04 (3.23e-4, 0.15) & 0.05 (1.58e-3, 0.10) & 0.02 (3.11e-3, 0.05) & 0.14 (0.02, 0.29) & 0.37 (0.02, 0.62) \\   \bottomrule
-% \end{tabular}
-% \caption{Estimates of the local versus non-local parameter $\gamma$ for the four considered models, which include the gaussian kernel and power-law kernel base models, the variable gaussian model in which $\psi$ and $\gamma$ both vary by taxon, and the variable power law kernel model in which $a$ and $\gamma$ vary by taxon.}
-% \end{center}
-% \label{table:gamma}
-% \vspace{2cm}
-% \end{table}
 
 \begin{table}
 \begin{center}
@@ -129,3 +389,26 @@ Other hardwood & 264 & 448 & 252 & 476 \\
 \label{table:pollen_acc}
 \vspace{2cm}
 \end{table}
+
+
+\begin{table}
+\begin{center}
+\begin{tabular}{lr} 
+\toprule
+Underlying calibration model & Brier Score \\
+\midrule
+Base Gaussian      & 68.09 \\
+Base Power law     & 62.00 \\
+Variable Gaussian  & 68.82 \\
+Variable Power law & 66.37 \\
+ \bottomrule
+\end{tabular}
+\caption{Full Brier scores obtained by comparing the predicted
+  vegetation composition with different underlying calibration models
+  to the known vegetation composition.}
+\end{center}
+\label{table:brier}
+\vspace{2cm}
+\end{table}
+
+
