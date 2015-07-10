@@ -3,27 +3,27 @@ import subprocess
 
 runs = [ ('cal_g_Kpsi_Kgamma_EPs',
           './cal_g_Kpsi_Kgamma_EPs.exe \
-          sample num_warmup=250 num_samples=5000 save_warmup=1\
+          sample num_warmup=250 num_samples=2000 save_warmup=1\
           data file=../r/dump/cal_data_12taxa_mid_comp_ALL_v0.3.dump \
-          output file=../output/cal_g_Kpsi_Kgamma_EPs_ALL_v0.4.csv\
+          output file=../output/cal_g_Kpsi_Kgamma_EPs_ALL_v0.4c1.csv\
           random seed=42'),
          ('cal_g_Kpsi_EPs',
           './cal_g_Kpsi_EPs.exe \
-          sample num_warmup=250 num_samples=5000 save_warmup=1\
+          sample num_warmup=250 num_samples=2000 save_warmup=1\
           data file=../r/dump/cal_data_12taxa_mid_comp_ALL_v0.3.dump \
-          output file=../output/cal_g_Kpsi_EPs_ALL_v0.4.csv\
+          output file=../output/cal_g_Kpsi_EPs_ALL_v0.4c1.csv\
           random seed=42'),
          ('cal_g_Kgamma_EPs',
           './cal_g_Kgamma_EPs.exe \
-          sample num_warmup=250 num_samples=5000 save_warmup=1\
+          sample num_warmup=250 num_samples=2000 save_warmup=1\
           data file=../r/dump/cal_data_12taxa_mid_comp_ALL_v0.3.dump \
-          output file=../output/cal_g_Kgamma_EPs_ALL_v0.4.csv\
+          output file=../output/cal_g_Kgamma_EPs_ALL_v0.4c1.csv\
           random seed=42'),
          ('cal_g',
          './cal_g.exe \
-          sample num_warmup=250 num_samples=5000 save_warmup=1\
+          sample num_warmup=250 num_samples=2000 save_warmup=1\
           data file=../r/dump/cal_data_12taxa_mid_comp_ALL_v0.3.dump \
-          output file=../output/cal_g_v0.4.csv\
+          output file=../output/cal_g_ALL_v0.4c1.csv\
           random seed=42')
 ]
 
