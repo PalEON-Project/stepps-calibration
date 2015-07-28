@@ -730,25 +730,28 @@ our current understanding.
 In the previous studies of pollen-vegetation relationships, pollen
 productivity is quantified in several ways. In linear regression
 models, pollen and vegetation proportions are related according to a
-linear model \citep{XXX}. In these linear models, the slope
-coefficient accounts for differences in pollen productivity among taxa
-but also includes the effects of dispersal. The degree to which these
-effects are confounded in the slope coefficient depends on the nature
-of the vegetation sampling; in general, the larger the area of sampled
-vegetation, the more likely it is that productivity and dispersal are
-confounded, although we note that this is also highly dependent on the
-size of the sedimentary basin. In the Extended R-value (ERV) model,
-deposited pollen is a function of nearby vegetation composition, plus
-a background pollen source \citep{XXX}. The $\alpha$-slope coefficient
-that relates deposited pollen from nearby sources to nearby vegetation
-measures productivity, but as in the linear regression model, is also
-confounded by dispersal processes to some degree. With the goal of
-quantifying unconfounded pollen productivity, pollen dispersal biases
-can be removed from the $\alpha$-slope coefficients estimated from the
-ERV model \citep{XXX}. We compare our productivity estimates $\phi_p$
-to pollen productivity estimates (PPEs) determined by each of the
-above methods. For ease of comparison, each set of PPEs is rescaled to
-the $[0,1]$ interval.
+linear model \citep{bradshaw1985relationships, jackson1990}. In these
+linear models, the slope coefficient accounts for differences in
+pollen productivity among taxa but also includes the effects of
+dispersal. The degree to which these effects are confounded in the
+slope coefficient depends on the nature of the vegetation sampling; in
+general, the larger the area of sampled vegetation, the more likely it
+is that productivity and dispersal are confounded, although we note
+that this is also highly dependent on the size of the sedimentary
+basin. In the Extended R-value (ERV) model, deposited pollen is a
+function of nearby vegetation composition, plus a background pollen
+source \citep{prentice1986, prentice1987quantitative,
+  marquer2014holocene, brostrom2008pollen}. The $\alpha$-slope
+coefficient that relates deposited pollen from nearby sources to
+nearby vegetation measures productivity, but as in the linear
+regression model, is also confounded by dispersal processes to some
+degree. With the goal of quantifying unconfounded pollen productivity,
+pollen dispersal biases can be removed from the $\alpha$-slope
+coefficients estimated from the ERV model
+\citep{sugita1999landscape}. We compare our productivity estimates
+$\phi_p$ to pollen productivity estimates (PPEs) determined by each of
+the above methods. For ease of comparison, each set of PPEs is
+rescaled to the $[0,1]$ interval.
 
 Comparing pollen dispersal estimates with our established
 understanding of dispersal is less straightforward. In STEPPS,
@@ -778,20 +781,19 @@ The goal is to make predictions based on sediment pollen data. The
 model is similar to the calibration model, in which we defined the
 relationship between vegetation composition and sediment pollen. Now
 we would like to make predictions in the absence of composition data,
-using the calibration process parameter estimate. The vegetation
+using the calibration process parameter estimates. The vegetation
 composition now becomes an unknown parameter, with a defined spatial
 structure that we assign. This assigned spatial structure comes from
 the composition calibration data, and constrains the vegetation
 composition by quantifying the smoothness of compositional changes on
-the landscape. 
+the landscape.
 
-The structure of the relationship between the pollen counts and
-vegetation is identical to Equations~\ref{eq:arriving} \& \ref{eq:DM},
-but in the prediction model the underlying vegetation process is not
-known. The underlying composition, denoted $g$ is modelled as a
-Gaussian process, where for the set of points in our domain, defined
-by the grid cell centers, $g$ follows a multivariate normal (MVN)
-distribution where
+More specifically, the structure of the relationship between the
+pollen counts and vegetation is identical to
+Equations~\ref{eq:arriving} \& \ref{eq:DM}. The underlying
+composition, denoted $g$ is modelled as a Gaussian process, where for
+the set of points in our domain, defined by the grid cell centers, $g$
+follows a multivariate normal (MVN) distribution where
 \begin{align*}
 \bm{g}_p \sim \text{MVN}(\mu_p, \eta_p \, \exp(-d/\rho_p)),
 \end{align*}
@@ -814,15 +816,17 @@ in the Upper Midwestern domain is computationally challenging, at
 least for a grid of the specified resolution. To overcome the burden
 of long computational times, we use a Gaussian predictive process
 model in which the process is estimated at specified knot locations
-and then scaled up to the full domain (see \cite{XXX}). Here we use
-120 knot locations, whose locations are determined using the kmeans
-clustering algorithm \cite{XXX}.
+and then scaled up to the full domain (see
+\cite{finley2009improving}). Here we use 120 knot locations, whose
+locations are determined using the kmeans clustering algorithm
+\cite{macqueen1967some}.
 
 Settlement-era vegetation composition is estimated for the subdomain
 composed of Minnesota, Wisconsin, and the Upper Peninsula of Michigan
 using the settlement-era sediment pollen calibration data set. The
 Michigan Lower Peninsula is disjoint and distant from the remainder of
-the domain and is therefore excluded. 
+the domain, and only a few pollen samples are available for this
+region, and it is therefore excluded from the prediction domain.
 
 The dissimilarity between the predicted composition for different
 underlying calibration models and the PLS data is determined by
@@ -845,20 +849,31 @@ the dissimilarity values over all locations.
 We cannot directly sample from the joint posterior, so we rely on MCMC
 methods. With the goal of achieving more efficient sampling with
 respect to the effective sample size per unit time, we used the Stan
-statistical modeling software to estimate parameters
+v2.6.2 statistical modeling software to estimate parameters
 \citep{stan-software:2014}. Stan implements a variant of the
 Hamiltonian Monte Carlo method called the No-U-Turn Sampler, which is
 a gradient based sampling method that uses these directional
 derivatives to make informed decisions about how to move along (and
-sample from) the joint posterior surface \citep{hoffman2011nuts}. 
+sample from) the joint posterior surface \citep{hoffman2011nuts}.
 
 The complex nature of the prediction model in combination with the
 domain size make it prohibitively slow to estimate prediction model
 parameters. To overcome this issue, we modified the Stan software to
-it call a function which analytically computes the model gradient,
-allowing us to use parallel computation via openMP.
+have it call a function that analytically computes the model gradient,
+thus avoiding the need to rely on automatic differentiation. This
+modification additionally allowed us to use parallel computation via
+openMP.
 
 All scripts are made publicly available on github (link).
+
+Ten candidate calibration models are considered; four Gaussian kernel
+variants, and six Power-law kernel variants. For each model, we run
+three chains using different random seeds and initial conditions with
+a warm-up of 250 iterations, followed by a sampling period of 2,000
+iterations. Warm-up iterations are discarded and not used in further
+analysis. Convergence is assessed using a multi-chain effective sample
+size estimator \citep{gelman2014bayesian, XXX}.
+
 
 % Our model was coded in the Stan bugs-like language, then converted
 % to C++ code using the Stan translator, compiled using GCC, and run
@@ -878,7 +893,9 @@ All scripts are made publicly available on github (link).
 
 \subsection{Expert elicitation of biostratigraphic evidence for European settlement and site suitability}
 
-Four experts participated in the elicitation exercise. For 59 out of
+Four experts participated in the elicitation exercise. All 185 sites
+for which there were pollen count time series were considered; only
+the before/after sites were omitted from this exercise. For 59 out of
 185 sites, the experts were in total agreement: they all identified
 the same pre-settlement sample (53 cases) or agreed that no such
 sample could be identified (6 cases). The remaining sites varied in
@@ -886,10 +903,10 @@ level of disagreement - in 79 cases, experts identified two samples;
 in 39 cases 3 pre-settlement samples were identified; and in 8 cases
 there was no agreement. These results confirm our hypothesis that
 identification of biostratigraphic markers is subject to variability
-between analysts and is the first to quantify this uncertainty. In
-Figure~\ref{fig:elicit}, pollen diagrams for two sites illustrate that
-in some cases the settlement horizon is quite prominent, while in
-other cases it is much less so.
+between analysts, and the exercise described is the first to quantify
+this uncertainty. In Figure~\ref{fig:elicit}, pollen diagrams for two
+sites illustrate that in some cases the settlement horizon is quite
+prominent, while in other cases it is much less so.
 
 Of the 6 sites that experts agreed had no discernible settlement
 signal, two of these sites were at Rice Lake, which is an anomalous
@@ -902,13 +919,14 @@ sites are bogs and marshes with local marshland non-arboreal plants
 growing at or near the coring location; these marshland plants may be
 swamping the signal from agricultural non-arboreal indicators.
 
-Based on these results, we were subsequently faced with the challenge
-of establishing site suitability criteria to determine which sites to
+Based on these results, we were faced with the challenge of
+establishing site suitability criteria to determine which sites to
 include in the calibration data set. Ideally, the now quantified
 pre-settlement sample uncertainty would be included into the modelling
-framework, but this option was rejected in favor of simplicity of the
-statistical model. Accordingly, we set rules for filtering suitable
-sites and assigning pre-settlement depths on expert determinations.
+framework. In favor of simplicity, here we use a single pre-settlement
+sample for each suitable site. Accordingly, we established criteria
+for determining site suitability and assigning a single pre-settlement
+depth.
 
 %% Based on these results, we faced the challenge of establishing site
 %% suitability criteria to determine which sites to include in the
@@ -926,18 +944,18 @@ sites and assigning pre-settlement depths on expert determinations.
 % assign pre-settlement depths in a systematic way based on the expert
 % determinations.
 
-Sites were considered unsuitable if: 1) a majority chose not to assign
-a pre-settlement sample (12 sites), or 2) if half of the experts chose
-not to assign a pre-settlement sample and the remaining half
-identified pre-settlement samples whose modelled ages were “far” from
-the approximate time of settlement (7 sites). For this second
-criterion, we looked to existing age-depth models associated with the
-pollen cores. Modelled ages for the identified pre-settlement depths
-were compared to 1850 AD, which serves as an approximate year of
-settlement in the upper Midwest.  Modeled ages were defined to be far
-from the expert-identified settlement horizon if discrepancies were
-greater than 500 years. All 19 unsuitable sites were excluded from further
-analysis.
+Sites were considered unsuitable if: 1) a majority (more than half)
+chose not to assign a pre-settlement sample (12 sites), or 2) if half
+of the experts chose not to assign a pre-settlement sample and the
+remaining half identified pre-settlement samples whose estimated ages
+were “far” from the approximate time of settlement (7 sites). For this
+second criterion, we used existing age-depth models associated with
+the pollen cores. Modelled ages for the identified pre-settlement
+depths were compared to 1850 AD, which serves as an approximate year
+of settlement in the upper Midwest.  Modeled ages were defined to be
+far from the expert-identified settlement horizon if discrepancies
+were greater than 500 years. All 19 unsuitable sites were excluded
+from further analysis.
 
 We also considered the representativeness of the pollen records. To
 reconstruct vegetation at a regional scale, we need pollen records
@@ -949,21 +967,21 @@ Ocheda Lake, a large but shallow glacial kettle lake in Southwestern
 Minnesota. The pollen diagrams indicate a relative spike in deposited
 \textit{Acer rubrum} pollen in the sample identified as being
 representative of pre-settlement composition. This is likely a
-misidentification - \text{Acer rubrum} is not found in Southwestern
+misidentification - \textit{Acer rubrum} is not found in southwestern
 Minnesota. It is possible that this pollen comes from \textit{Acer
   negra}, however this species is also uncommon, occuring only along
 riverbeds. Assuming that this pollen is indeed from the genus
 \textit{Acer}, we assume that the high count is a result of an
-\textit{Acer} falling into the sample. As such, at this site we set
-the \textit{Acer} pollen count to zero. The second anomalous site is
-Tamarack Creek, a Tamarack bog situated in an unglaciated wetland in
-what is know as the Driftless Area of western Wisconsin. This site is
-characterized by unusually high Tamarack pollen counts for the top 80
-cm of sediment. In particular, the sample classified as pre-settlement
-is composed of 40 \% Tamarack, while all other fossil pollen sites
-contain a maximum of 1 \% Tamarack. Tamarack bogs are not common in
-this region, so we set the \textit{Larix} count to zero to remove the
-local signal, and use the remaining counts to represent copmosition
+\textit{Acer} tree falling into the sample. As such, at this site we
+set the \textit{Acer} pollen count to zero. The second anomalous site
+is Tamarack Creek, a Tamarack bog situated in an unglaciated wetland
+in what is know as the Driftless Area of western Wisconsin. This site
+is characterized by unusually high Tamarack pollen counts for the top
+80 cm of sediment. In particular, the sample classified as
+pre-settlement is composed of 40 \% Tamarack, while all other fossil
+pollen sites contain a maximum of 1 \% Tamarack. Tamarack bogs are not
+common in this region, so we set the Tamarack count to zero to remove
+the local signal and use the remaining counts to represent composition
 from beyond the bog.
 
 %% There are two anomalous sites for which the model is
@@ -982,8 +1000,11 @@ of the stratigraphic data revealed several cores with top samples that
 were older (and deeper) than expected. Typically the date of a true
 core top corresponds with the year of sampling (with some margin of
 error). Further investigation uncovered that five of the cores
-included in our analysis were missing core tops. For Lake Mary, Green
-Lake, Chippewa Bog, and Ryerse Lake, we determined that the core tops
+included in our analysis were missing core tops. These errors are a
+result of data errors (that have since been addressed) in Neotoma, and
+the confusion associated with reporting depths as being either the
+distance from the lake or sediment surface. For Lake Mary, Green Lake,
+Chippewa Bog, and Ryerse Lake, we determined that the core tops
 pre-date settlement, and these sites were therefore discarded
 \citep{webb1971late, lawrenz1975}. A third site, Lake Kotiranta, had a
 core top previously identified as a representative pre-settlement
@@ -993,7 +1014,6 @@ data set \citep{wright1969}. Interestingly, for each of these cores,
 they made this judgment based solely on the stratigraphic diagram and
 no information about site characteristics, and likely assumed that the
 uppermost sample was in fact a surface sample).
-
 
 % After completion of the elicitation exercise, a follow-up examination
 % of the stratigraphic data revealed several cores with core tops with
@@ -1021,25 +1041,25 @@ side of caution and choose a depth that was more certainly
 pre-settlement (deeper) than one that represented post-disturbance
 times (more shallow), we ordered the sample depths from deepest to
 shallowest, and selected the second in this list (typically the second
-deepest, although sometimes the two largest sample depths were equal).
-The additional 48 before-after records were not candidates for the
-elicitation exercise (they consist of only a core top and
-pre-settlement sample). The decision to include this additional data
-in the calibration data set was debated - the pre-settlement samples
-for these cores were identified using different methodology (and
-analysts) than the remaining sites. In the end, we opted to include
-these samples as part of the calibration data set, based on our
-confidence in the data set and analysts and the recognition that
-including these sites would result in a substantive increase in sample
-size. In total we had 213 pollen samples in the Upper Midwest
-settlement-era calibration data set. A full list of sites which
-highlights those considered inadmissible is given in
+deepest, although sometimes the deepest when there was some agreement
+among experts).  The additional 48 before-after records were not
+candidates for the elicitation exercise (they consist of only a core
+top and pre-settlement sample). The decision to include these
+additional data in the calibration data set was debated - the
+pre-settlement samples for these cores were identified using different
+methodology (and analysts) than the remaining sites. In the end, we
+opted to include these samples as part of the calibration data set,
+based on our confidence in the data set and analysts and the
+recognition that including these sites would result in a substantive
+increase in sample size. In total we had 213 pollen samples in the
+Upper Midwest settlement-era calibration data set. A full list of
+sites that highlights those considered inadmissible is given in
 Table~\ref{table:site-data}.
 
 \subsection{Exploratory data analysis}
 
 To visually assess the relationship between sediment pollen and tree
-taxa, we compare pie maps which depict the relative proportions of
+taxa, we compare pie maps that depict the relative proportions of
 taxa across space (Figure~\ref{fig:pie}). In these maps the broadscale
 patterns are consistent with each other, with both pollen and PLS data
 capturing the major ecotones in the region
@@ -1056,57 +1076,50 @@ between pollen and vegetation is complex.
 To further assess spatial distributions of pollen versus PLS data, we
 plot the data as heat maps by taxon. Differences in extent of these
 distributions indicate pollen dispersal beyond species range
-limits. For example, for both birch and pine, both of which are known
-to be overrepresented in pollen records, the distributions of sediment
+limits. For example, for both birch and pine, which are known to be
+overrepresented in pollen records, the distributions of sediment
 pollen extend well beyond the boundaries of those shown in the PLS
-data (Figures~\ref{fig:maps_pp}).
+data (Figures~\ref{fig:maps_pp}, columns~1 and 2).
 
 \subsection{Modelling results}
 
-%\subsubsection{Posterior sampling and model selection}
-A total of ten models were considered; four Gaussian kernel variants,
-and six Power-law kernel variants (see Table~\ref{table:GOF}). For each
-model, three chains were run with a warm-up of 250 iterations,
-followed by a sampling period of 10,000 iterations. Warm-up iterations
-were not used in further analysis. For a total of 30,000 iterations
-per model, the effective sample sizes of the joint log posterior
-ranged from 12,247 for the Gaussian kernel base model to XXXX for the
-XXX model. Effective sample sizes for the joint log posterior and
-parameter posteriors are given in Table~\ref{table:GOF}. Trace plots for
-the joint log posterior show the efficient mixing achieved by the
-sampler (not shown).
+For the ten considered calibration models, the multi-chain effective
+sample sizes of the joint log posterior ranged from 12,247 for the
+Gaussian kernel base model to XXXX for the XXX model
+(Table~\ref{table:GOF}). In all ten cases, the three chains converge
+to the same posterior distributions. Trace plots illustrate the
+efficient mixing achieved by the sampler (not shown).
 
 To compare among models, we first assess the estimates of the
 hyperparameters for the exchangeable priors. All parameter and
 hyperparameter estimates support the use of taxon-specific parameter
-values, except for the power-law models which allow $b$ to vary by
+values, except for the power-law models that allow $b$ to vary by
 taxon. In these cases, the estimated variance for the exchangeable
-prior for $\log ( b )$ is small (9e-6 for the variable $a$ and $b$ case;
-1e-4 for the variable $a$, $b$, and gamma case). In addition, the 95 \%
-credible intervals for the estimate of $b_k$ for all $k$ overlap,
-supporting the conclusion that the values of $b_k$ are not
-statistically different. In light of this, we reject these two
-power-law kernel variable $b$ models. 
+prior for $\log ( b )$ is small (9e-6 for the variable $a$ and $b$
+case; 1e-4 for the variable $a$, $b$, and gamma case). In addition,
+the 95 \% credible intervals for the estimate of $b_k$ for all $k$
+overlap, supporting the conclusion that the values of $b_k$ are not
+statistically different. In light of this, we omit these two
+Power-law kernel variable $b$ models.
 
 Out of the remaining eight candidate models (four Gaussian kernel
 variants; four Power-law kernel variants) we compare the WAIC
 (Table~\ref{table:GOF}). According to the WAIC the power law kernel
 outperforms the Gaussian kernel - even the most flexible Gaussian
 model (variable $\psi$ and $\gamma$) results in a WAIC that is higher
-than the least flexible power law kernel model (base model). The power
+than the least flexible Power-law kernel model (base model). The power
 law kernel model with variable $a$ and $\gamma$ results in the lowest
 WAIC, indicating that it performs the best out of the suite of
-considered models. Depite the WAIC relative model rankings, assessing
-the effect the kernel formulations have on pollen production estimates
-and predictions is still of value. PVM results will be used to make
-vegetation composition predictions back through time, and these
-predictions are determined (in part) by the dispersal kernel.
+considered models. Despite the WAIC relative model rankings, it is
+still of interest to understand how different dispersal kernels affect
+pollen production and dispersal estimates, and vegetation composition
+predictions.
 
 In light of this, we continue to compare the two base models (Gaussian
-and power law), as well as the models with the lowest WAIC for each
+and Power-law), as well as the models with the lowest WAIC for each
 kernel type - the Gaussian variable $\psi$ and $\gamma$ model and the
 Power-law variable $a$ and $\gamma$ model (hereafter referred to as
-the variable Gaussian or Power-law models).
+the variable Gaussian and Power-law models).
 
 In Figure~\ref{fig:focal_scaled}, the raw pollen proportions are
 plotted against the vegetation proportions for each grid cell (red
@@ -1146,11 +1159,11 @@ closely along the 1:1 line. This indicates that, at least in our
 domain, non-local dispersal processes account for much of the pollen
 that arrive at any given location. For most taxa, the improvement that
 we gain by using more flexible models versus the base models is not
-qualitatively obvious. However, for Hemlock, there is an obvious
-improvement in our ability to predict sediment pollen with the more
-flexible models. Both base models underpredict Hemlock pollen at sites
-where there are relatively high proportions of Hemlock (although
-Hemlock pollen never exceeds 28\% at any site in our domain), but this
+qualitatively obvious (not shown). However, for hemlock, there is an
+obvious improvement in our ability to predict sediment pollen with the
+more flexible models. Both base models underpredict hemlock pollen at
+sites where there are relatively high proportions of hemlock (although
+hemlock pollen never exceeds 28\% at any site in our domain), but this
 is not the case for the variable Gaussian and Power-law models. This
 suggests that with the base models the relative contribution of local
 versus non-local hemlock pollen is estimated to be less than the true
@@ -1171,8 +1184,8 @@ uncertain values resulting from the variable Power-law model, the
 estimated values of $\phi$ form three distinct groups in $\phi$
 parameter space: low, intermediate, and high production
 (Figure~\ref{fig:phi}). The group of taxa with lowest production in
-decreasing order are beech, maple, fir, and tamarack. This
-low production pattern is evident in Figure~\ref{fig:preds}, where the
+decreasing order are beech, maple, fir, and tamarack. This low
+production pattern is evident in Figure~\ref{fig:preds}, where the
 representation of these taxa in the pollen records is consistently
 less than their representation on the landscape (except at a few
 anomalous ponds). Intermediate producers, again in decreasing order,
@@ -1180,13 +1193,13 @@ include other hardwood, oak, elm, hemlock, ash, and spruce. The high
 production group includes pine and birch, which can also be seen in
 Figure~\ref{fig:preds} by their propensity to be over-represented in
 the pollen record relative to the landscape. These results agree in
-general with \citep{prentice1986}, which analyzed the
-pollen-vegetation relationship for sites in Wisconsin and the Upper
-Peninsula of Michigan. In that work, pine and birch were identified as
-high producers/dispersers, while maple and tamarack were identified as
-low producers/dispersers. \citep{jackson1990} also found that pine and
+general with \citep{prentice1986}, who analyzed the pollen-vegetation
+relationship for sites in Wisconsin and the Upper Peninsula of
+Michigan. In that work, pine and birch were identified as high
+producers/dispersers, while maple and tamarack were identified as low
+producers/dispersers. \citep{jackson1990} also found that pine and
 birch were good dispersers with effective source areas of 1000m, while
-maple was found to have a much smaller source area indicating limited
+maple was found to have a much smaller source area, indicating limited
 dispersal.
 
 For the base models, the local versus non-local parameter $\gamma$ was
@@ -1216,57 +1229,55 @@ For the base Gaussian kernel case, the spread parameter $\psi$ was
 estimated to be $204\,(192, 215)$ km. In the variable Gaussian model
 $\psi$ estimates ranged from 152 for pine to 361 for Other
 hardwood. For many taxa, 95\% credible intervals are large; this is
-especially true for Tamarack, with a an estimated $\psi$ value of $230
-(128, 553)$. For the base power law model, the kernel parameters $a$
-and $b$ were estimated to be $0.01\,(8.29e-3, 0.01)$ and $2.03\,(2.00,
-2.12)$. For the variable Power-law model case, the estimated $b$ value
-was almost identical to the base model $2.06\,(2.00, 2.16)$. The $a$
-estimates ranged from $2.68e-3$ for beech to $0.203$ for elm.
+especially true for Tamarack ($\psi$ of $230\,(128, 553)$. For the
+base Power-law model, the kernel parameters $a$ and $b$ were estimated
+to be $0.01\,(0.00829, 0.02)$ and $2.03\,(2.00, 2.12)$. For the
+variable Power-law model, the estimated $b$ value was almost identical
+to the base model $2.06\,(2.00, 2.16)$. The $a$ estimates ranged from
+$0.00268$ for beech to $0.203$ for elm.
 
-The most intuitive way to assess how these parameters affect pollen
-dispersal is to plot the proportion of deposited pollen as a function
-of radius from the pollen source. So, we plot $\gamma + (1- \gamma)
-\sum_{s_j \neq s_i} w(s_i, s_j)$ for a hypothetical core ($i$)
-centered on our potential discretized domain as a function of
-radius. So, for a defined radius, cells are included in the non-local
-sum if the distance between $s_i$ and $s_j$ is less than or equal to
-this radius. Then for each taxon, we can plot cumulative density
-functions of the deposited pollen for each of the four considered
-models (Figure~\ref{fig:cdf}). We note that the plotted based model
-functions are identical for all taxa because in these models neither
-$\gamma$ nor the kernels vary by taxon (solid lines).  For the
-variable models, we can see the effects of changes in magnitude in
-both $\psi$ for the Gaussian kernel, and $a$ for the variable
-kernel. The CDFs for the Gaussian kernel models all have a sigmoidal
-shape, where smaller values of $\psi$ correspond with a steeper slope
+To assess how $\gamma$ and the kernel parameters affect pollen
+dispersal, we plot the proportion of deposited pollen as a function of
+radius from the pollen source. For a pollen source centered on the
+potential source area $\Omega$, we plot $\gamma + (1- \gamma)
+\sum_{s_j \neq s_i} w(s_i, s_j)$ as a function of radius from the
+source where cells are included in the non-local sum if the distance
+between $s_i$ and $s_j$ is less than or equal to this radius. For each
+taxon, we plot cumulative density functions (CDFs) of deposited pollen
+for the four considered models (Figure~\ref{fig:cdf}). Note that the
+CDFs for the base models do not vary by taxon (solid lines).  
+
+As seen in Figure~\ref{fig:cdf}, the base model CDFs have two points
+of intersection, indicating changing relative rates of accumulation.
+
+The CDFs for the Gaussian kernel models all have a sigmoidal shape,
+where smaller values of $\psi$ correspond with a steeper slope
 indicating that relatively more pollen is deposited close to the
-source. The contrast between the two most extreme $\psi$ values is
-seen when comparing pine (lowest $\psi$) and other hardwood (greatest
-$\psi$) variable Gaussian CDFs. For the variable Power-law model, for
-fixed $b$, larger values of $a$ result in a more sigmoidal shape that
-resembles the Gaussian kernel. This can be seen in the case of elm,
-where the two variable model CDFs are nearly identical. Again for
-fixed $b$, smaller values of $a$ result in a concave downward curve
-that shows that pollen is deposited closer to the source, but at a
-certain distance from the source - where the Gaussian and power law
-CDFs intersect - the cumulative pollen deposition is equal. To help
-with interpretation, we determined the radius from the source needed
-to capture 50\% and 90\% of the deposited pollen for each model and
-each taxon (Table~\ref{table:pollen_acc}). As seen in
-Figure~\ref{fig:cdf}, the CDFs for the two base models have two points
-of intersection, indicating changing relative rates of
-accumulation. The power law based model estimates a smaller radius
-needed to accumulate 50\% of the pollen, however, the Gaussian base
-model cdf asymptotes to one more quickly (shorter-tailed kernel). For
-the variable models, the taxon with the smallest radius from a pollen
-source needed to accumulate 50\% of the dispersed pollen was Hemlock
-(60 km for the variable Gaussian, and 28 km for the the variable power
-law), while other hardwood required the largest radius to accumulate
-the same percent (264 km for the variable Gaussian, 252 km for the
-variable Power-law). To capture 90\% of the dispersed pollen required
-radii of 216 km for pine up to 448 km for other hardwood for the
-variable Gaussian model, and 292 km for hemlock to 476 km for elm and
-other hardwood for the variable Power-law model.
+source. This effect can is most obvious when we contrast the variable
+Gaussian CDFs for pine (lowest $\psi$) and other hardwood (greatest
+$\psi$). For the variable Power-law model, for fixed $b$, larger
+values of $a$ result in a more sigmoidal shape that resembles the
+Gaussian kernel, as seem in the case of elm. Again for fixed $b$,
+smaller values of $a$ result in a concave downward curve indicating
+that more pollen is deposited closer to the source, but at a certain
+distance from the source - the farthest point from the source where
+the Gaussian and Power-law CDFs intersect - the cumulative pollen
+deposition is equal. To condense these results, we determined the
+radius from the source needed to capture 50\% and 90\% of the
+deposited pollen for each model and each taxon
+(Table~\ref{table:pollen_acc}). The radius needed to account for 50\%
+of the dispersed pollen is smaller for the Power-law base model that
+for the Gaussian base model. However, the CDF for the Gaussian base
+model asymptotes to one at a smaller radius than the Power-law base
+model (Gaussian base has a shorter-tailed kernel). For the variable
+models, the radius needed to capture 50\% of the dispersed pollen was
+smallest for hemlock (60 km for the variable Gaussian; 28 km for the
+the variable power law) and largest for other hardwood (264 km for the
+variable Gaussian; 252 km for the variable Power-law). To capture 90\%
+of the dispersed pollen required radii of 216 km for pine up to 448 km
+for other hardwood for the variable Gaussian model, and 292 km for
+hemlock to 476 km for elm and other hardwood for the variable
+Power-law model.
 
 % To assess the assumption that all taxa share a dispersal kernel with
 % spread controlled by the scalar $\psi$, we re-ran the model letting
@@ -1297,15 +1308,14 @@ other hardwood for the variable Power-law model.
 
 To visualize the dispersal patterns predicted by our model, we can
 estimate the proportion of deposited pollen by taxon for each grid
-cell in the domain (previously we were estimating deposited pollen
-only at lakes for which we had pollen data)
+cell in the domain (previously, as seen in
+Figures~\ref{fig:focal_scaled} and \ref{fig:preds}, we were estimating
+deposited pollen only at lakes for which we had pollen data)
 (Figures~\ref{fig:maps_pp}). These spatial maps help us understand how
-the models treat dispersal. Comparing these two figures illustrates
-the differences between these two models - the predicted sediment
-pollen maps for the variable Power-law model are much smoother. This
-is due to the increased accumulation of dispersed pollen at short
-distances relative to the Gaussian, which predicts that the fastest
-accumulation rate of dispersed pollen occurs farther from the source
+the models treat dispersal - the predicted sediment pollen maps for
+the variable Power-law model appear to be more smooth. This difference
+is due in part to the increased accumulation of dispersed pollen at
+short/intermediate distances relative to the variable Gaussian model
 (see Figure~\ref{fig:cdf}).
 
 We can also compare the predicted pollen maps with those depicting the
@@ -1319,41 +1329,44 @@ and as a result, we expect that the model will predict low amounts of
 maple pollen, which it does. To see how the model predicts dispersal
 by taxon, based on parameters estimated from that data, we can compare
 the vegetation and pollen ranges. The effects of dispersal are
-especially clear in the cases of pine and oak, where we see pollen
-dispersing well beyond the vegetation range limits.
+especially clear in the cases of pine and birch, where we see pollen
+dispersing beyond the vegetation range limits.
 
 \subsection{Comparing STEPPS productivity and dispersal to previous
   estimates}
 
-We compared the STEPPS productivity estimates, $\phi$, to sets of
-published PPEs for the considered taxa (Figure~\ref{fig:ppe}). The PPE
-data sets included in the comparison were slope coefficients in either
-a linear regression, ERV, or bias-corrected ERV model. These PPEs were
-also split into geographical regions based on the sampling locations,
-which were Upper Midwestern USA, Northeastern USA, and the European
+We compared the STEPPS variable Power-law model productivity
+estimates, $\phi$, to sets of published PPEs for the considered taxa
+(Figure~\ref{fig:ppe}). The PPE data sets included in the comparison
+were slope coefficients in either a linear regression, ERV, or
+bias-corrected ERV model. These PPEs were also split into geographical
+regions based on the sampling locations, which were Upper Midwestern
+USA, Northeastern USA, and the European
 continent. %A detailed description of the PPEs used in this comparison
 %is in Appendix~\ref{append}: Table~\ref{table:XXX}. 
 
-We find that the STEPPS productivity estimates and the PPEs from the
-Upper Midwest are most similar in terms of relative rank, however, we
-also see a discernible positive linear relationship between the STEPPS
-productivity estimates and those from the Northeastern USA. For the
-PPEs from the European continent the relationship is weak, although
-the both STEPPS and PPE estimates are in agreement that ash, elm,
-maple, and spruce are low producers. From these plots, we see that
-sets of PPEs from more distance locations (relative to the Upper
-Midwestern USA) are in less agreement with the STEPPS productivity
-estimates/rankings. The strength of the relationship between STEPPS
-estimates and PPEs is not strongly affected by the method used to
-estimate the PPEs.
+From these plots, we see that sets of PPEs from more distant locations
+(relative to the upper midwestern USA) are less in agreement with the
+STEPPS productivity estimates/rankings.  We find that the STEPPS
+productivity estimates and the PPEs from the upper midwest are most
+similar in terms of relative rank; however, we also see a discernible
+positive linear relationship between the STEPPS productivity estimates
+and those from the northeastern USA. For the PPEs from the European
+continent the relationship is weak, although both STEPPS and PPE
+estimates are in agreement that ash, elm, maple, and spruce are low
+producers. The strength of the relationship between STEPPS estimates
+and PPEs is not strongly affected by the method used to estimate the
+PPEs.
 
 Next, we compared our estimated 90\% capture radius, which we defined
 as the radius of the circle (centered at the pollen source) within
 which 90\% of the pollen is deposited, to published values of
-sedimentation velocity (Figure~\ref{fig:svs}). Sedimentation velocity
-values used in this comparison were found in \citet{jackson1999pollen}
-and \citet{matthias2014insights}; both of which include compilations
-of previously published values.
+sedimentation velocity for trees from continental Europe and North
+America within the same genus as the STEPPS taxa
+(Figure~\ref{fig:svs}). Sedimentation velocity values used in this
+comparison were found in \citet{jackson1999pollen} and
+\citet{matthias2014insights}, both of which include compilations of
+previously published values.
 
 %For a detailed description of the sedimentation
 %velocity values used in this comparison, see Appendix~\ref{append}:
@@ -1363,7 +1376,7 @@ We find that the STEPPS capture radius and sedimentation velocity are
 inversely related; a lower sedimentation velocity corresponds with a
 greater ability to travel farther from the source. There are several
 sedimentation velocities that do not fit this relationship: hemlock,
-maple, and spruce. For hemlock, and spruce to a lesser degree, we see
+maple, and spruce. For tamarack, and spruce to a lesser degree, we see
 large differences between the published sedimentation
 velocities. Sedimentation velocity is difficult to measure, and
 differences in measured velocities can can be a result of many
@@ -1378,8 +1391,8 @@ STEPPS and our current understanding of these processes.
 We estimated settlement-era vegetation composition based on the
 prediction model for four candidate calibration submodels (Gaussian
 base and variable; Power-law base and variable). Composition was
-estimated using the NUTS sampler with a warm-up period of 150
-iterations, followed by a sampling period of 1000
+estimated using a modified version of Stan with a warm-up period of
+150 iterations, followed by a sampling period of 1000
 iterations. Effective sample sizes were XXXX.
 
 Maps of the predicted settlement-era composition for each of the four
@@ -1398,16 +1411,15 @@ model and their uncertainty. For most taxa, the variable Power-law
 STEPPS composition predictions broadly match the compositional
 distributions in the PLS data. As expected, the STEPPS predictions
 appear more smooth, as a result of the continuous deterministic nature
-of the dispersal kernel. For some taxa, such as Pine, it appears as if
+of the dispersal kernel. For some taxa, such as pine, it appears as if
 STEPPS is able to better resolve local heterogeneity. This is
 consistent with our process parameter estimates, which indicate that
 Pine is a high producer, and limited disperser. For taxa which are
 more widely dispersed, such as Oak, we expect it to be more difficult
-for the model to resolve local heterogenities. The STEPPS model does
-is not able to adequately predict the Tamarack spatial
-distribution. This is not surprising, given the wide credible
-intervals estimated for the Tamarack dispersal and production
-parameters. 
+for the model to resolve local heterogenities. The STEPPS model is not
+able to adequately predict the Tamarack spatial distribution. This is
+not surprising, given the wide credible intervals estimated for the
+Tamarack dispersal and production parameters.
 
 Total dissimilarity scores were computed for each set of predictions
 (Table~\ref{table:GOF}). According to the Euclidean distance, the
