@@ -11,7 +11,7 @@ source('r/utils/simDataFuns.r')
 # load('r/dump/cal_data_12taxa_mid_comp_UMW_v0.2.rdata')
 
 # load('r/dump/cal_data_12taxa_mid_mi_sp.rdata')
-load('r/dump/cal_data_12taxa_mid_comp_ALL_v0.2.rdata')
+load('r/dump/cal_data_12taxa_mid_comp_ALL_v0.3.rdata')
 
 v = '0_3'
 # v = 'mi_sp'
@@ -28,6 +28,14 @@ y = y[,new.order]
 r = r[,new.order]
 colnames(r) = taxa
 
+col_list = c("#1F78B4", "#33A02C", "#E31A1C", "#6A3D9A", "#B15928", "#FF7F00", 
+             "#FFFF99", "#A6CEE3", "#B2DF8A", "#FB9A99", "#FDBF6F", "#CAB2D6")
+
+stepps_cols = data.frame(taxa=taxa, cols=col_list)
+save(stepps_cols, file='r/stepps_cols.rdata')
+
+taxa[which(taxa == 'OTHER.CONIFER')] = 'FIR'
+taxa[which(taxa == 'OTHER.HARDWOOD')] = 'OTHER HARDWOOD'
 ########################################################################################################
 ## pls pie map
 ########################################################################################################
@@ -126,29 +134,3 @@ pieMap(proportions = pollen_props,
        add_legend=TRUE,
        main_title='')
 dev.off()
-
-
-
-
-# #compute proportions
-# pls_props    = colSums(pls[,4:ncol(pls)], na.rm=TRUE)/sum(colSums(pls[,4:ncol(pls)], na.rm=TRUE))
-# pollen_props = colSums(pollen[,7:ncol(pollen)], na.rm=TRUE)/sum(colSums(pollen[,7:ncol(pollen)], na.rm=TRUE))
-# 
-# #
-# # make the plot!
-# #
-# 
-# # condense to 12 taxa
-# n = 12
-# pls_props_cond = c(pls_props[1:(n-1)], sum(pls_props[n:length(pls_props)]))
-# names(pls_props_cond)[n] = 'other'
-# 
-# pollen_props_cond = c(pollen_props[1:(n-1)], sum(pollen_props[n:length(pollen_props)]))
-# names(pollen_props_cond)[n] = 'other'
-# 
-# col_list = c("#1F78B4", "#33A02C", "#FF7F00", "#E31A1C", "#6A3D9A", "#B15928", 
-#              "#FFFF99", "#A6CEE3", "#B2DF8A", "#FB9A99", "#FDBF6F", "#CAB2D6")
-
-
-
-
