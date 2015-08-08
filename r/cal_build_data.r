@@ -237,7 +237,7 @@ coord_pot = expand.grid(coord_pot, coord_pot)
 d_pot = t(rdist(matrix(c(0,0), ncol=2), as.matrix(coord_pot, ncol=2))/dist.scale)
 
 # want a circular region
-idx_circ  = which(d_pot[,1] > 0.7)
+idx_circ  = which(d_pot[,1] < 0.7)
 coord_pot = coord_pot[idx_circ, ]
 d_pot     = d_pot[idx_circ, ]
 

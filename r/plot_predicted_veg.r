@@ -61,8 +61,9 @@ preds=melt(preds, id.vars=c('x', 'y', 'type'))
 ###############################################################################################################
 # fix names for plotting
 ###############################################################################################################
-levels(preds$variable)[levels(preds$variable) == 'OTHER.CONIFER'] = 'OTHER CON'
+levels(preds$variable)[levels(preds$variable) == 'OTHER.CONIFER'] = 'FIR'
 levels(preds$variable)[levels(preds$variable) == 'OTHER.HARDWOOD'] = 'OTHER HW'
+levels(preds$variable) = sort(levels(preds$variable))
 levels(preds$type) <- c('Variable PL', 'Variable G', 'Base PL', 'Base G')
 preds$type <- factor(preds$type, levels=c('Base G', 'Base PL', 'Variable G', 'Variable PL'))
 
@@ -91,7 +92,7 @@ preds$value_binned = cut(preds$value, breaks, include.lowest=TRUE, labels=FALSE)
 cols = tim.colors(length(breaks))
 
 p <- ggplot() + geom_tile(data=preds, aes(x=x, y=y, fill=factor(value_binned))) + 
-  scale_fill_manual(values = cols, labels=breaklabels, name='Proportions') + 
+  scale_fill_manual(values = cols, labels=breaklabels, name='Proportion') + 
   coord_fixed() 
 p <- add_map_albers(p, us.shp, limits, rescale)
 p <- p + facet_grid(variable~type)

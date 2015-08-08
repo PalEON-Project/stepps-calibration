@@ -49,7 +49,7 @@ colnames(centers_r_pred) = c('x', 'y')
 
 # abb longer taxon name for plotting
 taxa_abb = taxa
-taxa_abb[which(taxa_abb == 'OTHER.CONIFER')] = 'OTHER CON'
+taxa_abb[which(taxa_abb == 'OTHER.CONIFER')]  = 'FIR'
 taxa_abb[which(taxa_abb == 'OTHER.HARDWOOD')] = 'OTHER HW'
 
 ###############################################################################################################
@@ -120,6 +120,8 @@ dat_pp = data.frame(pp, centers_pp)
 dat_pp_melt = melt(dat_pp, id.vars=c('x', 'y'))
 dat_pp_melt = cbind(dat_pp_melt, type=rep('pollen', nrow(dat_pp_melt)))
 
+#################################################################################################################
+
 # bind all three data types together
 dat = rbind(dat_veg_melt, dat_pred_melt, dat_pp_melt)
 
@@ -175,10 +177,12 @@ limits <- get_limits(centers_veg)
 dat = rbind(dat_veg_melt, dat_pred_melt, dat_pred_sd_melt)
 
 # rename and reorder some factors
-levels(dat$variable)[levels(dat$variable) == 'OTHER.CON'] = 'OTHER CON'
+levels(dat$variable)[levels(dat$variable) == 'OTHER.CON'] = 'FIR'
 levels(dat$variable)[levels(dat$variable) == 'OTHER.HW'] = 'OTHER HW'
-levels(dat$type) <- c('PLS estimates', 'STEPPS veg', 'STEPPS SD')
-dat$type <- factor(dat$type, levels=c('PLS estimates', 'STEPPS veg', 'STEPPS SD'))
+# levels(dat$variable) = sort(levels(dat$variable))
+dat$variable = factor(dat$variable,sort(levels(dat$variable)))
+levels(dat$type) <- c('PLS data', 'STEPPS veg', 'STEPPS SD')
+dat$type <- factor(dat$type, levels=c('PLS data', 'STEPPS veg', 'STEPPS SD'))
 
 # # continuous
 # p <- ggplot() + geom_raster(data=dat, aes(x=x, y=y, fill=value)) + 
@@ -212,7 +216,7 @@ p <- p + theme(strip.text.y = element_text(size = rel(1.5)), strip.text.x = elem
 p <- p + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
 print(p)
 
-fname = paste0(getwd(), '/figures/map_assess_comp.pdf')
+fname = paste0(getwd(), '/figures/maps_PLS_STEPPS_SD.pdf')
 ggsave(p, file=fname, scale=3)#, width=14, units='in')
 # ggsave(p, file='figures/map_assess_comp.eps', scale=3)#, width=14, units='in')
 # ggsave(p, file='figures/map_assess_comp.png', scale=3)

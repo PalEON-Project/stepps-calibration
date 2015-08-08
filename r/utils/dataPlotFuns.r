@@ -72,7 +72,20 @@ pmap2 <-
 # plots pie charts for taxa composition on a map; note this is specialized to the STEPPS1 New England domain in the input args defaults, but should work for a different domain
 # proportions should be a n x p matrix with columns being different taxa
 # centers should be a n x 2 matrix of locations
-pieMap=function(proportions,centers,restrict=FALSE,inputRestricted=FALSE,xlim=c(-52000,940000),ylim=c(676000, 1484000),radius=NULL,scale=1,xlab='x',ylab='y', add_legend, main_title){
+pieMap=function(proportions, 
+                centers, 
+                restrict = FALSE,
+                inputRestricted = FALSE,
+                xlim = c(-52000,940000),
+                ylim = c(676000, 1484000),
+                radius = NULL,
+                scale = 1,
+                xlab = 'x',
+                ylab = 'y', 
+                add_legend, 
+                main_title,
+                col_list = c("#1F78B4", "#33A02C", "#E31A1C", "#6A3D9A", "#B15928", "#FF7F00", 
+                             "#FFFF99", "#A6CEE3", "#B2DF8A", "#FB9A99", "#FDBF6F", "#CAB2D6")){
   # plots multiple pie composition charts as a map
   if(!restrict){
     used=1:nrow(centers)
@@ -100,12 +113,9 @@ pieMap=function(proportions,centers,restrict=FALSE,inputRestricted=FALSE,xlim=c(
                            proj4string=CRS('+init=epsg:3175'))
   plot(us.shp, add=T, lwd=2)
   n=length(centers[,1])
-#     col_list = c("#1F78B4", "#33A02C", "#FF7F00", "#E31A1C", "#6A3D9A", "#B15928", 
-#              "#FFFF99", "#A6CEE3", "#B2DF8A", "#FB9A99", "#FDBF6F", "#CAB2D6")
-  col_list = c("#1F78B4", "#33A02C", "#E31A1C", "#6A3D9A", "#B15928", "#FF7F00", 
-               "#FFFF99", "#A6CEE3", "#B2DF8A", "#FB9A99", "#FDBF6F", "#CAB2D6")
-#   col_list = c("#1F78B4", "#E31A1C", "#33A02C", "#6A3D9A", "#B15928", "#FF7F00",
-#                "#FFFF99", "#B2DF8A", "#A6CEE3", "#FDBF6F", "#FB9A99", "#CAB2D6")
+
+#   col_list = c("#1F78B4", "#33A02C", "#E31A1C", "#6A3D9A", "#B15928", "#FF7F00", 
+#                "#FFFF99", "#A6CEE3", "#B2DF8A", "#FB9A99", "#FDBF6F", "#CAB2D6")
   cols     = col_list[1:ncol(proportions)]
 #   if (ncol(proportions)<13){
 #     cols     = col_list[1:ncol(proportions)]
@@ -152,7 +162,10 @@ pieMap=function(proportions,centers,restrict=FALSE,inputRestricted=FALSE,xlim=c(
 }
 
 # auxiliary fxn needed by pieMap
-pieAdd= function (x, center, labels = names(x), edges = 200, radius = 0.8, density = NULL, angle = 45, col = NULL, border = NULL, lty = NULL) # modified from the pie() function in R
+pieAdd= function (x, center, labels = names(x), edges = 200, radius = 0.8, density = NULL, 
+                  angle = 45, col = NULL, border = NULL, lty = NULL,
+                  col_list = c("#1F78B4", "#33A02C", "#E31A1C", "#6A3D9A", "#B15928", "#FF7F00", 
+                               "#FFFF99", "#A6CEE3", "#B2DF8A", "#FB9A99", "#FDBF6F", "#CAB2D6")) # modified from the pie() function in R
 {
   if (!is.numeric(x) || any(is.na(x) | x <= 0)) 
     stop("pie: `x' values must be positive.")
@@ -165,14 +178,8 @@ pieAdd= function (x, center, labels = names(x), edges = 200, radius = 0.8, densi
   nx <- length(dx)
   if (is.null(col)){ 
     col <- if (is.null(density)) 
-#             col_list = c("#1F78B4", "#33A02C", "#FF7F00", "#E31A1C", "#6A3D9A", "#B15928", 
-#                          "#FFFF99", "#A6CEE3", "#B2DF8A", "#FB9A99", "#FDBF6F", "#CAB2D6")
-    col_list = c("#1F78B4", "#33A02C", "#E31A1C", "#6A3D9A", "#B15928", "#FF7F00", 
-                 "#FFFF99", "#A6CEE3", "#B2DF8A", "#FB9A99", "#FDBF6F", "#CAB2D6")
-    
-
-#     col_list = c("#1F78B4", "#E31A1C", "#33A02C", "#6A3D9A", "#B15928", "#FF7F00",
-#                  "#FFFF99", "#B2DF8A", "#A6CEE3", "#FDBF6F", "#FB9A99", "#CAB2D6")
+#     col_list = c("#1F78B4", "#33A02C", "#E31A1C", "#6A3D9A", "#B15928", "#FF7F00", 
+#                  "#FFFF99", "#A6CEE3", "#B2DF8A", "#FB9A99", "#FDBF6F", "#CAB2D6")
     cols     = col_list[1:nx]
 #     if (ncol(proportions)<13){
 #       cols     = col_list[1:nx]
