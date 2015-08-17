@@ -58,21 +58,6 @@ post = rstan::extract(fit, permuted=FALSE, inc_warmup=FALSE)
 #####################################################################################
 # read in data and source utils
 #####################################################################################
-# npars   = K # always have K phis
-# if (kernel=='gaussian'){
-#   if (one_psi){ npars = npars + 1 } else { npars = npars + K}
-#   if (one_gamma){ npars = npars + 1 } else { npars = npars + K}
-#   if (EPs & !one_psi){ npars = npars + 2} # mu and sigma
-#   if (EPs & !one_gamma){ npars = npars + 2 + K} # mu and sigma, plus log_gamma
-# } else if (kernel=='pl'){
-#   if (one_gamma){npars = npars + 1} else {npars = npars + K}
-#   if (one_a){npars = npars + 1} else {npars = npars + K}
-#   if (one_b){npars = npars + 1} else {npars = npars + K}
-#   if (EPs & !one_gamma){ npars = npars + 2} # mu and sigma, plus log_gamma
-#   if (EPs & !one_a){ npars = npars + 2 + K} # mu and sigma, plus log_a
-#   if (EPs & !one_b){ npars = npars + 2 + K} # mu and sigma, plus log_b
-# }
-
 npars   = K # always have K phis
 if (kernel=='gaussian'){
   if (one_psi){ npars = npars + 1 } else { npars = npars + K}
@@ -88,7 +73,6 @@ if (kernel=='gaussian'){
   if (EPs & !one_b){ npars = npars + 2 } # mu and sigma, plus log_b
 }
 
-
 # phi <- extract(fit, "phi")$phi
 # phi <- extract(fit, "psi")$psi
 
@@ -98,6 +82,16 @@ print(fit)
 summary(fit)$summary[,'mean'][par_idx]
 ess(fit)
 trace_plots(fit, npars, N_cores, suff, save_plots=save_plots, fpath=path_figs1)
+
+# compare phi and a for variable PL
+col_names = sapply(strsplit(colnames(post[,1,]), '\\['), function(x) x[[1]][1])
+a   = post[,1,which(col_names == 'a')]
+phi = post[,1,which(col_names == 'phi')]
+
+plot(a[,2]/mean(a[,2]), type='l')
+lines(phi[,2]/mean(phi[,2]), col='blue')
+
+# plot(a[,2]+phi[,2], type='l')
 
 print(waic(fit))
 print(aic(fit, npars))

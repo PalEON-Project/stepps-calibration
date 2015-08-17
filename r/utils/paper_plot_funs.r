@@ -1,5 +1,11 @@
 plot_pollen_preds_paper <- function(dat, path_figs, type) {
   
+#   levels(dat$taxon)[levels(dat$taxon) == "OTHER.CONIFER"] = "OTHER CONIFER"
+  levels(dat$taxon)[levels(dat$taxon) == "OTHER.CONIFER"] = "FIR"
+  levels(dat$taxon)[levels(dat$taxon) == "OTHER.HARDWOOD"] = "OTHER HARDWOOD"
+  
+  dat$taxon = factor(dat$taxon, levels = sort(levels(dat$taxon)))
+  
   p <- ggplot(dat) + geom_point(data=dat, mapping=aes(x=veg, y=data, shape=3), colour='red') 
   p <- p + scale_shape_identity()
   p <- p + geom_point(data=dat, mapping=aes(x=pred, y=data, shape=16), colour="gray21") + 
@@ -18,6 +24,13 @@ plot_pollen_preds_paper <- function(dat, path_figs, type) {
 }
 
 plot_pollen_phi_scaled_paper <- function(dat, path_figs, type) {
+  
+#   levels(dat$taxon)[levels(dat$taxon) == "OTHER.CONIFER"] = "OTHER CONIFER"
+  levels(dat$taxon)[levels(dat$taxon) == "OTHER.CONIFER"] = "FIR"
+  levels(dat$taxon)[levels(dat$taxon) == "OTHER.HARDWOOD"] = "OTHER HARDWOOD"
+  
+  dat$taxon = factor(dat$taxon, levels = sort(levels(dat$taxon)))
+  
   # plot the phi scaled veg versus 
   p <- ggplot(dat) + geom_point(data=dat, mapping=aes(x=veg, y=data, shape=3), colour='red') 
   p <- p + scale_shape_identity()

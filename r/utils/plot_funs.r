@@ -620,19 +620,6 @@ theme_clean <- function(plot_obj){
   return(plot_obj)
 }
 
-# add_map_albers <- function(plot_obj, map_data=us.fort, limits){
-#   p <- plot_obj + geom_path(data=map_data, aes(x=long, y=lat, group=group),  colour='grey55') + 
-#     #     scale_x_continuous(limits = c(min(umw.coord$x, na.rm=TRUE), max(umw.coord$x, na.rm=TRUE))) +
-#     #     scale_y_continuous(limits = c(min(umw.coord$y, na.rm=TRUE), max(umw.coord$y, na.rm=TRUE)))#, colour = "black", size = 1, fill = "white", aes(x=long, y=lat, group = group))
-#     # #   
-#     #     scale_x_continuous(limits = c(min(dat[,1], na.rm=TRUE), max(dat[,1], na.rm=TRUE))) +
-#     #     scale_y_continuous(limits = c(min(dat[,2], na.rm=TRUE), max(dat[,2], na.rm=TRUE)))
-#     scale_x_continuous(limits = limits$xlims*1000000) +
-#     scale_y_continuous(limits = limits$ylims*1000000) #+ coord_map("albers")
-#   return(p)
-#   
-# }
-
 get_limits <- function(centers){
   xlo = min(centers[,1])
   xhi = max(centers[,1])

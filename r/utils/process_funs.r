@@ -387,6 +387,127 @@ dispersal_decay <- function(post, dmat, sum_w, radius, run, taxa){
   return(r_int)
 }
 
+#build_sumw_pot_ci(post, K, N_pot, d_pot, run)
+# build the total potential neighborhood weighting
+build_sumw_pot_ci <- function(post, K, N_pot, d_pot, run){
+  
+  kernel = run$kernel
+  
+  niter = dim(post)[1]
+  sum_w = array(NA, c(K, niter))
+  
+  col_names = colnames(post[,1,])
+  par_names = unlist(lapply(col_names, function(x) strsplit(x, "\\[")[[1]][1]))
+  
+  if (kernel=='gaussian'){
+    one_psi = run$one_psi
+    if (one_psi){
+      psi   = replicate(K, post[,1,which(par_names == 'psi')])
+    } else {
+      psi   = post[,1,which(par_names == 'psi')]
+    }
+    
+    for (i in 1:niter)
+      for (k in 1:K)
+        sum_w[k,i] = sum(d_pot[,2] * exp(-d_pot[,1]^2/psi[i,k]^2))
+    
+  } else if (kernel=='pl'){
+    one_a = run$one_a
+    if (one_a){
+      a = replicate(K, post[,1,which(par_names == 'a')])
+    } else {
+      a = post[,1,which(par_names == 'a')]
+    }
+    
+    one_b = run$one_b
+    if (one_b){
+      b = replicate(K, post[,1,which(par_names == 'b')])
+    } else {
+      b = post[,1,which(par_names == 'b')]
+    }
+    for (i in 1:niter)
+      for (k in 1:K)
+        sum_w[k,i] = sum( d_pot[,2] * (b[i,k]-1) * (b[i,k]-2) / (2 * pi * a[i,k]  * a[i,k]) * 
+                            (1 + d_pot[,1] / a[i,k])^(-b[i,k]) )
+  }
+  return(sum_w)
+}
+
+#predicted pollen based on weighted neighborhoods using estimated pars
+# dispersal_decay(post, d_pot, sum_w, radius/rescale, run, taxa)
+dispersal_decay_ci <- function(post, dmat, sum_w, radius, run, taxa){
+  
+  kernel = run$kernel
+  one_gamma = run$one_gamma
+  if (kernel == 'gaussian'){
+    one_psi = run$one_psi
+  } else if (kernel == 'pl'){
+    one_a = run$one_a
+    one_b = run$one_b
+  }
+  
+  rescale = 1e6
+  niter   = dim(post)[1]
+  K       = ncol(r)
+  N_cells = nrow(d)
+  
+  w = array(NA, c(K, nrow(dmat), niter))
+  
+  col_names = colnames(post[,1,])
+  par_names  = unlist(lapply(col_names, function(x) strsplit(x, "\\[")[[1]][1]))
+  
+  phi   = post[,1,which(par_names == 'phi')]
+  if (one_gamma){
+    gamma = replicate(K, post[,1,which(par_names == 'gamma')])
+  } else {
+    gamma = post[,1,which(par_names == 'gamma')]
+  }
+  
+  if (kernel=='gaussian'){
+    if (one_psi){
+      psi   = replicate(K, post[,1,which(par_names == 'psi')])
+    } else {
+      psi   = post[,1,which(par_names == 'psi')]
+    }
+    for (i in 1:niter){
+      for (k in 1:K){
+        w[k,,i] = dmat[,2] * exp(-(dmat[,1] * dmat[,1])/(psi[i,k] * psi[i,k]))
+      }
+    }
+  } else if (kernel=='pl'){
+    if (one_a){
+      a = replicate(K, post[,1,which(par_names == 'a')])
+    } else {
+      a = post[,1,which(par_names == 'a')]
+    }
+    if (one_b){
+      b = replicate(K, post[,1,which(par_names == 'b')])
+    } else {
+      b = post[,1,which(par_names == 'b')]
+    }
+    for (i in 1:niter){
+      for (k in 1:K){
+        w[k,,i] = dmat[,2] * (b[i,k]-1) * (b[i,k]-2) / (2 * pi * a[i,k]  * a[i,k]) * (1 + dmat[,1] / a[i,k]) ^ (-b[i,k])
+      }
+    }
+  }
+  
+  r_int  = array(NA, c(length(radius), K, niter) ) #vector(length=length(radius), mode='numeric')
+  #   C_test = sum(w)
+  colnames(r_int) = taxa
+  
+  for (i in 1:niter){
+    for (rad in 1:length(radius)){
+      for (k in 1:K){
+        idx_int    = which(dmat[,1]<radius[rad])#/rescale)
+        sum_w_int  = sum(w[k, idx_int, i])
+        r_int[rad,k,i] = gamma[i,k] + (1-gamma[i,k]) / sum_w[k,i] * sum_w_int     
+      }
+    }
+  }
+  return(r_int)
+}
+
 
 #scale veg props in focal cell based on phi
 phi_scale_veg <- function(post, N_cores, r, idx_cores){
