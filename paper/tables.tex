@@ -1,82 +1,94 @@
+\singlespacing
+
+% % \pgfplotstableset{
+% % }
 
 
-% \pgfplotstableset{
-% }
-
-
- % \begin{table}[h!]
- %  \begin{center}
- %    \caption{XXX.}
- %    \label{table1}
+%  % \begin{table}[h!]
+%  %  \begin{center}
+%  %    \caption{XXX.}
+%  %    \label{table1}
 
 
 
-    \pgfplotstabletypeset[
-      begin table=\begin{landscape}\begin{longtable},
-      end table=\caption{A full list of sediment pollen sites in the %
-                    Upper Midwestern USA considered for inclusion in %
-                    the calibration data set. Meta data provided %
-                    includes site name (Site), Neotoma or given %
-                    identification number (ID), latitude (Lat) and %
-                    longitude (Long), principal investigator (PI), %
-                    depth of the settlement-era pollen sample (Depth; %
-                    may be recorded as either depth from upper most %
-                    sediment layer, or from lake surface), an %
-                    indication if the dataset came from Neotoma %
-                    (Neotoma), an indication as to whether the dataset %
-                    is included in the final calibration data set %
-                    (Calibration), and in the case a site is not %
-                    included (Calibration value of N), then a note %
-                    indication the reason for inadmissibility %
-                    (Notes). The reasons for inadmissibility are: A) %
-                    Three or four experts did not assign a %
-                    pre-settlement sample; B) Two experts did not %
-                    assign a pre-settlement sample, and the two %
-                    assigned pre-settlement samples were at least 300 %
-                    years away from 1850 according to the default %
-                    age-depth models; C) No core top.} %
-                    \label{table:site-data}\end{longtable}\end{landscape},
-      multicolumn names,
-      col sep=comma,
-      font=\small,
-      display columns/0/.style={string type},
-      display columns/1/.style={string type},
-      display columns/4/.style={string type},
-      display columns/6/.style={string type},
-      display columns/7/.style={string type},
-      display columns/8/.style={string type},
-      empty cells with=\ ,
-      every head row/.style={
-		before row={\toprule},
-		after row={\midrule\endhead}},
-      every last row/.style={after row={\bottomrule\\}},
-    ]{../../stepps-data/data/meta_v3.csv}
+%     \pgfplotstabletypeset[
+%       begin table=\begin{landscape}\begin{longtable},
+%       end table=\caption{A full list of sediment pollen sites in the %
+%                     Upper Midwestern USA considered for inclusion in %
+%                     the calibration data set. Meta data provided %
+%                     includes site name (Site), Neotoma or given %
+%                     identification number (ID), latitude (Lat) and %
+%                     longitude (Long), principal investigator (PI), %
+%                     depth of the settlement-era pollen sample (Depth; %
+%                     may be recorded as either depth from upper most %
+%                     sediment layer, or from lake surface), an %
+%                     indication if the dataset came from Neotoma %
+%                     (Neotoma), an indication as to whether the dataset %
+%                     is included in the final calibration data set %
+%                     (Calibration), and in the case a site is not %
+%                     included (Calibration value of N), then a note %
+%                     indication the reason for inadmissibility %
+%                     (Notes). The reasons for inadmissibility are: A) %
+%                     Three or four experts did not assign a %
+%                     pre-settlement sample; B) Two experts did not %
+%                     assign a pre-settlement sample, and the two %
+%                     assigned pre-settlement samples were at least 300 %
+%                     years away from 1850 according to the default %
+%                     age-depth models; C) No core top.} %
+%                     \label{table:site-data}\end{longtable}\end{landscape},
+%       multicolumn names,
+%       col sep=comma,
+%       font=\small,
+%       display columns/0/.style={string type},
+%       display columns/1/.style={string type},
+%       display columns/4/.style={string type},
+%       display columns/6/.style={string type},
+%       display columns/7/.style={string type},
+%       display columns/8/.style={string type},
+%       empty cells with=\ ,
+%       every head row/.style={
+% 		before row={\toprule},
+% 		after row={\midrule\endhead}},
+%       every last row/.style={after row={\bottomrule\\}},
+%     ]{../../stepps-data/data/meta_v3.csv}
 
 \begin{table}
 \begin{center}
-\begin{tabular}{cccc} 
+\begin{tabular}{ccccc} 
 \toprule
-Kernel    & Model                          & WAIC           & Dissimilarity \\ \midrule
-Gaussian  & Base                           & 13115          & 2062 \\
-Gaussian  & Variable $\gamma$              & 13053          &  -   \\
-Gaussian  & Variable $\psi$                & 13038          &  -   \\   
-Gaussian  & Variable $\psi$ and $\gamma$   & 12953          & 2078 \\
-Power-law & Base                           & 12852          & \textbf{1979} \\
-Power-law & Variable $\gamma$              & 12789          &  -   \\
-Power-law & Variable $a$                   & 12702          &  -   \\
-Power-law & Variable $a$ and $b$           & $b$ EPC        &  -   \\
-Power-law & Variable $a$ and $\gamma$      & \textbf{12689} & 2044 \\  
-Power-law & Variable $a$, $b$ and $\gamma$ & $b$ EPC        &  -   \\
+Kernel    & Model                          & LP ESS & WAIC           & Dissimilarity \\ \midrule
+Gaussian  & Base                           & 2055   & 12966          & 2062 \\
+Gaussian  & Variable $\gamma$              & 1356   & 12899          &  -   \\
+Gaussian  & Variable $\psi$                & 1702   & 12895          &  -   \\   
+Gaussian  & Variable $\psi$ and $\gamma$   & 1112   & 12804          & 2078 \\
+Power-law & Base                           & 1564   & 12693          & \textbf{1979} \\
+Power-law & Variable $\gamma$              & 179    & 12630          &  -   \\
+Power-law & Variable $a$                   & 1385   & 12563          &  -   \\
+Power-law & Variable $a$ and $b$           & 11     & $b$ EPC        &  -   \\
+Power-law & Variable $a$ and $\gamma$      & 468    & \textbf{12548} & 2044 \\  
+Power-law & Variable $a$, $b$ and $\gamma$ & 84     & $b$ EPC        &  -   \\
+% Kernel    & Model                          & WAIC           & Dissimilarity \\ \midrule
+% Gaussian  & Base                           & 13115          & 2062 \\
+% Gaussian  & Variable $\gamma$              & 13053          &  -   \\
+% Gaussian  & Variable $\psi$                & 13038          &  -   \\   
+% Gaussian  & Variable $\psi$ and $\gamma$   & 12953          & 2078 \\
+% Power-law & Base                           & 12852          & \textbf{1979} \\
+% Power-law & Variable $\gamma$              & 12789          &  -   \\
+% Power-law & Variable $a$                   & 12702          &  -   \\
+% Power-law & Variable $a$ and $b$           & $b$ EPC        &  -   \\
+% Power-law & Variable $a$ and $\gamma$      & \textbf{12689} & 2044 \\  
+% Power-law & Variable $a$, $b$ and $\gamma$ & $b$ EPC        &  -   \\
 \bottomrule
 \end{tabular}
 \caption{Goodness-of-fit measures for the calibration and prediction
   model for different underlying dispersal submodels. For the
-  calibration model, we report the Wantanabe-Akaike Information
-  Criterion (WAIC). EPC denotes an exchangeable prior collapse for the
-  indicated parameter. Overall, calibration models with the Power-law
-  kernel have lower WAIC values. For the prediction model, we report
-  the dissimilarity between the PLS data and the predictions as
-  measured by the sum of the cell-wise Euclidean distances.}
+  calibration model, we report the effective sample size of the log
+  posterior (LP ESS) and the Wantanabe-Akaike Information Criterion
+  (WAIC). EPC denotes an exchangeable prior collapse for the indicated
+  parameter. Overall, calibration models with the Power-law kernel
+  have lower WAIC values. For the prediction model, we report the
+  dissimilarity between the PLS data and the predictions as measured
+  by the sum of the cell-wise Euclidean distances.}
 \label{table:GOF}
 \end{center}
 \vspace{2cm}
@@ -88,7 +100,7 @@ Power-law & Variable $a$, $b$ and $\gamma$ & $b$ EPC        &  -   \\
 \begin{tabular}{ll*{6}{r@{ (}r@{, }r}}
 \toprule
                              &  & \multicolumn{18}{c}{Model} \\ \cmidrule(lr){3-20}
-\multicolumn{2}{c}{Taxon names} & \multicolumn{9}{c}{Gaussian} & \multicolumn{9}{c}{Power law} \\  \cmidrule(lr){1-2}  \cmidrule(lr){3-11}  \cmidrule(lr){12-20}
+\multicolumn{2}{c}{Taxon names} & \multicolumn{9}{c}{Gaussian} & \multicolumn{9}{c}{Power-law} \\  \cmidrule(lr){1-2}  \cmidrule(lr){3-11}  \cmidrule(lr){12-20}
 Common & Scientific             & \multicolumn{3}{c}{50\%} & \multicolumn{3}{c}{70\%} & \multicolumn{3}{c}{90\%} & \multicolumn{3}{c}{50\%} & \multicolumn{3}{c}{70\%} & \multicolumn{3}{c}{90\%} \\
 \cmidrule(lr){1-1} \cmidrule(lr){2-2} \cmidrule(lr){3-5} \cmidrule(lr){6-8} \cmidrule(lr){9-11} \cmidrule(lr){12-14} \cmidrule(lr){15-17} \cmidrule(lr){18-20}
 % Hemlock        & 60  & 280 & 28  & 292 \\
@@ -115,32 +127,45 @@ Common & Scientific             & \multicolumn{3}{c}{50\%} & \multicolumn{3}{c}{
 % Ash& Fraxinus & 232 & 172 & 296) & 436 & 330 & 540)&236 & 167 & 337) & 576 & 535 & 617) \\
 % Elm& Ulmus & 256 & 196 & 324) & 500 & 396 & 592)&272 & 196 & 341) & 600 & 562 & 632) \\
 % Other hardwood& * & 284 & 244 & 332) & 520 & 460 & 574)&312 & 252 & 352) & 608 & 584 & 624) \\
-Hemlock& Tsuga & 60 &   8 & 104) & 168 & 136 & 198) & 284 & 248 & 332)&32 &  16 &  44) & 110 &  84 & 140) & 372 & 335 & 412) \\
-Tamarack & Larix & 72 &   8 & 192) & 172 &  74 & 374) & 288 & 162 & 574)&40 &   8 & 192) & 160 &  47 & 369) & 442 & 281 & 582) \\
-Pine & Pinus & 96 &  88 & 108) & 148 & 132 & 160) & 216 & 198 & 236)&76 &  60 &  88) & 184 & 156 & 204) & 444 & 408 & 464) \\
-Birch & Betula & 120 & 108 & 136) & 164 & 148 & 184) & 232 & 208 & 264)&120 &  92 & 152) & 248 & 207 & 289) & 496 & 460 & 525) \\
-Beech & Fagus & 140 &   8 & 184) & 228 & 178 & 276) & 348 & 276 & 428)&40 &   8 &  69) & 120 &  75 & 177) & 386 & 324 & 441) \\
-Oak & Quercus & 140 & 124 & 154) & 208 & 188 & 228) & 304 & 280 & 340)&116 &  99 & 140) & 244 & 215 & 273) & 492 & 470 & 512) \\
-Fir & Abies & 144 & 112 & 188) & 196 & 156 & 252) & 276 & 218 & 354)&140 &  71 & 209) & 272 & 175 & 349) & 512 & 438 & 560) \\
-Spruce & Picea & 168 & 136 & 208) & 252 & 210 & 304) & 368 & 312 & 440)&144 & 100 & 197) & 284 & 231 & 352) & 524 & 484 & 564) \\
-Maple & Acer & 176 & 108 & 296) & 256 & 158 & 410) & 368 & 232 & 566)&148 &  52 & 296) & 304 & 151 & 449) & 536 & 415 & 612) \\
-Ash& Fraxinus & 232 & 172 & 296) & 312 & 234 & 396) & 436 & 330 & 540)&236 & 167 & 337) & 380 & 304 & 469) & 576 & 535 & 617) \\
-Elm& Ulmus & 256 & 196 & 324) & 356 & 276 & 444) & 500 & 396 & 592)&272 & 196 & 341) & 424 & 346 & 492) & 600 & 562 & 632) \\
-Other hardwood& * &284 & 244 & 332) & 380 & 330 & 434) & 520 & 460 & 574)&312 & 252 & 352) & 448 & 399 & 484) & 608 & 584 & 624) \\
- \bottomrule
+% Hemlock& Tsuga & 60 &   8 & 104) & 168 & 136 & 198) & 284 & 248 & 332)&32 &  16 &  44) & 110 &  84 & 140) & 372 & 335 & 412) \\
+% Tamarack & Larix & 72 &   8 & 192) & 172 &  74 & 374) & 288 & 162 & 574)&40 &   8 & 192) & 160 &  47 & 369) & 442 & 281 & 582) \\
+% Pine & Pinus & 96 &  88 & 108) & 148 & 132 & 160) & 216 & 198 & 236)&76 &  60 &  88) & 184 & 156 & 204) & 444 & 408 & 464) \\
+% Birch & Betula & 120 & 108 & 136) & 164 & 148 & 184) & 232 & 208 & 264)&120 &  92 & 152) & 248 & 207 & 289) & 496 & 460 & 525) \\
+% Beech & Fagus & 140 &   8 & 184) & 228 & 178 & 276) & 348 & 276 & 428)&40 &   8 &  69) & 120 &  75 & 177) & 386 & 324 & 441) \\
+% Oak & Quercus & 140 & 124 & 154) & 208 & 188 & 228) & 304 & 280 & 340)&116 &  99 & 140) & 244 & 215 & 273) & 492 & 470 & 512) \\
+% Fir & Abies \& Cedrus & 144 & 112 & 188) & 196 & 156 & 252) & 276 & 218 & 354)&140 &  71 & 209) & 272 & 175 & 349) & 512 & 438 & 560) \\
+% Spruce & Picea & 168 & 136 & 208) & 252 & 210 & 304) & 368 & 312 & 440)&144 & 100 & 197) & 284 & 231 & 352) & 524 & 484 & 564) \\
+% Maple & Acer & 176 & 108 & 296) & 256 & 158 & 410) & 368 & 232 & 566)&148 &  52 & 296) & 304 & 151 & 449) & 536 & 415 & 612) \\
+% Ash& Fraxinus & 232 & 172 & 296) & 312 & 234 & 396) & 436 & 330 & 540)&236 & 167 & 337) & 380 & 304 & 469) & 576 & 535 & 617) \\
+% Elm& Ulmus & 256 & 196 & 324) & 356 & 276 & 444) & 500 & 396 & 592)&272 & 196 & 341) & 424 & 346 & 492) & 600 & 562 & 632) \\
+% Other hardwood& * &284 & 244 & 332) & 380 & 330 & 434) & 520 & 460 & 574)&312 & 252 & 352) & 448 & 399 & 484) & 608 & 584 & 624) \\
+%
+Hemlock& Tsuga&60 &   8 & 104) & 168 & 136 & 196) & 284 & 248 & 328)&32 &  20 &  56) & 116 &  84 & 164) & 380 & 332 & 436) \\
+Tamarack& Larix &68 &   8 & 196) & 156 &  72 & 344) & 268 & 156 & 532)&40 &   8 & 188) & 152 &  44 & 372) & 428 & 284 & 580) \\
+Pine & Pinus & 100 &  88 & 108) & 148 & 136 & 160) & 216 & 200 & 240)&92 &  80 & 104) & 208 & 188 & 228) & 468 & 440 & 484) \\
+Birch & Betula & 120 & 108 & 136) & 164 & 148 & 188) & 232 & 204 & 264)&132 & 104 & 160) & 260 & 224 & 300) & 504 & 476 & 528) \\
+Oak & Quercus & 136 & 120 & 152) & 204 & 188 & 224) & 304 & 276 & 336)&116 & 100 & 140) & 244 & 216 & 272) & 492 & 472 & 512) \\
+Beech & Fagus & 144 &   8 & 192) & 228 & 180 & 292) & 348 & 280 & 452)&52 &  24 & 100) & 152 &  96 & 228) & 420 & 352 & 484) \\
+Other conifer & Abies \& Cedrus & 144 & 112 & 184) & 196 & 152 & 252) & 276 & 216 & 352)&148 &  96 & 212) & 284 & 216 & 356) & 520 & 472 & 564) \\
+Spruce & Picea & 168 & 132 & 212) & 252 & 208 & 316) & 372 & 308 & 464)&156 & 108 & 220) & 300 & 236 & 372) & 532 & 488 & 576) \\
+Maple & Acer & 180 & 108 & 320) & 256 & 160 & 432) & 368 & 236 & 580)&144 &  56 & 324) & 288 & 148 & 468) & 524 & 416 & 620) \\
+Ash & Fraxinus & 228 & 176 & 304) & 308 & 236 & 408) & 432 & 332 & 552)&244 & 168 & 324) & 384 & 304 & 460) & 580 & 532 & 616) \\
+Elm & Ulmus & 248 & 192 & 328) & 344 & 268 & 444) & 484 & 384 & 588)&268 & 196 & 344) & 416 & 344 & 484) & 596 & 556 & 628) \\
+Other hardwood & * & 280 & 240 & 328) & 376 & 320 & 432) & 512 & 444 & 572)&312 & 260 & 360) & 448 & 400 & 488) & 608 & 588 & 628) \\
+\bottomrule
 \end{tabular}
 \caption{Radii (km) from a pollen source needed to capture 50, 70 and
-  90\% of the dispersed pollen for the variable gaussian and variable
-  power law models. The gaussian base model estimated radii of $136\,
-  (132, 144)$, $200\, (192, 212)$ and $292\, (276, 308)$ km to capture
+  90\% of the dispersed pollen for the variable Gaussian and variable
+  Power-law models. The Gaussian base model estimated radii of $136\,
+  (128, 144)$, $200\, (188, 208)$ and $292\, (276, 308)$ km to capture
   50, 70 and 90\% of the dispersed pollen across all taxa, while the
-  power law model estimated radii of $108\, (100, 116)$, $234\, (220,
-  244)$ and $488\, (476, 496)$ km.  $^{*}$ The Other Hardwood grouping
-  is composed of: Alnus, Carya, Cornus, Cupressaceae, Gleditsia,
-  Liquidambar, Maclura, Morus, Nyssa, Ostrya carpinus, Platanus,
-  Populus, Robinia, Rosaceae, Salix, Tilia, Zanthoxylum, as well as
-  any undifferentiated hardwood (e.g. pollen grains classified as
-  Fagus\textbackslash Nyssa, Betula\textbackslash Corylus, etc.).}
+  Power-law model estimated radii of $116\, (104, 124)$, $240\, (228,
+  256)$ and $492\, (484, 504)$ km.  $^{*}$ The Other hardwood grouping
+  is composed of: Alnus, Carya, Cornus, Gleditsia, Liquidambar,
+  Maclura, Morus, Nyssa, Ostrya carpinus, Platanus, Populus, Robinia,
+  Rosaceae, Salix, Tilia, Zanthoxylum, as well as any undifferentiated
+  hardwood (e.g. pollen grains classified as Fagus\textbackslash
+  Nyssa, Betula\textbackslash Corylus, etc.).}
 \end{center}
 \label{table:pollen_acc}
 \vspace{2cm}
