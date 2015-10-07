@@ -2,14 +2,14 @@
 // Date:    26 June 2014
 // Settlement era pollen estimation model based on STEPPS1
 // Uses veg proportions and pollen counts to estimate process parameters
-// With a Gaussian dispersal model using a single dispersal distance parameter psi
+// With a Gaussian dispersal kernel using a single dispersal distance parameter psi
  
 
 data {
   int<lower=0> K;                // number of taxa
   int<lower=0> N_cores;          // number of core sites
   int<lower=0> N_cells;          // number of spatial cells
-  int<lower=0> N_pot;           // number of potential contributing spatial cells
+  int<lower=0> N_pot;            // number of potential contributing spatial cells
 
   int y[N_cores,K];              // pollen count data
   
@@ -57,7 +57,7 @@ model {
   
   sum_w_pot <- 0;
   for (v in 1:N_pot)
-    sum_w_pot <- sum_w_pot + d_pot[v,2] * exp(-square(d_pot[v,1])/square(psi));
+    sum_w_pot <- sum_w_pot + d_pot[v,2] * exp(-square(d_pot[v,1]) / square(psi));
   
   w <- exp(-(d2)/square(psi));
       
@@ -65,17 +65,12 @@ model {
    
     for (k in 1:K) {out_sum[k] <- 0;}
     for (j in 1:N_hood[i]){
-	out_sum <- out_sum + w[idx_hood[i,j],i]*r[idx_hood[i,j]];
+	out_sum <- out_sum + w[idx_hood[i,j],i] * r[idx_hood[i,j]];
     }  
-   //for (j in 1:N_cells){ // change N_hood to N_cells
-    //if (idx_hood[i,j] != 0){
-      //if (j != idx_cores[i]){
-        //out_sum <- out_sum + w[j,i]*r[j];
-    //}
 
-    r_new[i] <- gamma*r[idx_cores[i]] + out_sum*(1-gamma)/sum_w_pot;
-        
-    // // hacky!
+    r_new[i] <- gamma * r[idx_cores[i]] + out_sum * (1-gamma) / sum_w_pot;
+
+    // // when zeros in raw data, readjust to non-zero
     // // find taxon with highest proportional value
     // max_r_new <- 0;
     // for (k in 1:K){
@@ -120,34 +115,26 @@ generated quantities {
      
     sum_w_pot <- 0;
     for (v in 1:N_pot)
-      sum_w_pot <- sum_w_pot + d_pot[v,2] * exp(-square(d_pot[v,1])/square(psi));
+      sum_w_pot <- sum_w_pot + d_pot[v,2] * exp(-square(d_pot[v,1]) / square(psi));
   
     w <- exp(-(d2)/square(psi));
       
     for (i in 1:N_cores){   
    
       for (k in 1:K) {out_sum[k] <- 0;}
-      for (j in 1:N_cells){ // change N_hood to N_cells
+      for (j in 1:N_cells){ 
 	if (idx_hood[i,j] != 0){
-	  //if (j != idx_cores[i]){
-	  //out_sum <- out_sum + w[j,i]*r[j];
-	  out_sum <- out_sum + w[idx_hood[i,j],i]*r[idx_hood[i,j]];
+	  out_sum <- out_sum + w[idx_hood[i,j],i] * r[idx_hood[i,j]];
 	}  
       }
 
-      // for (k in 1:K) {out_sum[k] <- 0;}
-      // for (j in 1:N_cells){ // change N_hood to N_cells
-      // 	if (j != idx_cores[i]){
-      // 	  out_sum <- out_sum + w[j,i]*r[j];
-      // 	}  
-      // }
+      r_new[i] <- gamma * r[idx_cores[i]] + out_sum * (1-gamma) / sum_w_pot;
 
-      r_new[i] <- gamma*r[idx_cores[i]] + out_sum*(1-gamma)/sum_w_pot;
-    
-      alpha <- phi .* r_new[i];
+      alpha <- phi . * r_new[i];
       
       A <- sum(alpha);
-      N <- sum(y[i]);     
+      N <- sum(y[i]);
+      
       log_lik[i] <- lgamma(N + 1) + lgamma(A) - lgamma(N + A);
       for (k in 1:K)  log_lik[i] <- log_lik[i] - lgamma(y[i,k] + 1) + lgamma(y[i,k] + alpha[k]) - lgamma(alpha[k]);
     }
