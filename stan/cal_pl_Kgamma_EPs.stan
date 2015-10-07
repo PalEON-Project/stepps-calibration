@@ -2,7 +2,7 @@
 // Date:    October 2014
 // Settlement era pollen estimation model based on STEPPS1
 // Uses veg proportions and pollen counts to estimate process parameters
-// With a Gaussian dispersal model using taxon-specific dispersal distance parameters psi[k]
+// With an Inverse Power Law dispersal kernel with taxon-specific gamma
  
 
 data {
@@ -88,7 +88,7 @@ model {
     for (k in 1:K)
       r_new[i,k] <- gamma[k]*r[idx_cores[i],k] + out_sum[k]*(1-gamma[k])/sum_w_pot;
     
-    // // hacky!
+    // // when zeros in raw data, readjust to non-zero
     // // find taxon with highest proportional value
     // max_r_new <- 0;
     // for (k in 1:K){
@@ -126,8 +126,6 @@ generated quantities {
     vector[K] out_sum;    
   
     real sum_w_pot;
-    // real max_r_new;
-    // int  max_r_new_idx;
 
     real N;
     real A;
@@ -144,11 +142,6 @@ generated quantities {
     for (i in 1:N_cores){
       for (k in 1:K){
 	out_sum[k] <- 0;
-	// for (j in 1:N_cells){ // change N_hood to N_cells
-	//   if (j != idx_cores[i]){
-	//     out_sum[k] <- out_sum[k] + w[j,i]*r[j][k];
-	//   }  
-	// }
 	for (j in 1:N_hood[i]){
 	  out_sum[k] <- out_sum[k] + w[idx_hood[i,j],i]*r[idx_hood[i,j]][k];
 	}  

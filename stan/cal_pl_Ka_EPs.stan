@@ -2,8 +2,7 @@
 // Date:    October 2014
 // Settlement era pollen estimation model based on STEPPS1
 // Uses veg proportions and pollen counts to estimate process parameters
-// With a Gaussian dispersal model using taxon-specific dispersal distance parameters psi[k]
- 
+// With an Inverse Power Law dispersal kernel with taxon-specific a
 
 data {
   int<lower=0> K;                // number of taxa
@@ -76,20 +75,14 @@ model {
     log_a[k] ~ normal(mu_a, sigma_a);
   }  
 
-  print("a = ", a);
-  print("b = ", b);
-  
   for (k in 1:K){
-    //kernel_p1[k] <-  (b[k]-2) * (b[k]-1) / ( 2 * pi() * a[k] * a[k] );
     log_kernel_p1[k] <-  log(b-2) + log(b-1) - log(2 * pi()) - 2*log(a[k]);
     sum_w_pot[k] <- 0; 
     for (v in 1:N_pot){
-      //sum_w_pot[k] <- sum_w_pot[k] + d_pot[v,2] * kernel_p1[k] * pow( 1 + d_pot[v,1] / a[k], -b[k]) ; 
       sum_w_pot[k] <- sum_w_pot[k] + d_pot[v,2] * exp(log_kernel_p1[k]  - b *  log(1 + d_pot[v,1] / a[k]) ); 
     }
     for (i in 1:N_cells)
       for (j in 1:N_cores)
-	// w[k][i,j] <-  kernel_p1[k] * pow( 1 + d[i,j] / a[k], -b[k]) ;
 	w[k][i,j] <-  log_kernel_p1[k] - b * log( 1 + d[i,j] / a[k]) ;
 
     w[k] <- exp(w[k]); 
@@ -98,25 +91,16 @@ model {
   for (i in 1:N_cores){        
     for (k in 1:K){
       out_sum[k] <- 0;
-      // for (j in 1:N_cells){ // change N_hood to N_cells
-      // 	if (j != idx_cores[i]){
-      // 	  out_sum[k] <- out_sum[k] + w[k][j,i]*r[j][k];
-      // 	}  
-      // }
       for (j in 1:N_hood[i]){
 	out_sum[k] <- out_sum[k] + w[k][idx_hood[i,j],i]*r[idx_hood[i,j]][k];
       }  
     }
 
-    print("gamma = ", gamma);
-
     //local plus non-local piece
     for (k in 1:K){
-      print("sum_w_pot[k] = ", sum_w_pot[k]);
-      print("out_sum[k] = ", out_sum[k]);
       r_new[i,k] <- gamma*r[idx_cores[i],k] + out_sum[k]*(1-gamma)/sum_w_pot[k];
     }
-    // // hacky!
+    // // when zeros in raw data, readjust to non-zero
     // // find taxon with highest proportional value
     // max_r_new <- 0;
     // for (k in 1:K){
@@ -134,8 +118,6 @@ model {
     //     print("warning: zero proportion; core: ", i, "; taxon: ", k, " -> adjusting");
     //   }
     //}
-
-    print("r_new[i] = ", r_new[i]);
 
     alpha <- phi .* r_new[i];
     A     <- sum(alpha);     
@@ -157,23 +139,17 @@ generated quantities {
     vector[K] kernel_p1;
     vector[K] log_kernel_p1;
 
-    // real max_r_new;
-    // int  max_r_new_idx;
-    
     real A;
     vector[K] alpha;
   
     for (k in 1:K){
-      //kernel_p1[k] <-  (b[k]-2) * (b[k]-1) / ( 2 * pi() * a[k] * a[k] );
       log_kernel_p1[k] <-  log(b-2) + log(b-1) - log(2 * pi()) - 2*log(a[k]);
       sum_w_pot[k] <- 0; 
       for (v in 1:N_pot){
-	//sum_w_pot[k] <- sum_w_pot[k] + d_pot[v,2] * kernel_p1[k] * pow( 1 + d_pot[v,1] / a[k], -b[k]) ; 
 	sum_w_pot[k] <- sum_w_pot[k] + d_pot[v,2] * exp(log_kernel_p1[k]  - b *  log(1 + d_pot[v,1] / a[k]) ); 
       }
       for (i in 1:N_cells)
 	for (j in 1:N_cores)
-	  // w[k][i,j] <-  kernel_p1[k] * pow( 1 + d[i,j] / a[k], -b[k]) ;
 	  w[k][i,j] <-  log_kernel_p1[k] - b * log( 1 + d[i,j] / a[k]) ;
 
       w[k] <- exp(w[k]); 
@@ -185,12 +161,6 @@ generated quantities {
 	for (j in 1:N_hood[i]){
 	  out_sum[k] <- out_sum[k] + w[k][idx_hood[i,j],i]*r[idx_hood[i,j]][k];
 	} 
-
-	// for (j in 1:N_cells){ // change N_hood to N_cells
-	//   if (j != idx_cores[i]){
-	//     out_sum[k] <- out_sum[k] + w[k][j,i]*r[j][k];
-	//   }  
-	// }
       }
 
       //local plus non-local piece
