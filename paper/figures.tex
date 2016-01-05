@@ -1,23 +1,3 @@
-%Elicitation results
-\begin{figure}
-\centering
-\begin{tabular}{c}
-\includegraphics[width=6in]{figures/BROWNSBY_314.png} \\
-\includegraphics[width=6in]{figures/PENNINGT_1884.png}
-\end{tabular}
-\caption{Pollen diagrams showing the relative pollen proportions as a
-  function of core depth for the ten most common taxa for two sites in
-  the calibration data set. Dashed horizontal lines indicate the
-  samples selected by experts as pre-settlement samples. For some
-  sites, such as Brownsby Lake, the settlement horizon is easily
-  identified and all experts were in agreement with respect to its
-  location (top panel). For other sites, such as Pennington Lake, the
-  settlement horizon is difficult less obvious, resulting in multiple
-  inferred pre-settlement samples (bottom panel).}
-\label{fig:elicit}
-\end{figure}
-
-
 %PLS and pollen pie maps
 \begin{figure}
 \centering
@@ -25,64 +5,33 @@
 \includegraphics[width=5in]{figures/pie_plot_pollen_ALL_v0_3.png} \\
 \includegraphics[width=5in]{figures/pie_plot_pls_ALL_v0_3.png}
 \end{tabular}
-\caption{Pie maps depicting the relative composition of tree genera of pollen (top)
-  and PLS vegetation (bottom) from the data. Note that the PLS data
-  has been aggregated from 8 km to 34 km resolution for illustrative
-  purposes.}
+\caption[Pie maps]{\internallinenumbers \doublespacing Pie maps depicting the relative composition of tree genera of
+  pollen (top) and PLS vegetation (bottom) from the data. Note that
+  the PLS data has been aggregated from 8 km to 32 km resolution for
+  illustrative purposes.}
 \label{fig:pie}
 \end{figure}
-
 
 %potential pollen maps by taxon
 \begin{figure}
 \centering
 \includegraphics[width=7in]{figures/map_pls_pollen.png}
-\caption{Heat maps of the PLS dat, pollen data, and predicted sediment
-  pollen for the variable Gaussian (G) and Power-law (PL) models for a
-  subset of modelled taxa.}
+\caption[PLS data, pollen data, predicted pollen heat
+  maps]{\internallinenumbers \doublespacing Heat maps of the PLS data, pollen data, and
+  predicted sediment pollen for the variable Gaussian (GK) and
+  power-law (PLK) kernel models for a subset of modelled taxa.}
 \label{fig:maps_pp}
 \end{figure}
-
-% %trace plots
-% \begin{figure}
-% \centering
-% %% \begin{tabular}{ccc}
-% \includegraphics[width=5in]{figures/cal_trace.png}
-% %\includepdf[nup=2x3]{figures/cal_trace.pdf}
-%   %% \includegraphics[page=1,width=0.3\textwidth]{figures/cal_trace.png} &
-%   %% \includegraphics[page=2,width=0.3\textwidth]{figures/cal_trace.png} &
-%   %% \includegraphics[page=3,width=0.3\textwidth]{figures/cal_trace.png} \\
-%   %% \includegraphics[page=4,width=0.3\textwidth]{figures/cal_trace.png} &
-%   %% \includegraphics[page=5,width=0.3\textwidth]{figures/cal_trace.png} &
-%   %% \includegraphics[page=6,width=0.3\textwidth]{figures/cal_trace.png} \\
-%   %% \includegraphics[page=7,width=0.3\textwidth]{figures/cal_trace.png} &
-%   %% \includegraphics[page=8,width=0.3\textwidth]{figures/cal_trace.png} &
-%   %% \includegraphics[page=9,width=0.3\textwidth]{figures/cal_trace.png} \\
-%   %% \includegraphics[page=10,width=0.3\textwidth]{figures/cal_trace.png} &
-%   %% \includegraphics[page=11,width=0.3\textwidth]{figures/cal_trace.png} &
-%   %% \includegraphics[page=12,width=0.3\textwidth]{figures/cal_trace.png} \\
-%   %% \includegraphics[page=13,width=0.3\textwidth]{figures/cal_trace.png} &
-%   %% \includegraphics[page=14,width=0.3\textwidth]{figures/cal_trace.png} &
-%   %% \includegraphics[page=15,width=0.3\textwidth]{figures/cal_trace.png} 
-% %% \end{tabular}
-% \caption{Trace plots for the parameters in the gaussian dispersed
-%   calibration model, including $\phi_k$ for $k=1, \ldots, W$, $\psi$,
-%   and $\gamma$, as well as the joint log posterior,
-%   $\textit{lp}$. Posterior estimates for each of the three runs are
-%   depicted in shades of grey. The 2.5\% and 97.5\% quantiles are
-%   indicated by the solid lines, while the 50\% quantiles are indicated
-%   by the hashed lines.}
-% \label{fig:trace}
-% \end{figure}
 
 %pollen raw versus scaled focal
 \begin{figure}
 \centering
 \includegraphics[width=7in]{figures/pollen_phi_scaled_pl_Ka_Kgamma.png}
-\caption{Pollen proportions plotted against local vegetation
-  proportions (red crosses) or local vegetation proportion scaled by
-  the pollen production factor $\bm{\phi}$ for the variable Power-law
-  kernel model (black dots).}
+\caption[Pollen-vegetation scatter, $\phi$-scaled]{\internallinenumbers \doublespacing
+  Pollen proportions plotted against local vegetation proportions (red
+  crosses) or local vegetation proportion scaled by the pollen
+  production factor $\phi_k$ for the variable power-law kernel (PLK)
+  model (black dots).}
 \label{fig:focal_scaled}
 \end{figure}
 
@@ -90,9 +39,10 @@
 \begin{figure}
 \centering
 \includegraphics[width=7in]{figures/pollen_preds_pl_Ka_Kgamma.png}
-\caption{Pollen proportions plotted against local vegetation
-  proportions (red crosses) or model-predicted pollen for the variable
-  Power-law kernel model (black dots).}
+\caption[Pollen-vegetation scatter, predicted]{\internallinenumbers \doublespacing Pollen
+  proportions plotted against local vegetation proportions (red
+  crosses) or model-predicted pollen for the variable power-law kernel
+  (PLK) model (black dots).}
 \label{fig:preds}
 \end{figure}
 
@@ -100,9 +50,9 @@
 \begin{figure}
 \centering
 \includegraphics[width=7in]{figures/phi.png}
-\caption{Mean values and 95\% credible intervals for differential
+\caption[]{\internallinenumbers \doublespacing Mean values and 95\% credible intervals for differential
   production parameter $\phi$, by taxon for the four considered
-  models.}
+  models  (GK and PLK base and variable).}
 \label{fig:phi}
 \end{figure}
 
@@ -110,10 +60,9 @@
 \begin{figure}
 \centering
 \includegraphics[width=7in]{figures/kernel_discrete_cdfs.png}
-\caption{The proportion of deposited (or accumulated) pollen plotted
+\caption[]{\internallinenumbers \doublespacing The proportion of deposited (or accumulated) pollen plotted
   as a function of radius for each of the modelled taxa and for each
-  of the four considered models (Gaussian base and variable; Power-law
-  base and variable).}
+  of the four considered models (GK and PLK base and variable).}
 \label{fig:cdf}
 \end{figure}
 
@@ -122,7 +71,7 @@
 \begin{figure}
 \centering
 \includegraphics[width=4in]{figures/PPEs_panels.png}
-\caption{Pollen productivity estimates (PPEs) from STEPPS versus sets
+\caption[]{\internallinenumbers \doublespacing Pollen productivity estimates (PPEs) from STEPPS versus sets
   of previously published PPEs from different geographical regions
   (Upper Midwest USA, Northeastern USA, European continent). Published
   PPE data sets were generated using linear regression (LR), extended
@@ -134,39 +83,18 @@
 \begin{figure}
 \centering
 \includegraphics[width=7in]{figures/SVs_90_single.png}
-\caption{Scatter plot of the STEPPS 90\% capture radius versus
+\caption[]{\internallinenumbers \doublespacing Scatter plot of the STEPPS 90\% capture radius versus
   measured falling speeds.}
 \label{fig:svs}
-\end{figure}
-
-%STEPPS-predicted composition for the four models by taxon
-\begin{figure}
-\centering
-\includegraphics[width=4.5in]{figures/maps_predicted_veg.png}
-\caption{Heat maps of the STEPPS composition estimates, based on the
-  Gaussian (G; base and variable) and Power-law (PL; base and
-  variable) candidate calibration models.}
-\label{fig:maps_stepps_veg}
-\end{figure}
-
-%Dissimilarity maps
-\begin{figure}
-\centering
-\includegraphics[width=4in]{figures/maps_l2.png}
-\caption{Heat maps of the dissimilarity as measured by the Euclidean
-  distance between the PLS data and STEPPS composition estimates for
-  different underlying calibration models.}
-\label{fig:maps_l2}
 \end{figure}
 
 %PLS estimates, STEPPS estimates, and uncertainty for the best model
 \begin{figure}
 \centering
-\includegraphics[width=3.5in]{figures/maps_PLS_STEPPS_SD.png}
-\caption{Heat maps of the PLS composition estimates, STEPPS
-  composition estimates based on the Variable Power-law (PL)
-  calibration model and their uncertainty quantified as the standard
-  deviation of the posterior estimates.}
+\includegraphics[width=3.2in]{figures/maps_PLS_STEPPS_SD.png}
+\caption[]{\internallinenumbers \doublespacing Heat maps of the PLS data, STEPPS
+  composition estimates and the standard deviation of the posterior
+  sample, based on the variable PLK model.}
 \label{fig:maps_pls_stepps_sd}
 \end{figure}
 

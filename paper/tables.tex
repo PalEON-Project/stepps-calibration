@@ -53,49 +53,95 @@
 %     ]{../../stepps-data/data/meta_v3.csv}
 
 \begin{table}
+  \caption[]{\internallinenumbers \doublespacing Goodness-of-fit measures for the
+    calibration and prediction models for model variants. For the
+    calibration model, we report the Wantanabe-Akaike Information
+    Criterion (WAIC). The exchangeable priors indicated that the data
+    do not support a taxon specific $b$ in the PLK model; for this
+    reason we do not report the WAIC for the models with
+    taxon-specific $b$. Overall, calibration models with the PLK have
+    lower WAIC values. For the prediction model, we report the
+    dissimilarity between the PLS data and the predictions as measured
+    by the sum of the cell-wise Euclidean distances.}
 \begin{center}
-\begin{tabular}{ccccc} 
+\begin{tabular}{cccc} 
 \toprule
-Kernel    & Model                          & LP ESS & WAIC           & Dissimilarity \\ \midrule
-Gaussian  & Base                           & 2055   & 12966          & 2062 \\
-Gaussian  & Variable $\gamma$              & 1356   & 12899          &  -   \\
-Gaussian  & Variable $\psi$                & 1702   & 12895          &  -   \\   
-Gaussian  & Variable $\psi$ and $\gamma$   & 1112   & 12804          & 2078 \\
-Power-law & Base                           & 1564   & 12693          & \textbf{1979} \\
-Power-law & Variable $\gamma$              & 179    & 12630          &  -   \\
-Power-law & Variable $a$                   & 1385   & 12563          &  -   \\
-Power-law & Variable $a$ and $b$           & 11     & $b$ EPC        &  -   \\
-Power-law & Variable $a$ and $\gamma$      & 468    & \textbf{12548} & 2044 \\  
-Power-law & Variable $a$, $b$ and $\gamma$ & 84     & $b$ EPC        &  -   \\
-% Kernel    & Model                          & WAIC           & Dissimilarity \\ \midrule
-% Gaussian  & Base                           & 13115          & 2062 \\
-% Gaussian  & Variable $\gamma$              & 13053          &  -   \\
-% Gaussian  & Variable $\psi$                & 13038          &  -   \\   
-% Gaussian  & Variable $\psi$ and $\gamma$   & 12953          & 2078 \\
-% Power-law & Base                           & 12852          & \textbf{1979} \\
-% Power-law & Variable $\gamma$              & 12789          &  -   \\
-% Power-law & Variable $a$                   & 12702          &  -   \\
-% Power-law & Variable $a$ and $b$           & $b$ EPC        &  -   \\
-% Power-law & Variable $a$ and $\gamma$      & \textbf{12689} & 2044 \\  
-% Power-law & Variable $a$, $b$ and $\gamma$ & $b$ EPC        &  -   \\
+Kernel    & Model                          & WAIC           & Dissimilarity \\ \midrule
+Gaussian  & Base                           & 12966          & 2062 \\
+Gaussian  & Variable $\gamma$              & 12899          &  -   \\
+Gaussian  & Variable $\psi$                & 12895          &  -   \\   
+Gaussian  & Variable $\psi$ and $\gamma$   & 12804          & 2078 \\
+Power-law & Base                           & 12693          & \textbf{1979} \\
+Power-law & Variable $\gamma$              & 12630          &  -   \\
+Power-law & Variable $a$                   & 12563          &  -   \\
+Power-law & Variable $a$ and $b$           & -              &  -   \\
+Power-law & Variable $a$ and $\gamma$      & \textbf{12548} & 2044 \\  
+Power-law & Variable $a$, $b$ and $\gamma$ & -              &  -   \\
 \bottomrule
 \end{tabular}
-\caption{Goodness-of-fit measures for the calibration and prediction
-  model for different underlying dispersal submodels. For the
-  calibration model, we report the effective sample size of the log
-  posterior (LP ESS) and the Wantanabe-Akaike Information Criterion
-  (WAIC). EPC denotes an exchangeable prior collapse for the indicated
-  parameter. Overall, calibration models with the Power-law kernel
-  have lower WAIC values. For the prediction model, we report the
-  dissimilarity between the PLS data and the predictions as measured
-  by the sum of the cell-wise Euclidean distances.}
 \label{table:GOF}
 \end{center}
 \vspace{2cm}
 \end{table}
 
+% \begin{table}
+% \caption{Goodness-of-fit measures for the calibration and prediction
+%   models for different underlying dispersal submodels. For the
+%   calibration model, we report the effective sample size of the log
+%   posterior (LP ESS) and the Wantanabe-Akaike Information Criterion
+%   (WAIC). The exchangeable priors indicated that the data do not
+%   support a taxon specific $b$ in the power-law model; for this reason
+%   we do not report the WAIC for the models with taxon-specific
+%   $b$. Overall, calibration models with the power-law kernel have
+%   lower WAIC values. For the prediction model, we report the
+%   dissimilarity between the PLS data and the predictions as measured
+%   by the sum of the cell-wise Euclidean distances.}
+% \begin{center}
+% \begin{tabular}{ccccc} 
+% \toprule
+% Kernel    & Model                          & LP ESS & WAIC           & Dissimilarity \\ \midrule
+% Gaussian  & Base                           & 2055   & 12966          & 2062 \\
+% Gaussian  & Variable $\gamma$              & 1356   & 12899          &  -   \\
+% Gaussian  & Variable $\psi$                & 1702   & 12895          &  -   \\   
+% Gaussian  & Variable $\psi$ and $\gamma$   & 1112   & 12804          & 2078 \\
+% Power-law & Base                           & 1564   & 12693          & \textbf{1979} \\
+% Power-law & Variable $\gamma$              & 179    & 12630          &  -   \\
+% Power-law & Variable $a$                   & 1385   & 12563          &  -   \\
+% Power-law & Variable $a$ and $b$           & 11     & -              &  -   \\
+% Power-law & Variable $a$ and $\gamma$      & 468    & \textbf{12548} & 2044 \\  
+% Power-law & Variable $a$, $b$ and $\gamma$ & 84     & -              &  -   \\
+% % Kernel    & Model                          & WAIC           & Dissimilarity \\ \midrule
+% % Gaussian  & Base                           & 13115          & 2062 \\
+% % Gaussian  & Variable $\gamma$              & 13053          &  -   \\
+% % Gaussian  & Variable $\psi$                & 13038          &  -   \\   
+% % Gaussian  & Variable $\psi$ and $\gamma$   & 12953          & 2078 \\
+% % Power-law & Base                           & 12852          & \textbf{1979} \\
+% % Power-law & Variable $\gamma$              & 12789          &  -   \\
+% % Power-law & Variable $a$                   & 12702          &  -   \\
+% % Power-law & Variable $a$ and $b$           & $b$ EPC        &  -   \\
+% % Power-law & Variable $a$ and $\gamma$      & \textbf{12689} & 2044 \\  
+% % Power-law & Variable $a$, $b$ and $\gamma$ & $b$ EPC        &  -   \\
+% \bottomrule
+% \end{tabular}
+% \label{table:GOF}
+% \end{center}
+% \vspace{2cm}
+% \end{table}
+
 \begin{landscape}
 \begin{table}
+\caption[]{\internallinenumbers \doublespacing Radii (km) from a pollen source needed to capture 50, 70 and
+  90\% of the dispersed pollen for the variable Gaussian and variable
+  power-law models. The Gaussian base model estimated radii of $136\,
+  (128, 144)$, $200\, (188, 208)$ and $292\, (276, 308)$ km to capture
+  50, 70 and 90\% of the dispersed pollen across all taxa, while the
+  power-law model estimated radii of $116\, (104, 124)$, $240\, (228,
+  256)$ and $492\, (484, 504)$ km.  $^{*}$The Other hardwood grouping
+  is composed of: Alnus, Carya, Cornus, Gleditsia, Liquidambar,
+  Maclura, Morus, Nyssa, Ostrya carpinus, Platanus, Populus, Robinia,
+  Rosaceae, Salix, Tilia, Zanthoxylum, as well as any undifferentiated
+  hardwood (e.g. pollen grains classified as Fagus/Nyssa,
+  Betula/Corylus, etc.).}
 \begin{center}
 \begin{tabular}{ll*{6}{r@{ (}r@{, }r}}
 \toprule
@@ -154,18 +200,6 @@ Elm & Ulmus & 248 & 192 & 328) & 344 & 268 & 444) & 484 & 384 & 588)&268 & 196 &
 Other hardwood & * & 280 & 240 & 328) & 376 & 320 & 432) & 512 & 444 & 572)&312 & 260 & 360) & 448 & 400 & 488) & 608 & 588 & 628) \\
 \bottomrule
 \end{tabular}
-\caption{Radii (km) from a pollen source needed to capture 50, 70 and
-  90\% of the dispersed pollen for the variable Gaussian and variable
-  Power-law models. The Gaussian base model estimated radii of $136\,
-  (128, 144)$, $200\, (188, 208)$ and $292\, (276, 308)$ km to capture
-  50, 70 and 90\% of the dispersed pollen across all taxa, while the
-  Power-law model estimated radii of $116\, (104, 124)$, $240\, (228,
-  256)$ and $492\, (484, 504)$ km.  $^{*}$ The Other hardwood grouping
-  is composed of: Alnus, Carya, Cornus, Gleditsia, Liquidambar,
-  Maclura, Morus, Nyssa, Ostrya carpinus, Platanus, Populus, Robinia,
-  Rosaceae, Salix, Tilia, Zanthoxylum, as well as any undifferentiated
-  hardwood (e.g. pollen grains classified as Fagus\textbackslash
-  Nyssa, Betula\textbackslash Corylus, etc.).}
 \end{center}
 \label{table:pollen_acc}
 \vspace{2cm}

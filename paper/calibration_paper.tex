@@ -1,23 +1,74 @@
 \documentclass[12pt]{article}
 
-\usepackage[margin=1in,top=1in,bottom=1in]{geometry}  % set the margins to 1in on all sides
-\usepackage{graphicx}              % to include figures
-\usepackage{amsmath, bm}               % great math stuff
-\usepackage{amsfonts}              % for blackboard bold, etc
-\usepackage{amsthm}                % better theorem environments
+\usepackage[margin=1in,top=1in,bottom=1in]{geometry} 
+\usepackage{graphicx}              
+\usepackage{amsmath, bm}           
+\usepackage{amsfonts}              
+\usepackage{amsthm}                
 \usepackage{hyperref}
 \usepackage{natbib}
 \usepackage{pdfpages}
 \usepackage{booktabs}
 \usepackage{multirow}
-%% \usepackage{siunitx} % Formats the units and values
-\usepackage{pgfplotstable} % Generates table from .csv
+\usepackage{pgfplotstable}
 \usepackage{longtable}
 \usepackage{pdflscape}
 \usepackage{authblk}
 \usepackage{setspace}
 \usepackage[title]{appendix}
 \usepackage{float}
+\usepackage{epigraph,varwidth}
+
+\usepackage{lineno}
+\linenumbers
+
+\renewcommand{\epigraphsize}{\small}
+\setlength{\epigraphwidth}{0.6\textwidth}
+\renewcommand{\textflush}{flushright}
+\renewcommand{\sourceflush}{flushright}
+% A useful addition
+\newcommand{\epitextfont}{\itshape}
+\newcommand{\episourcefont}{\scshape}
+
+\makeatletter
+\newsavebox{\epi@textbox}
+\newsavebox{\epi@sourcebox}
+\newlength\epi@finalwidth
+\renewcommand{\epigraph}[2]{%
+  \vspace{\beforeepigraphskip}
+  {\epigraphsize\begin{\epigraphflush}
+   \epi@finalwidth=\z@
+   \sbox\epi@textbox{%
+     \varwidth{\epigraphwidth}
+     \begin{\textflush}\epitextfont#1\end{\textflush}
+     \endvarwidth
+   }%
+   \epi@finalwidth=\wd\epi@textbox
+   \sbox\epi@sourcebox{%
+     \varwidth{\epigraphwidth}
+     \begin{\sourceflush}\episourcefont#2\end{\sourceflush}%
+     \endvarwidth
+   }%
+   \ifdim\wd\epi@sourcebox>\epi@finalwidth 
+     \epi@finalwidth=\wd\epi@sourcebox
+   \fi
+   \leavevmode\vbox{
+     \hb@xt@\epi@finalwidth{\hfil\box\epi@textbox}
+     \vskip1.75ex
+     \hrule height \epigraphrule
+     \vskip.75ex
+     \hb@xt@\epi@finalwidth{\hfil\box\epi@sourcebox}
+   }%
+   \end{\epigraphflush}
+   \vspace{\afterepigraphskip}}}
+\makeatother
+
+
+\newcommand\invisiblesection[1]{%
+  \refstepcounter{section}%
+  \addcontentsline{toc}{section}{\protect\numberline{\thesection}#1}%
+  \sectionmark{#1}}
+
 \doublespacing
 
 \setlength{\LTcapwidth}{8in}
@@ -37,12 +88,13 @@
 \newcommand{\digamma}{\text{digamma}} 
 
 \bibliographystyle{ea}
+%\bibliographystyle{abbrvnat}
 
 \begin{document}
 
-\nocite{*}
+%\nocite{*}
 
-\title{Calibrating pollen-vegetation relationships using 19-century forest composition and pollen data}
+\title{Quantifying pollen-vegetation relationships to reconstruct ancient forests using 19th-century forest composition and pollen data}
 
 % \author{Andria Dawson\footnote{\url{andria.dawson@gmail.com}}, Department of Statistics, University of California, Berkeley, CA, 94720\\
 %   Christopher Paciorek, Department of Statistics, University of California, Berkeley, CA, 94720\\
@@ -54,9 +106,9 @@
 
 \author[1]{Andria Dawson}%\footnote{\url{andria.dawson@gmail.com}}}
 \affil[1]{Department of Statistics, University of California, Berkeley, CA, 94720}
-\author[1]{Christopher Paciorek}
+\author[1]{Christopher J. Paciorek}
 %\affil[1]{Department of Statistics, University of California, Berkeley, CA, 94720}
-\author[2]{Jason McLachlan}
+\author[2]{Jason S. McLachlan}
 \affil[2]{Department of Biological Sciences, Notre Dame, IN 46556} 
 \author[3]{Simon Goring}
 \affil[3]{Department of Geography, University of Wisconsin-Madison, Madison, WI, 53706}
@@ -68,40 +120,47 @@
 \maketitle
 
 \newpage
+
+
 \begin{abstract}
-  Quantifying historical states of forest ecosystems is necessary to
-  understand the processes governing forest dynamics in a changing
+  Our ability to mitigate the effects of climate change relies on our
+  ability to quantify land-atmosphere interactions. Our
+  understanding of forest ecosystems is incomplete; quantifying past forest ecosystems can help us understand processes governing forest dynamics in a changing
   world. Fossil pollen data provide information about past forest
   composition, but rigorous interpretation requires development of
   pollen-vegetation models (PVMs) that account for interspecific
-  differences in pollen production and dispersal and other
-  factors. Widespread and intensified land-use over the 19th and 20th
-  centuries may have altered the pollen-vegetation relationship. Here
-  we use STEPPS, a Bayesian hierarchical spatial PVM, to estimate key
-  process parameters and associated uncertainties in the
-  pollen-vegetation relationship.  We experiment with alternate
-  dispersal kernels, and calibrate STEPPS using a newly developed
-  settlement-era calibration data set that relies on Public Land
-  Survey data and fossil pollen samples matched to the settlement-era
-  through expert elicitation. All variations of the Power-law kernel
-  model outperformed all variations of the Gaussian model, indicating
-  that pollen dispersal kernels are fat tailed.  Pine and birch have
-  the highest pollen productivities. Roughly 1 - 45\% of pollen produced by
-  trees in each 8 km grid cell remain in that grid cell, with 55-99\%
-  deposited elsewhere.  The 90\% capture radius ranged from 380 km for
-  hemlock to 608 km for other hardwood for the best-fit model.  Pollen
-  productivity and dispersal estimates are generally consistent with
-  previous understanding, although source area estimates are
-  larger. Tests of model predictions demonstrate the ability of STEPPS
-  to predict regional compositional patterns.
+  differences in pollen production and dispersal. Widespread and
+  intensified land-use over the 19th and 20th centuries may have
+  altered the pollen-vegetation relationship. Here we use STEPPS, a
+  Bayesian hierarchical spatial PVM, to estimate key process
+  parameters and associated uncertainties in the pollen-vegetation
+  relationship.  We experiment with alternate dispersal kernels, and
+  calibrate STEPPS using a newly developed settlement-era calibration
+  data set constructed from Public Land Survey data and fossil pollen
+  samples matched to the settlement-era using expert
+  elicitation. Models based on the inverse power-law dispersal kernel
+  outperformed those based on the Gaussian dispersal kernel,
+  indicating that pollen dispersal kernels are fat tailed.  Pine and
+  birch have the highest pollen productivities. Pollen productivity
+  and dispersal estimates are generally consistent with previous
+  understanding, although source area estimates are larger. Tests of
+  model predictions demonstrate the ability of STEPPS to predict
+  regional compositional patterns.
 \end{abstract}
+
+{\bf Keywords:} pollen, fossil, sediment, vegetation, forest, Bayesian,
+modelling, elicitation, dispersal, calibration, prediction
+
+\newpage
+\epigraph{It has been claimed that skilful hunters of old could bring their prey down even if they caught only a fleeting glimpse of its shadow. But still more remarkable appear the performances accomplished to-day by the pollen analyst. Out of pollen from crumbled clay or minute pieces of peat, taken from bits of earthenware or a stone axe, may be constructed a picture of the primeval forests which flourished in the region at the time when the pot or axe dropped, into the bog. This is, however, not the whole story.}{Gunnar Erdtman, 1943}
+
 
 %\newpage
 \section{Introduction}
-Understanding past forest compositional change provides valuable
+Understanding changes in past forest composition provides valuable
 information about ecosystem response to biotic and abiotic factors at
 timescales outside the realm of most direct ecological observations,
-particularly with respect to dynamics of tree species, and vegetation
+particularly with respect tree species composition, and vegetation
 feedbacks to other components of the earth system. Fossil pollen
 records extracted from sediments of lakes and mires are our primary
 source of data about prehistoric forest composition. Rigorous
@@ -167,89 +226,92 @@ pollen dispersal can be assumed constant \citep{davis1963theory,
 a simple inverse square or other function \citep{webb1981estimating,
   calcote1995pollen, jackson1998quantitative}, or parameterized using
 various pollen-transport models, usually based on the Sutton models of
-particulate dispersal \citep{prentice1988records, sugita2007theory1,
-  sugita2007theory2, jackson1999pollen}. Here, as in
-\citet{paciorek2009mapping}, a Bayesian hierarchical spatial approach
-is used to model pollen counts from a network of ponds as a function
+particulate dispersal \citep{prentice1988records, jackson1999pollen,
+  sugita2007theory1, sugita2007theory2}. 
+
+PVMs are ultimately used to reconstruct past vegetation. However, most
+models lack the ability to account for uncertainty in a coherent
+way. Without some understanding of the uncertainty, it is difficult to
+make conclusions about changes across space and/or time. In this work,
+our primary goal is to develop a PVM to estimate past vegetation
+composition and its uncertainty. As opposed to working with individual
+sites, we treat the data as a cohesive unit, and allow it to directly
+inform us about changes in space and time. As in
+\citet{paciorek2009mapping}, we use a Bayesian hierarchical spatial
+approach to model pollen counts from a network of ponds as a function
 of gridded forest composition data, taking into account pollen
 dispersal (from both local and regional vegetation), differential
-pollen production, and process uncertainty. Pollen dispersal
-descreases with increasing distance from the source, XXX
-
-% without
-%requiring prior knowledge about taxon-specific differents with respect
-%to pollen production and dispersal processes.
-
-% The spatial scale at which we can infer past forest composition
-% varies, and depends in part on the grain and extent of the forest
-% composition data used to calibrate the PVM. Some PVMs deal with highly
-% spatially resolved pollen dispersal events (REFS), while others are
-% more coarse in nature (REFS). Model structure is motivated by the
-% scientific question at hand - a model built to help understand the
-% physics of pollen transport requires different tools than one whose
-% goal is to estimate the functional response between vegetation and
-% deposited pollen across locations. In this work, our spatial scale is
-% large in both grain and extent relative to most other PVMs, which
-% reflects our motivation to estimate forest composition at a regional
-% scale. As such, we do not aim (and will not be able) to resolve
-% depositional events or composition heterogeneity at scales smaller
-% than that determined by our grid cell size. However, we can infer
-% composition at a coarser scale, over a large extent, which informs us
-% about broad compositional shifts across space and time.
+pollen production, and process uncertainty.  The statistical model
+infers production and dispersal capability based on finding parameter
+values that best explain the sediment pollen data given known
+vegetation, within the structure of how the model represents
+production and dispersal. That is to say that parameter estimates are
+collectively informed by all of the pollen and vegetation data.
 
 PVMs are calibrated using pollen and forest data. Some PVMs, notably
 the LOVE/REVEALS family of models \citep{sugita2007theory1,
   sugita2007theory2}, require information about pollen dispersal
 properties for individual taxa, which are then used to parameterize
 diffusion-based models of particulate transport [e.g.,
-\citet{prentice1985pollen}]. Other PVMs are calibrated against spatial
-networks of pollen assemblages extracted from surface sediment
-samples, which are then cross-referenced to contemporary spatial
+\citet{prentice1985pollen}]. In some cases, PVMs are calibrated
+against spatial networks of pollen assemblages extracted from surface
+sediment samples that are cross-referenced to contemporary spatial
 datasets of vegetation composition and abundance of the surrounding
 forests \citep{sugita2007theory1, sugita2007theory2}. These
 cross-referenced pollen and vegetation datasets are then used to build
 empirical models that can be used to infer past forest composition
-from fossil pollen assemblages. Most spatially calibrated PVMs are
-often not explicitly process-based, but sometimes the parameters in
-these empirical models given insight into process (e.g. the
-y-intercept in linear regression models provides an estimate of pollen
-deriving from non-local sources \citep{howe1983calibrating}).
-Bayesian hierarchical models, however, are flexible and can be
-designed to include parameters that specifically represent processes
-in pollen production, transport, and deposition
-\citep{paciorek2009mapping}.
+from fossil pollen assemblages. Most spatially-calibrated PVMs are not
+explicitly process-based, but sometimes the parameters in these
+empirical models give insight into process (e.g. the y-intercept in
+linear regression models provides an estimate of pollen deriving from
+non-local sources \citep{howe1983calibrating}).  This is the case with
+Bayesian hierarchical models; they can be designed to include
+parameters that represent processes in pollen production, transport,
+and deposition \citep{paciorek2009mapping}. 
 
 Most PVMs are used to reconstruct vegetation in the relevant pollen
 source area of a deposition basin. Previous studies have shown that
 the size of the deposition basin may affect the relevant pollen source
 area, with sediment pollen from larger lakes providing better
-representation of the regional pollen signal \citep{sugita2007theory1,
-  sugita1994pollen, jacobson1981selection}. In the LOVE/REVEALS models
-\citep{sugita2007theory1, sugita2007theory2}, background pollen is
-estimated based on pollen counts from large lakes, and is then used to
-inform local vegetation estimates from pollen counts at smaller
-depositional sites. Estimates of pollen productivity, fall speeds, and
-atmospheric conditions are required model inputs. Some of these
-required inputs are difficult to determine; they may be difficult to
-measure or quantify, or variable through time and/or space
-\citep{jackson1999pollen}. Here, we avoid the need for these inputs
-using a coherent hierarchical framework that allows us to estimate
-these process parameters and their uncertainty. However, the main
-advantage of the Bayesian PVM presented here is its ability to allow
-the model to borrow information across space and time, taking
-advantage of our understanding of the nature of compositional
-change. Currently we assume that the size of the depositional basin
-does not affect the distance weighting of the surrounding
-vegetation. This is in part a result our restricted ability to resolve
-smaller-scale compositional gradients near depositional basins because
-of the spatial resolution of the vegetation data used here. Although
-the lack of higher-resolution vegetation-sampling imposes some error
+representation of the regional pollen signal
+\citep{jacobson1981selection, sugita1994pollen, sugita2007theory1}. In
+the LOVE/REVEALS models \citep{sugita2007theory1, sugita2007theory2},
+background pollen is estimated based on pollen counts from large
+lakes, and is then used to inform local vegetation estimates from
+pollen counts at smaller depositional sites. Estimates of pollen
+productivity, fall speeds, and atmospheric conditions are required
+model inputs. As in LOVE/REVEALS, the PVM developed here also divides
+pollen dispersal into local and non-local components. Neither of these
+two PVMs is fully mechanistic (i.e. explicitly based on particle
+dynamics), although both account for some parts of the complex
+production and dispersal processes in different ways. The strength of
+the PVM presented here relative to other PVMs is in its ability to
+estimate vegetation and uncertainty by borrowing information across
+space and time. As a result of the explicit spatio-temporal
+construction of the PVM and this borrowing of information, we can
+estimate spatial maps of vegetation, and their uncertainty, even at
+locations for which we do not have pollen data. In addition, we avoid
+the need for model inputs using a coherent hierarchical
+framework. Requiring inputs is not an impediment \textit{per se}, but
+some of the inputs required for other PVMs are difficult to determine;
+they may be difficult to measure or quantify, or variable through time
+and/or space \citep{jackson1999pollen}.
+
+Unlike many other PVMs, we assume that deposition basin size does not
+affect the distance weighting of the surrounding vegetation. This is
+in part a consequence of the spatial resolution of the vegetation
+data; our ability to resolve smaller-scale compositional gradients
+near depositional basins is restricted by the coarseness of the
+vegetation data. However, all deposition sites regardless of size
+receive much of their pollen from regional sources and hence are
+sensitive to broader-scale vegetation patterns and gradients
 \citep{bradshaw1985relationships, prentice1987quantitative,
-  jackson1990}, all sites regardless of size receive much of their
-pollen from regional sources and hence are sensitive to broader-scale
-vegetation patterns and gradients \citep{bradshaw1985relationships,
-  prentice1987quantitative, jackson1991pollen, sugita2007theory1,
-  sugita2007theory2}.
+  jackson1991pollen, sugita2007theory1, sugita2007theory2}. Although
+the lack of higher-resolution vegetation-sampling likely imposes some
+error \citep{bradshaw1985relationships, prentice1987quantitative,
+  jackson1990}, our goal is to predict vegetation at a regional scale
+and as such we do not expect to resolve fine-scale local
+heterogeneities.
 
 
 %% The main advantage of this approach is the ability to borrow
@@ -263,7 +325,6 @@ vegetation patterns and gradients \citep{bradshaw1985relationships,
 %% represent processes in pollen production, transport, and deposition
 %% \citep{paciorek2009mapping}.
 
-
 For all PVMs, extending them to make inference about palynological
 processes and vegetation composition for times other than the time of
 calibration requires the assumption that the pollen-vegetation
@@ -275,25 +336,30 @@ differences among taxa should be less variable
 compositional and structural modification of vegetation by human
 land-use in the past two centuries in eastern North America and
 elsewhere, this assumption merits serious investigation and testing
-\citep{kujawa2015}. Recent human land-use has altered forest
+\citep{kujawa2015}. Recent human land use has altered forest
 composition and structure in at least five ways.  First, ecotonal
-gradients within forests of the upper Midwest were steeper in
-presettlement forests than they are now
-\citep{goring_witness}. Second, most forests of the region are now
-secondary, and so differ in density, biomass, size-structure, and
-age-structure from pre-settlement forests
-\citep{rhemtulla2009legacies}.  Third, land clearance, forest
-management practices, and successional processes have led to
+gradients within forests of the upper Midwestern US were steeper
+in pre-settlement forests than they are now
+\citep{goring_witness}. Second, most forests differ in density,
+biomass, size structure, and age structure from pre-settlement forests
+\citep{leahy2003comparison, schulte2007homogenization,
+  rhemtulla2009legacies, goring_witness}.  Third, land clearance,
+forest management practices, and successional processes have led to
 fundamental changes in forest composition, such that early
 successional trees such as poplar and maple are more abundant now than
-in the 19th century \citep{thompson2013four}.  Fourth, the overall
-pattern of forest mosaics in the region may be different - in some
-cases more spatially homogeneous (e.g., forest management practices)
-but in others more heterogeneous (e.g., locally idiosyncratic
-disturbance or land-use legacies) \citep{thompson2013four,
-  wang2007spatial}. Finally, fire suppression during the 20th century
-may have led to increasing forest density and changes in abundance of
-fire-adapted species \citep{nowacki2008demise}.
+in the 19th century \citep{thompson2013four, goring_witness}.  Fourth,
+the overall pattern of forest mosaics in the region may be different -
+in some cases more spatially homogeneous (e.g., forest management
+practices) but in others more heterogeneous (e.g., locally
+idiosyncratic disturbance or land-use legacies)
+\citep{thompson2013four, wang2007spatial, li2015drivers}. Finally,
+fire suppression during the 20th century may have led to increasing
+forest density and changes in abundance of fire-adapted species
+\citep{nowacki2008demise}. Critically however, the nature of change
+across the region varies; for example, fire supression has led to
+higher biomass in northern Minnesota, while clearance and regeneration
+has resulted in lower biomass in southern Wisconsin and Michigan
+\citep{goring_witness}.
 
 These changes in forest composition, structure, and landscape pattern
 may have directly influenced pollen production and dispersal
@@ -313,50 +379,74 @@ correct for the Fagerlind effect \citep{prentice1986,
 particular vegetational contexts \citep{jackson1998quantitative}.
 
 Most PVMs are calibrated using contemporary forest data; few studies
-have examined presettlement pollen-vegetation relationships
-\citep{schwartz1989predicting}.  However, recent work from Minnesota
-has shown that pollen-based paleoclimate reconstructions calibrated
-with pre-settlement pollen data differ significantly from those using
-modern pollen data \citep{st2014bias}. The compilation of settlement
-era Public Land Survey (PLS) forest composition records from the
-western Great Lakes region \citep{goring_witness, bourdo1956review,
-  schulte2001original, almendinger1996minnesota}, along with a new
-dataset of settlement era fossil pollen records from the upper
-midwestern US \citep{kujawa2015}, largely drawn from the Neotoma
+have examined settlement-era pollen-vegetation relationships
+\citep{schwartz1989predicting}. Although some have used historical
+forest cover maps to validate models based on modern relationships
+\citep{nielsen2004modelling}, recent work from Minnesota has shown
+that pollen-based paleoclimate reconstructions calibrated with
+settlement-era pollen data differ significantly from those using
+modern pollen data \citep{st2014bias} indicating the possibility that
+shifts in pollen-climate relationships have occured across the
+region.. The compilation of settlement-era Public Land Survey (PLS)
+forest composition records from the western Great Lakes region
+\citep{bourdo1956review, schulte2001original,
+  almendinger1996minnesota, liu2011broadscale, goring_witness}, along
+with a new dataset of settlement-era fossil pollen records from the
+upper Midwest \citep{kujawa2015}, largely drawn from the Neotoma
 Paleoecological Database (www.neotomadb.org), provides an opportunity
-to calibrate a PVM for the early to mid-19th Century, thus avoiding
+to calibrate a PVM for the early to mid-19th century, thus avoiding
 the effects of settlement, agriculture, and industrialization.
 
 Cross-referencing settlement-era forest composition with appropriate
 fossil data requires identification of pollen samples that are
-contemporaneous with the pre-settlement era.  In eastern North
-America, land-clearances during EuroAmerican settlement led to
-increases in certain agricultural and weedy plant taxa; these
-increases can be used as direct biostratigraphic markers of the
-settlement horizon in pollen records. Of these, the rise in ragweed
-(\textit{Ambrosia}) abundance is generally the most prominent
-\citep{mcandrews1988human}, and is widely used by palynologists to
-identify the EuroAmerican settlement horizon. Identifying the
-settlement horizon in this way requires interpretation of pollen
-seqeuences; the uncertainty associated with this interpretation has
-not been assessed to date. Here we use expert opinion from four
-paleoecologists to reduce bias and quantify uncertainty associated
-with the identification of biostratigraphic signals. Results from this
-exercise are used to construct a settlement-era pollen calibration
-data set.
+contemporaneous with the settlement-era.  In eastern North America,
+land clearances during Euro-American settlement led to increases in
+certain agricultural and weedy plant taxa; these increases can be used
+as direct biostratigraphic markers of settlement in pollen records. Of
+these, the rise in ragweed (\textit{Ambrosia}) abundance is generally
+the most prominent \citep{mcandrews1988human} and is widely used by
+palynologists to identify the Euro-American settlement horizon,
+i.e. the sample immediately preceding increases in indicator
+taxa. Identifying the settlement horizon in this way requires the
+interpretation of pollen sequences; the uncertainty associated with
+this interpretation has not been assessed to date. Here we use expert
+opinion from four paleoecologists to reduce bias and quantify
+uncertainty associated with the identification of biostratigraphic
+signals. Results from this exercise are used to construct a
+settlement-era pollen calibration data set.
 
-Using the settlement era PLS forest composition and pollen datasets,
-we calibrate a Bayesian hierarchical PVM based on the STEPPS
+Towards our goal of predicting vegetation and uncertainty, we develop
+and calibrate a Bayesian hierarchical PVM based on the STEPPS
 (Spatio-Temporal Empirical Prediction from Pollen in Sediments) model
-\citep{paciorek2009mapping}. We then use these results to predict
-settlement-era vegetation composition for the upper midwestern domain,
-and assess our ability to predict vegetation composition by comparing
-spatial predictions with the settlement-era forest composition
-data. As part of this work, we test and compare two standard isometric
+\citep{paciorek2009mapping}. We calibrate the PVM using the
+settlement-era PLS forest composition and pollen datasets, and use
+these calibration results to predict settlement-era vegetation
+composition for the upper Midwestern US. We assess our ability to
+predict vegetation composition by comparing these spatial predictions
+with the PLS data. With both prediction and understanding in mind, we
+test variations of the calibration model against the data and compare
+results to our current scientific understanding of pollen
+processes. Specifically, we test and compare two standard isometric
 dispersal kernels. We apply the PVM results to develop new estimates
-of relative pollen productivity and source area, assess the relative
-importance of local and non-local pollen sources, and compare these
-results to prior estimates of source area and pollen productivity.
+of relative pollen productivity and source area, and assess the
+relative importance of local and non-local pollen sources.
+
+% In this work, our primary goal is to develop a PVM to estimate past
+% vegetation composition and its uncertainty. There are several
+% quantitative methods that have been used to develop vegetation
+% reconstructions, however these models lack the ability to account for
+% uncertainty in a coherent way. Without understanding of the
+% uncertainty, it is impossible to make definitive conclusions about
+% changes across space and/or time. Here we let the data directly inform
+% us about changes in space and time, and their uncertainty. To achieve
+% this goal of reconstructing vegetation, we aim to develop a
+% statistical model that accounts for and quantifies the processes of
+% pollen production and dispersal. The success of the PVM is measured by
+% its ability to predict the vegetation data and estimate production and
+% dispersal parameters that agree in general with our scientific
+% understanding of pollen processes. A secondary goal is to use the PVM
+% to improve our understanding of the underlying processes, which we do
+% by testing variations of the calibration model against the data.
 
 \section{Data and Methods}
 
@@ -364,75 +454,72 @@ results to prior estimates of source area and pollen productivity.
 
 \subsubsection{Spatial domain}
 
-The study area is the upper midwestern US, including Minnesota,
-Wisconsin, and Michigan.  This region includes two major ecotones: the
-``Tension Zone'' between northern mixed forests and temperature
-broadleaved deciduous forests (\citet{curtis1959vegetation}), and the
-prairie/forest/savanna ecotone.  Both of these ecotones have been
-heavily modified by contemporary land use \citep{goring_witness}. We
-focus on the upper midwestern US because 1) there is interest in
-understanding past compositional changes, especially with respect to
-the ecotone, and 2) there is sufficient forest and pollen data to make
-and assess quantitative predictions.
+The study area is the upper midwestern US (UMW), including Minnesota,
+Wisconsin, and Michigan (see Fig.~\ref{fig:pie}).  This region
+includes two major ecotones: the ``Tension Zone'' between northern
+mixed forests and temperate broadleaved deciduous forests
+\citet{curtis1959vegetation}, and the prairie/forest/savanna ecotone.
+Both of these ecotones have been heavily modified by contemporary land
+use \citep{goring_witness}. We focus on the UMW because 1) there is
+interest in understanding past compositional change, especially with
+respect to the ecotone in this region, and 2) there is sufficient
+forest and pollen data to develop and assess quantitative predictions.
 
 \subsubsection{Public Land Survey (PLS) data}
 Prior to major European settlement, the US General Land Office
 conducted a Public Land Survey (PLS) throughout much of the United
 States to simplify the sale of federal lands. The PLS mapped the
-United States west and south of Ohio on a 1$\times$1 mi grid for the
-sale of public lands \citep{stewart1935public, white1983history}. At
-section corners surveyors placed a stake as the official location
-marker, and then recorded the closest two to four trees, measuring the
-distance from tree to point center, tree diameter and the (often
+United States west and south of Ohio on a 1$\times$1 mile grid for the
+sale of public lands \citep{stewart1935public,
+  white1983history}. Surveyors marked section corners with stakes, and
+recorded the closest two to four trees, measuring the distance from
+tree to point center, azimuth, tree diameter and the (often
 idiosyncratic) common name of these trees
 \citep{mladenoff2002narrowing}.
 
-This data set provides a systematic survey of the forest before
-settlement, and has been used by foresters, ecologists, and historians
-to learn about ecosystem and land-use change through time. In the
-upper midwestern US, the survey was conducted during 1834-1907
-\citep{stewart1935public}.
+This dataset provides a systematic survey of the forest before
+settlement and has been used by foresters, ecologists, and historians
+to learn about ecosystem and land-use change. In the UMW, the survey
+was conducted during 1834-1907 \citep{stewart1935public}.
 
-Recently these point-level data have been standardized and aggregated
-across the upper Midwest to a 64 km$^2$ grid (8$\times$8 km) on an
-equal-area Albers projection (proj4:
-+\textit{init}=\textit{epsg}:3175) to account for changing survey
-instructions through time (cf. Stewart, 1935) and to provide
-sufficient spatial resolution for regional scale analysis
+Recently these point-level data have been aggregated across the UMW to
+a 64 km$^2$ grid (8$\times$8 km) on an equal-area Albers projection
+(proj4: +\textit{init}=\textit{epsg}:3175) and standardized to account
+for changing survey instructions through time (cf. Stewart, 1935) and
+to provide sufficient spatial resolution for regional scale analysis
 \citep{goring_witness}.  This aggregation results in an average count
 of 134 trees per grid cell. This tree count per cell is low, but
 because of the uniform spatial sampling the ecological patterns and
 regional structure of the dominant forest taxa are evident
 \citep{goring_witness}. In a given grid cell, the raw data provide
 noisy estimates of composition proportions because of the limited
-number of trees per cell. Instead, we used composition estimates
-provided by \citet{paciorek2015}, who used a statistical model that
+number of trees per cell. Instead, we use composition estimates
+provided by \citet{paciorek2015}, who uses a statistical model that
 borrows information across nearby grid cells to estimate the
 composition proportions in each grid cell with uncertainty. Here we
-work with these PLS composition estimates. Although they are not data
-in the true sense, for our purposes they are assumed to be fixed;
-hereafter these PLS composition estimates are referred to as PLS data.
+work with these PLS composition estimates. These estimates are not
+data in the true sense, but assumed to be fixed for our purposes and
+are hereafter referred to as PLS data.
 
 \subsubsection{Tree taxa}
 
-For the upper midwestern US domain, \citet{goring_witness} report
-fifteen tree taxa directly, however the full dataset contains 28 taxa.
-Most taxa are resolved to the level of genera, and the list of taxa
-includes ``No Tree'' (21 \% of points) when surveyors did not find a
-tree within a reasonable distance, ``Unknown Tree'' (0.001 \% of
-points) when the common name used to identify the tree could not be
-resolved, and ``Other Hardwood'' (0.02 \% of points) when the surveyed
-tree was clearly a hardwood, but could not be resolved beyond that
-level. We focus on a subset representing two functional groups
-(Deciduous and Coniferous taxa) and 10 tree genera that include the
-most abundant taxa as well as less-abundant taxa of particular
-ecological importance. Our modelled taxa are: ash, beech, birch, elm,
-hemlock, maple, oak, pine, spruce, and tamarack (see
-Table~\ref{table:pollen_acc} for the scientific name
+For the UMW domain, \citet{goring_witness} report fifteen tree taxa,
+although the full dataset contains 28 taxa.  Most taxa are resolved to
+the level of genera, and the list of taxa includes ``No Tree'' (21\%
+of points) when surveyors did not find a tree within a reasonable
+distance, ``Unknown Tree'' (0.001\% of points) when the common name
+used to identify the tree could not be resolved, and ``Other
+Hardwood'' (0.02\% of points) when the surveyed tree was clearly a
+hardwood, but could not be resolved beyond that level. We focus on a
+subset representing two functional groups (Deciduous and Coniferous
+taxa) composed of 10 tree genera that include the most abundant taxa
+as well as less-abundant but ecologically significant taxa. These taxa
+are: ash, beech, birch, elm, hemlock, maple, oak, pine, spruce, and
+tamarack (see Table~\ref{table:pollen_acc} for scientific name
 translations). The remaining tree taxa, including ``Unknown Tree'',
 are aggregated to ``Other Hardwood'' or ``Other Conifer'', which
-amount to 10 \% and 7 \% of the included trees respectively.``No
-Tree`` is excluded from further analysis.
+amount to 10\% and 7\% of the included trees respectively.``No Tree``
+is excluded from further analysis.
 
 % \textit{Abies}, \textit{Acer}, \textit{Betula},
 % \textit{Fagus}, \textit{Fraxinus}, \textit{Larix}, \textit{Picea},
@@ -450,81 +537,90 @@ Advances in paleoecoinformatics \citep{brewer2012paleoecoinformatics,
   grimm2013encyclopedia} have made it possible to easily access and
 query large datasets using tools such as the multi-proxy
 Pliocene-Quaternary database Neotoma (\url{neotomadb.org}). The
-development of the Neotoma API has provided a foundation for the
-development of a map-based search interface - the Neotoma Explorer
-(http://apps.neotomadb.org/explorer/) - and the neotoma package for R
-\citep{goring2015}. Using these tools we identified 176 sedimentary
-pollen records in the Neotoma database from the upper midwestern
-US. To be considered useful for our purposes each record was required
-to include multiple pollen samples within the last 2000 years.  An
-additional 57 cores, not available from Neotoma at the time of this
-project, were contributed by independent researchers
-\citep{kujawa2015}. These additional records include 9 pollen count
-time series records and 48 records that consist only of the core top
-and pre-settlement assemblages, hereafter referred to as before-after
-records. This new settlement-era pollen dataset is fully described in
+development of the Neotoma API (\url{api.neotomadb.org}) has provided
+a foundation for the development of a map-based search interface - the
+Neotoma Explorer (\url{apps.neotomadb.org/explorer}) - and the neotoma
+package for R \citep{goring2015}. Using these tools we identified 176
+sedimentary pollen records in the Neotoma database from the UMW. To be
+considered for settlement-era calibration, records must contain a
+sample deemed representative of settlement-era vegetation; for this
+reason, we considered only records that included multiple pollen
+samples from the last 2000 years (with the hope that one of these
+samples will be deemed representative). An additional 57 records, not
+available from Neotoma at the time of this project, were contributed
+by independent researchers \citep{kujawa2015}. These additional
+records include 9 pollen count time series records and 48 records that
+consist only of the core top and pre-settlement assemblages, hereafter
+referred to as before-after records. The dating controls available for
+the identified pollen records varied. To form our calibration data set
+we do not rely on these controls, and as a result they were not
+explicitly considered during the pollen record screening process (but
+will be considered in the formation of the prediction data set). The
+new settlement-era pollen dataset is fully described in
 \citet{kujawa2015}.
 
-These pollen records are obtained from the classification of pollen
-grains based on morphological features into groups that correspond
-with plant taxa, which is a labour intensive and skill-dependent
-process. Each pollen count represents a sample from a larger
-population with associated uncertainty \citep{maher2012assessment,
-  maher1981statistics}, although uncertainty from pollen
-identification and counting is negligible for regional-to-global-scale
-syntheses focused on the most common taxa from lake and mire sediments
-\citep{webb1978sensing, webb1978mapped}. These data are collected by
-independent researchers and as such require the standardization of
-pollen taxonomies to account for differing nomenclature and taxonomic
-resolution. Pollen taxonomies were standardized using the STEPPS
-translation table from \url{neotoma}, which is reported as
-supplemental material.
+Pollen records are obtained from the classification of pollen grains
+based on morphological features into groups that correspond with plant
+taxa, which is a labor intensive and skill-dependent process. Each
+pollen count represents a sample from a larger population
+\citep{maher2012assessment, maher1981statistics}, although uncertainty
+from pollen identification and counting is negligible for
+regional-to-global-scale syntheses focused on the most common taxa
+from lake and mire sediments \citep{webb1978sensing,
+  webb1978mapped}. These data are collected by independent researchers
+and as such require the standardization of pollen taxonomies to
+account for differing nomenclature and taxonomic resolution. Here
+pollen taxonomies were standardized using the STEPPS translation table
+from \url{neotoma}, which is reported as supplemental material.
 
-\subsubsection{Identifying the EuroAmerican settlement horizon in pollen records via expert elicitation}
+\subsubsection{Elicitation of evidence for settlement in pollen
+  records}
 
-Widespread land clearance during European settlement provided habitat
-for many ruderal plants, resulting in increases in non-arboreal taxa
-which are evident in pollen count time series
-\citep{mcandrews1988human}. In the upper midwestern US, significant
+Widespread land clearance during Euro-America settlement provided
+habitat for many ruderal plants, resulting in increases in
+non-arboreal taxa that are evident in pollen records
+\citep{mcandrews1988human}. In the UMW, significant
 increases in ragweed (\textit{Ambrosia}), docks and sorrels
 (\textit{Rumex}), and grasses (\textit{Poaceae}) typically mark this
-settlement horizon. 
+settlement horizon.
 
 Here we use expert elicitation to identify the representative
-settlement horizon sample, defined as the sample that falls
-immediately before the increase in agricultural indicator species, at
-each of the 185 sites with pollen count time series data. All expert
-elicitation relies on judgment. The degree of uncertainty resulting
-from this expert judgment varies widely among sites as a result of the
-temporal density of pollen samples, time-averaging of sediments, the
-rapidity of forest clearance and landscape transformation, and the
-pollen representation of dominant trees, which can dampen or amplify
-the ragweed signal. At some sites, the settlement horizon is
-unambiguous, while at others the transition is less clear (see
-Figure~\ref{fig:elicit}).
+settlement horizon sample, defined to be the sample preceding the
+increase in agricultural indicator species, at each of the 185 sites
+with pollen count time series data. All expert elicitation relies on
+judgment, and there is often significant variability in expert's
+determination of true signals \citep{bond2007you, bond2012makes}. The
+degree of uncertainty resulting from expert identification of
+``settlement'' likely varies among sites as a result of the temporal
+density of pollen samples, time-averaging of sediments, the rapidity
+of forest clearance and landscape transformation, the pollen
+representation of dominant trees, which can dampen or amplify the
+ragweed signal, and expert knowledge of the region and the
+late-Holocene history of the site. At some sites, the settlement
+horizon is unambiguous, while at others the transition is less clear
+(see App.~\ref{append}, Fig.~\ref{fig:elicit}).
 
-For this study, in the interest of reducing bias and quantifying
-uncertainty, we: 1) use consistent methodology to identify the
-settlement horizon for the pollen sites, and 2) assess the variability
-in assignment of the settlement horizon among analysts. Four expert
-palynologists (Goring, Jackson, St. Jacques, Williams) participated in
-the elicitation exercise. Each expert was provided with pollen
-diagrams depicting proportional changes through time as a function of
-depth for key indicator plus the ten most abundant arboreal taxa for
-the last 2000 years as determined by the default neotoma age-depth
-models. Experts were prohibited from relying on stratigraphic dates
-(radiocarbon or other) or age-depth model estimates of sample age. If
-experts could not distinguish the settlement horizon, they were
-instructed to report NA. If experts were uncertain about their
-settlement horizon determination, they were instructed to note this,
-with or without justification. Expert identifications were checked
-against age assignments based on age-depth models obtained from the
-Neotoma Paleoecology Database or that we constructed using the
-original age controls and the bacon age model
+In the interest of reducing bias and quantifying uncertainty, we: 1)
+use consistent methodology to identify the settlement horizon in the
+pollen reocrds, and 2) assess the variability in settlement horizon
+assignment among analysts. Four expert palynologists (Goring, Jackson,
+St. Jacques, Williams) participated in the elicitation exercise. Each
+expert was provided with pollen diagrams depicting proportional
+changes through time as a function of depth for the ten most abundant
+arboreal plus key indicator taxa for the last 2000 years as determined
+by the default Neotoma age-depth models. Experts were prohibited from
+relying on stratigraphic dates (radiocarbon or other) or age-depth
+model estimates of sample age. Experts were instructed to report NA
+when they could not distinguish the settlement horizon, and to note
+the uncertainty of their settlement horizon assignments, with or
+without justification. Expert identifications were checked against age
+assignments based on age-depth models either obtained from Neotoma or
+constructed using original age controls and the Bacon age model
 \citep{blaauw2011flexible}.  Results from this exercise were used to
 define depths associated with settlement horizon samples and their
 uncertainty. Pollen samples corresponding to the selected settlement
-horizon depths were included in our calibration data set.
+horizon depths were included in our calibration data set. Expert
+elicitation results are included as supplementary material.
 
 % To calibrate a PVM against PLS forest composition data, prior to major
 % anthropogenic disturbance, requires pollen data that is
@@ -585,7 +681,7 @@ horizon depths were included in our calibration data set.
 % representation of dominant trees, which can dampen or amplify the
 % \textit{Ambrosia} signal. At some sites, the settlement horizon is
 % unambiguous, while at others the transition is less clear (see
-% Figure~\ref{fig:elicit}).
+% Fig.~\ref{fig:elicit}).
 
 % For this study, in the interest of reducing uncertainty, we want to:
 % 1) identify pre-settlement samples using consistent methodology, and
@@ -607,173 +703,178 @@ horizon depths were included in our calibration data set.
 
 
 \subsection{Models}
+\label{sec:models}
 
-In this section we describe the Bayesian hierarchical PVM. In our
-workflow, vegetation reconstruction using the PVM is composed of two
-phases: calibration and prediction. In section~\ref{sec:cal}, we
-describe the calibration model used to estimate the parameters that
-describe the processes that link vegetation composition to sediment
-pollen through pollen production and dispersal. Then, in
-section~\ref{sec:pred}, we describe the prediction model used to
-estimate settlement-era vegetation composition. In
-section~\ref{sec:imp} we describe computational software and tools
-used to estimate parameters.
+In this section we describe the PVM. In our workflow,
+vegetation reconstruction is composed of two phases: calibration and
+prediction. In section~\ref{sec:cal}, we describe the calibration
+model used to estimate the parameters that describe the processes that
+link vegetation composition to sediment pollen through pollen
+production and dispersal. Then, in section~\ref{sec:pred}, we describe
+the prediction model used to estimate settlement-era vegetation
+composition. In section~\ref{sec:imp} we describe computational
+software and tools used to fit the models.
 
 %  the methodological foundation for rigorous
 % reconstruction of past forest composition from fossil pollen data and
 % all scripts are made publicly available at GitHub (link).
 
-\subsubsection{Calibration model overview}
+\subsubsection{Calibration model}
 \label{sec:cal}
 
-Here we describe the calibration model used in the first phase of the
-vegetation reconstruction. For the sake of clarity, we first provide
-an overview of the model, and then introduce the mathematical
-notation.
+Here we describe the calibration model used in the first phase of
+vegetation reconstruction. We first provide an overview of the model
+and then introduce the mathematical notation.
 
-The pollen counts that we observe are a function of the vegetation on
-the landscape, i.e. the composition and abundance of trees on the
+The observed pollen counts are a function of the vegetation on the
+landscape; i.e., the composition and abundance of trees on the
 landscape determines (in part) the composition and abundance of pollen
-that is deposited in the sediment. Determining how much pollen the
-surrounding vegetation contributes is a complex function of forest
-characteristics (e.g., composition, structure, patchiness, spatial
-stationarity), climate (including wind), grain size and morphology,
+deposited in the sediment. How much pollen the surrounding vegetation
+contributes is a complex function of forest characteristics (e.g.,
+composition, structure, patchiness, spatial stationarity), climate
+(including wind), pollen productivity, grain size and morphology,
 topography, and proximity of the vegetation to a deposition basin.
 
 We work on an 8 km grid defined by the resolution of the gridded PLS
 data and define each deposition site as having both local and
 non-local pollen contributions. Local contributions are made by the
 vegetation within the same grid cell as a site, and non-local
-contributions are made by vegetation from all other grid cells in the
-domain. The relative contribution of local versus non-local pollen is
-determined by a model parameter, with the restriction that the sum of
-all contributions from the pollen source area must be one.
+contributions are made by vegetation from other grid cells. The
+relative contribution of local versus non-local pollen is determined
+by a model parameter, with the restriction that the sum of all
+contributions from the pollen source area must be one. We emphasize
+that here ``local'' refers to pollen from an area much larger than
+what would usually be referred to as such.
 
 Contributions from non-local grid cells are not all equal; their
 relative contributions are distance-weighted according to a dispersal
 kernel, which determines how likely it is for pollen to travel from
-one grid cell to another. The dispersal kernels used here are
-isometric so they depend only on the distance of the tree to the
-deposition site, and not on the absolute position or direction. In
+one grid cell to another. Dispersal is a well-studied phenomenon, and
+there is no consensus on a single best dispersal kernel; dispersal
+kernels vary in function complexity and flexibility, and some are
+better suited in certain cases than others
+\citep{clobert2012dispersal}. Given this, we test two dispersal
+kernels, both of which have been used to model pollen dispersal
+\citep{clobert2012dispersal}. The considered dispersal kernels are
+isometric, meaning they depend only on the distance of the tree to the
+deposition site and not on the absolute position or direction. In
 reality, dispersal may not be isometric, owing to prevailing wind
 directions during pollen-dispersal seasons, regional topography,
 surface roughness, and vegetation patchiness on the
 landscape. However, isometric dispersal kernels are a reasonable and
 widely used approximation \citep{sugita2007theory1,
   sugita2007theory2}, because turbulent atmospheric mixing below the
-boundary layer tends to smooth out anisotropies.
+boundary layer tends to smooth out anisotropies. We define a maximum
+dispersal distance that determines an upper limit to the distance that
+pollen is able to disperse from the source; this reduces computation
+without a significant loss of information.
 
 Here, we choose two kernels that are representative of the short- and
-long-tail kernel classes, the Gaussian and the inverse Power-law
-kernels, and compare between these generalized functional forms. The
-Gaussian kernel is often used as a reference against more leptokurtic
-kernels such as the inverse Power-law kernel, and can represent
-dispersal through diffusion. While the Gaussian kernel has simpler
-mathematical representation, fatter-tailed kernels (such as the
-inverse Power-law) in general perform better than those with thinner
-tails (like the Gaussian or Exponential) when modelling pollen
-dispersal \citep{devaux2007modelling, austerlitz2004using}. However,
-pollen dispersal data needed to validate pollen dispersal models are
+long-tail kernel classes, the Gaussian kernel (GK) and the inverse
+power-law kernel (PLK), and compare between these generalized
+functional forms. The GK is often used as a reference against more
+leptokurtic kernels such as the PLK and can represent dispersal
+through diffusion. While the GK has a simpler mathematical
+representation, fatter-tailed kernels (such as the PLK) in general
+perform better than those with thinner tails (like the GK or
+Exponential) when modelling pollen dispersal
+\citep{devaux2007modelling, austerlitz2004using}. However, pollen
+dispersal data needed to validate pollen dispersal models are
 generally unavailable, especially at the large spatial scales required
 to adequately test long-tailed kernels \citep{clobert2012dispersal}.
 
-%  Both the gaussian and inverse power law kernels have
-% been successfully applied to pollen data ??.  
-
 To determine how much pollen a grid cell contributes to a deposition
 site such as a pond, the vegetation composition proportion vector is
-scaled by a taxon-specific parameter ($\phi$) that accounts for
-differential pollen production among plant species. The local
+first scaled by taxon-specific parameters that account for
+differential pollen production among tree species. The local
 contribution is determined by the scaled vegetation vector for the
 grid cell that contains the pond. For all grids cells in the domain
-that do not contain the pond, the scaled vegetation vector is
-multiplied by the weight assigned by the dispersal kernel (which
-depends on the distance to the pond and the kernel parameters). The
-total non-local contribution is the sum of the scaled and weighted
-vegetation vectors over all grid cells that do not contain the
-pond. The relative importance of the local and non-local contributions
-is determined by the local strength parameter $\gamma$, and the sum of
-the scaled local and non-local contributions determines the predicted
+that do not contain the pond, their scaled vegetation vectors are
+multiplied by the respective weights assigned by the dispersal kernel
+(which depend on the distance to the pond and the kernel
+parameters). The total non-local contribution is the sum of the scaled
+and weighted vegetation vectors over all grid cells that do not
+contain the pond. The relative importance of the local and non-local
+contributions is determined by the local strength parameter, and the
+sum of the local and non-local contributions determines the predicted
 sediment pollen at the pond.
 
-\subsubsection{Calibration model}
+\subsubsection*{Calibration model details}
 
-Here we give a more detailed description of the calibration model. As
-described, the spatial domain is regular grid is composed of 64 km$^2$
+Here we give a mathematical description of the calibration model. As
+described, the spatial domain is regular grid composed of 64 km$^2$
 discrete cells, but the underlying vegetation composition and
 dispersal spatial processes are continuous functions of space. Spatial
-cells are indexed by $s=1,\ldots,S$, where $S=8013$. Hence, all grid
-cells in the domain are potential sources of pollen.
+cells are indexed by $s=1,\ldots,S$, and for the full UMW
+spatial domain $S=8013$. All grid cells in the domain are potential
+sources of pollen.
 
 Pollen produced by vegetation within each grid cell can be deposited
 within that grid cell or dispersed into the neighborhood around that
 grid cell. For grid cell $s_i$, the pollen produced by taxon $p$
 within that cell that remains local is given by
-\begin{align}
-\gamma \phi_p r_p(s_i)
-\end{align} 
+\begin{linenomath*}
+\begin{equation}
+\gamma \phi_p r_p(s_i),
+\end{equation} 
+\end{linenomath*}
 where $\gamma$ is the proportion of pollen produced in $s_i$ that is
 deposited in $s_i$, $\phi_p$ is the scaling factor that accounts for
 differential production, and $r_p(s_i)$ is the proportional abundance
 of vegetation of taxon $p$ in $s_i$.
 
-The remaining ($1-\gamma$) proportion of pollen produced in $s_i$ is
+The remaining $1-\gamma$ proportion of pollen produced in $s_i$ is
 dispersed to other grid cells according to an isometric dispersal
 kernel centered at $s_i$. The dispersal kernel weights all pollen
 dispersing away from the focal cell as a function of the distance from
 $s_i$ to any neighboring cell $s_k$ by $w(s_i, s_k)$.
 
-The two dispersal kernels considered here are: (i) the Gaussian and
-(ii) the inverse Power-law. The Gaussian kernel is defined as 
-\begin{align}
+The two dispersal kernels considered are the GK, defined as
+\begin{linenomath*}
+\begin{equation}
   w_g(s_i, s_k) = \exp\left( - \frac{d(s_i, s_k)^2}{\psi^2} \right),
-\end{align}
+\end{equation}
+\end{linenomath*}
 where $d(s_i,s_k)$ defines the distance between cells $s_i$ and $s_k$
 and $\psi>0$ is a parameter that describes the spread of the
-kernel. The inverse Power-law kernel is defined as
-\begin{align}
+kernel, and the PLK, defined as
+\begin{linenomath*}
+\begin{equation}
 w_{pl}(s_i, s_k) = \frac{(b-2)(b-1)}{2 \pi a^2} \left( 1 + \frac{d(s_i, s_k)}{a} \right)^{-b},
-\end{align}
+\end{equation}
+\end{linenomath*}
 where $a>0$ and $b>2$ are parameters that determine the kernel
 shape. As expected, the weight assigned by both kernels is a
 decreasing function of distance - less pollen is distributed farther
 away.
-
-%Previous work has shown that pollen dispersal distances can reach up to XXXX, and that long-distance dispersal events may be rare, but have the ability to drive range expansion XXX.
  
 Pollen produced by taxon $p$ dispersing from $s_i$ to $s_k$ is then
-described as
-\begin{align}
-(1-\gamma) \phi_p r_p(s_i) w(s_i, s_k).
-\end{align}
-
-% We can then define the pollen produced by taxon $p$ dispersing from
-% $s_i$ to $s_k$ by
-% \begin{align}
-% \frac{1}{C} (1-\gamma) \phi_p r_p(s_i) w(s_i, s_k),
-% \end{align}
-% where $C$ is a normalizing constant equal to the sum of the weights of
-% all the cells to which pollen can be dispersed, defined be a
-% rectangular region that covers and extends beyond the limits of the domain.
-
-%% An anisotropic kernel may better approximate true pollen dispersal due to prevailing winds, although prevailing wind direction in the Upper Midwest is not constant throughout the domain due to the proximity to the great lakes, making the inclusion of this asymmetry complicated. %
-
-%and therefore including this non-constant asymmetry in the modeling framework is not straightforward. 
+calculated as
+\begin{linenomath*}
+\begin{equation}
+(1-\gamma) \phi_p r_p(s_i) w(s_i, s_k),
+\end{equation}
+\end{linenomath*}
+where $w \in \{w_{g}, w_{pl} \}$.
 
 So far we have characterized the model from a source-based
 perspective, describing how pollen disperses from the grid cell in
-which it was produced. We would like to quantify the pollen arriving
-at pond $i$ located in the grid cell $s_i$ - our data are counts of
-pollen grains that have been dispersed to the depositional site and
-deposited in the sediment. This arriving pollen is equal to the sum of
-the locally deposited pollen plus the pollen dispersed to $s_i$ from
-other grid cells in the domain that are within the maximum dispersal
-distance of $s_i$. Therefore the pollen from taxon $p$ arriving at
-pond $i$, referred to as $r_{i,p}^{\text{pol}}$, is given by
-\begin{align}
+which it was produced. To quantify vegetation we need to interpret the
+counts of pollen grains from the sedimentary record from site $i$ in
+grid cell $s_{i}$. These pollen grains were produced in and dispersed
+from grid cells within the maximum dispersal distance, and have been
+deposited, preserved, and counted. The pollen arriving at site $i$ is
+equal to the sum of the locally deposited pollen plus the pollen
+dispersed to $s_i$ from other grid cells in the domain that are within
+the maximum dispersal distance of $s_i$. Therefore the pollen of taxon
+$p$ arriving at pond $i$, referred to as $r_{i,p}^{\text{pol}}$, is
+given by
+\begin{linenomath*}
+\begin{equation}
 r_{i,p}^{\text{pol}} = \gamma \phi_p r_p\bigl(s_i\bigr) + \frac{1}{\Omega} (1-\gamma) \phi_p \sum_{s_k \neq s_i } r_p(s_k) w\bigl(s_i, s_k\bigr)
 \label{eq:arriving}
-\end{align}
+\end{equation}
+\end{linenomath*}
 where $\Omega$ is a normalizing constant equal to the sum of the
 weights of all the cells to which pollen can be dispersed, defined to
 be a circle of radius 700 km. Note that $\Omega$ depends on the
@@ -783,101 +884,115 @@ $\Omega$ is constant across the domain.
 
 Finally, we need to relate the arriving pollen $r_{i,p}^{\text{pol}}$
 quantified in Equation~\ref{eq:arriving} to the pollen count data. To
-do this, we must consider that the pollen data are overdispersed - the
-counts are more variable than we might expect if they were assumed to
-follow a multinomial distribution. This overdispersion is at least in
-part (and perhaps mostly) attributed to heterogeneity in the pollen
-production and dispersal processes that are not accounted for in our
-mathematical characterization, but is also an artifact of the
+do this, we consider that the pollen data are overdispersed - the
+counts are more variable than we might expect if they were
+multinomially distributed. This overdispersion is at least in part
+(and perhaps mostly) attributed to heterogeneity in the pollen
+production and dispersal processes that is not accounted for in our
+mathematical characterization but is also an artifact of the
 comparison of pollen counts at a point location (the depositional
 site) situated anywhere within a focal grid cell to a grid-based
-vegetation composition average. As such, the pollen counts at
-depositional site $i$, denoted by $\bm{y}_i$, are modelled by a
-Dirichlet-multinomial (DM) distribution, a compound distribution used
-to account for overdispersion in multinomial count data (and tends to
-the multinomial distribution in the case of no overdispersion). We
-have that
-\begin{align}
-\bm{y}_i \sim DM (n_i, \bm{r}_i^{\text{pol}})
+estimate of pollen deposition. Therefore, we model the pollen counts
+at depositional site $i$, denoted by $\bm{y}_i=(y_{i1}, \ldots,
+y_{iP})$, with a Dirichlet-multinomial (DM) distribution, a compound
+distribution used to account for overdispersion in multinomial count
+data (that simplifies to the multinomial distribution in the case of
+no overdispersion). We have that
+\begin{linenomath*}
+\begin{equation}
+\bm{y}_i \sim DM (n_i, \bm{r}_i^{\text{pol}}),
 \label{eq:DM}
-\end{align}
+\end{equation}
+\end{linenomath*}
 where $\bm{r}_i^{\text{pol}} = (r_{i,1}^{\text{pol}}, \ldots,
-r_{i,K}^{\text{pol}})$.  The precision $\alpha_i$ is equal to the sum
-of Equation~\ref{eq:arriving} over all taxa
-\begin{align}
-\alpha_i = \sum_{p=1}^K \Bigl[\gamma \phi_p r_p\bigl(s_i\bigr) + \frac{1}{\Omega} (1-\gamma) \phi_p \sum_{s_k \neq s_i } r_p(s_k) w\bigl(s_i, s_k\bigr)\Bigr].
+r_{i,P}^{\text{pol}})$ and $n_i$ is the number of pollen grains
+counted at site $i$.  The precision $\alpha_i$ of the distribution is
+equal to the sum of Equation~\ref{eq:arriving} over all taxa
+\begin{linenomath*}
+\begin{equation}
+\alpha_i = \sum_{p=1}^P \Bigl[\gamma \phi_p r_p\bigl(s_i\bigr) + \frac{1}{\Omega} (1-\gamma) \phi_p \sum_{s_k \neq s_i } r_p(s_k) w\bigl(s_i, s_k\bigr)\Bigr].
 \label{eq:alpha}
-\end{align}
-Note that the precision parameter $\alpha_i$ is affected by the
-proximity of a depositional site to the domain boundary. We do not
-have PLS data outside of the defined upper midwestern US domain, so
-cannot quantify the pollen dispersed from vegetation outside the
-domain arriving at depositional sites in our domain. The repercussion
-of this is that the sum of the weights of the grid cells contributing
-pollen to a depositional site close to the domain boundary is less
-than the sum of the weights of the total potential contributing
+\end{equation}
+\end{linenomath*}
+Note that the precision is affected by the proximity of a depositional
+site to the domain boundary. We do not have PLS data outside of the
+defined UMW domain, so we cannot quantify the pollen dispersed from
+vegetation outside the domain arriving at depositional sites in our
+domain. The repercussion of this is that the sum of weights of the
+grid cells contributing pollen to sites close to the domain boundary
+is less than the sum of weights of the total potential contributing
 neighborhood, defined as $\Omega$. The result of having a smaller
 contributing neighborhood is that the local pollen contribution is
-effectively up-weighted relative to the non-local contribution (see
-Equation~\ref{eq:alpha} ).
+effectively up-weighted relative to the non-local contribution.This
+edge effect will have the greatest impact at sites that are close to
+the boundary and near regions of vegetation that contribute pollen
+which are not accounted for (some sites are near the boundary but are
+surrounded by lakes which do not contribute tree pollen). The
+northeastern tip of Minnesota is likely the most affected part of the
+domain; it likely receives pollen from Canada where we do not have
+vegetation data. However, as long as there are sufficiently many sites
+for which we do have vegetation for most of the source area then these
+edge effects will not significantly influence our process parameter
+estimates (process parameters are not spatially-dependent).
 
-\subsubsection{Model priors}
+\subsubsection*{Model priors}
 
-Uninformative priors are assigned to the model parameters. For all
-calibration models, we set the priors $\phi_k \sim \text{uniform}(0,
-300)$ for $k=1, \ldots, K$ and $\gamma \sim \text{uniform}(0,1)$. For
-dispersal kernel parameters, we note that we work with megametre (Mm)
-distance units, where $1 \text{Mm} = 1000 \text{km}$. For the Gaussian
-kernel we define the prior $\psi \sim \text{uniform}(0, 2)$, while for
-the Power-law kernel we have $a \sim \text{uniform}(0, 500)$ and $b
-\sim \text{uniform}(2, 6)$.
+Non-informative priors are assigned to model parameters. For both
+dispersal kernels, we set the priors $\phi_p \sim \text{uniform}(0,
+300)$ for $p=1, \ldots, P$ and $\gamma \sim \text{uniform}(0,1)$. For
+the GK we define the prior $\psi \sim \text{uniform}(0, 2)$, while for
+the PLK we have $a \sim \text{uniform}(0, 500)$ and $b \sim
+\text{uniform}(2, 6)$. Note that we work in megameters (Mm), where $1
+\text{ Mm} = 1000 \text{ km}$.
 
-\subsubsection{Model variants}
+\subsubsection*{Model variants}
 \label{variants}
 
-As currently described, neither dispersal kernel ($w_{pl}$ or $w_g$)
-nor the parameter $\gamma$ vary by taxon. In this base model, a single
-dispersal kernel defines all pollen dispersal and a single parameter
-determines what proportion of pollen remains local. In reality pollen
-dispersal varies among species; pollen-grain morphology, size, weight,
-and release mechanism all vary systematically among plant taxa
-\citep{jackson1999pollen}. Here, we let the data inform us if there is
-sufficient evidence to support taxon-specific dispersal parameters
-through the use of exchangeable priors \citep{gelman2014bayesian}. An
-exchangeable prior defines the same prior distribution on each of the
-$K$ parameters in question as a function of shared
-hyperparameters. When the variance hyperparameter is estimated to be
-small, we can conclude that there is not sufficient evidence in the
-data at hand to support taxon-specific parameters.
+As currently described, neither dispersal kernel (GK or PLK) nor the
+parameter $\gamma$ vary by taxon. In reality pollen dispersal varies
+among species; pollen-grain morphology, size, weight, and release
+mechanism all vary systematically among plant taxa
+\citep{jackson1999pollen}. We let the data inform us if there is
+sufficient evidence to support taxon-specific dispersal parameters by
+testing alternative models with exchangeable priors
+\citep{gelman2014bayesian}. An exchangeable prior defines the same
+prior distribution on each of the $P$ parameters in question as a
+function of shared hyperparameters. When the variance hyperparameter
+is estimated to be small, there is not sufficient evidence in the
+available data to support taxon-specific parameters.
 
-In the Gaussian kernel case we evaluate the support for taxon specific
-values of $\psi$ using the exchangeable prior
-\begin{align}
-\log(\psi_k) \sim \text{normal}( \mu_{\psi}, \sigma_{\psi})
-\end{align}
-for taxon $k=1, \ldots, K$ where $\mu_{\psi} \sim
+In the GK case we use the exchangeable priors
+\begin{linenomath*}
+\begin{equation}
+  \log(\psi_p) \sim \text{normal}( \mu_{\psi}, \sigma_{\psi})
+\label{eq:psi_ep}
+\end{equation}
+\end{linenomath*}
+for taxon $p=1, \ldots, P$ where $\mu_{\psi} \sim
 \text{uniform}(\log(0.1),\log(2))$ (the log of the $\psi$ prior
 interval in the single-taxon case), and $\sigma_{\psi} \sim
-\text{halfCauchy}(0, 2)$, a half-Cauchy with mean of 0 and standard
-deviation 2 \citep{gelman2006prior}. For the Power-law kernel case,
-when $a$ and/or $b$ are allowed to vary their exchangeable priors are
-analogous to the exchangeable prior defined for $\psi$. Note that for
-the Power-law kernel, $b$ is allowed to vary by taxon only when $a$
-varies by taxon.
+\text{half-Cauchy}(0, 2)$, a half-Cauchy with mean of 0 and scale of 2
+\citep{gelman2006prior}. For the PLK case, when $a$ and/or $b$ are
+allowed to vary their exchangeable priors are analogous to the
+exchangeable prior defined for $\psi$ (see
+Equation~\ref{eq:psi_ep}). Note that for the PLK, $b$ is allowed to
+vary by taxon only when $a$ varies by taxon.
 
 When $\gamma$ is allowed to vary by taxon, we define a logit-normal
-prior such that the probability density function for $0 \leq \gamma_k
+prior such that the probability density function for $0 \leq \gamma_p
 \leq 1$ is given by
-\begin{align}
-\frac{1}{\sigma_\gamma \sqrt{2 \pi}}\frac{1}{ \gamma_k ( 1 - \gamma_k )}\exp \left(- \frac{(\text{logit}(\gamma_k) - \mu_{\gamma})}{2 \sigma_{\gamma}^2} \right)
-\end{align} 
+\begin{linenomath*}
+\begin{equation}
+\frac{1}{\sigma_\gamma \sqrt{2 \pi}}\frac{1}{ \gamma_p ( 1 - \gamma_p )}\exp \left(- \frac{(\text{logit}(\gamma_p) - \mu_{\gamma})}{2 \sigma_{\gamma}^2} \right)
+\end{equation} 
+\end{linenomath*}
 where $\mu_{\gamma} \sim \text{uniform}(-2, 2)$ and $\sigma_{\gamma}
-\sim \text{halfCauchy}(0,5)$.
+\sim \text{half-Cauchy}(0,5)$.
 
 Allowing $\gamma$ and/or the kernel to vary by taxon results in a
-total of 10 model variations, described in Table~\ref{table:GOF}.
+total of 10 model variations, described in Table~\ref{table:GOF}. 
 
-\subsubsection{Model comparison}
+\subsubsection*{Model comparison}
 
 To reduce the number of candidate models, we first assessed the
 exchangeable prior variance estimates. When there was insufficient
@@ -897,109 +1012,110 @@ estimate (as in AIC and DIC) \citep{gelman2014understanding}. One of
 the benefits of the WAIC is that it avoids the necessity of knowing
 the number of model parameters (as required by AIC).
 
-\subsubsection{Comparing STEPPS productivity and dispersal to
-  previous estimates}
+\subsubsection*{Assessing productivity and dispersal estimates}
 
 To assess our level of agreement with our current scientific
 understanding of pollen dispersal and production processes, we compare
 our productivity and dispersal estimates to previously published
-results. We do not expect to agreement among absolute quantities; if
+results. We do not expect agreement among absolute quantities; if
 STEPPS is well-defined, we expect the relative ordering of taxa with
 respect to both of these processes to be consistent (at least in
 general) with our current understanding.
 
 In previous pollen-vegetation studies, pollen productivity is
-quantified in several ways. In linear regression models, pollen and
-vegetation proportions are related according to a linear model
-\citep{bradshaw1985relationships, jackson1990}. In these linear
-models, the slope coefficient accounts for differences in pollen
-productivity among taxa but also includes the effects of
-dispersal. The degree to which these effects are confounded in the
-slope coefficient depends on the nature of the vegetation sampling; in
-general, the larger the area of sampled vegetation, the more likely it
-is that productivity and dispersal are confounded, although we note
-that this is also highly dependent on the size of the sedimentary
-basin. In the Extended R-value (ERV) model, deposited pollen is a
-function of nearby vegetation composition, plus a background pollen
-source \citep{prentice1986, prentice1987quantitative,
-  marquer2014holocene, brostrom2008pollen}. The $\alpha$-slope
-coefficient that relates deposited pollen from nearby sources to
-nearby vegetation measures productivity, but as in the linear
-regression model, is also confounded by dispersal processes to some
-degree. With the goal of quantifying unconfounded pollen productivity,
-pollen dispersal biases can be removed from the $\alpha$-slope
-coefficients estimated from the ERV model
-\citep{sugita1999landscape}. We compare our productivity estimates
-$\phi_p$ to pollen productivity estimates (PPEs) determined by each of
-the above methods. For ease of comparison, each set of PPEs is
-rescaled to the $[0,1]$ interval.
+quantified in several ways. In models that assume a linear
+relationship between pollen and vegetation proportions
+\citep{webb1981estimating, bradshaw1985relationships, jackson1990},
+the slope coefficient accounts for differences in pollen productivity
+among taxa but also includes the effects of dispersal. The degree to
+which these effects are confounded in the slope coefficient depends on
+the nature of the vegetation sampling; in general, the larger the area
+of sampled vegetation, the more likely it is that productivity and
+dispersal are confounded. However, the size of the sedimentary basin
+also affects our ability to distinguish these effects. In the Extended
+R-value (ERV) model, deposited pollen is a function of nearby
+vegetation composition, plus a background pollen source
+\citep{prentice1986, prentice1987quantitative, marquer2014holocene,
+  brostrom2008pollen}. The $\alpha$-slope coefficient that relates
+deposited pollen from nearby sources to nearby vegetation measures
+productivity, but as in the linear regression model, is also
+confounded by dispersal processes to some degree. With the goal of
+quantifying unconfounded pollen productivity, pollen dispersal biases
+can be removed from the $\alpha$-slope coefficients estimated from the
+ERV model \citep{sugita1999landscape}. We compare our productivity
+estimates $\phi_p$ to pollen productivity estimates (PPEs) determined
+by each of the above methods. For ease of comparison, each set of PPEs
+is rescaled to the $[0,1]$ interval.
 
 Comparing pollen dispersal estimates with our established
 understanding of dispersal is less straightforward. In STEPPS,
-dispersal is defined as the sum of locally and non-locally deposited
-pollen, where the non-local pollen is distance-weighted by a dispersal
-kernel. Due to this model specification, there is no single parameter
-that quantifies dispersal. However, we can compute a capture radius,
-i.e., the radius of the circle within which some proportion of the
-total released pollen is deposited. We can use this measure as an
-crude approximation of distance travelled, which is inversely related
-to falling speed, at least for a fixed release height and
-wind speed.
+dispersal is defined as the sum of locally- and non-locally-deposited
+pollen, where non-local pollen is distance-weighted by a dispersal
+kernel. As such, there is no single parameter that quantifies
+dispersal. However, we can compute a capture radius, i.e., the radius
+of the circle within which some proportion of the total released
+pollen is deposited. We use this measure as an crude approximation of
+distance travelled, which is inversely related to falling speed, at
+least for a fixed release height and wind speed.
 
 \subsubsection{Prediction model}
 \label{sec:pred}
 
-One of the common uses of a PVM is to make predictions of vegetation
-composition from pollen data, typically back through time. In future
-work, we will use the PVM presented here to make vegetation
-composition predictions for the upper midwestern USA for the last 2000
-years. Here we predict settlement-era vegetation composition to assess
-our ability predict the data used to calibrate. These predictions also
-allows us assess how the differences between model variants manifest
-themselves in the composition estimates.
+Most PVMs are developed with the goal of making predictions of
+vegetation composition from pollen data for past times. The PVM here
+is our first step towards that goal; in future work it will be used to
+reconstruct vegetation for the UMW for the last 2000 years. For now,
+we assess the predictive ability of the PVM by predicting the
+settlement-era vegetation used in calibration. This allows us to
+evaluate the PVM and the effects of the model variants on composition.
 
-The model is similar to the calibration model, in which we defined the
-relationship between vegetation composition and sediment pollen. Now
-we would like to make predictions in the absence of composition data,
-using the calibration process parameter estimates. The vegetation
-composition now becomes an unknown parameter, with a defined spatial
-structure that we assign. This assigned spatial structure comes from
-the composition calibration data, and constrains the vegetation
-composition by quantifying the smoothness of compositional changes on
-the landscape.
+The prediction and calibration models are similar, in that the
+relationship between vegetation composition and sediment pollen is the
+same. Now we would like to make predictions in the absence of
+composition data, using the calibration process parameter
+estimates. The vegetation composition now becomes a vector of unknown
+parameters, with some defined spatial structure. This defined spatial
+structure is determined by the vegetation data used in calibration and
+constrains the estimated composition by quantifying the smoothness of
+compositional changes across the landscape.
 
 More specifically, the structure of the relationship between the
 pollen counts and vegetation is identical to
 Equations~\ref{eq:arriving} \& \ref{eq:DM}. The underlying
-composition, denoted $g$ is modelled as a Gaussian process, where for
-the set of points in our domain, defined by the grid cell centers, $g$
-follows a multivariate normal (MVN) distribution where
-\begin{align*}
+composition, unknown from the perspective of prediction, and denoted
+by $g$, is modelled as a Gaussian process, where for the set of points
+in our domain, defined by the grid cell centers, $g$ follows a
+multivariate normal (MVN) distribution where
+\begin{linenomath*}
+\begin{equation*}
 \bm{g}_p \sim \text{MVN}(\mu_p, \eta_p \, \exp(-d/\rho_p)),
-\end{align*}
-where $\eta_p$ and $\rho_p$ are taxon-specific spatial covariance
-parameters and $\mu_p$ is the taxon-specific mean.  The covariance
-paramaters $\eta_p$ and $\rho_p$ ara estimated \textit{a priori} by
-fitting a Gaussian process to the settlement-era composition data.
-The proportional vegetation $r_p(s)$ is linked to the underlying
-corresponding spatial process $g_p(s)$ through an additive log-ratio
-sum-to-one constraint
-\begin{align*}
-r_p(s) = \frac{ \text{exp}(g_p(s))}{ \sum_{k=1}^K \exp (g_p(s)) }.
-\end{align*} 
+\end{equation*}
+\end{linenomath*}
+where $d$ is the matrix of distances between grid cells, $\eta_p$ and
+$\rho_p$ are taxon-specific spatial covariance parameters, and $\mu_p$
+is the taxon-specific mean.  The covariance paramaters $\eta_p$ and
+$\rho_p$ are estimated \textit{a priori} by fitting a Gaussian process
+to the settlement-era composition data.  The proportional vegetation
+$r_p(s)$ is linked to the underlying corresponding spatial process
+$g_p(s)$ through an additive log-ratio sum-to-one constraint,
+\begin{linenomath*}
+\begin{equation*}
+r_p(s) = \frac{ \text{exp}(g_p(s))}{ \sum_{p=1}^P \exp (g_p(s)) }.
+\end{equation*} 
+\end{linenomath*}
 The full prediction model (not described here) used to estimate
 composition at multiple times accounts for covariance across both time
 and space. 
 
 Estimating the underlying vegetation process at each spatial location
-in the Upper Midwestern domain is computationally challenging, at
+in the UMW domain is computationally challenging, at
 least for a grid of the specified resolution. To overcome the burden
 of long computational times, we use a Gaussian predictive process
 model in which the process is estimated at specified knot locations
 and then scaled up to the full domain (see
-\cite{finley2009improving}). Here we use 120 knot locations, whose
+\citet{finley2009improving}). Here we use 120 knot locations, whose
 locations are determined using the kmeans clustering algorithm
-\cite{macqueen1967some}.
+\citep{macqueen1967some}.
 
 Settlement-era vegetation composition is estimated for the subdomain
 composed of Minnesota, Wisconsin, and the Upper Peninsula of Michigan
@@ -1011,15 +1127,15 @@ therefore excluded from the prediction domain in this analysis.
 The dissimilarity between the predicted composition for different
 underlying calibration models and the PLS data is determined by
 measuring the Euclidean distance between the two sets of
-multi-category outcomes at each grid cell.
-
-More specifically, we compare the settlement-era PLS data
-$\bm{r}(s_i)$ with the posterior mean of the composition estimates
-obtained from the prediction model $\hat{\bm{r}}(s_i)$. Then, for
-location $s_i$ the dissimilarity is
-\begin{align*}
-\left( \sum_{p=1}^{P} (r_p(s_i) - \hat{r}(s_i))^2 \right).
-\end{align*}
+multi-category outcomes at each grid cell. More specifically, we
+compare the settlement-era PLS data $\bm{r}(s_i)$ with the posterior
+mean of the composition estimates obtained from the prediction model
+$\hat{\bm{r}}(s_i)$. Then, for location $s_i$ the dissimilarity is
+\begin{linenomath*}
+\begin{equation*}
+\sum_{p=1}^{P} (r_p(s_i) - \hat{r}_p(s_i))^2.
+\end{equation*}
+\end{linenomath*}
 This measure is analogous to the Brier score, which measures the
 accuracy of probabilitic predictions
 \citep{gneiting2007strictly}. Total dissimilarity is obtained for each
@@ -1033,30 +1149,31 @@ We cannot directly sample from the joint posterior, so we rely on MCMC
 methods. With the goal of achieving more efficient sampling with
 respect to the effective sample size per unit time, we used the Stan
 v2.6.2 statistical modeling software to estimate parameters
-\citep{stan-software:2014}. Stan implements a variant of the
-Hamiltonian Monte Carlo method called the No-U-Turn Sampler, which is
-a gradient based sampling method that uses these directional
-derivatives to make informed decisions about how to move along (and
+\citep{stan-software:2014}. Stan uses the No-U-Turn Sampler, a variant
+of the Hamiltonian Monte Carlo method which is a gradient-based
+sampling method that uses the directional derivatives from the
+gradient to make informed decisions about how to move along (and
 sample from) the joint posterior surface \citep{hoffman2011nuts}.
 
 The complex nature of the prediction model in combination with the
 domain size make it prohibitively slow to estimate prediction model
 parameters. To overcome this issue, we modified the Stan software to
 have it call a function that analytically computes the model gradient,
-thus avoiding the need to rely on automatic differentiation. This
-modification additionally allowed us to use parallel computation via
-openMP.
+thus avoiding our reliance on automatic differentiation. This
+modification allowed us to use parallel computation via openMP
+\citep{openmp08}.
 
-All scripts are made publicly available on github (link).
-
-Ten candidate calibration models are considered; four Gaussian kernel
-variants, and six Power-law kernel variants. For each model, we run
-three chains using different random seeds and initial conditions with
-a warm-up of 250 iterations, followed by a sampling period of 1700
-iterations. Warm-up iterations are discarded and not used in further
-analysis. Convergence is assessed using a potential scale reduction
-factor and a multi-chain effective sample size estimator
-\citep{gelman2014bayesian}.
+Ten candidate calibration models are considered: four GK and six PLK
+variants. For each model, we ran three chains using different random
+seeds and initial conditions with a warm-up of 250 iterations,
+followed by a sampling period of 1700 iterations. For the prediction
+models, we ran a single chain with a warm-up of 150 iterations
+followed by a sampling period of 1000 iterations. For all models,
+warm-up iterations were discarded and not used in further
+analysis. Convergence was assessed using a potential scale reduction
+factor and an effective sample size estimator
+\citep{gelman2014bayesian}. All scripts are made publicly available on
+github (\url{https://github.com/PalEON-Project/stepps-calibration}).
 
 % Our model was coded in the Stan bugs-like language, then converted
 % to C++ code using the Stan translator, compiled using GCC, and run
@@ -1073,110 +1190,87 @@ factor and a multi-chain effective sample size estimator
 % bugs-like syntax.
 
 \section{Results}
+\subsection{Elicitation of evidence for settlement and site suitability}
 
-\subsection{Expert elicitation of biostratigraphic evidence for European settlement and site suitability}
+All 185 sites with pollen count time series were considered; only the
+before-after sites were omitted from this exercise.  For 59 out of 185
+sites the four experts were in complete agreements: they all
+identified the same settlement horizon (53 sites) or agreed that no
+such event could be identified (6 sites). The remaining sites varied
+in level of disagreement - for 79 sites, experts identified two
+settlement horizons; for 39 sites 3 were identified; and for 8 sites
+there was no agreement. These results confirm our hypothesis that
+identification of biostratigraphic markers is subject to variability
+among analysts. To our knowledge this exercise is the first to
+quantify this uncertainty.
 
-All 185 sites for which there were pollen count time series were
-considered; only the before/after sites were omitted from this
-exercise. The four experts were in complete agreement for 59 out of
-185 sites: they all identified the same pre-settlement sample (53
-cases) or agreed that no such sample could be identified (6
-cases). The remaining sites varied in level of disagreement - in 79
-cases, experts identified two samples; in 39 cases 3 pre-settlement
-samples were identified; and in 8 cases there was no agreement. These
-results confirm our hypothesis that identification of biostratigraphic
-markers is subject to variability among analysts, and to our knowledge
-exercise is the first to quantify this uncertainty. In
-Figure~\ref{fig:elicit}, pollen diagrams for two sites illustrate that
-in some cases the settlement horizon is prominent, while in other
-cases it is much less so.
+%In Appendix~\ref{append},
+%Fig.~\ref{fig:elicit}, pollen diagrams for two sites illustrate that
+%in some cases the settlement horizon is prominent, while in other
+%cases it is much less so.
 
-Of the 6 sites that experts agreed had no discernible settlement
+Of the six sites that experts agreed had no discernible settlement
 signal, two were from Rice Lake, which is an anomalous site locally
 dominated by wild rice (\textit{Zizania}), with very high grass
-(\textit{Poaceae}) pollen representation; it lacks any clear
-indication of settlement. The remaining four included: Rossburg peat
-bog in Minnesota; Disterhaft Farm Bog in Wisconsin; Kirchner Marsh in
-Minnesota; and Stewart’s Dark Lake in Wisconsin. Three of these four
-sites are bogs and marshes with local marshland non-arboreal plants
-growing at or near the coring location; these marshland plants may
-swamp the signal from agricultural non-arboreal indicators.
+(\textit{Poaceae}) pollen representation
+\citep{mcandrews1969paleobotany}; it lacks any clear indication of
+settlement. The remaining four included: Rossburg peat bog in
+Minnesota \citep{wright1969}; Disterhaft Farm Bog in Wisconsin
+\citep{webb1972late}; Kirchner Marsh in Minnesota
+\citep{wright1963two}; and Stewart's Dark Lake in Wisconsin
+\citep{peters1979radiocarbon}. Three of these four sites are bogs and
+marshes with local marshland non-arboreal plants growing at or near
+the coring location; these marshland plants may swamp the signal from
+agricultural non-arboreal indicators.
 
 Based on these results, we were faced with the challenge of
 establishing criteria to determine which sites to include in the
 calibration data set and where to place the settlement horizon for
-each site. Ideally, the now quantified pre-settlement sample
-uncertainty would be included into the modelling framework. In favor
-of simplicity, for now we use a single pre-settlement sample for each
-suitable site. 
-
-%% Based on these results, we faced the challenge of establishing site
-%% suitability criteria to determine which sites to include in the
-%% calibration data set. Ideally, the now quantified pre-settlement
-%% sample uncertainty would be included into the modelling
-%% framework. Although this is surely possible, it would increase the
-%% complexity of the statistical model. For the sake of simplicity, we
-%% filter suitable sites and assign pre-settlement depths in a systematic
-%% way based on expert determinations.
-
-% However, this elicitation exercise varies from those that
-% are typically conducted to construct priors; here we are uncertain
-% about our data, not our parameters. Instead of increasing the
-% complexity of the statistical model, we filter suitable sites and
-% assign pre-settlement depths in a systematic way based on the expert
-% determinations.
+each site. Ideally, the now quantified settlement horizon uncertainty
+would be included into the modelling framework. In favor of
+simplicity, for now we use a single settlement horizon for each
+suitable site.
 
 Sites were considered unsuitable if: 1) a majority of experts (more
-than half) chose not to assign a pre-settlement sample (12 sites), or
-2) if half of the experts chose not to assign a pre-settlement sample
-and the other half identified pre-settlement samples whose estimated
-ages were “far” from the approximate time of settlement (7 sites). For
-this second criterion, we used existing age-depth models associated
-with the pollen records. Modelled ages for the identified
-pre-settlement depths were compared to 1850 AD, which serves as an
-approximate year of settlement in the upper Midwest.  Modeled ages
-were defined to be far from the expert-identified settlement horizon
-if discrepancies were greater than 500 years. All 19 unsuitable sites
-were excluded from further analysis.
+than half) chose not to assign a settlement horizon (12 sites), or 2)
+if half of the experts chose not to assign a settlement horizon and
+the other half identified settlement horizons whose estimated ages
+were “far” from the approximate time of settlement (7 sites). For this
+second criterion, settlement horizon sample ages from existing
+age-depth models were compared to 1850 AD, an approximate year of
+settlement in the UMW. Modeled ages were defined to be far from the
+expert-identified settlement horizon if discrepancies were greater
+than 500 years. All 19 unsuitable sites were excluded from further
+analysis.
 
-We also checked the pollen records for their representativity and
-possible identification errors. To reconstruct regional vegetation, we
-need pollen records that represent composition representative of that
-found on a larger spatial scale. However, it is likely that some sites
-were sampled as a result of their (relatively speaking) unusual
-composition or local setting. We identified two anomalous sites. The
-first is Ocheda Lake, a large but shallow glacial kettle lake in
-Southwestern Minnesota. The pollen diagrams indicate a relative spike
-in red maple (\textit{Acer rubrum}) pollen in the expert-identified
-settlement horizon sample. This may represent a misidentification
-given that red maple is rare in southwestern Minnesota. It is possible
-that this pollen comes from box elder maple (\textit{A. negundo}) or
-silver maple (\textit{A. saccharinum}), which occur along streams and
-lakes. Assuming that this pollen is indeed from the maple genus, we
-assume that the high count is a result of a maple anther falling into
-the sample. Hence, at this site we set the maple pollen count to
-zero. The second anomalous site is Tamarack Creek, a tamarack bog
-situated in an unglaciated wetland in the Driftless Area of western
-Wisconsin. This site is characterized by unusually high tamarack
-pollen counts for the top 80 cm of sediment. In particular, the sample
-classified as pre-settlement is composed of 40 \% tamarack, while all
-other fossil pollen sites contain a maximum of 1 \% tamarack. Tamarack
-trees and pollen are known for being locally concentrated in bogs, so
-we set the tamarack count to zero to remove the local signal and use
-the remaining counts to represent composition from beyond the bog. We
-accept that these decisions may mask some true local-scale
-heterogeneity within the regional vegetation.
-
-%% There are two anomalous sites for which the model is
-%% unable to adequately account for the processes leading to the
-%% (relatively speaking) unusual compositional makeup of the deposited
-%% pollen. The first is Ocheda Lake, a large but shallow glacial kettle
-%% lake in Southwestern Minnesota. The pollen diagrams indicate a
-%% relative spike in deposited Maple pollen in the pre-settlement
-%% sample. The second is Tamarack Creek, a site situated in a wetland
-%% with high Tamarack pollen counts for the top 80 cm of sediment. At
-%% this site, the calibration sample is composed of 40 \% Tamarack, while
-%% all other fossil pollen sites contain a maximum of 1 \% Tamarack.
+Pollen records were checked for their representativeness and possible
+identification errors. To reconstruct regional vegetation, we would
+like pollen records to contain some regional signal. However, some
+sites were likely sampled as a result of their (relatively speaking)
+unusual composition or local setting, and may lack a strong regional
+signal. We identified two anomalous sites: Ocheda Lake and Tamarack
+Creek . Ocheda Lake is a large but shallow glacial kettle lake in
+Southwestern Minnesota (Neotoma site 6507). Pollen diagrams indicate a
+relative spike in red maple (\textit{Acer rubrum}) pollen in the
+expert-identified settlement horizon sample. This may represent a
+misidentification given that red maple is rare in southwestern
+Minnesota. It is possible that this pollen comes from box elder maple
+(\textit{A. negundo}) or silver maple (\textit{A. saccharinum}), which
+occur along streams and lakes. We assume that this pollen is from the
+maple genus, and that the high count is a result of a maple anther
+falling into the sample. Hence, at this site we set the maple pollen
+count to zero. Tamarack Creek is a tamarack bog situated in an
+unglaciated wetland in the Driftless Area of western Wisconsin
+\citep{davis1979wetland}. This site is characterized by unusually high
+tamarack pollen counts for the top 80 cm of sediment. In particular,
+the settlement horizon sample is composed of 40\% tamarack, while all
+other UMW settlement-era pollen records contain a maximum of 1\%
+tamarack. Tamarack trees and pollen are known for being locally
+concentrated in bogs as a result of poor pollen production and
+dispersal. We set the tamarack count to zero to remove the local
+signal and use the remaining counts to represent composition from
+beyond the bog. We accept that these decisions may mask some true
+local-scale heterogeneity within the regional vegetation.
 
 After completion of the elicitation exercise, a follow-up examination
 revealed several cores with top samples that were older (and deeper)
@@ -1187,40 +1281,23 @@ analysis were missing core tops. (The soupy sediments just below the
 sediment surface are often difficult to collect, and, depending on
 time, equipment, field conditions, and study purpose, investigators
 sometimes do not recover these upper sediments intact.) These errors
-are a result of data errors in Neotoma, and the confusion associated
+are a result of data errors in Neotoma and the confusion associated
 with reporting depths as being either the depth below the lake surface
-or sediment surface. For Lake Mary, Green Lake, Chippewa Bog, and
-Ryerse Lake, we determined that the core tops pre-date settlement, and
-these sites were therefore discarded \citep{webb1971late,
-  lawrenz1975}. A third site, Lake Kotiranta, had a core top
-previously identified as a representative pre-settlement sample, and
-this sample was retained for inclusion in the calibration data set
-\citep{wright1969}. The absence of core tops at these sites have been
-reported to Neotoma and the records amended
-accordingly. Interestingly, for each of these cores, 1-3 experts
-identified a pre-settlement sample (although to be fair, they made
-this judgment based solely on the stratigraphic diagram and no
-information about site characteristics, and likely assumed that the
+or sediment surface. For Lake Mary \citep{webb1971late}, Green Lake
+\citep{lawrenz1975}, Chippewa Bog \citep{bailey1981late}, and Ryerse
+Lake \citep{futyma1982postglacial}, we determined that the core tops
+pre-date settlement, and these sites were therefore discarded. A third
+site, Lake Kotiranta, had a core top previously identified as a
+representative pre-settlement sample, and this sample was retained for
+inclusion in the calibration data set \citep{wright1969}. The absence
+of core tops at these sites have been reported to Neotoma and the
+records amended accordingly. Interestingly, for each of these cores,
+1-3 experts identified a pre-settlement sample (although to be fair,
+they made this judgment based solely on the stratigraphic diagram and
+no information about site characteristics, and likely assumed that the
 uppermost sample was in fact a surface sample).
 
-% After completion of the elicitation exercise, a follow-up examination
-% of the stratigraphic data revealed several cores with core tops with
-% dates much older than expected - typically the date of a true core top
-% corresponds with the year of sampling (with some margin of
-% error). Further investigation uncovered that three of the cores
-% included in our analysis were missing core tops. For both Lake Mary
-% and Green Lake, we determined that the core tops pre-date settlement,
-% and these sites were therefore were discarded \citep{webb1971late,
-%   lawrenz1975}. A third site, Lake Kotiranta, had a core top
-% previously identified as a representative pre-settlement sample, and
-% this sample was retained for inclusion in the calibration data set
-% \citep{wright1969}. Interestingly, for each of these cores, 1-3
-% experts identified a pre-settlement sample (although to be fair, they
-% made this judgment based solely on the stratigraphic diagram and no
-% information about site characteristics, and likely assumed that the
-% uppermost sample was in fact a surface sample).
-
-After the suitability screening, we were left with 165 time series of
+After the suitability screening, we were left with 164 time series of
 pollen counts, and the question of how to assign the best estimate of
 pre-settlement. Given the sample resolution and an even number of
 experts, neither the mean nor the median were options. Keeping in mind
@@ -1231,34 +1308,37 @@ sample depths from deepest to shallowest, and selected the second in
 this list (typically the second deepest, although sometimes the
 deepest when there was some agreement among experts).  The 48 records
 that consist of only a core top and previously identified settlement
-horizon sample were not candidates for the elicitation exercise . The
+horizon sample were not candidates for the elicitation exercise. The
 decision to include these additional data in the calibration data set
 was debated - the settlement horizon samples for these cores were
 identified using different methodology (and analysts) than the
-remaining sites. In the end, we opted to include these samples as part
-of the calibration data set, based on our confidence in the data set
-and analysts and the recognition that including these sites would
-result in a substantive increase in sample size. In total we had 213
-settlememt era sites in the upper midwestern calibration data set and
-21 sites considered inadmissable (Table~\ref{table:site-data}).
+remaining sites. In the end, we opted to include these samples based
+on our confidence in the data set and analysts and the recognition
+that including these sites would result in a substantive increase in
+sample size. In total we had 213 settlememt era sites in the UMW
+calibration data set and 21 sites considered inadmissable
+(Table~\ref{table:site-data}).
 
 \subsection{Exploratory data analysis}
 
 To visually assess the relationship between sediment pollen and tree
 taxa, we compare pie maps that depict the relative proportions of taxa
-across space (Figure~\ref{fig:pie}). In these maps the broadscale
-patterns of pollen and PLS data are consistent with each other, both
-capturing the major ecotones in the region.  However, there are
-striking differences. First, pine dominates the pollen records for
-most of the northern half of the domain. Second, in the vegetation
-composition data, some regions that have higher relative abundances of
-hemlock, tamarack, and maple are not apparent or much less pronounced
-in the pollen data. These taxa, particularly tamarack and maple, are
-generally underrepresented in pollen assemblages
-\citep{webb1981estimating, bradshaw1985relationships, jackson1990}. As
-expected, these maps confirm that pollen data can detect key
-vegetational gradients, but that the relationship between pollen and
-vegetation is complex.
+across space (Fig.~\ref{fig:pie}). In these maps the broadscale
+patterns of pollen and PLS data are consistent, both capturing the
+major regional ecotones.  However, there are striking
+differences. First, pine dominates the pollen records for most of the
+northern half of the domain. However, in the PLS data pine proportions
+are occasionally high but the average proportion of pine across the
+domain is low ($<20$\%).
+
+Second, in the vegetation composition data, some regions that have
+higher relative abundances of hemlock, tamarack, and maple are not
+apparent or much less pronounced in the pollen data. These taxa,
+particularly tamarack and maple, are generally underrepresented in
+pollen assemblages \citep{webb1981estimating,
+  bradshaw1985relationships, jackson1990}. As expected, these maps
+confirm that pollen data can detect key vegetational gradients, but
+that the relationship between pollen and vegetation is complex.
 
 To further assess spatial distributions of pollen versus PLS data, we
 plot the data as heat maps by taxon. Differences in extent of these
@@ -1266,52 +1346,48 @@ distributions indicate pollen dispersal beyond species range
 limits. For example, for both birch and pine, which are
 overrepresented in pollen records \citep{webb1981estimating,
   bradshaw1985relationships, jackson1990, williams2003palynological},
-the distributions of sediment pollen extend well beyond the boundaries
-of those shown in the PLS data (Figures~\ref{fig:maps_pp}, columns~1
-and 2).
+the distributions of sediment pollen extend well beyond the range
+boundaries of these taxa shown in the PLS data
+(Fig.~\ref{fig:maps_pp}, columns~1 and 2).
 
 \subsection{Modelling results}
 
-For the ten considered calibration models, the multi-chain effective
-sample sizes of the joint log posterior ranged from 11 to 2055
-(Table~\ref{table:GOF}). Effective sample sizes for individual
-parameters were much larger. In all ten cases, the three chains
-converged to the same posterior distributions. Trace plots and the
-potential scale reduction factor illustrate the efficient mixing
-achieved by the sampler (not shown).
+For the ten considered calibration models, effective sample sizes of
+the dispersal and production model parameters ranged from 1954 to 6000
+for the GK models, and 480 to 6000 for the PLK models. In all ten
+cases, the three chains converged to the same posterior
+distributions. Trace plots and the potential scale reduction factor
+illustrate the efficient mixing achieved by the sampler (not shown).
 
-To compare among models, we first assess the estimates of the
-hyperparameters for the exchangeable priors. All parameter and
-hyperparameter estimates support the use of taxon-specific parameter
-values, except for the power-law models that allow $b$ to vary by
-taxon. In these cases, the estimated variance for the exchangeable
-prior for $\log ( b )$ is small ($9\cdot 10^{-6}$ for the variable $a$
-and $b$ case; $1\cdot 10^{-4}$ for the variable $a$, $b$, and gamma
-case). In addition, the 95 \% credible intervals for the estimate of
-$b_k$ for all $k$ overlap, supporting the conclusion that the values
-of $b_k$ are not statistically different. In light of this, we omit
-these two Power-law kernel variable $b$ models.
+To compare among models, we assess the exchangeable priors
+hyperparameter estimates. All parameter and hyperparameter estimates
+support taxon-specificity, except for the PLK models that allow $b$ to
+vary by taxon. For these models, the estimated variance for the
+exchangeable prior for $\log ( b )$ is small ($9\cdot 10^{-6}$ for the
+variable $a$ and $b$ case; $1\cdot 10^{-4}$ for the variable $a$, $b$,
+and $\gamma$ case). In addition, the 95\% credible intervals for the
+estimate of $b_k$ for all $k$ overlap, supporting the conclusion that
+the values of $b_k$ are not statistically different. In light of this,
+we omit these two PLK variable $b$ models.
 
-Out of the remaining eight candidate models (four Gaussian kernel
-variants; four Power-law kernel variants) we compare the WAIC
-(Table~\ref{table:GOF}). According to the WAIC the power law kernel
-outperforms the Gaussian kernel - even the most flexible Gaussian
-model (variable $\psi$ and $\gamma$) results in a WAIC that is higher
-than the least flexible Power-law kernel model (base model). The power
-law kernel model with variable $a$ and $\gamma$ results in the lowest
-WAIC, indicating that it performs the best out of the suite of
-considered models. 
+For the remaining eight candidate models (four GK and four PLK
+variants) we compare the WAIC (Table~\ref{table:GOF}). According to
+the WAIC the PLK outperforms the GK - even the most flexible GK model
+(variable $\psi$ and $\gamma$) has a WAIC that is higher than that of
+the least flexible PLK model (base model). The PLK model with variable
+$a$ and $\gamma$ results in the lowest WAIC, indicating that it
+performs the best out of the suite of considered models.
 
-In subsequent analyses, we compare the two base models (Gaussian and
-Power-law), and the models with the lowest WAIC for each kernel type -
-the Gaussian variable $\psi$ and $\gamma$ model and the Power-law
-variable $a$ and $\gamma$ model (hereafter referred to as the variable
-Gaussian and Power-law models).
+In subsequent analyses, we compare the two base models (GK and PLK),
+and the models with the lowest WAIC for each kernel type - the GK
+variable $\psi$ and $\gamma$ model and the PLK variable $a$ and
+$\gamma$ model (hereafter referred to as the variable GK and PLK
+models).
 
-In Figure~\ref{fig:focal_scaled}, the raw pollen proportions are
-plotted against the vegetation proportions for each grid cell (red
-crosses). The relationship between pollen and vegetation is clearly
-not 1:1. In particular, some taxa, such as beech, maple, other conifer, and
+In Fig.~\ref{fig:focal_scaled}, the raw pollen proportions are plotted
+against the vegetation proportions for each grid cell (red
+crosses). The pollen-vegetation relationship is clearly not 1:1. In
+particular, some taxa, such as beech, maple, other conifer, and
 tamarack, are underrepresented - they can appear in large proportion
 on the landscape, but never in equally large proportion in the pollen
 record. Some relationships are more difficult to characterize. For
@@ -1320,97 +1396,97 @@ but is consistently abundant in pollen assemblages in the northern
 half of our study area, regardless of local tree abundance.
 
 These relationships are complicated in part because of differential
-pollen production, which the calibration model accounts for by the
+pollen production, which the calibration model accounts for with the
 taxon-specific scaling parameter $\phi_k$. After scaling the local
 vegetation in a cell by $\phi_k$, we compare the raw pollen
 proportions with the phi-scaled vegetation
-(Figure~\ref{fig:focal_scaled}; black dots). Here we show the scaled
-vegetation for the variable Power-law model, but the results are
-similar for the variable Gaussian and base models. Scaling by $\phi$
-does improve our pollen estimates; for many taxa, the black dots have
-shifted towards the 1:1 line. This is especially true for maple,
-tamarack, and other conifer, suggesting that these pollen-vegetation
-relationships are heavily influenced by local pollen sources. This
-finding is consistent with results of \citet{jackson1990,
-  jackson1991pollen} and others, which showed that pollen dispersal as well as
-productivity play important roles in their underrepresentation in
-pollen assemblages. However, for most of the remaining taxa the
-improvement is minimal, indicating that simply scaling the local
-vegetation proportions is not sufficient to predict deposited pollen.
+(Fig.~\ref{fig:focal_scaled}; black dots). Here we show the scaled
+vegetation for the variable PLK model, but the results are similar for
+the variable GK and base models. Scaling by $\phi$ does improve our
+pollen estimates; for many taxa, the black dots have shifted towards
+the 1:1 line. This is especially true for maple, tamarack, and other
+conifer, suggesting that these pollen-vegetation relationships depend
+primarily on pollen production from local sources, and that dispersal
+for these taxa is limited. This finding is consistent with results of
+\citet{jackson1990, jackson1991pollen} and others, which showed that
+pollen dispersal as well as productivity play important roles in their
+underrepresentation in pollen assemblages. However, for most of the
+remaining taxa the improvement is minimal, indicating that simply
+scaling the local vegetation proportions is not sufficient to predict
+deposited pollen.
 
-In Figure~\ref{fig:preds}, we plot the raw pollen proportions against
+In Fig.~\ref{fig:preds}, we plot the raw pollen proportions against
 both the vegetation (red crosses) and predicted pollen for the
-variable Power-law model (black dots). In this case the predicted
-pollen is based on the local plus non-local predictions obtained from
-the full calibration model. Now that non-local dispersal has been
-accounted for, the raw versus predicted pollen points fall more
-closely along the 1:1 line. This indicates that, at least in our
-domain, non-local dispersal processes account for much of the pollen
-that arrive at any given location. For most taxa, the improvement that
-we gain by using more flexible models versus the base models is not
-qualitatively obvious (not shown). However, for hemlock, there is an
-obvious improvement in our ability to predict sediment pollen with the
-more flexible models. Both base models underpredict hemlock pollen at
-sites where there are relatively high proportions of hemlock (although
-hemlock pollen never exceeds 28\% at any site in our domain), but this
-is not the case for the variable Gaussian and Power-law models. This
-suggests that with the base models the relative contribution of local
-versus non-local hemlock pollen is estimated to be less than the true
-value, i.e. $\gamma$ is too small.
+variable PLK model (black dots). In this case the predicted pollen is
+based on the local plus non-local predictions obtained from the full
+calibration model. Now that non-local dispersal has been accounted
+for, the raw versus predicted pollen points fall more closely along
+the 1:1 line (compare the black dots in Fig.~\ref{fig:focal_scaled} to
+those in Fig.~\ref{fig:preds}; improvement most noticeable for oak and
+pine). This indicates that, at least in our domain, non-local
+dispersal processes account for much of the pollen that arrive at any
+given location. For most taxa, the improvement that we gain by using
+more flexible models with taxon-specific parameters versus the base
+models is not qualitatively obvious (not shown). However, for hemlock,
+there is an obvious improvement in our ability to predict sediment
+pollen with the more flexible models. Both base models underpredict
+hemlock pollen at sites where there are relatively high proportions of
+hemlock (although hemlock pollen never exceeds 28\% at any site in our
+domain), but this is not the case for the variable GK and PLK
+models. This suggests that with the base models the relative
+contribution of local versus non-local hemlock pollen is estimated to
+be less than the true value, i.e. $\gamma$ is too small.
 
 From each model we obtain taxon-specific estimates of pollen
-productivity $\phi$ (Figure~\ref{fig:phi}). If this parameter truly
-represents differential pollen production, then we expect the
-estimated values to be more or less consistent across model variants,
-which is generally the case (Figure~\ref{fig:phi}). However, for most
-taxa, $\phi$ estimates for the variable Power-law kernel model are
-larger than for the other models (although they may not be
-statistically different). The estimated values of $\phi$ form three
-distinct groups in $\phi$ parameter space: low, intermediate, and high
-production (Figure~\ref{fig:phi}). The group of taxa with lowest
-production in decreasing order are beech, maple, other conifer, and
-tamarack. This low production pattern is evident in
-Figure~\ref{fig:preds}, where the representation of these taxa in the
+productivity $\phi$ (Fig.~\ref{fig:phi}). If this parameter truly
+represents differential pollen production, then $\phi$ estimates
+should be more or less consistent across model variants, which is
+generally the case (Fig.~\ref{fig:phi}). However, for most taxa,
+variable PLK model $\phi$ estimates are larger than for the other
+models (although perhaps not statistically different). The estimated
+values of $\phi$ form three distinct groups in $\phi$ parameter space:
+low, intermediate, and high production (Fig.~\ref{fig:phi}). Taxa with
+lowest production in decreasing order are beech, maple, other conifer,
+and tamarack. This low production pattern is evident in
+Fig.~\ref{fig:preds}, where the representation of these taxa in the
 pollen records is consistently less than their representation on the
 landscape (except at a few anomalous ponds). Intermediate producers,
 again in decreasing order, include other hardwood, oak, elm, hemlock,
 ash, and spruce. The high production group includes pine and birch,
-which can also be seen in Figure~\ref{fig:preds} by their propensity
-to be over-represented in the pollen record relative to the
-landscape. These results agree in general with \citep{prentice1986},
+which can also be seen in Fig.~\ref{fig:preds} by their propensity to
+be over-represented in the pollen record relative to the
+landscape. These results agree in general with \citet{prentice1986},
 who analyzed the pollen-vegetation relationship for sites in Wisconsin
 and the Upper Peninsula of Michigan. In that work, pine and birch were
 identified as high producers/dispersers, while maple and tamarack were
-identified as low producers/dispersers. \citep{jackson1990} also found
+identified as low producers/dispersers. \citet{jackson1990} also found
 that pine and birch were good dispersers with effective source areas
-of 1000m, while maple was found to have a much smaller source area,
+of 1000 m, while maple was found to have a much smaller source area,
 indicating limited dispersal.
 
 %FIXME  \citep{williams2003palynologica}
 
-For the base models, the local versus non-local parameter $\gamma$ was
-estimated to have a mean of $0.21$ for the Gaussian kernel model and
-$0.046$ for the Power-law kernel model. These values indicate that
-roughly 21\% (or 5\%) of the pollen produced by vegetation in a focal
-grid cell is deposited in that grid cell, while the remaining 79\% (or
-95\%) disperses elsewhere in the domain.
+For the base models, the local versus non-local parameter $\gamma$ had
+an estimated mean of $0.21$ for the GK model and $0.046$ for the PLK
+model. This indicates that roughly 21\% (or 5\%) of the pollen
+produced by vegetation in a focal grid cell is deposited in that grid
+cell, while the remaining 79\% (or 95\%) disperses elsewhere.
 
-When we allowed $\gamma$ to vary by taxon in the variable models, the
-estimates for both kernels yielded similar results with overlapping 95
-\% credible intervals for all taxa except pine and oak
-(Table~\ref{table:gamma}). For both kernels, birch, ash, other
+When we allowed $\gamma$ to vary by taxon, the estimates for both
+kernels yielded similar results with overlapping 95\% credible
+intervals for all taxa except pine and oak
+(App.~\ref{append}, Table~\ref{table:gamma}). For both kernels, birch, ash, other
 hardwood and other conifer all had lower estimates of $\gamma$, with
 mean posterior values all less than 0.10 (mean values ranging from
 0.015 - 0.088). Pine and oak estimates of $\gamma$ were also small for
-the variable Power-law model ($\gamma < 0.05$), but not for the
-variable Gaussian model ($\gamma > 0.2$). Both hemlock and tamarack
-had larger estimated values of $\gamma$ for both models. It is
-encouraging that these estimates of taxon-specific local strengths are
-similar among models, but based on these estimates alone we can
-compare only focal-cell contributions. Non-local dispersal is
-determined by the product of $(1-\gamma)$ and the sum of the weights
-of all non-local cells, which in turn depends on the estimated kernel
-parameter(s).
+the variable PLK model ($\gamma < 0.05$), but not for the variable GK
+model ($\gamma > 0.2$). Both hemlock and tamarack had larger estimated
+values of $\gamma$ for both models. It is encouraging that these
+estimates of taxon-specific local strengths are similar among models,
+but based on these estimates alone we can compare only focal-cell
+contributions. Non-local dispersal is determined by the product of
+$(1-\gamma)$ and the sum of the weights of all non-local cells, which
+in turn depends on the estimated kernel parameter(s).
 
 % For the base Gaussian kernel case, the spread parameter $\psi$ was
 % estimated to be $204\,(192, 215)$ km. In the variable Gaussian model
@@ -1424,152 +1500,114 @@ parameter(s).
 % $0.00268$ for beech to $0.203$ for elm.
 
 To assess how $\gamma$ and the kernel parameters affect pollen
-dispersal, we plot the proportion of deposited pollen as a function of
-radius from the pollen source. For a pollen source centered on the
-potential source area $\Omega$, we plot $\gamma + (1- \gamma)
-\sum_{s_j \neq s_i} w(s_i, s_j)$ as a function of radius from the
-source where cells are included in the non-local sum if the distance
-between $s_i$ and $s_j$ is less than or equal to this radius. The
-weights $w(s_i, s_j)$ depend on the estimated kernel parameters, whose
-quantities are not directly interpretable on their own but are
-reported in Appendix~\ref{append}. For each taxon, we plot cumulative
-density functions (CDFs) of deposited pollen for the four considered
-models (Figure~\ref{fig:cdf}). Note that the CDFs for the base models
-do not vary by taxon (solid lines).
+dispersal, we plot the proportion of deposited pollen as a function
+of distance from the pollen source. More precisely, for each taxon we
+plot the cumulative density function (CDF) given by $\gamma + (1-
+\gamma) \sum_{s_j \neq s_i} w(s_i, s_j)$ as a function of radius from
+the source, where cells are included in the non-local sum if the
+distance between $s_i$ and $s_j$ is less than or equal to this radius
+(Fig.~\ref{fig:cdf}). The weights $w(s_i, s_j)$ depend on the
+estimated kernel parameters, whose quantities are not directly
+interpretable on their own but are reported in Appendix~\ref{append},
+Table~\ref{table:weights}. Note that the base model CDFs do not vary
+by taxon (Fig.~\ref{fig:cdf}, solid lines).
 
-As seen in Figure~\ref{fig:cdf}, the base model CDFs have two points
-of intersection, indicating changing relative rates of
-accumulation. The CDFs for the Gaussian kernel models all have a
-sigmoidal shape, where smaller values of $\psi$ correspond with a
-steeper slope indicating that relatively more pollen is deposited
-close to the source. This effect can is most obvious when we contrast
-the variable Gaussian CDFs for pine (lowest $\psi$) and other hardwood
-(greatest $\psi$). For the variable Power-law model, for fixed $b$,
-larger values of $a$ result in a more sigmoidal shape that resembles
-the Gaussian kernel, as seem in the case of elm. Again for fixed $b$,
-smaller values of $a$ result in a concave downward curve indicating
-that more pollen is deposited closer to the source, but at a certain
-distance from the source - the farthest point from the source where
-the Gaussian and Power-law CDFs intersect - the cumulative pollen
-deposition is equal. To condense these results, we determined the
-radius from the source needed to capture 50, 70, and 90\% of the
-deposited pollen for each model and each taxon
-(Table~\ref{table:pollen_acc}). The 50 \% capture radius is smaller
-for the Power-law base model than for the Gaussian base
-model. However, the CDF for the Gaussian base model asymptotes to one
-at a smaller radius than the Power-law base model (Gaussian base has a
-shorter-tailed kernel). For the variable models, the 50 \% capture
-radius was smallest for hemlock (60 km for the variable Gaussian; 32
-km for the the variable Power-law) and largest for other hardwood (280
-km for the variable Gaussian; 312 km for the variable Power-law). The
-90 \% capture radii ranged from 216 km for pine to 512 km for other
-hardwood for the variable Gaussian, and 380 km for elm to 608 km for
-other hardwood for the variable Power-law. These values are larger
-than previous estimates of source
-area. \citet{williams2003palynological} estimated source area by
-comparing broad- and needle-leaved pollen percentage to forest cover
-obtained via remote sensing, and found that average source areas
-appear to be from 25 - 75 km. \citet{prentice1987quantitative} and
+As seen in Fig.~\ref{fig:cdf}, the base model CDFs have two points
+of intersection, indicating changing relative rates of pollen
+accumulation. CDFs for the GK models have a sigmoidal shape, where
+smaller values of $\psi$ correspond with steeper slopes indicating
+that relatively more pollen is deposited close to the source. This
+effect is most obvious when we contrast the variable GK CDFs for pine
+(lowest $\psi$) and other hardwood (greatest $\psi$). For the variable
+PLK model, for fixed $b$, larger values of $a$ result in a more
+sigmoidal shape that resembles the GK, as seen in the case of
+elm. Again for fixed $b$, smaller values of $a$ result in a concave
+downward curve indicating more deposition closer to the source, but at
+a certain distance from the source - the radius at which the GK and
+PLK CDFs intersect - the cumulative pollen deposition is equal. To
+condense these results, we determined the radius from the source
+needed to capture 50, 70, and 90\% of the deposited pollen for each
+model by taxon (Table~\ref{table:pollen_acc}). The 50\% capture radius
+is smaller for the PLK base model than for the GK base model. However,
+the CDF for the GK base model asymptotes to one at a smaller radius
+than the PLK base model (GK base has a thinner tail). For the variable
+models, the 50\% capture radius was smallest for hemlock (60 km for
+the variable GK; 32 km for the variable PLK) and largest for other
+hardwood (280 km for the variable GK; 312 km for the variable
+PLK). The 90\% capture radii ranged from 216 km for pine to 512 km for
+other hardwood for the variable GK, and 380 km for elm to 608 km for
+other hardwood for the variable PLK. These values are larger than
+previous estimates of source area. \citet{williams2003palynological}
+estimated source area by comparing broad- and needle-leaved pollen
+percentage to forest cover obtained via remote sensing, and found that
+average source areas appear to be from 25 - 75
+km. \citet{prentice1987quantitative} and
 \citet{bradshaw1985relationships} also estimated that for small to
 medium lakes the majority of the pollen comes from a source area on
 the order of 30 - 50 and 10 - 30 km respectively. Conversely,
-\citet{sugita1994pollen} found that 30 \% pollen source areas were
-approximately 50 - 800 metres depending on the lake size and that
+\citet{sugita1994pollen} found that 30\% pollen source areas were
+approximately 50 - 800 m depending on the lake size and that
 vegetation sampling restricted to this area was sufficient to obtain
 reliable parameter estimates. In subsequent work, however,
-\citet{sugita2007theory2} noted that for most taxa, 90 - 95 \% of
+\citet{sugita2007theory2} noted that for most taxa, 90 - 95\% of
 pollen comes from within a source area of 100 - 400 km of the
 depositional basin.
 
-% To assess the assumption that all taxa share a dispersal kernel with
-% spread controlled by the scalar $\psi$, we re-ran the model letting
-% $\psi$ vary by taxon. Five of the taxon-specific 95\% credible
-% intervals had some overlap with the credible intervals for the
-% single-$\psi$ case, while the remaining taxa had estimated $\psi$
-% value that were larger (Figure~\ref{fig:psi_vary_psi}). Elm, Tamarack,
-% Maple, and Ash had the largest mean value of $\psi$, although the
-% uncertainty of these estimates was large - for example, for Tamarack
-% the mean value and credible interval of $\psi$ was $0.73 (0.10,
-% 1.9)$. When we let $\psi$ vary by taxon, there was little effect on
-% the values of $\phi$. The ordering of the taxa remained identical,
-% except for a minor switch in position of Oak with Elm
-% (Figure~\ref{fig:phi_vary_psi}). XXX: I don't get the dispersal pars
-% for elm, tam, maple, ash - why are these so big?
+To visualize the predicted dispersal patterns, we estimate the
+proportion of deposited pollen by taxon for each grid cell in the
+domain (Fig.~\ref{fig:maps_pp}; previously, as seen in
+Figs.~\ref{fig:focal_scaled} and \ref{fig:preds}, we estimated
+deposited pollen only for grid cells with pollen data). These spatial
+maps illustrate how the models treat dispersal - the predicted pollen
+maps for the variable PLK model appear to be more smooth. This
+difference in part attributed to the shallow slope of the PLK relative
+to that of the GK; more pollen is deposited at short/intermediate
+distances resulting in a gentle gradient (see Fig.~\ref{fig:cdf}).
 
-% On average, Maple had by far the
-% largest value of $\psi$, followed by Other hardwood, which implies
-% that these two taxonomic groups are disperse the farthest. However,
-% the 95\% credible interval for $\psi$ for Maple was wide, and in both
-% cases the increased value of $\psi$ corresponded with an increased
-% value of $\phi$ relative to the single-$\psi$ runs
-% (Figure~\ref{fig:phi_vary_psi}). This indicates that there may be
-% some issues with parameter identifiability inherent in the model when
-% we allow $\psi$ to vary by taxon, and as such results from this run
-% should be interepreted with caution.
-
-To visualize the dispersal patterns predicted by our model, we can
-estimate the proportion of deposited pollen by taxon for each grid
-cell in the domain (previously, as seen in
-Figures~\ref{fig:focal_scaled} and \ref{fig:preds}, we were estimating
-deposited pollen only at lakes for which we had pollen data)
-(Figures~\ref{fig:maps_pp}). These spatial maps help us understand how
-the models treat dispersal - the predicted sediment pollen maps for
-the variable Power-law model appear to be more smooth. This difference
-is due in part to the increased accumulation of dispersed pollen at
-short/intermediate distances relative to the variable Gaussian model
-(see Figure~\ref{fig:cdf}).
-
-We can also compare the predicted pollen maps with those depicting the
-PLS data (Figure~\ref{fig:maps_pp}), remembering that the pollen
-predictions have been scaled to account for differential production
-(so we are comparing predicted sediment pollen with vegetation
-composition). This scaling for differential production is particularly
-apparent for maple. We know from the data that maple pollen
-proportions are consistently lower than the vegetation proportions,
-and as a result, we expect that the model will predict low amounts of
-maple pollen, which it does. To see how the model predicts dispersal
-by taxon, based on parameters estimated from that data, we can compare
-the vegetation and pollen ranges. The effects of dispersal are
-especially clear in the cases of pine and birch, where pollen
+We compare predicted pollen maps with maps of the PLS data
+(Fig.~\ref{fig:maps_pp}), recalling that pollen predictions have
+been scaled to account for differential production (i.e., we compare
+predicted pollen with vegetation composition). Accounting for
+differential production highlights the under-production of maple
+pollen; maple pollen proportions are consistently lower than
+vegetation proportions. Fig.~\ref{fig:maps_pp} also illustrate the
+differences in pollen and vegetation ranges. The effects of dispersal
+are especially clear in the cases of pine and birch, where pollen
 disperses well beyond the vegetation range limits.
 
-\subsection{Comparing STEPPS productivity and dispersal to previous
-  estimates}
+\subsection{Assessing productivity and dispersal estimates}
 
-We compared the STEPPS variable Power-law model productivity
-estimates, $\phi$, to sets of published PPEs for the considered taxa
-(Figure~\ref{fig:ppe}). The PPE data sets included in the comparison
-were slope coefficients in either a linear regression, ERV, or
-bias-corrected ERV model. These PPE estimates were also split into
-geographical regions: based on the sampling locations, which were
-upper midwestern USA, northeastern USA, and the European
-continent. %A detailed description of the PPEs used in this comparison
-%is in Appendix~\ref{append}: Table~\ref{table:XXX}. 
+We compared the STEPPS variable PLK model productivity estimates,
+$\phi$, to sets of published PPEs (Fig.~\ref{fig:ppe}). PPEs included
+in the comparison were slope coefficients in either a linear
+regression, ERV, or bias-corrected ERV model.  PPEs were also split
+into geographical regions based on the sampling locations, which were
+upper Midwestern USA (UMW), northeastern USA, and the European
+continent.
 
-PPEs further from the upper midwestern USA agree less with the STEPPS
-productivity estimates/rankings.  STEPPS productivity estimates are
-most similar to PPEs from the upper midwest in terms of relative
-rank. However, a positive linear relationship exists between STEPPS
-productivity estimates and the PPEs those from the northeastern
-USA. For the PPEs from the European continent the relationship is
-weak, although both STEPPS and PPE estimates agree that ash, elm,
-maple, and spruce are low producers. The strength of the relationship
-between STEPPS estimates and PPEs is not strongly affected by the
-method used to estimate the PPEs.
+ STEPPS productivity estimates are most similar to PPEs from the UMW
+ in terms of relative rank, while PPEs further from the UMW agree less
+ with the STEPPS productivity estimates/rankings.  However, a positive
+ linear relationship exists between STEPPS productivity estimates and
+ the PPEs from the northeastern USA. For the PPEs from the European
+ continent the relationship is weak, although both STEPPS and PPE
+ estimates agree that ash, elm, maple, and spruce are low
+ producers. The variability in PPEs across space and the closer
+ agreement of STEPPS productivity estimates with PPEs from the UMW is
+ likely a result of the species composition and forest structure of a
+ particular region. We do find that the strength of the relationship
+ between STEPPS estimates and PPEs is not strongly affected by the
+ method used to estimate the PPEs.
 
 Next, we compared our estimated 90\% capture radius, which we defined
 as the radius of the circle (centered at the pollen source) within
 which 90\% of the pollen is deposited, to published values of falling
 speed for trees from continental Europe and North America within the
-same genus as the STEPPS taxa (Figure~\ref{fig:svs}). Capture radius
+same genus as the STEPPS taxa (Fig.~\ref{fig:svs}). Capture radius
 is similar to the widely used concept of pollen source area
 \citep{sugita1994pollen}, but calculated from point of source rather
 than point of deposition. Falling speed values used in this comparison
 were obtained from the compilation of \citet{jackson1999pollen}.
-
-%For a detailed description of the sedimentation
-%velocity values used in this comparison, see Appendix~\ref{append}:
-%Table~\ref{table:XXX}.
 
 As expected, the STEPPS capture radius and falling speed are inversely
 related; a lower falling speed corresponds with a greater dispersal
@@ -1578,215 +1616,240 @@ maple, and spruce. Measured falling speeds vary for these and other
 taxa, both within and among laboratories and methods
 \citep{jackson1999pollen}.
 
-These comparisons provide additional support for the STEPPS model; for
-both productivity and dispersal estimates, we find agreement between
-STEPPS and our current understanding of these processes.
+These comparisons provide additional support for the STEPPS model; we
+find agreement between STEPPS estimates and our current understanding
+of production and dispersal processes.
 
 \subsection{Vegetation composition predictions}
 
-We estimated settlement-era vegetation composition based on the
-prediction model for four candidate calibration submodels (Gaussian
-base and variable; Power-law base and variable). Composition was
-estimated using a modified version of Stan with a warm-up period of
-150 iterations, followed by a sampling period of 1000
-iterations. Effective sample sizes for the joint log posterior ranged
-from 209 to 400.
-
-The predicted patterns of settlement-era composition are generally
-similar across models (Figure~\ref{fig:maps_stepps_veg}) and
-dissimilarities among maps are low
-(Figure~\ref{fig:maps_l2}). According to the Euclidean distance, the
-composition estimates obtained from the prediction model with the
-underlying base Power-law calibration model are closest to the data
-(Table~\ref{table:GOF}, Total distance = 1979), while the prediction
-model with underlying variable Gaussian calibration model are the
-farthest (Total distance = 2078).  For most taxa, the STEPPS
+We estimated settlement-era vegetation using the prediction model with
+four candidate calibration models (GK and PLK, base and variable). The
+model was fit using a modified version of Stan with a warm-up period
+of 150 iterations and a sampling period of 1000 iterations. Parameter
+effective sample sizes were small (10-200) reflecting the complex
+dependence structure of the model. However, trace plots indicated
+successful mixing.
+                                                                                  
+Predicted patterns of settlement-era composition are generally similar
+across models and dissimilarities among maps are low
+(App.~\ref{append}, Figs.~\ref{fig:maps_stepps_veg} \&
+\ref{fig:maps_l2}). According to the Euclidean distance, composition
+estimates with the underlying base PLK calibration model are closest
+to the data (Table~\ref{table:GOF}, Distance = 1979), and farthest for
+the GK calibration model (Distance = 2078).  For most taxa, the STEPPS
 composition predictions (using, for illustration purposes, the
-variable Power-law kernel) broadly match the compositional
-distributions in the PLS data
-(Figure~\ref{fig:maps_pls_stepps_sd}). As expected, the STEPPS
-predictions appear smoother due to the simple dispersal kernel and the
-limited number of sites for which we have pollen samples. For some
-taxa, such as pine, STEPPS is able to better resolve local
-heterogeneity. For taxa which are more widely dispersed, such as oak,
-it is more difficult for the model to resolve local
-heterogeneities. Smaller regions that are compositionally unique such
-as the Big Woods in Minnesota are not well resolved by the model
-(Figure~\ref{fig:maps_stepps_veg}).
+variable PLK) broadly match the compositional distributions in the PLS
+data (Fig.~\ref{fig:maps_pls_stepps_sd}). As expected, the STEPPS
+predictions appear smoother; this is a result of the long-range pollen
+transport smoothing out local features, but also because of the
+limited number of pollen sample sites. Smaller compostionally unique
+regions such as the Minnesota Big Woods are not well resolved by the
+model (App.~\ref{append}, Fig.~\ref{fig:maps_stepps_veg}).
 
-The STEPPS model does not adequately predict the spatial distribution
-of tamarack;the wide credible interval for estimated dispersal
-indicates large dispersal parameter uncertainty
-(Table~\ref{table:pollen_acc}), and tamarack in Wisconsin is highly
-underpredicted (Figure~\ref{fig:maps_stepps_veg}). According to STEPPS
-and others, tamarack is a relatively low pollen producer and a poor
-disperser \citep{janssen1966recent}. Populations are highly
-concentrated in localized settings, such as peatlands, but are rare
-across the uplands. Given all this, we do not expect to observe
-tamarack pollen anywhere except peatlands, and even there the tamarack
-signal often will be swamped by pollen from taxa that are better
-producers and/or dispersers. Since there are few pollen records from
-locations that are dominated by tamarack trees, it is not surprising
-that STEPPS predictive ability for tamarack is relatively poor.
+STEPPS does not adequately predict the spatial distribution of
+tamarack; in Wisconsin tamarack is highly underpredicted
+(App.~\ref{append}, Fig.~\ref{fig:maps_stepps_veg}), and dispersal
+credible intervals indicate large uncertainties
+(Table~\ref{table:pollen_acc}). According to STEPPS and others,
+tamarack is a low pollen producer and a poor disperser
+\citep{janssen1966recent}. Populations are highly concentrated in
+localized settings, such as peatlands, but are rare across the
+uplands. Given this, we expect to observe tamarack pollen only in
+peatlands, and even there the tamarack signal will often be swamped by
+pollen from better producers and/or dispersers. Since there are few
+pollen records from tamarack-dominated locations, it is not surprising
+that the predictive ability of STEPPS is poor for tamarack.
 
 \section{Discussion}
 
 Bayesian pollen-vegetation models (PVMs) enable spatial
-reconstructions of vegetation composition and estimates of key process
-parameters, while accounting for data, process, and parameter
+reconstructions of vegetation composition and estimation of key
+process parameters, while accounting for data, process, and parameter
 uncertainty, as well as complex spatial dependencies
-\citep{paciorek2009mapping}.  Here we have furthered our understanding
-of the pollen-vegetation relationship using a Bayesian hierarchical
-PVM (STEPPS) calibrated with a newly developed settlement-era
-vegetation and pollen datasets. STEPPS is not derived from first
-physical principles, but it accounts for differential pollen
-production and dispersal among taxa. One of the benefits of the STEPPS
-PVM is its ability to estimate pollen-vegetation process parameters
-without the need to quantify any taxon-specific attributes \textit{a
-  priori}. This is in contrast to other forms of PVMs, as in the case
-of LOVE and REVEALS \citep{sugita2007theory1, sugita2007theory2},
-which requires the use of prescribed estimates of taxon-specific fall
-speeds and productivity, in addition to assumptions about local
-atmospheric conditions \citep{jackson1999pollen}. Despite these
-differences, both PVMs have demonstrated their ability to predict
-vegetation composition
+\citep{paciorek2009mapping}. Here we work towards improving
+reconstructions of vegetation and quantifying their uncertainty using
+a Bayesian hierarchical PVM (STEPPS) calibrated with newly developed
+settlement-era vegetation and pollen datasets. STEPPS is not derived
+from physical first principles, but it accounts for differential
+pollen production and dispersal among taxa. The STEPPS PVM is able to
+estimate pollen-vegetation process parameters without the need to
+quantify any taxon-specific attributes \textit{a priori}; these
+estimates are collectively informed by the network of pollen sites and
+PLS data. This is in contrast to some other PVMs, such as LOVE and
+REVEALS \citep{sugita2007theory1, sugita2007theory2}, which require
+prescribed estimates of taxon-specific fall speeds and productivity,
+in addition to assumptions about local atmospheric conditions
+\citep{jackson1999pollen}. Despite these differences, both PVMs have
+demonstrated their ability to predict vegetation composition
 \citep{soepboer2010regional,wang2011reassessment,
   overballe2013quantitative}. Continued model comparisons and
 development will lead to better understanding of physical and
 ecological assumptions and parameters.
 
-In STEPPS, we make several simplifying assumptions that contribute to
-process uncertainty. First, we do not account for the effects of
-sedimentary basin size. Previous studies have found that sedimentary
-basin size is related to pollen source area - the area from which
-deposited pollen originates \citep{jacobson1981selection,
-  prentice1985pollen, sugita1994pollen}. Larger basins are less
-sensitive to local vegetation, and provide regional
-integration. However, even the smallest basins \citep{jackson1990} and
-forest-floor pollen assemblages \citep{jackson1998quantitative,
-  calcote1995pollen} have a substantial long-distance component. As a
-result, pollen records from larger lakes generally represent
-regional-scale vegetational patterns. Recent work has shown that
-regional vegetation can be inferred from smaller-sized lakes
-\citep{trondmanpollen}. Here we assume composition to be constant
-within each grid cell, and pollen contribution to a sedimentary basin
-is determined based on the distance from the pollen sample to the
-grid cell centroid. The spatial resolution of the vegetation data
-prevents resolution of sub-cell heterogeneity in forest
-composition. However, in future work, it should be possible to refine
-the STEPPS PVM to account for and assess the importance of variable
-basin size.
+In STEPPS, we do not account for the effects of sedimentary basin
+size. Previous studies have found that basin size is related to pollen
+source area - the area from which deposited pollen originates
+\citep{jacobson1981selection, prentice1985pollen,
+  sugita1994pollen}. Larger basins are less sensitive to local
+vegetation, and provide regional integration. As a result, pollen
+records from larger lakes are more frequently used to reconstruct
+regional vegetation. However, even the smallest basins
+\citep{jackson1990} and forest-floor pollen assemblages
+\citep{jackson1998quantitative, calcote1995pollen} have a strong
+regional signal. Recent work has shown that regional vegetation can be
+inferred from smaller-sized lakes \citep{trondmanpollen}. In STEPPS we
+use all suitable pollen records to reconstruct regional
+vegetation. /vegetation composition is assumed constant within grid
+cells, and pollen dispersal to a basin is based on the distance from
+the cell centroid to the basin. The coarseness of the PLS data
+prevents resolution of sub-grid-cell heterogeneity in forest
+composition; as such, accounting for lake size would likely not
+improve predictions. However, the STEPPS PVM can be refined to account
+for and assess the importance of basin size.
 
-Second, following standard convention in Quaternary palynology, we
-assume that dispersal is isometric. In reality, pollen dispersal is a
-complex function of many factors, including wind direction and speed
-and topographical and landscape features. Asymmetric dispersal has
-been documented by \citet{robledo2005patterns} using DNA extraction to
-identify parentage, and non-uniform wind fields have been incorporated
-into a few PVMs \citep{bunting2005modelling}. It is theoretically
-possible to account for complexities in dispersal in a PVM calibrated
-using modern data. However, covariate data needed to determine
+Following standard convention in Quaternary palynology, we assume that
+dispersal is isometric, and that it does not vary throughout the
+domain. In reality, pollen dispersal is a complex function of many
+factors, including wind direction and speed and topographical and
+landscape features. Asymmetric dispersal has been documented by
+\citet{robledo2005patterns} using DNA extraction to identify
+parentage, and non-uniform wind fields have been incorporated into a
+few PVMs \citep{bunting2005modelling}. However, pollen dispersal is an
+underexplored problem and the importance of anisotropy has yet to be
+determined with any certainty. Frequent changes in wind direction and
+the multiple mechanisms and processes affecting pollen transport that act at different spatial and
+temporal scales suggest that a simple
+characterization of anisotropic dispersal may not improve
+predictions. It is possible to account for such dispersal-related
+complexities in a PVM calibrated during modern times for which wind
+data is available. However, covariate data needed to determine
 non-uniform dispersal patterns, such as wind speed and direction, are
-not readily available for past times.
+not readily available for past times. Regardless, further
+investigation is warranted.
 %dyer2007powers
 
 Even with the simplifying assumption of isometry, dispersal-kernel
-shape can vary. In these analyses, we used the Gaussian and inverse
-Power-law as representative of short- and long-tailed kernel
-types. Predictions based on these kernels are similar, although the
-fatter-tailed inverse Power-law kernel performed slightly better than
-the Gaussian. This agrees with findings by others, who found evidence
-supporting the importance of long-distance pollen dispersal
-\citep{austerlitz2004using, macinnis2012measuring}, although further
-investigation is warranted.
+shape can vary. In these analyses, we used the GK and PLK as
+representative of short- and long-tailed kernel types. Predictions
+based on these kernels are similar, although the fatter-tailed PLK
+performed slightly better than the GK. This agrees with findings by
+others, who found evidence supporting the importance of long-distance
+pollen dispersal \citep{austerlitz2004using, macinnis2012measuring},
+although additional data and analyses are needed to support these
+conclusions.
 
-Most PVMs are calibrated using modern vegetation and pollen data, and
-application of these models to reconstruct past vegetation assumes
-that these relationships are constant. However, European settlement
-resulted in significant changes to the landscape that may influence
-the pollen-vegetation relationship \citep{kujawa2015,
-  st2014bias}. This influence does not affect our ability to calibrate
-PVMs using modern data, but suggests that quantitative reconstructions
-of past composition based on the assumption of constancy of the
-pollen-vegetation relationship may be improved by using settlement-era
-calibration data \citep{kujawa2015}. In future work, we plan to
-address this question by quantifying the differences in STEPPS
-composition reconstructions based on modern versus settlement-era
-calibration data for the upper midwestern domain.
+Most PVMs are calibrated with modern vegetation and pollen data, and
+are subsequently used to reconstruct past vegetation under the
+assumption that the pollen-vegetation relationship is
+constant. However, Euro-American settlement resulted in significant
+changes to the landscape that may have influenced the
+pollen-vegetation relationship, and calibration based on
+settlement-era data may improve past predictions \citep{kujawa2015,
+  st2014bias}. That being said, PVM calibration using modern data is
+still valuable; in many cases no past forest data is available.  Also,
+if it exists, prediction bias can likely be quantified and corrected
+for. In future work we will reconstruct vegetation using the STEPPS
+PVM calibrated with modern data and compare with
+settlement-era-calibrated predictions.
 
-Confidently estimating placement of the EuroAmerican settlement
-horizon and other biostratigraphic events remains an underappreciated
-source of uncertainty and potential bias in paleoecology. Soliciting
-expert opinion has become an increasingly common way to assign
-parameter priors in Bayesian statistics
-\citep{choy2009elicitation}. Here, we use expert elicitation to
-identify the settlement-era horizon in the pollen data, with the goal
-of reducing expert bias. Experts were in complete agreement for
-approximately a third of the pollen sites, and differed for
-two-thirds, indicating substantial uncertainty in identifying
-biostratigraphic signals in fossil pollen records. Further
-investigation can be undertaken to determine the effects of these
-uncertainties on calibration parameters and vegetation
-reconstructions, although in this work we do not account for
-uncertainty associated with the settlement-era pollen sample
-selection.
+In many cases vegetation composition data that is as extensive,
+complete, and rich as the PLS data is not available. The modelling
+framework presented here may still be useful, depending on the
+availability of data relative to the spatial region over which one
+would like to make inference.
+
+PVMs calibrated with modern data generally do not rely on age-depth
+models; modern pollen samples are taken from the upper-most
+sediment. However, past vegetation reconstructions based on dated
+pollen samples assume sediment age is known. Age-depth models are used
+to infer sediment age, and are based on chronological controls
+including radiometric and biostratigraphic dates. However, confidently
+estimating placement of biostratigraphic events including the
+Euro-American settlement horizon remains an underappreciated source of
+uncertainty and potential bias in paleoecology. Soliciting expert
+opinion has become an increasingly common way to assign parameter
+priors in Bayesian statistics \citep{choy2009elicitation}. Here, we
+use expert elicitation to identify the settlement horizon in pollen
+records to reduce expert bias. Experts were in complete agreement for
+only about a third of the pollen records, indicating substantial
+uncertainty in identifying biostratigraphic signals. Further
+investigation can determine the effects of this uncertainty on PVM
+calibration and reconstructions; here we use elicitation only to
+reduce bias in identifying the settlement horizon.
 
 The STEPPS PVM outperforms vegetation predictions based on raw pollen
 counts alone, as well as those based simply on scaling using pollen
-productivity factors (Figures~\ref{fig:focal_scaled}
-and~\ref{fig:preds}). Pine and birch are estimated to have the highest
-pollen productivities, consistent with prior productivity estimates
-\citep{bradshaw1985relationships, prentice1986}. In these STEPPS
-estimates, long-distance dispersal plays a major role in determining
-pollen assemblages in the upper midwest domain. For some taxa, such as
-pine and birch, the variable Power-law model estimates that 2\% of the
-dispersed pollen remains within an 8 km grid cell, while the remainder
-is dispersed outside the grid-cell. For other taxa, such as hemlock,
-27\% of the pollen remains local.
+productivity (Figs.~\ref{fig:focal_scaled} and~\ref{fig:preds}). Pine
+and birch have the highest pollen productivity estimates, consistent
+with prior productivity estimates \citep{bradshaw1985relationships,
+  prentice1986}. For the STEPPS estimates, long-distance dispersal
+plays a major role in determining pollen assemblages in the UMW
+domain. For some taxa, such as pine and birch, the variable PLK model
+estimates that 2\% of the dispersed pollen remains within an 8 km grid
+cell, while the remainder is dispersed elsewhere. For other taxa, such
+as hemlock, 27\% of the pollen remains local.
 
 Our pollen capture-radius estimates are large compared to prior
 estimates
 \citep{sugita2007theory2,sugita1994pollen,williams2003palynological,prentice1987quantitative,bradshaw1985relationships};
-source-area radii required to account for 90 \% of the pollen are on
-the order of hundreds of kilometres. A comparison of the PLS and
-pollen data (Figure~\ref{fig:pie}) shows evidence of
-long-distance-dispersal over large distances (e.g. high pine pollen
-abundances far outside the area of highest pine tree abundances). The
-difference between STEPPS and previous source area estimates may be in
-part a consequence of the 8 km spatial resolution of our vegetation
-data, which does not allow us to resolve within-grid-cell
-heterogeneity and the effects of local populations near depositional
-environments \citep{jacobson1981selection, bradshaw1985relationships,
-  jackson1990}. The importance of spatial resolution on source area
-estimates has been previously noted
-\citep{sugita1994pollen}. Multi-scale analyses testing the impacts of
-spatial resolution on pollen-source area are needed to provide further
-insight to this potential sampling artifact and to better understand
-pollen dispersal and source area.
+capture-radii required to account for 90\% of the pollen are on the
+order of hundreds of kilometres. A comparison of the PLS and pollen
+data (Fig.~\ref{fig:pie}) shows evidence of long-distance-dispersal
+over large distances (e.g., high pine pollen abundances far outside
+the area of highest pine tree abundances). Differences between STEPPS
+and previous source area estimates may be in part a consequence of the
+8 km spatial resolution of our vegetation data, which does not allow
+us to resolve within-grid-cell heterogeneity and the effects of local
+populations near depositional environments
+\citep{jacobson1981selection, bradshaw1985relationships,
+  jackson1990}. If local populations not evident in the PLS data
+contribute large amounts of pollen to depositional environments, the
+model will infer that this pollen originated from further afield. The
+importance of spatial resolution on source area estimates has been
+previously noted \citep{sugita1994pollen}. Multi-scale analyses that
+test the impacts of spatial resolution on pollen source area are
+needed to provide further insight.
 
-The STEPPS PVM is able to reproduce regional patterns of settlement
-vegetation for most taxa, but with some smoothing attributed to the
-dispersal kernel (Figure~\ref{fig:maps_pp}). Tamarack is the sole
-taxon not well-modeled by STEPPS; the poor performance for tamarack is
-attributable to its low pollen production, poor pollen dispersal, and
-highly localized distribution.
+The STEPPS PVM reproduces regional patterns of settlement vegetation
+for most taxa, with some smoothing attributed to
+long-distance-dispersal, model assumptions, mixing of sediments and
+air, and the limited number of pollen records
+(Fig.~\ref{fig:maps_pp}). Tamarack is the sole taxon not well-modeled
+by STEPPS; this poor performance is attributable to the low pollen
+production, poor pollen dispersal, and highly localized distribution
+of tamarack.
 
 Overall, our application of STEPPS has demonstrated its ability to
-reconstruct regional patterns of vegetation in the upper midwestern US
-from networks of fossil pollen data, while providing new insights into
-the key processes governing pollen-vegetation relationships and
-parameter estimates for those processes. Given ability to predict
-vegetation composition at the time of calibration, it should become
-possible to infer past forest composition robustly from fossil pollen
-data, and thereby better understand the processes that determined past
-forest dynamics during the changing climates and land use of the
-Holocene and Anthropocene.
+reconstruct regional patterns of vegetation in the UMW
+from a network of fossil pollen reocrds, while providing new insights
+into the key processes governing pollen-vegetation relationships. Our
+ability to predict vegetation at the time of calibration indicates
+that it should be possible to infer past forest composition robustly
+from fossil pollen data, and thereby better understand past forest
+dynamics during the changing climates and land use of the Holocene and
+Anthropocene.
 
-\include{tables}
-\include{figures}
+\section*{Acknowledgements}
+We thank Jeanine St. Jacques for participating in the elicitation
+exercise and for comments in the intellectual development stages of
+this work. We also thank paleoecologists who made their data available
+through Neotoma or otherwise, especially Randy Calcote, Sarah
+Hotchkiss, and Edward Cushing. A special thanks to Eric Grimm for his
+role in data and knowledge stewardship. For the PLS data, we thank
+David Mladenoff and others involved. This work was carried out by the
+PalEON Project with support from the National Science Foundation
+MacroSystems Program through grants EF-1065702, EF-1065656,
+DEB-1241874 and DEB-1241868 and from the Notre Dame Environmental
+Change Initiative.
 
 \newpage
+\begingroup\doublespacing
 \bibliography{calibration}
+\endgroup
+
+\include{tables}
+%\include{figures_eps}
+\include{figures}
 
 \newpage
 \vspace{2in}
@@ -1794,6 +1857,7 @@ Holocene and Anthropocene.
 \section{}
 \label{append}
 \include{tables_appendix}
+\include{figures_appendix}
 \end{appendices}
 
 \end{document}
