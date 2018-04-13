@@ -75,13 +75,10 @@ model {
   phi     ~ uniform(0.01,300);
   mu_gamma    ~ uniform(-2, 2);
   sigma_gamma ~ cauchy(0, 5); 
-  //sigma_a ~ cauchy(1e-5, 0.2);
-  //mu_a ~ normal(mu_a_umw, sigma_a_umw);
-  //sigma_a ~ normal(sigma_a, 2);
   b ~ uniform(2.001, 6);  
 
   for (k in 1:K){
-    log_a[k] ~ normal(mu_a, sigma_a);
+    log_a[k] ~ normal(mu_a[k], sigma_a[k]);
     increment_log_prob(- log(sigma_gamma) - log(gamma[k]) - log(1 - gamma[k]));
     increment_log_prob(- square(logit(gamma[k]) - mu_gamma) / (2 * square(sigma_gamma)));
   }  

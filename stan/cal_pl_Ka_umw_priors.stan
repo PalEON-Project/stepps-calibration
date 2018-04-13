@@ -73,7 +73,7 @@ model {
   b       ~ uniform(2.001, 6);
 
   for (k in 1:K){
-    log_a[k] ~ normal(mu_a, sigma_a);
+    log_a[k] ~ normal(mu_a[k], sigma_a[k]);
   }  
 
   for (k in 1:K){
